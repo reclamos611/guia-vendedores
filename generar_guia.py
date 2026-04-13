@@ -30,11 +30,46 @@ print("=" * 60)
 # ── CONFIGURACION ──────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Detectar archivos Excel automaticamente en la carpeta data/
+DATA_DIR = os.path.join(BASE_DIR, "data")
+xlsx_files = sorted([f for f in os.listdir(DATA_DIR) if f.endswith('.xlsx') and not f.startswith('~')])
+print(f"Archivos encontrados en data/: {xlsx_files}")
+
+# El mas reciente es el mes actual, el anterior es el mes pasado
+# Si hay solo uno, se usa para ambos (historial y actual)
+if len(xlsx_files) == 0:
+    print("ERROR: No hay archivos .xlsx en la carpeta data/")
+    sys.exit(1)
+elif len(xlsx_files) == 1:
+    archivo_actual   = os.path.join(DATA_DIR, xlsx_files[0])
+    archivo_anterior = os.path.join(DATA_DIR, xlsx_files[0])
+    print(f"Un solo archivo detectado — se usa para mes actual y anterior: {xlsx_files[0]}")
+else:
+    # Ordenados por fecha de modificacion: el mas nuevo = actual, el anterior = historial
+    xlsx_con_fecha = sorted(
+        [(f, os.path.getmtime(os.path.join(DATA_DIR, f))) for f in xlsx_files],
+        key=lambda x: x[1], reverse=True
+    )
+    archivo_actual   = os.path.join(DATA_DIR, xlsx_con_fecha[0][0])
+    archivo_anterior = os.path.join(DATA_DIR, xlsx_con_fecha[1][0])
+    print(f"Mes actual:   {xlsx_con_fecha[0][0]}")
+    print(f"Mes anterior: {xlsx_con_fecha[1][0]}")
+
+# Buscar maestro y cliente_zona (cualquier nombre que contenga esas palabras)
+def find_file(keyword):
+    matches = [f for f in xlsx_files if keyword.lower() in f.lower()]
+    if matches:
+        return os.path.join(DATA_DIR, matches[0])
+    return None
+
+maestro_auto    = find_file('maestro')
+cliente_zona_auto = find_file('zona') or find_file('cliente_zona')
+
 FILES = {
-    "venta_actual":   os.path.join(BASE_DIR, "data", "venta_mes_actual.xlsx"),
-    "venta_anterior": os.path.join(BASE_DIR, "data", "venta_mes_anterior.xlsx"),
-    "maestro":        os.path.join(BASE_DIR, "data", "maestro_clientes.xlsx"),
-    "cliente_zona":   os.path.join(BASE_DIR, "data", "cliente_zona.xlsx"),
+    "venta_actual":   archivo_actual,
+    "venta_anterior": archivo_anterior,
+    "maestro":        maestro_auto or archivo_actual,
+    "cliente_zona":   cliente_zona_auto or archivo_actual,
     "template":       os.path.join(BASE_DIR, "guia_template.html"),
     "output":         os.path.join(BASE_DIR, "guia_visita_611.html"),
 }
@@ -100,12 +135,11 @@ def cls_art(art):
 # ── VERIFICAR ARCHIVOS ─────────────────────────────────────────
 print("\nVerificando archivos...")
 for key, path in FILES.items():
-    exists = os.path.exists(path)
-    print(f"  {'OK' if exists else 'FALTA'} {os.path.basename(path)}")
-    if not exists and key not in ['output']:
-        print(f"\nERROR: Falta el archivo {path}")
-        print("Asegurate de tener todos los archivos en la carpeta 'data/'")
-        sys.exit(1)
+    exists = os.path.exists(path) if path else False
+    print(f"  {'OK' if exists else 'FALTA'} {key}: {os.path.basename(path) if path else 'no encontrado'}")
+if not os.path.exists(FILES['template']):
+    print(f"\nERROR: Falta guia_template.html en la raiz del repositorio")
+    sys.exit(1)
 
 # ── LEER CLIENTE ZONA ─────────────────────────────────────────
 print("\nProcesando cliente zona...")
