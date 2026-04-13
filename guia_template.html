@@ -203,6 +203,45 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
 .empty-desc{font-size:12px;color:var(--tx3);line-height:1.6}
 
 .mono{font-family:'DM Mono',monospace}
+/* SECCIONES COLAPSABLES */
+.collapse-sec{margin:0 14px 8px}
+.collapse-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:10px;
+  padding:11px 14px;cursor:pointer;user-select:none;transition:background .12s
+}
+.collapse-hdr:active{background:var(--bg3)}
+.collapse-hdr.open{border-radius:10px 10px 0 0;border-bottom-color:var(--brd)}
+.collapse-titulo{font-size:12px;font-weight:600;color:var(--tx2);
+  text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.collapse-badge{padding:2px 8px;border-radius:20px;font-size:10px;
+  font-family:'DM Mono',monospace;font-weight:700}
+.collapse-arrow{font-size:12px;color:var(--tx3);transition:transform .2s;font-family:'DM Mono',monospace}
+.collapse-arrow.open{transform:rotate(90deg)}
+.collapse-body{
+  background:var(--bg2);border:1px solid var(--brd);border-top:none;
+  border-radius:0 0 10px 10px;overflow:hidden;
+  max-height:0;transition:max-height .25s ease
+}
+.collapse-body.open{max-height:3000px}
+.collapse-inner{padding:10px 12px}
+
+/* TABLA PROVEEDORES (formato anterior) */
+.prov-table{width:100%;border-collapse:collapse}
+.prov-thead td{font-size:9px;color:var(--tx3);text-transform:uppercase;
+  letter-spacing:.05em;padding:6px 8px;border-bottom:1px solid var(--brd)}
+.prov-row{border-bottom:1px solid var(--brd)}
+.prov-row:last-child{border-bottom:none}
+.prov-row td{padding:8px 8px;font-size:12px;vertical-align:middle}
+.prov-nom{font-weight:600}
+.prov-bdg{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;
+  font-family:'DM Mono',monospace;white-space:nowrap}
+.bdg-activo{background:var(--gr-d);color:var(--gr-l);border:1px solid var(--gr)}
+.bdg-inactivo{background:var(--rd-d);color:var(--rd-l);border:1px solid var(--rd)}
+.bdg-nunca{background:var(--bg4);color:var(--tx3);border:1px solid var(--brd)}
+.prov-uds{font-family:'DM Mono',monospace;font-size:12px;text-align:center}
+.prov-ofr{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;text-align:center}
+
 </style>
 </head>
 <body>
@@ -282,25 +321,53 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
   <div class="cli-head" id="ficha-head"></div>
   <div class="cli-kpis" id="ficha-kpis"></div>
 
-  <div class="seccion">
-    <div class="seccion-titulo">PepsiCo - Marcas</div>
-    <div id="ficha-marcas"></div>
+  <!-- PepsiCo - abierta por defecto -->
+  <div class="collapse-sec">
+    <div class="collapse-hdr open" onclick="toggleSec('sec-pep',this)" id="hdr-pep">
+      <div class="collapse-titulo">
+        <span style="color:var(--bl-l)">P</span> PepsiCo - Marcas
+        <span class="collapse-badge" id="badge-pep" style="background:var(--bg3);color:var(--tx2)"></span>
+      </div>
+      <span class="collapse-arrow open">&#9658;</span>
+    </div>
+    <div class="collapse-body open" id="sec-pep">
+      <div class="collapse-inner" id="ficha-marcas"></div>
+    </div>
   </div>
 
-  <div class="seccion" id="seccion-pedido" style="display:none">
-    <div class="seccion-titulo">Pedido sugerido (marcas sin cobertura)</div>
-    <div id="ficha-pedido"></div>
+  <!-- Pedido sugerido -->
+  <div class="collapse-sec" id="wrap-pedido">
+    <div class="collapse-hdr" onclick="toggleSec('sec-pedido',this)" id="hdr-pedido">
+      <div class="collapse-titulo">
+        <span style="color:var(--am-l)">!</span> Pedido sugerido
+        <span class="collapse-badge" id="badge-pedido" style="background:var(--am-d);color:var(--am-l)"></span>
+      </div>
+      <span class="collapse-arrow">&#9658;</span>
+    </div>
+    <div class="collapse-body" id="sec-pedido">
+      <div class="collapse-inner" id="ficha-pedido"></div>
+    </div>
   </div>
 
-  <div class="seccion">
-    <div class="seccion-titulo">Otros proveedores</div>
-    <div id="ficha-provs"></div>
+  <!-- Otros proveedores -->
+  <div class="collapse-sec">
+    <div class="collapse-hdr" onclick="toggleSec('sec-provs',this)" id="hdr-provs">
+      <div class="collapse-titulo">
+        <span style="color:var(--pu-l)">+</span> Otros proveedores
+        <span class="collapse-badge" id="badge-provs" style="background:var(--bg3);color:var(--tx2)"></span>
+      </div>
+      <span class="collapse-arrow">&#9658;</span>
+    </div>
+    <div class="collapse-body" id="sec-provs">
+      <div class="collapse-inner" id="ficha-provs"></div>
+    </div>
   </div>
 </div>
 
 <script>
 // -- CONSTANTES ------------------------------------------------------------
 var MARCAS = ['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker'];
+var MK_TARGETS = {"Lays": 94.9, "Doritos": 98.0, "3D": 85.7, "Cheetos": 83.9, "Twistos": 79.4, "Pep": 62.3, "Tostitos": 28.4, "Pehuamar": 20.7, "Quaker": 4.6};
 var MK_COLORS = {Lays:'#f5e642',Doritos:'#f5a623',Cheetos:'#f57d23','3D':'#a57af5',
   Pep:'#4f8ef5',Pehuamar:'#2dd98a',Twistos:'#f54f7d',Tostitos:'#f5c842',Quaker:'#c07af5'};
 var PROV_COLORS = ['#4d8ef0','#f0a500','#2ecc8a','#a07cf0','#f04d4d','#f57d23',
@@ -331,6 +398,20 @@ document.getElementById('tb-fecha').textContent =
 
 // -- UTILS -----------------------------------------------------------------
 function fmtN(v){ return Math.round(v||0).toLocaleString('es-AR'); }
+function toggleSec(id, hdr) {
+  var body = document.getElementById(id);
+  var arrow = hdr.querySelector('.collapse-arrow');
+  var isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    hdr.classList.remove('open');
+    if (arrow) arrow.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    hdr.classList.add('open');
+    if (arrow) arrow.classList.add('open');
+  }
+}
 function fmtM(v){
   if(!v) return '$0';
   if(v>=1e9) return '$'+(v/1e9).toFixed(1)+'B';
@@ -498,7 +579,7 @@ function verFicha(cid){
       '<div class="zona-txt"><strong>FUERA DE ZONA</strong> - Hoy es '+HOY_DIA+'. '+
       'Dia asignado: <strong>'+diasNom.join(' / ')+'</strong></div></div>';
   } else {
-    zonaEl.innerHTML='<div class="zona-alerta zona-ok"><div class="zona-icon"></div>'+
+    zonaEl.innerHTML='<div class="zona-alerta zona-ok"><div class="zona-icon">OK</div>'+
       '<div class="zona-txt"><strong>En zona</strong> - Dia de visita asignado.</div></div>';
   }
 
@@ -576,6 +657,24 @@ function verFicha(cid){
             '<div class="dato-val azul">'+(udsAnt>0?udsAnt+'u':'-')+'</div>'+
           '</div>'+
         '</div>'+
+        // Barra de objetivo de cobertura
+        (function(){
+          var objPct = MK_TARGETS[mk] || 0;
+          if (!objPct) return '';
+          var colBar = ok?'var(--gr)':'var(--rd)';
+          var fillW = ok ? 100 : Math.round(udsRef/3*100);
+          return '<div style="padding:6px 12px 8px;border-top:1px solid var(--brd)">'+
+            '<div style="display:flex;justify-content:space-between;margin-bottom:3px">'+
+              '<span style="font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em">Obj cobertura 611</span>'+
+              '<span style="font-size:10px;font-weight:700;font-family:DM Mono,monospace;color:'+(ok?'var(--gr-l)':'var(--rd-l)')+'">'+
+                (ok?'Logrado':'Falta')+'  obj '+objPct+'%'+
+              '</span>'+
+            '</div>'+
+            '<div style="height:4px;background:var(--bg4);border-radius:2px;overflow:hidden">'+
+              '<div style="height:100%;width:'+(ok?100:Math.min(Math.round(udsRef/3*100),99))+'%;background:'+colBar+';border-radius:2px"></div>'+
+            '</div>'+
+          '</div>';
+        })() +
       '</div>';
 
     if(!ok) faltantes.push({mk:mk,col:col,sugMin:sugMin,udsAct:udsAct,udsAnt:udsAnt});
@@ -583,10 +682,24 @@ function verFicha(cid){
   document.getElementById('ficha-marcas').innerHTML=marcasHtml;
 
   // Pedido sugerido
-  var pedSec=document.getElementById('seccion-pedido');
-  var pedEl=document.getElementById('ficha-pedido');
+  // Badge PepsiCo
+  var badgePep = document.getElementById('badge-pep');
+  if (badgePep) {
+    var nFalt = faltantes.length;
+    badgePep.textContent = (9-nFalt)+'/9 OK';
+    badgePep.style.background = nFalt===0?'var(--gr-d)':nFalt<=3?'var(--am-d)':'var(--rd-d)';
+    badgePep.style.color = nFalt===0?'var(--gr-l)':nFalt<=3?'var(--am-l)':'var(--rd-l)';
+  }
+
+  // Badge pedido
+  var badgePed = document.getElementById('badge-pedido');
+  if (badgePed) badgePed.textContent = faltantes.length + ' marcas';
+
+  // Wrap pedido
+  var wrapPed = document.getElementById('wrap-pedido');
+  var pedEl = document.getElementById('ficha-pedido');
   if(faltantes.length){
-    pedSec.style.display='block';
+    if (wrapPed) wrapPed.style.display='block';
     pedEl.innerHTML=faltantes.map(function(f){
       return '<div class="pedido-card">'+
         '<div class="pedido-mk" style="color:'+f.col+'">'+f.mk+'</div>'+
@@ -607,43 +720,43 @@ function verFicha(cid){
       '</div>';
     }).join('');
   } else {
-    pedSec.style.display='none';
+    if (wrapPed) wrapPed.style.display='none';
   }
 
   // Otros proveedores
   var provsDet=(typeof OTROS_PROV_DET!=='undefined'&&OTROS_PROV_DET[cid])||{};
   var todosP=typeof TODOS_PROV_ACTIVOS!=='undefined'?TODOS_PROV_ACTIVOS:Object.keys(provsDet);
-  var provsHtml='';
+  var nActivos=0;
+  var provsHtml='<table class="prov-table">'+
+    '<tr class="prov-thead"><td>Proveedor</td><td>Estado</td>'+
+    '<td style="text-align:center">Mar.</td><td style="text-align:center">Act.</td>'+
+    '<td style="text-align:center">Ofr.</td></tr>';
   todosP.forEach(function(prov,idx){
     var vals=provsDet[prov]||[0,0,0,0];
     var marU=vals[0]||0, marI=vals[1]||0, actU=vals[2]||0, actI=vals[3]||0;
-    var estado, badgeClass, cardClass;
-    if(actI>0){ estado='Activo'; badgeClass='bdg-ok'; cardClass='activo'; }
-    else if(marI>0){ estado='Inactivo'; badgeClass='bdg-falta'; cardClass='inactivo'; }
-    else { estado='Nunca'; badgeClass=''; cardClass='nunca'; }
+    var estado, bdgCls;
+    if(actI>0){ estado='Activo'; bdgCls='bdg-activo'; nActivos++; }
+    else if(marI>0){ estado='Inactivo'; bdgCls='bdg-inactivo'; }
+    else { estado='Nunca'; bdgCls='bdg-nunca'; }
     var col=PROV_COLORS[idx%PROV_COLORS.length];
     var ofrecer=(marI>0&&actI===0)?(marU>0?'+'+marU:'si'):(actI>0?'OK':'-');
     var ofCol=(marI>0&&actI===0)?'var(--am-l)':(actI>0?'var(--gr-l)':'var(--tx3)');
-
-    provsHtml+=
-      '<div class="prov-card '+cardClass+'">'+
-        '<div class="prov-header">'+
-          '<div class="prov-nombre" style="color:'+col+'">'+prov+'</div>'+
-          '<span class="prov-badge '+badgeClass+'" style="'+(badgeClass?'':'background:var(--bg3);color:var(--tx3)')+'">'+estado+'</span>'+
-        '</div>'+
-        (cardClass!=='nunca'?
-          '<div class="prov-datos">'+
-            '<div class="prov-dato"><div class="dato-lbl">Mes ant.</div>'+
-              '<div class="dato-val azul">'+(marU>0?marU+'u':'-')+'</div></div>'+
-            '<div class="prov-dato"><div class="dato-lbl">Mes act.</div>'+
-              '<div class="dato-val '+(actU>0?'verde':'gris')+'">'+(actU>0?actU+'u':'-')+'</div></div>'+
-            '<div class="prov-dato"><div class="dato-lbl">Ofrecer</div>'+
-              '<div class="dato-val" style="color:'+ofCol+'">'+ofrecer+'</div></div>'+
-          '</div>':'')+
-      '</div>';
+    provsHtml+='<tr class="prov-row">'+
+      '<td class="prov-nom" style="color:'+col+'">'+prov+'</td>'+
+      '<td><span class="prov-bdg '+bdgCls+'">'+estado+'</span></td>'+
+      '<td class="prov-uds" style="color:var(--bl-l)">'+(marU>0?marU+'u':'-')+'</td>'+
+      '<td class="prov-uds" style="color:'+(actU>0?'var(--gr-l)':'var(--tx3)')+'">'+(actU>0?actU+'u':'-')+'</td>'+
+      '<td class="prov-ofr" style="color:'+ofCol+'">'+ofrecer+'</td>'+
+    '</tr>';
   });
-  document.getElementById('ficha-provs').innerHTML=provsHtml||
-    '<div style="font-size:12px;color:var(--tx3);padding:12px">Sin datos de otros proveedores</div>';
+  provsHtml+='</table>';
+  document.getElementById('ficha-provs').innerHTML=provsHtml;
+  var badgeProvs=document.getElementById('badge-provs');
+  if(badgeProvs){
+    badgeProvs.textContent=nActivos+' activos';
+    badgeProvs.style.background=nActivos>0?'var(--gr-d)':'var(--bg3)';
+    badgeProvs.style.color=nActivos>0?'var(--gr-l)':'var(--tx3)';
+  }
 
   ir('v-ficha');
 }
@@ -660,6 +773,9 @@ function verFicha(cid){
 </script>
 <script>
 // __OTROS_PROV__
+</script>
+<script>
+const VEND_RESUMEN={"31":{"nom":"VILLALBA MAX.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":274,"a_ccc":107,"a_pcc":39.1,"a_imp":14768273,"a_kr":405,"a_ot":2421,"a_apr":16.7,"a_pp":20.1,"m_ccc":223,"m_pcc":81.4,"m_imp":88777327,"m_kr":2445,"m_ot":2421,"m_apr":101.0},"32":{"nom":"OLIVARES EDGAR","mesa":400,"sup":"CLAUDIO ALVARADO","cart":286,"a_ccc":65,"a_pcc":22.7,"a_imp":7845825,"a_kr":250,"a_ot":1547,"a_apr":16.2,"a_pp":19.4,"m_ccc":218,"m_pcc":76.2,"m_imp":50007578,"m_kr":1426,"m_ot":1547,"m_apr":92.2},"33":{"nom":"ORDO\u00d1EZ ISMAEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":247,"a_ccc":70,"a_pcc":28.3,"a_imp":10854279,"a_kr":364,"a_ot":1787,"a_apr":20.4,"a_pp":24.4,"m_ccc":168,"m_pcc":68.0,"m_imp":74877786,"m_kr":1783,"m_ot":1787,"m_apr":99.8},"34":{"nom":"BALDO JULIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":263,"a_ccc":61,"a_pcc":23.2,"a_imp":4956235,"a_kr":132,"a_ot":1628,"a_apr":8.1,"a_pp":9.7,"m_ccc":192,"m_pcc":73.0,"m_imp":49863989,"m_kr":1402,"m_ot":1628,"m_apr":86.1},"35":{"nom":"BAZAN LUCIANO","mesa":400,"sup":"CLAUDIO ALVARADO","cart":275,"a_ccc":91,"a_pcc":33.1,"a_imp":9929741,"a_kr":310,"a_ot":1548,"a_apr":20.0,"a_pp":24.0,"m_ccc":235,"m_pcc":85.5,"m_imp":54674851,"m_kr":1660,"m_ot":1548,"m_apr":107.2},"36":{"nom":"NEIRA NAHUEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":254,"a_ccc":82,"a_pcc":32.3,"a_imp":8908806,"a_kr":259,"a_ot":2739,"a_apr":9.5,"a_pp":11.3,"m_ccc":196,"m_pcc":77.2,"m_imp":61433839,"m_kr":2129,"m_ot":2739,"m_apr":77.7},"37":{"nom":"SCORRANI IGN.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":272,"a_ccc":82,"a_pcc":30.1,"a_imp":9466999,"a_kr":305,"a_ot":1628,"a_apr":18.7,"a_pp":22.5,"m_ccc":194,"m_pcc":71.3,"m_imp":50063985,"m_kr":1546,"m_ot":1628,"m_apr":95.0},"38":{"nom":"MARTINEZ MAU.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":304,"a_ccc":109,"a_pcc":35.9,"a_imp":9975612,"a_kr":292,"a_ot":2461,"a_apr":11.9,"a_pp":14.2,"m_ccc":219,"m_pcc":72.0,"m_imp":58292329,"m_kr":1926,"m_ot":2461,"m_apr":78.3},"39":{"nom":"MERLO SEBASTIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":299,"a_ccc":94,"a_pcc":31.4,"a_imp":8007588,"a_kr":269,"a_ot":2243,"a_apr":12.0,"a_pp":14.4,"m_ccc":229,"m_pcc":76.6,"m_imp":57954152,"m_kr":1939,"m_ot":2243,"m_apr":86.4},"41":{"nom":"CISTERNA DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":305,"a_ccc":68,"a_pcc":22.3,"a_imp":5001349,"a_kr":145,"a_ot":1166,"a_apr":12.4,"a_pp":14.9,"m_ccc":209,"m_pcc":68.5,"m_imp":35127177,"m_kr":1015,"m_ot":1166,"m_apr":87.0},"42":{"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULCI","cart":282,"a_ccc":73,"a_pcc":25.9,"a_imp":6649488,"a_kr":188,"a_ot":1375,"a_apr":13.7,"a_pp":16.4,"m_ccc":180,"m_pcc":63.8,"m_imp":44958496,"m_kr":1423,"m_ot":1375,"m_apr":103.5},"43":{"nom":"RUEDA CUJAR","mesa":500,"sup":"MARIANO TRIULCI","cart":280,"a_ccc":73,"a_pcc":26.1,"a_imp":5954060,"a_kr":159,"a_ot":1328,"a_apr":12.0,"a_pp":14.4,"m_ccc":228,"m_pcc":81.4,"m_imp":37964662,"m_kr":1119,"m_ot":1328,"m_apr":84.3},"44":{"nom":"BERNAHOLA AGU.","mesa":500,"sup":"MARIANO TRIULCI","cart":315,"a_ccc":71,"a_pcc":22.5,"a_imp":6402422,"a_kr":209,"a_ot":1222,"a_apr":17.1,"a_pp":20.5,"m_ccc":172,"m_pcc":54.6,"m_imp":39147641,"m_kr":1191,"m_ot":1222,"m_apr":97.5},"45":{"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","cart":337,"a_ccc":76,"a_pcc":22.6,"a_imp":7394685,"a_kr":206,"a_ot":1153,"a_apr":17.9,"a_pp":21.4,"m_ccc":209,"m_pcc":62.0,"m_imp":43957151,"m_kr":1321,"m_ot":1153,"m_apr":114.6},"46":{"nom":"OCHOA ROXANA","mesa":500,"sup":"MARIANO TRIULCI","cart":256,"a_ccc":77,"a_pcc":30.1,"a_imp":5691485,"a_kr":163,"a_ot":1200,"a_apr":13.6,"a_pp":16.3,"m_ccc":186,"m_pcc":72.7,"m_imp":40247032,"m_kr":1243,"m_ot":1200,"m_apr":103.6},"47":{"nom":"CACERES YANINA","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":61,"a_pcc":20.5,"a_imp":4882574,"a_kr":145,"a_ot":1199,"a_apr":12.1,"a_pp":14.5,"m_ccc":190,"m_pcc":64.0,"m_imp":36458445,"m_kr":1039,"m_ot":1199,"m_apr":86.7},"48":{"nom":"SALDE MARCELA","mesa":500,"sup":"MARIANO TRIULCI","cart":313,"a_ccc":80,"a_pcc":25.6,"a_imp":6452350,"a_kr":175,"a_ot":2632,"a_apr":6.6,"a_pp":8.0,"m_ccc":184,"m_pcc":58.8,"m_imp":79430337,"m_kr":2503,"m_ot":2632,"m_apr":95.1},"49":{"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","cart":317,"a_ccc":57,"a_pcc":18.0,"a_imp":4486694,"a_kr":129,"a_ot":1166,"a_apr":11.1,"a_pp":13.3,"m_ccc":186,"m_pcc":58.7,"m_imp":31526583,"m_kr":914,"m_ot":1166,"m_apr":78.4},"51":{"nom":"GONZALEZ CAND.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":245,"a_ccc":109,"a_pcc":44.5,"a_imp":11693917,"a_kr":277,"a_ot":1846,"a_apr":15.0,"a_pp":18.0,"m_ccc":189,"m_pcc":77.1,"m_imp":58822255,"m_kr":1541,"m_ot":1846,"m_apr":83.5},"52":{"nom":"MARTINEZ DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":332,"a_ccc":82,"a_pcc":24.7,"a_imp":7372625,"a_kr":202,"a_ot":1438,"a_apr":14.0,"a_pp":16.9,"m_ccc":235,"m_pcc":70.8,"m_imp":44973200,"m_kr":1331,"m_ot":1438,"m_apr":92.6},"53":{"nom":"CARRIZO EZE.","mesa":300,"sup":"NATALIA PEREZ","cart":303,"a_ccc":84,"a_pcc":27.7,"a_imp":6887270,"a_kr":170,"a_ot":1451,"a_apr":11.7,"a_pp":14.1,"m_ccc":225,"m_pcc":74.3,"m_imp":42747885,"m_kr":1143,"m_ot":1451,"m_apr":78.8},"54":{"nom":"MORENO JOHAN","mesa":500,"sup":"MARIANO TRIULCI","cart":360,"a_ccc":70,"a_pcc":19.4,"a_imp":5379696,"a_kr":162,"a_ot":1351,"a_apr":12.0,"a_pp":14.4,"m_ccc":213,"m_pcc":59.2,"m_imp":40725802,"m_kr":1249,"m_ot":1351,"m_apr":92.5},"55":{"nom":"PULIDO EFRAIM","mesa":300,"sup":"NATALIA PEREZ","cart":315,"a_ccc":70,"a_pcc":22.2,"a_imp":6652244,"a_kr":202,"a_ot":1177,"a_apr":17.2,"a_pp":20.6,"m_ccc":175,"m_pcc":55.6,"m_imp":41730782,"m_kr":1293,"m_ot":1177,"m_apr":109.9},"56":{"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","cart":292,"a_ccc":51,"a_pcc":17.5,"a_imp":4896551,"a_kr":154,"a_ot":2096,"a_apr":7.3,"a_pp":8.8,"m_ccc":192,"m_pcc":65.8,"m_imp":51734056,"m_kr":1772,"m_ot":2096,"m_apr":84.5},"57":{"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","cart":274,"a_ccc":68,"a_pcc":24.8,"a_imp":6204887,"a_kr":177,"a_ot":1153,"a_apr":15.4,"a_pp":18.4,"m_ccc":197,"m_pcc":71.9,"m_imp":36446145,"m_kr":1052,"m_ot":1153,"m_apr":91.2},"58":{"nom":"GONZALEZ MARC.","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":76,"a_pcc":25.6,"a_imp":8588524,"a_kr":258,"a_ot":1446,"a_apr":17.8,"a_pp":21.4,"m_ccc":216,"m_pcc":72.7,"m_imp":50471152,"m_kr":1467,"m_ot":1446,"m_apr":101.5},"59":{"nom":"AVENDA\u00d1O SERGIO","mesa":300,"sup":"NATALIA PEREZ","cart":298,"a_ccc":48,"a_pcc":16.1,"a_imp":5960907,"a_kr":178,"a_ot":1600,"a_apr":11.1,"a_pp":13.4,"m_ccc":176,"m_pcc":59.1,"m_imp":36662513,"m_kr":1178,"m_ot":1600,"m_apr":73.6},"61":{"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","cart":558,"a_ccc":86,"a_pcc":15.4,"a_imp":6502017,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":252,"m_pcc":45.2,"m_imp":44237676,"m_kr":1,"m_ot":0,"m_apr":null},"62":{"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","cart":525,"a_ccc":26,"a_pcc":5.0,"a_imp":1433027,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":190,"m_pcc":36.2,"m_imp":23370801,"m_kr":0,"m_ot":0,"m_apr":null},"63":{"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","cart":527,"a_ccc":89,"a_pcc":16.9,"a_imp":8097355,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":241,"m_pcc":45.7,"m_imp":38010349,"m_kr":0,"m_ot":0,"m_apr":null},"64":{"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","cart":370,"a_ccc":77,"a_pcc":20.8,"a_imp":15361904,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":182,"m_pcc":49.2,"m_imp":62716339,"m_kr":0,"m_ot":0,"m_apr":null},"65":{"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","cart":593,"a_ccc":79,"a_pcc":13.3,"a_imp":15357055,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":278,"m_pcc":46.9,"m_imp":70286390,"m_kr":3,"m_ot":0,"m_apr":null}};
 </script>
 </body>
 </html>

@@ -203,6 +203,45 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
 .empty-desc{font-size:12px;color:var(--tx3);line-height:1.6}
 
 .mono{font-family:'DM Mono',monospace}
+/* SECCIONES COLAPSABLES */
+.collapse-sec{margin:0 14px 8px}
+.collapse-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:10px;
+  padding:11px 14px;cursor:pointer;user-select:none;transition:background .12s
+}
+.collapse-hdr:active{background:var(--bg3)}
+.collapse-hdr.open{border-radius:10px 10px 0 0;border-bottom-color:var(--brd)}
+.collapse-titulo{font-size:12px;font-weight:600;color:var(--tx2);
+  text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.collapse-badge{padding:2px 8px;border-radius:20px;font-size:10px;
+  font-family:'DM Mono',monospace;font-weight:700}
+.collapse-arrow{font-size:12px;color:var(--tx3);transition:transform .2s;font-family:'DM Mono',monospace}
+.collapse-arrow.open{transform:rotate(90deg)}
+.collapse-body{
+  background:var(--bg2);border:1px solid var(--brd);border-top:none;
+  border-radius:0 0 10px 10px;overflow:hidden;
+  max-height:0;transition:max-height .25s ease
+}
+.collapse-body.open{max-height:3000px}
+.collapse-inner{padding:10px 12px}
+
+/* TABLA PROVEEDORES (formato anterior) */
+.prov-table{width:100%;border-collapse:collapse}
+.prov-thead td{font-size:9px;color:var(--tx3);text-transform:uppercase;
+  letter-spacing:.05em;padding:6px 8px;border-bottom:1px solid var(--brd)}
+.prov-row{border-bottom:1px solid var(--brd)}
+.prov-row:last-child{border-bottom:none}
+.prov-row td{padding:8px 8px;font-size:12px;vertical-align:middle}
+.prov-nom{font-weight:600}
+.prov-bdg{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;
+  font-family:'DM Mono',monospace;white-space:nowrap}
+.bdg-activo{background:var(--gr-d);color:var(--gr-l);border:1px solid var(--gr)}
+.bdg-inactivo{background:var(--rd-d);color:var(--rd-l);border:1px solid var(--rd)}
+.bdg-nunca{background:var(--bg4);color:var(--tx3);border:1px solid var(--brd)}
+.prov-uds{font-family:'DM Mono',monospace;font-size:12px;text-align:center}
+.prov-ofr{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;text-align:center}
+
 </style>
 </head>
 <body>
@@ -282,25 +321,53 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
   <div class="cli-head" id="ficha-head"></div>
   <div class="cli-kpis" id="ficha-kpis"></div>
 
-  <div class="seccion">
-    <div class="seccion-titulo">PepsiCo - Marcas</div>
-    <div id="ficha-marcas"></div>
+  <!-- PepsiCo - abierta por defecto -->
+  <div class="collapse-sec">
+    <div class="collapse-hdr open" onclick="toggleSec('sec-pep',this)" id="hdr-pep">
+      <div class="collapse-titulo">
+        <span style="color:var(--bl-l)">P</span> PepsiCo - Marcas
+        <span class="collapse-badge" id="badge-pep" style="background:var(--bg3);color:var(--tx2)"></span>
+      </div>
+      <span class="collapse-arrow open">&#9658;</span>
+    </div>
+    <div class="collapse-body open" id="sec-pep">
+      <div class="collapse-inner" id="ficha-marcas"></div>
+    </div>
   </div>
 
-  <div class="seccion" id="seccion-pedido" style="display:none">
-    <div class="seccion-titulo">Pedido sugerido (marcas sin cobertura)</div>
-    <div id="ficha-pedido"></div>
+  <!-- Pedido sugerido -->
+  <div class="collapse-sec" id="wrap-pedido">
+    <div class="collapse-hdr" onclick="toggleSec('sec-pedido',this)" id="hdr-pedido">
+      <div class="collapse-titulo">
+        <span style="color:var(--am-l)">!</span> Pedido sugerido
+        <span class="collapse-badge" id="badge-pedido" style="background:var(--am-d);color:var(--am-l)"></span>
+      </div>
+      <span class="collapse-arrow">&#9658;</span>
+    </div>
+    <div class="collapse-body" id="sec-pedido">
+      <div class="collapse-inner" id="ficha-pedido"></div>
+    </div>
   </div>
 
-  <div class="seccion">
-    <div class="seccion-titulo">Otros proveedores</div>
-    <div id="ficha-provs"></div>
+  <!-- Otros proveedores -->
+  <div class="collapse-sec">
+    <div class="collapse-hdr" onclick="toggleSec('sec-provs',this)" id="hdr-provs">
+      <div class="collapse-titulo">
+        <span style="color:var(--pu-l)">+</span> Otros proveedores
+        <span class="collapse-badge" id="badge-provs" style="background:var(--bg3);color:var(--tx2)"></span>
+      </div>
+      <span class="collapse-arrow">&#9658;</span>
+    </div>
+    <div class="collapse-body" id="sec-provs">
+      <div class="collapse-inner" id="ficha-provs"></div>
+    </div>
   </div>
 </div>
 
 <script>
 // -- CONSTANTES ------------------------------------------------------------
 var MARCAS = ['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker'];
+var MK_TARGETS = {"Lays": 94.9, "Doritos": 98.0, "3D": 85.7, "Cheetos": 83.9, "Twistos": 79.4, "Pep": 62.3, "Tostitos": 28.4, "Pehuamar": 20.7, "Quaker": 4.6};
 var MK_COLORS = {Lays:'#f5e642',Doritos:'#f5a623',Cheetos:'#f57d23','3D':'#a57af5',
   Pep:'#4f8ef5',Pehuamar:'#2dd98a',Twistos:'#f54f7d',Tostitos:'#f5c842',Quaker:'#c07af5'};
 var PROV_COLORS = ['#4d8ef0','#f0a500','#2ecc8a','#a07cf0','#f04d4d','#f57d23',
@@ -331,6 +398,20 @@ document.getElementById('tb-fecha').textContent =
 
 // -- UTILS -----------------------------------------------------------------
 function fmtN(v){ return Math.round(v||0).toLocaleString('es-AR'); }
+function toggleSec(id, hdr) {
+  var body = document.getElementById(id);
+  var arrow = hdr.querySelector('.collapse-arrow');
+  var isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    hdr.classList.remove('open');
+    if (arrow) arrow.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    hdr.classList.add('open');
+    if (arrow) arrow.classList.add('open');
+  }
+}
 function fmtM(v){
   if(!v) return '$0';
   if(v>=1e9) return '$'+(v/1e9).toFixed(1)+'B';
@@ -576,6 +657,24 @@ function verFicha(cid){
             '<div class="dato-val azul">'+(udsAnt>0?udsAnt+'u':'-')+'</div>'+
           '</div>'+
         '</div>'+
+        // Barra de objetivo de cobertura
+        (function(){
+          var objPct = MK_TARGETS[mk] || 0;
+          if (!objPct) return '';
+          var colBar = ok?'var(--gr)':'var(--rd)';
+          var fillW = ok ? 100 : Math.round(udsRef/3*100);
+          return '<div style="padding:6px 12px 8px;border-top:1px solid var(--brd)">'+
+            '<div style="display:flex;justify-content:space-between;margin-bottom:3px">'+
+              '<span style="font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em">Obj cobertura 611</span>'+
+              '<span style="font-size:10px;font-weight:700;font-family:DM Mono,monospace;color:'+(ok?'var(--gr-l)':'var(--rd-l)')+'">'+
+                (ok?'Logrado':'Falta')+' - obj '+objPct+'%'+
+              '</span>'+
+            '</div>'+
+            '<div style="height:4px;background:var(--bg4);border-radius:2px;overflow:hidden">'+
+              '<div style="height:100%;width:'+(ok?100:Math.min(Math.round(udsRef/3*100),99))+'%;background:'+colBar+';border-radius:2px"></div>'+
+            '</div>'+
+          '</div>';
+        })() +
       '</div>';
 
     if(!ok) faltantes.push({mk:mk,col:col,sugMin:sugMin,udsAct:udsAct,udsAnt:udsAnt});
@@ -583,10 +682,24 @@ function verFicha(cid){
   document.getElementById('ficha-marcas').innerHTML=marcasHtml;
 
   // Pedido sugerido
-  var pedSec=document.getElementById('seccion-pedido');
-  var pedEl=document.getElementById('ficha-pedido');
+  // Badge PepsiCo
+  var badgePep = document.getElementById('badge-pep');
+  if (badgePep) {
+    var nFalt = faltantes.length;
+    badgePep.textContent = (9-nFalt)+'/9 OK';
+    badgePep.style.background = nFalt===0?'var(--gr-d)':nFalt<=3?'var(--am-d)':'var(--rd-d)';
+    badgePep.style.color = nFalt===0?'var(--gr-l)':nFalt<=3?'var(--am-l)':'var(--rd-l)';
+  }
+
+  // Badge pedido
+  var badgePed = document.getElementById('badge-pedido');
+  if (badgePed) badgePed.textContent = faltantes.length + ' marcas';
+
+  // Wrap pedido
+  var wrapPed = document.getElementById('wrap-pedido');
+  var pedEl = document.getElementById('ficha-pedido');
   if(faltantes.length){
-    pedSec.style.display='block';
+    if (wrapPed) wrapPed.style.display='block';
     pedEl.innerHTML=faltantes.map(function(f){
       return '<div class="pedido-card">'+
         '<div class="pedido-mk" style="color:'+f.col+'">'+f.mk+'</div>'+
@@ -607,43 +720,43 @@ function verFicha(cid){
       '</div>';
     }).join('');
   } else {
-    pedSec.style.display='none';
+    if (wrapPed) wrapPed.style.display='none';
   }
 
   // Otros proveedores
   var provsDet=(typeof OTROS_PROV_DET!=='undefined'&&OTROS_PROV_DET[cid])||{};
   var todosP=typeof TODOS_PROV_ACTIVOS!=='undefined'?TODOS_PROV_ACTIVOS:Object.keys(provsDet);
-  var provsHtml='';
+  var nActivos=0;
+  var provsHtml='<table class="prov-table">'+
+    '<tr class="prov-thead"><td>Proveedor</td><td>Estado</td>'+
+    '<td style="text-align:center">Mar.</td><td style="text-align:center">Act.</td>'+
+    '<td style="text-align:center">Ofr.</td></tr>';
   todosP.forEach(function(prov,idx){
     var vals=provsDet[prov]||[0,0,0,0];
     var marU=vals[0]||0, marI=vals[1]||0, actU=vals[2]||0, actI=vals[3]||0;
-    var estado, badgeClass, cardClass;
-    if(actI>0){ estado='Activo'; badgeClass='bdg-ok'; cardClass='activo'; }
-    else if(marI>0){ estado='Inactivo'; badgeClass='bdg-falta'; cardClass='inactivo'; }
-    else { estado='Nunca'; badgeClass=''; cardClass='nunca'; }
+    var estado, bdgCls;
+    if(actI>0){ estado='Activo'; bdgCls='bdg-activo'; nActivos++; }
+    else if(marI>0){ estado='Inactivo'; bdgCls='bdg-inactivo'; }
+    else { estado='Nunca'; bdgCls='bdg-nunca'; }
     var col=PROV_COLORS[idx%PROV_COLORS.length];
     var ofrecer=(marI>0&&actI===0)?(marU>0?'+'+marU:'si'):(actI>0?'OK':'-');
     var ofCol=(marI>0&&actI===0)?'var(--am-l)':(actI>0?'var(--gr-l)':'var(--tx3)');
-
-    provsHtml+=
-      '<div class="prov-card '+cardClass+'">'+
-        '<div class="prov-header">'+
-          '<div class="prov-nombre" style="color:'+col+'">'+prov+'</div>'+
-          '<span class="prov-badge '+badgeClass+'" style="'+(badgeClass?'':'background:var(--bg3);color:var(--tx3)')+'">'+estado+'</span>'+
-        '</div>'+
-        (cardClass!=='nunca'?
-          '<div class="prov-datos">'+
-            '<div class="prov-dato"><div class="dato-lbl">Mes ant.</div>'+
-              '<div class="dato-val azul">'+(marU>0?marU+'u':'-')+'</div></div>'+
-            '<div class="prov-dato"><div class="dato-lbl">Mes act.</div>'+
-              '<div class="dato-val '+(actU>0?'verde':'gris')+'">'+(actU>0?actU+'u':'-')+'</div></div>'+
-            '<div class="prov-dato"><div class="dato-lbl">Ofrecer</div>'+
-              '<div class="dato-val" style="color:'+ofCol+'">'+ofrecer+'</div></div>'+
-          '</div>':'')+
-      '</div>';
+    provsHtml+='<tr class="prov-row">'+
+      '<td class="prov-nom" style="color:'+col+'">'+prov+'</td>'+
+      '<td><span class="prov-bdg '+bdgCls+'">'+estado+'</span></td>'+
+      '<td class="prov-uds" style="color:var(--bl-l)">'+(marU>0?marU+'u':'-')+'</td>'+
+      '<td class="prov-uds" style="color:'+(actU>0?'var(--gr-l)':'var(--tx3)')+'">'+(actU>0?actU+'u':'-')+'</td>'+
+      '<td class="prov-ofr" style="color:'+ofCol+'">'+ofrecer+'</td>'+
+    '</tr>';
   });
-  document.getElementById('ficha-provs').innerHTML=provsHtml||
-    '<div style="font-size:12px;color:var(--tx3);padding:12px">Sin datos de otros proveedores</div>';
+  provsHtml+='</table>';
+  document.getElementById('ficha-provs').innerHTML=provsHtml;
+  var badgeProvs=document.getElementById('badge-provs');
+  if(badgeProvs){
+    badgeProvs.textContent=nActivos+' activos';
+    badgeProvs.style.background=nActivos>0?'var(--gr-d)':'var(--bg3)';
+    badgeProvs.style.color=nActivos>0?'var(--gr-l)':'var(--tx3)';
+  }
 
   ir('v-ficha');
 }
