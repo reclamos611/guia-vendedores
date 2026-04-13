@@ -20,7 +20,7 @@
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-size:14px;scroll-behavior:auto}
 
 /* TOPBAR */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,12,16,.98);
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,12,16,.98);
   backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);padding:10px 14px;
   display:flex;align-items:center;gap:10px}
 .logo-pill{background:var(--bl-d);border:1px solid var(--bl);border-radius:20px;
@@ -32,12 +32,12 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
 .tb-date{font-size:10px;color:var(--tx3);font-family:'DM Mono',monospace}
 
 /* VISTAS */
-.vista{display:none;position:fixed;top:0;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg);z-index:10;padding-bottom:60px}
-.vista.activa{display:block}
+.vista{display:none}
+.vista.activa{display:block;position:fixed;top:0;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:10}
 .vista.activa{display:block}
 
 /* ── LOGIN ── */
-#v-login{z-index:20;display:flex;flex-direction:column;align-items:center;
+#v-login{display:flex;flex-direction:column;align-items:center;
   justify-content:center;padding:32px 20px;min-height:100vh;position:relative}
 .login-box{width:100%;max-width:320px}
 .login-logo{text-align:center;margin-bottom:28px}
