@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Guía de Visita · 611 Logística</title>
+<title>Guia de Visita - 611</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -17,946 +17,638 @@
   --pu:#a57af5;--pu-d:#1a0f35;--pu-l:#d4bcff;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-size:14px;overflow-x:hidden}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-size:14px}
 
-/* ── TOP BAR ── */
-.topbar{
-  position:sticky;top:0;z-index:100;
-  background:rgba(10,12,16,.92);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--brd);
-  padding:12px 16px;
-}
-.tb-inner{display:flex;align-items:center;gap:10px}
-.logo-pill{
-  background:var(--bl-d);border:1px solid var(--bl);border-radius:20px;
-  padding:4px 12px;font-size:11px;color:var(--bl-l);font-weight:600;
-  white-space:nowrap;font-family:'DM Mono',monospace
-}
-.tb-title{font-size:15px;font-weight:700;flex:1}
-.tb-date{font-size:10px;color:var(--tx3);font-family:'DM Mono',monospace;text-align:right}
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(10,12,16,.95);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);padding:10px 14px;
+  display:flex;align-items:center;gap:10px}
+.logo-pill{background:var(--bl-d);border:1px solid var(--bl);border-radius:20px;
+  padding:3px 10px;font-size:10px;color:var(--bl-l);font-weight:600;
+  white-space:nowrap;font-family:'DM Mono',monospace}
+.tb-title{font-size:14px;font-weight:700;flex:1}
+.tb-right{text-align:right}
+.tb-vend{font-size:11px;color:var(--bl-l);font-weight:600;font-family:'DM Mono',monospace}
+.tb-date{font-size:10px;color:var(--tx3);font-family:'DM Mono',monospace}
 
-/* ── SEARCH ── */
-.search-wrap{padding:14px 16px 10px}
-.search-box{
-  width:100%;background:var(--bg2);border:1.5px solid var(--brd2);
-  border-radius:12px;padding:12px 16px;font-size:15px;
-  color:var(--tx);font-family:'Sora',sans-serif;outline:none;
-  transition:border-color .15s
-}
-.search-box:focus{border-color:var(--bl);background:var(--bg3)}
-.search-box::placeholder{color:var(--tx3)}
+/* VISTAS */
+.vista{display:none;min-height:100vh;padding-bottom:80px}
+.vista.activa{display:block}
 
-/* ── RESULTADOS DE BÚSQUEDA ── */
-.search-results{padding:0 16px 10px}
-.result-item{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 14px;background:var(--bg2);border:1px solid var(--brd);
-  border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .12s
-}
-.result-item:active{background:var(--bg3);transform:scale(.99)}
-.ri-code{font-size:11px;color:var(--tx3);font-family:'DM Mono',monospace;min-width:40px}
+/* ── LOGIN ── */
+#v-login{display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:32px 20px;min-height:100vh}
+.login-box{width:100%;max-width:320px}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo-icon{display:inline-flex;align-items:center;justify-content:center;
+  width:60px;height:60px;border-radius:18px;background:var(--bl-d);
+  border:1.5px solid var(--bl);margin-bottom:12px;font-size:26px}
+.login-titulo{font-size:22px;font-weight:700}
+.login-sub{font-size:11px;color:var(--tx3);margin-top:4px;font-family:'DM Mono',monospace}
+.login-form{background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:22px}
+.campo-lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:5px;font-family:'DM Mono',monospace}
+.campo-input{width:100%;background:var(--bg3);border:1.5px solid var(--brd2);
+  color:var(--tx);padding:12px 14px;border-radius:10px;font-size:17px;
+  font-family:'DM Mono',monospace;outline:none;transition:border-color .15s;margin-bottom:14px}
+.campo-input:focus{border-color:var(--bl)}
+.btn-login{width:100%;padding:14px;background:var(--bl);border:none;border-radius:10px;
+  color:#fff;font-size:15px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer}
+.login-error{display:none;color:var(--rd-l);font-size:12px;background:var(--rd-d);
+  border:1px solid var(--rd);border-radius:8px;padding:8px 12px;margin-bottom:12px;text-align:center}
+.login-hint{text-align:center;margin-top:14px;font-size:11px;color:var(--tx3)}
+
+/* ── DASHBOARD ── */
+#v-dashboard{padding:12px 14px 80px}
+.dash-welcome{background:var(--bg2);border:1px solid var(--brd);border-radius:14px;
+  padding:14px;margin-bottom:12px}
+.dash-nom{font-size:19px;font-weight:700;margin-bottom:6px}
+.dash-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.pill{padding:3px 10px;border-radius:20px;font-size:11px;border:1px solid var(--brd2);
+  color:var(--tx2);background:var(--bg3)}
+.pill-bl{background:var(--bl-d);border-color:var(--bl);color:var(--bl-l)}
+.pill-gr{background:var(--gr-d);border-color:var(--gr);color:var(--gr-l)}
+.pill-am{background:var(--am-d);border-color:var(--am);color:var(--am-l)}
+.pill-rd{background:var(--rd-d);border-color:var(--rd);color:var(--rd-l)}
+
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.kpi-card{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:12px}
+.kpi-lbl{font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.kpi-val{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
+.kpi-sub{font-size:10px;color:var(--tx3);margin-top:3px}
+
+.cob-section{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;
+  padding:12px;margin-bottom:12px}
+.sec-lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.cob-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cob-bar-mk{font-size:11px;font-weight:600;min-width:60px}
+.cob-bar-track{flex:1;background:var(--bg4);border-radius:3px;height:6px;overflow:hidden}
+.cob-bar-fill{height:100%;border-radius:3px}
+.cob-bar-pct{font-size:10px;font-weight:700;font-family:'DM Mono',monospace;min-width:30px;text-align:right}
+
+.btn-buscar{width:100%;padding:15px;background:var(--bl);border:none;border-radius:12px;
+  color:#fff;font-size:15px;font-weight:600;font-family:'Sora',sans-serif;
+  cursor:pointer;margin-bottom:8px}
+.btn-sec{width:100%;padding:11px;background:none;border:1px solid var(--brd2);
+  border-radius:10px;color:var(--tx3);font-size:13px;font-family:'Sora',sans-serif;cursor:pointer}
+
+/* ── BUSQUEDA ── */
+#v-busqueda{padding:10px 14px 80px}
+.back-btn{display:flex;align-items:center;gap:6px;padding:8px 0 10px;
+  color:var(--tx2);font-size:12px;cursor:pointer;background:none;border:none;
+  font-family:'Sora',sans-serif}
+.search-input{width:100%;background:var(--bg2);border:1.5px solid var(--brd2);
+  border-radius:12px;padding:12px 14px;font-size:15px;color:var(--tx);
+  font-family:'Sora',sans-serif;outline:none;transition:border-color .15s;margin-bottom:10px}
+.search-input:focus{border-color:var(--bl)}
+.search-results{display:flex;flex-direction:column;gap:6px}
+.result-item{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--bg2);border:1px solid var(--brd);border-radius:10px;cursor:pointer}
+.result-item:active{background:var(--bg3)}
+.ri-cod{font-size:10px;color:var(--tx3);font-family:'DM Mono',monospace;min-width:38px}
 .ri-nom{font-size:13px;font-weight:500;flex:1}
 .ri-loc{font-size:11px;color:var(--tx3)}
-.ri-cob{
-  font-size:11px;font-weight:700;font-family:'DM Mono',monospace;
-  padding:3px 8px;border-radius:20px;
-}
+.ri-cob{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700;
+  font-family:'DM Mono',monospace}
 .cob-ok{background:var(--gr-d);color:var(--gr-l)}
 .cob-med{background:var(--am-d);color:var(--am-l)}
 .cob-bad{background:var(--rd-d);color:var(--rd-l)}
 
 /* ── FICHA CLIENTE ── */
-.ficha{display:none;padding:0 0 80px}
+#v-ficha{padding:0 0 80px}
+.ficha-topbar{padding:10px 14px;display:flex;align-items:center;gap:8px}
+.back-ficha{background:none;border:1px solid var(--brd2);border-radius:8px;
+  padding:6px 12px;color:var(--tx2);font-size:12px;font-family:'Sora',sans-serif;cursor:pointer}
 
-/* Alerta fuera de zona */
-.alerta-zona{
-  margin:0 16px 12px;padding:12px 16px;
-  border-radius:12px;display:flex;align-items:center;gap:10px;
-}
-.az-warn{background:var(--am-d);border:1px solid var(--am);color:var(--am-l)}
-.az-ok{background:var(--gr-d);border:1px solid var(--gr);color:var(--gr-l)}
-.az-icon{font-size:20px;flex-shrink:0}
-.az-text{font-size:12px;line-height:1.5;font-weight:500}
+/* Alerta zona */
+.zona-alerta{margin:0 14px 10px;padding:10px 14px;border-radius:10px;
+  display:flex;align-items:flex-start;gap:8px}
+.zona-warn{background:var(--am-d);border:1px solid var(--am);color:var(--am-l)}
+.zona-ok{background:var(--gr-d);border:1px solid var(--gr);color:var(--gr-l)}
+.zona-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.zona-txt{font-size:12px;line-height:1.5;font-weight:500}
 
 /* Header cliente */
-.cli-header{
-  margin:0 16px 14px;padding:16px;
-  background:var(--bg2);border:1px solid var(--brd);border-radius:14px
-}
-.cli-nom{font-size:18px;font-weight:700;margin-bottom:4px}
-.cli-dir{font-size:12px;color:var(--tx2);margin-bottom:8px}
-.cli-meta{display:flex;gap:8px;flex-wrap:wrap}
-.pill{
-  padding:3px 10px;border-radius:20px;font-size:11px;
-  background:var(--bg3);border:1px solid var(--brd2);color:var(--tx2)
-}
-.pill-bl{background:var(--bl-d);border-color:var(--bl);color:var(--bl-l)}
-.pill-gr{background:var(--gr-d);border-color:var(--gr);color:var(--gr-l)}
-.pill-am{background:var(--am-d);border-color:var(--am);color:var(--am-l)}
-.pill-rd{background:var(--rd-d);border-color:var(--rd);color:var(--rd-l)}
-.pill-pu{background:var(--pu-d);border-color:var(--pu);color:var(--pu-l)}
+.cli-head{margin:0 14px 10px;background:var(--bg2);border:1px solid var(--brd);
+  border-radius:12px;padding:14px}
+.cli-nom{font-size:17px;font-weight:700;margin-bottom:3px}
+.cli-dir{font-size:11px;color:var(--tx2);margin-bottom:8px}
+.cli-pills{display:flex;gap:6px;flex-wrap:wrap}
 
-/* KPIs */
-.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px 14px}
-.kpi-card{
-  background:var(--bg2);border:1px solid var(--brd);border-radius:12px;
-  padding:12px 14px;
-}
-.kpi-lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.kpi-val{font-size:22px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
-.kpi-sub{font-size:11px;color:var(--tx3);margin-top:3px}
+/* KPIs cliente */
+.cli-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 14px 10px}
 
-/* Sección */
-.sec-title{
-  padding:0 16px 8px;font-size:11px;font-weight:600;
-  color:var(--tx3);text-transform:uppercase;letter-spacing:.08em
-}
+/* Sección de marcas - NUEVO DISEÑO VERTICAL */
+.seccion{margin:0 14px 10px}
+.seccion-titulo{font-size:10px;color:var(--tx3);text-transform:uppercase;
+  letter-spacing:.07em;font-weight:600;margin-bottom:8px}
 
-/* Tabla de marcas */
-.marcas-table{margin:0 10px 14px;border-radius:10px;overflow:hidden;border:1px solid var(--brd)}
-.mk-row{
-  display:grid;grid-template-columns:72px 50px 42px 42px 42px;
-  align-items:center;padding:6px 8px;border-bottom:1px solid var(--brd);
-  background:var(--bg2);gap:3px
-}
-.mk-row:last-child{border-bottom:none}
-.mk-row.mk-header{
-  background:var(--bg3);font-size:10px;color:var(--tx3);
-  text-transform:uppercase;letter-spacing:.06em;font-weight:500;
-  font-family:'DM Mono',monospace;padding:5px 8px
-}
-.mk-row.mk-falt{background:rgba(245,79,79,.04)}
-.mk-row.mk-ok{opacity:.7}
-.mk-nom{font-size:12px;font-weight:600}
-.mk-uds{
-  font-size:12px;font-family:'DM Mono',monospace;font-weight:600;text-align:center
-}
-.mk-badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:2px 5px;border-radius:20px;font-size:9px;font-weight:700;
-  font-family:'DM Mono',monospace;
-}
-.bOK{background:var(--gr-d);color:var(--gr-l)}
-.bFALT{background:var(--rd-d);color:var(--rd-l)}
-.bNEUT{background:var(--bg4);color:var(--tx3)}
-.mk-sug{
-  font-size:12px;font-weight:700;font-family:'DM Mono',monospace;
-  text-align:center;color:var(--am-l)
-}
-.mk-sug.sug-zero{color:var(--tx3);font-size:11px}
-.mk-hist{font-size:11px;font-family:'DM Mono',monospace;text-align:center;color:var(--bl-l)}
+/* Tarjeta de marca */
+.marca-card{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;
+  margin-bottom:6px;overflow:hidden}
+.marca-card.ok{border-left:3px solid var(--gr)}
+.marca-card.falta{border-left:3px solid var(--rd)}
+.marca-card.cerca{border-left:3px solid var(--am)}
 
-/* Resumen pedido */
-.pedido-box{
-  margin:0 16px 14px;background:var(--bg2);border:1px solid var(--brd);
-  border-radius:14px;overflow:hidden
-}
-.ped-header{
-  padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--brd);
-  font-size:12px;font-weight:600;color:var(--tx2);
-  display:flex;justify-content:space-between;align-items:center
-}
-.ped-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px;border-bottom:1px solid var(--brd)
-}
-.ped-row:last-child{border-bottom:none}
-.ped-mk{font-size:13px;font-weight:600}
-.ped-vals{display:flex;gap:16px;align-items:center}
-.ped-min{
-  font-size:13px;font-weight:700;font-family:'DM Mono',monospace;
-  color:var(--am-l);min-width:40px;text-align:right
-}
-.ped-hist{
-  font-size:12px;font-family:'DM Mono',monospace;
-  color:var(--bl-l);min-width:40px;text-align:right
-}
-.ped-lbl{font-size:9px;color:var(--tx3);display:block;text-align:right}
-.ped-empty{padding:20px;text-align:center;color:var(--gr-l);font-size:13px}
+.marca-header{display:flex;align-items:center;padding:10px 12px;gap:10px}
+.marca-nombre{font-size:13px;font-weight:700;flex:1}
+.marca-badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;
+  font-family:'DM Mono',monospace}
+.bdg-ok{background:var(--gr-d);color:var(--gr-l)}
+.bdg-falta{background:var(--rd-d);color:var(--rd-l)}
+.bdg-cerca{background:var(--am-d);color:var(--am-l)}
 
-/* Barra de progreso cobertura */
-.cob-bar{
-  height:4px;background:var(--bg4);border-radius:2px;
-  margin:8px 0 2px;overflow:hidden
-}
-.cob-fill{height:100%;border-radius:2px;transition:width .3s}
+.marca-datos{display:flex;border-top:1px solid var(--brd);
+  divide-x:var(--brd)}
+.marca-dato{flex:1;padding:7px 10px;text-align:center;border-right:1px solid var(--brd)}
+.marca-dato:last-child{border-right:none}
+.dato-lbl{font-size:9px;color:var(--tx3);text-transform:uppercase;
+  letter-spacing:.05em;margin-bottom:3px}
+.dato-val{font-size:14px;font-weight:700;font-family:'DM Mono',monospace}
+.dato-val.verde{color:var(--gr-l)}
+.dato-val.rojo{color:var(--rd-l)}
+.dato-val.amarillo{color:var(--am-l)}
+.dato-val.gris{color:var(--tx3)}
+.dato-val.azul{color:var(--bl-l)}
 
-/* Btn volver */
-.btn-back{
-  display:flex;align-items:center;gap:8px;
-  margin:0 16px 14px;padding:12px 16px;
-  background:var(--bg2);border:1px solid var(--brd2);border-radius:12px;
-  color:var(--tx2);font-size:13px;cursor:pointer;transition:all .12s;
-  font-family:'Sora',sans-serif;width:calc(100%-32px)
-}
-.btn-back:active{background:var(--bg3)}
+/* Pedido sugerido */
+.pedido-card{background:var(--bg2);border:1px solid var(--brd);
+  border-radius:10px;margin-bottom:6px;padding:10px 12px;
+  display:flex;align-items:center;gap:10px}
+.pedido-mk{font-size:13px;font-weight:700;flex:1}
+.pedido-vals{display:flex;gap:10px}
+.pedido-dato{text-align:center}
+.pedido-num{font-size:15px;font-weight:700;font-family:'DM Mono',monospace;display:block}
+.pedido-sub{font-size:9px;color:var(--tx3);display:block}
 
-/* Empty state */
+/* Proveedor card */
+.prov-card{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;
+  margin-bottom:6px;overflow:hidden}
+.prov-card.activo{border-left:3px solid var(--gr)}
+.prov-card.inactivo{border-left:3px solid var(--rd)}
+.prov-card.nunca{border-left:3px solid var(--brd)}
+
+.prov-header{display:flex;align-items:center;padding:10px 12px;gap:10px}
+.prov-nombre{font-size:12px;font-weight:600;flex:1}
+.prov-badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;
+  font-family:'DM Mono',monospace}
+.prov-datos{display:flex;border-top:1px solid var(--brd)}
+.prov-dato{flex:1;padding:7px 10px;text-align:center;border-right:1px solid var(--brd)}
+.prov-dato:last-child{border-right:none}
+
+/* EMPTY */
 .empty{padding:40px 20px;text-align:center}
-.empty-icon{font-size:48px;margin-bottom:14px}
-.empty-title{font-size:16px;font-weight:600;margin-bottom:6px}
-.empty-desc{font-size:13px;color:var(--tx3);line-height:1.6}
-
-/* Colores por marca */
-.mk-Lays{color:#f5e642}
-.mk-Doritos{color:#f5a623}
-.mk-Cheetos{color:#f57d23}
-.mk-3D{color:#a57af5}
-.mk-Pep{color:#4f8ef5}
-.mk-Pehuamar{color:#2dd98a}
-.mk-Twistos{color:#f54f7d}
-.mk-Tostitos{color:#f5c842}
-.mk-Quaker{color:#c07af5}
+.empty-ico{font-size:40px;margin-bottom:12px}
+.empty-tit{font-size:15px;font-weight:600;margin-bottom:5px}
+.empty-desc{font-size:12px;color:var(--tx3);line-height:1.6}
 
 .mono{font-family:'DM Mono',monospace}
 </style>
 </head>
 <body>
 
-
-<!-- LOGIN -->
-<div id="vista-login" style="
-  position:fixed;inset:0;background:var(--bg);z-index:999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:32px 24px;
-">
-  <div style="width:100%;max-width:340px">
-    <!-- Logo -->
-    <div style="text-align:center;margin-bottom:32px">
-      <div style="display:inline-flex;align-items:center;justify-content:center;
-        width:64px;height:64px;border-radius:20px;background:var(--bl-d);
-        border:1.5px solid var(--bl);margin-bottom:14px">
-        <span style="font-size:28px">📦</span>
-      </div>
-      <div style="font-size:22px;font-weight:700;color:var(--tx)">Guía de Visita</div>
-      <div style="font-size:12px;color:var(--tx3);margin-top:4px;font-family:DM Mono,monospace">611 Logística · PepsiCo</div>
-    </div>
-
-    <!-- Formulario -->
-    <div style="background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:24px">
-      <div style="margin-bottom:16px">
-        <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;
-          margin-bottom:6px;font-family:DM Mono,monospace">Número de vendedor</div>
-        <input type="number" id="login-vend" inputmode="numeric"
-          placeholder="Ej: 51"
-          style="width:100%;background:var(--bg3);border:1.5px solid var(--brd2);
-          color:var(--tx);padding:13px 16px;border-radius:10px;font-size:18px;
-          font-family:DM Mono,monospace;outline:none;transition:border-color .15s"
-          onfocus="this.style.borderColor='var(--bl)'"
-          onblur="this.style.borderColor='var(--brd2)'"
-          onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
-      </div>
-      <div style="margin-bottom:20px">
-        <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;
-          margin-bottom:6px;font-family:DM Mono,monospace">Contraseña</div>
-        <input type="password" id="login-pass" inputmode="numeric"
-          placeholder="••••"
-          style="width:100%;background:var(--bg3);border:1.5px solid var(--brd2);
-          color:var(--tx);padding:13px 16px;border-radius:10px;font-size:18px;
-          font-family:DM Mono,monospace;outline:none;transition:border-color .15s"
-          onfocus="this.style.borderColor='var(--bl)'"
-          onblur="this.style.borderColor='var(--brd2)'"
-          onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <div id="login-error" style="display:none;color:var(--rd-l);font-size:12px;
-        background:var(--rd-d);border:1px solid var(--rd);border-radius:8px;
-        padding:8px 12px;margin-bottom:12px;text-align:center"></div>
-      <button onclick="doLogin()" style="
-        width:100%;padding:14px;background:var(--bl);border:none;
-        border-radius:10px;color:#fff;font-size:15px;font-weight:600;
-        font-family:Sora,sans-serif;cursor:pointer;transition:opacity .15s"
-        onmousedown="this.style.opacity='.85'"
-        onmouseup="this.style.opacity='1'"
-        ontouchstart="this.style.opacity='.85'"
-        ontouchend="this.style.opacity='1'">
-        Ingresar
-      </button>
-    </div>
-    <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--tx3)">
-      Contraseña: tu número repetido dos veces
-    </div>
-  </div>
-</div>
-
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="tb-inner">
-    <div class="logo-pill">611 · PEP</div>
-    <div class="tb-title">Guía de Visita</div>
-    <div style="text-align:right">
-    <div id="tb-vend-nom" onclick="mostrarResumenBtn()" style="display:none;font-size:11px;color:var(--bl-l);font-weight:600;font-family:DM Mono,monospace;cursor:pointer;text-decoration:underline"></div>
-    <div class="tb-date" id="hoy-date"></div>
-  </div>
+  <div class="logo-pill">611 PEP</div>
+  <div class="tb-title">Guia de Visita</div>
+  <div class="tb-right">
+    <div class="tb-vend" id="tb-vend" style="display:none"></div>
+    <div class="tb-date" id="tb-fecha"></div>
   </div>
 </div>
 
-<!-- BÚSQUEDA -->
-<!-- RESUMEN VENDEDOR (post-login) -->
-<div id="vista-resumen" style="display:none;padding:0 0 80px">
-  <div style="padding:14px 16px 8px">
-    <div id="res-saludo" style="font-size:18px;font-weight:700;margin-bottom:2px"></div>
-    <div id="res-fecha" style="font-size:11px;color:var(--tx3);font-family:DM Mono,monospace;margin-bottom:14px"></div>
-  </div>
-
-  <!-- KPIs mes actual -->
-  <div style="padding:0 16px 8px;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Abril 2026 (mes actual)</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 14px" id="res-kpis-abr"></div>
-
-  <!-- KPIs mes anterior -->
-  <div style="padding:0 16px 8px;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Marzo 2026 (mes anterior - cierre)</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 14px" id="res-kpis-mar"></div>
-
-  <!-- Objetivo por categoria -->
-  <div style="padding:0 16px 8px;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Avance vs objetivo (abril)</div>
-  <div style="margin:0 16px 14px;background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px" id="res-cats"></div>
-
-  <!-- Boton ir a buscar -->
-  <div style="padding:0 16px">
-    <button onclick="irABusqueda()" style="
-      width:100%;padding:15px;background:var(--bl);border:none;
-      border-radius:12px;color:#fff;font-size:15px;font-weight:600;
-      font-family:Sora,sans-serif;cursor:pointer">
-      Buscar cliente
-    </button>
-  </div>
-</div>
-
-
-<!-- DASHBOARD VENDEDOR (post-login) -->
-<div id="vista-dashboard" style="display:none">
-  <div style="padding:14px 16px 0">
-
-    <!-- Bienvenida -->
-    <div style="background:var(--bg2);border:1px solid var(--brd);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Bienvenido</div>
-      <div id="dash-nom-vend" style="font-size:20px;font-weight:700;color:var(--tx);margin-bottom:8px"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap" id="dash-pills"></div>
+<!-- V1: LOGIN -->
+<div id="v-login" class="vista activa">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">📦</div>
+      <div class="login-titulo">Guia de Visita</div>
+      <div class="login-sub">611 Logistica · PepsiCo</div>
     </div>
-
-    <!-- KPIs -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px" id="dash-kpis"></div>
-
-    <!-- Barras de cobertura promedio -->
-    <div style="background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px;margin-bottom:14px">
-      <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Cobertura de tus clientes (marzo)</div>
-      <div id="dash-cob-bars"></div>
+    <div class="login-form">
+      <div class="campo-lbl">Numero de vendedor</div>
+      <input type="number" id="inp-vend" class="campo-input" placeholder="Ej: 51"
+        inputmode="numeric"
+        onkeydown="if(event.key==='Enter')document.getElementById('inp-pass').focus()">
+      <div class="campo-lbl">Contrasena</div>
+      <input type="password" id="inp-pass" class="campo-input" placeholder="****"
+        inputmode="numeric"
+        onkeydown="if(event.key==='Enter')doLogin()">
+      <div class="login-error" id="login-err"></div>
+      <button class="btn-login" onclick="doLogin()">Ingresar</button>
     </div>
-
-    <!-- Boton ir a busqueda -->
-    <button onclick="irABusqueda()" style="
-      width:100%;padding:16px;background:var(--bl);border:none;border-radius:12px;
-      color:#fff;font-size:15px;font-weight:600;font-family:Sora,sans-serif;
-      cursor:pointer;margin-bottom:10px">
-      Buscar cliente
-    </button>
-    <button onclick="doLogout()" style="
-      width:100%;padding:12px;background:none;border:1px solid var(--brd2);border-radius:12px;
-      color:var(--tx3);font-size:13px;font-family:Sora,sans-serif;cursor:pointer">
-      Cerrar sesion
-    </button>
+    <div class="login-hint">Contrasena: tu numero repetido dos veces</div>
   </div>
 </div>
 
-<div id="vista-busqueda">
-  <div style="padding:10px 16px 0;display:flex;align-items:center;gap:10px">
-    <button onclick="volverDashboard()" style="padding:6px 12px;background:none;border:1px solid var(--brd2);border-radius:8px;color:var(--tx2);font-size:12px;font-family:Sora,sans-serif;cursor:pointer">&#8592; Inicio</button>
-    <div style="font-size:12px;color:var(--tx2)" id="search-vend-label"></div>
+<!-- V2: DASHBOARD -->
+<div id="v-dashboard" class="vista">
+  <div class="dash-welcome">
+    <div class="dash-nom" id="dash-nom"></div>
+    <div class="dash-pills" id="dash-pills"></div>
   </div>
-<div class="search-wrap">
-    <input type="search" class="search-box" id="search-input"
-      placeholder="🔍  Código o nombre del cliente..."
-      oninput="buscar(this.value)" autocomplete="off" inputmode="text">
+  <div class="kpi-grid" id="dash-kpis"></div>
+  <div class="cob-section">
+    <div class="sec-lbl">Cobertura de tus clientes (mes anterior)</div>
+    <div id="dash-cob"></div>
   </div>
-  <div class="search-results" id="search-results">
+  <button class="btn-buscar" onclick="irBusqueda()">Buscar cliente</button>
+  <button class="btn-sec" onclick="doLogout()">Cerrar sesion</button>
+</div>
+
+<!-- V3: BUSQUEDA -->
+<div id="v-busqueda" class="vista">
+  <button class="back-btn" onclick="irDashboard()">&#8592; Inicio</button>
+  <div style="font-size:11px;color:var(--tx2);margin-bottom:8px" id="busq-vend-lbl"></div>
+  <input type="search" id="busq-input" class="search-input"
+    placeholder="Codigo o nombre del cliente..."
+    oninput="buscar(this.value)" autocomplete="off">
+  <div class="search-results" id="busq-results">
     <div class="empty">
-      <div class="empty-icon">📋</div>
-      <div class="empty-title">Buscá un cliente</div>
-      <div class="empty-desc">Ingresá el código numérico<br>o el nombre del cliente</div>
+      <div class="empty-ico">🔍</div>
+      <div class="empty-tit">Busca un cliente</div>
+      <div class="empty-desc">Ingresa el codigo o nombre</div>
     </div>
   </div>
 </div>
 
-<!-- FICHA CLIENTE -->
-<div id="vista-ficha" class="ficha">
-  <div style="padding:12px 16px 4px">
-    <button class="btn-back" onclick="volverBusqueda()">
-      ← Volver a la búsqueda
-    </button>
+<!-- V4: FICHA CLIENTE -->
+<div id="v-ficha" class="vista">
+  <div class="ficha-topbar">
+    <button class="back-ficha" onclick="irBusqueda()">&#8592; Busqueda</button>
+    <button class="back-ficha" onclick="irDashboard()" style="margin-left:auto">Inicio</button>
+  </div>
+  <div id="ficha-alerta-zona"></div>
+  <div class="cli-head" id="ficha-head"></div>
+  <div class="cli-kpis" id="ficha-kpis"></div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">PepsiCo - Marcas</div>
+    <div id="ficha-marcas"></div>
   </div>
 
-  <!-- Alerta zona -->
-  <div id="alerta-zona"></div>
+  <div class="seccion" id="seccion-pedido" style="display:none">
+    <div class="seccion-titulo">Pedido sugerido (marcas sin cobertura)</div>
+    <div id="ficha-pedido"></div>
+  </div>
 
-  <!-- Header -->
-  <div class="cli-header" id="cli-header"></div>
-
-  <!-- KPIs -->
-  <div class="kpi-row" id="cli-kpis"></div>
-
-  <!-- Tabla marcas -->
-  <div class="sec-title">Historial marzo · Cobertura · Sugerido</div>
-  <div class="marcas-table" id="marcas-table"></div>
-
-  <!-- Pedido sugerido -->
-  <div class="sec-title" style="margin-top:6px">Pedido sugerido (marcas sin cobertura)</div>
-  <div class="pedido-box" id="pedido-box"></div>
-
-  <!-- Otros proveedores -->
-  <div id="otros-prov-section"></div>
+  <div class="seccion">
+    <div class="seccion-titulo">Otros proveedores</div>
+    <div id="ficha-provs"></div>
+  </div>
 </div>
 
 <script>
-// -- DATOS -------------------------------------------------------------------
-const MARCAS = ['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker'];
-const DIAS_SEM = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
-const VEND_NOMBRES = {
-  31:'Villalba',32:'Olivares',33:'Ordonez',34:'Baldo',35:'Bazan',
-  36:'Neira',37:'Scorrani',38:'Martinez M.',39:'Merlo',
-  41:'Cisterna',42:'Restivo',43:'Rueda Cujar',44:'Bernahola',45:'Romero',
-  46:'Ochoa',47:'Caceres',48:'Salde',49:'Moreira',51:'Gonzalez C.',
-  52:'Martinez D.',53:'Carrizo',54:'Moreno',55:'Pulido',56:'Rivara',
-  57:'Diaz',58:'Gonzalez M.',59:'Avendano'
+// -- CONSTANTES ------------------------------------------------------------
+var MARCAS = ['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker'];
+var MK_COLORS = {Lays:'#f5e642',Doritos:'#f5a623',Cheetos:'#f57d23','3D':'#a57af5',
+  Pep:'#4f8ef5',Pehuamar:'#2dd98a',Twistos:'#f54f7d',Tostitos:'#f5c842',Quaker:'#c07af5'};
+var PROV_COLORS = ['#4d8ef0','#f0a500','#2ecc8a','#a07cf0','#f04d4d','#f57d23',
+  '#4dcef0','#c07af5','#f5c842','#888780','#f54f7d','#2dd98a','#ffd080','#a0c0ff'];
+var DIAS_SEM = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var VEND_NOMBRES = {
+  31:'VILLALBA MAX.',32:'OLIVARES EDGAR',33:'ORDOEZ ISMAEL',34:'BALDO JULIAN',
+  35:'BAZAN LUCIANO',36:'NEIRA NAHUEL',37:'SCORRANI IGN.',38:'MARTINEZ MAU.',
+  39:'MERLO SEBASTIAN',41:'CISTERNA DIEGO',42:'RESTIVO VALERIA',43:'RUEDA CUJAR',
+  44:'BERNAHOLA AGU.',45:'ROMERO DIANA',46:'OCHOA ROXANA',47:'CACERES YANINA',
+  48:'SALDE MARCELA',49:'MOREIRA TOBIAS',51:'GONZALEZ CAND.',52:'MARTINEZ DIEGO',
+  53:'CARRIZO EZE.',54:'MORENO JOHAN',55:'PULIDO EFRAIM',56:'RIVARA LORENZO',
+  57:'DIAZ OMAR',58:'GONZALEZ MARC.',59:'AVENDAO SERGIO'
 };
+var VEND_VALIDOS = [31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,
+  51,52,53,54,55,56,57,58,59];
+var MESA_COLORS = {300:'#4d8ef0',400:'#2ecc8a',500:'#f0a500',600:'#a07cf0'};
 
-// -- FECHA ACTUAL ---------------------------------------------------------
-const HOY = new Date();
-const HOY_DIA = DIAS_SEM[HOY.getDay()]; // 0=Dom
-const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-document.getElementById('hoy-date').textContent =
+// -- ESTADO ----------------------------------------------------------------
+var VEND_ACTIVO = null;
+var HOY = new Date();
+var HOY_DIA = DIAS_SEM[HOY.getDay()];
+var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+// Fecha en topbar
+document.getElementById('tb-fecha').textContent =
   HOY_DIA + ' ' + HOY.getDate() + '/' + MESES[HOY.getMonth()];
 
-// -- BUSQUEDA -------------------------------------------------------------
-let searchTimer = null;
-
-function buscar(q) {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => _buscar(q.trim()), 200);
+// -- UTILS -----------------------------------------------------------------
+function fmtN(v){ return Math.round(v||0).toLocaleString('es-AR'); }
+function fmtM(v){
+  if(!v) return '$0';
+  if(v>=1e9) return '$'+(v/1e9).toFixed(1)+'B';
+  if(v>=1e6) return '$'+(v/1e6).toFixed(1)+'M';
+  if(v>=1e3) return '$'+(v/1e3).toFixed(0)+'k';
+  return '$'+v;
+}
+function ir(id){
+  ['v-login','v-dashboard','v-busqueda','v-ficha'].forEach(function(v){
+    var el = document.getElementById(v);
+    if(el) el.classList.remove('activa');
+  });
+  var target = document.getElementById(id);
+  if(target){ target.classList.add('activa'); window.scrollTo(0,0); }
 }
 
-function _buscar(q) {
-  const el = document.getElementById('search-results');
-  if (!q || q.length < 2) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon"></div><div class="empty-title">Busca un cliente</div><div class="empty-desc">Ingresa el codigo numerico<br>o el nombre del cliente</div></div>';
-    return;
+// -- LOGIN -----------------------------------------------------------------
+function doLogin(){
+  var vend = parseInt(document.getElementById('inp-vend').value||'0');
+  var pass = document.getElementById('inp-pass').value.trim();
+  var errEl = document.getElementById('login-err');
+  if(!vend || VEND_VALIDOS.indexOf(vend)<0){
+    errEl.textContent='Numero de vendedor invalido'; errEl.style.display='block'; return;
   }
-  if (typeof GUIA_DATA === 'undefined') {
-    el.innerHTML = '<div class="empty"><div class="empty-title" style="color:var(--rd-l)">Sin datos cargados</div><div class="empty-desc">Carga el archivo de datos primero</div></div>';
-    return;
+  if(pass !== String(vend)+String(vend)){
+    errEl.textContent='Contrasena incorrecta'; errEl.style.display='block'; return;
   }
-  const ql = q.toLowerCase();
-  const esNum = /^\d+$/.test(q);
-  const results = [];
-  for (const [cid, d] of Object.entries(GUIA_DATA)) {
-    if (!clienteDelVendedor(d)) continue;
-    if (esNum) {
-      if (cid.startsWith(q)) results.push([cid,d]);
-    } else {
-      if (d.n.toLowerCase().includes(ql) || d.l.toLowerCase().includes(ql))
-        results.push([cid,d]);
+  errEl.style.display='none';
+  VEND_ACTIVO = vend;
+  var tbV = document.getElementById('tb-vend');
+  tbV.textContent = VEND_NOMBRES[vend]||'V'+vend;
+  tbV.style.display='block';
+  renderDashboard();
+  ir('v-dashboard');
+}
+
+function doLogout(){
+  VEND_ACTIVO=null;
+  document.getElementById('tb-vend').style.display='none';
+  document.getElementById('inp-vend').value='';
+  document.getElementById('inp-pass').value='';
+  ir('v-login');
+}
+
+// -- DASHBOARD -------------------------------------------------------------
+function renderDashboard(){
+  var v = VEND_ACTIVO;
+  var nom = VEND_NOMBRES[v]||'V'+v;
+  var s = (typeof VEND_STATS!=='undefined'&&VEND_STATS[String(v)])||null;
+  var mesa=0;
+  if(typeof GUIA_DATA!=='undefined'){
+    for(var cid in GUIA_DATA){ if(GUIA_DATA[cid].v===v){mesa=GUIA_DATA[cid].m;break;} }
+  }
+  var mc = MESA_COLORS[mesa]||'#888';
+
+  document.getElementById('dash-nom').textContent = nom;
+  document.getElementById('dash-pills').innerHTML =
+    '<span class="pill pill-bl">Mesa '+mesa+'</span>' +
+    '<span class="pill">V'+v+'</span>' +
+    '<span class="pill">'+HOY_DIA+'</span>';
+
+  if(s){
+    document.getElementById('dash-kpis').innerHTML = [
+      {lbl:'Cartera',val:fmtN(s.cart),sub:'clientes asignados',col:'var(--bl-l)'},
+      {lbl:'CCC mes ant.',val:s.pcc_m+'%',sub:fmtN(s.ccc_m)+' clientes',col:s.pcc_m>=60?'var(--gr-l)':s.pcc_m>=40?'var(--am-l)':'var(--rd-l)'},
+      {lbl:'CCC mes act.',val:s.pcc_a+'%',sub:fmtN(s.ccc_a)+' clientes',col:s.pcc_a>=20?'var(--gr-l)':s.pcc_a>=10?'var(--am-l)':'var(--rd-l)'},
+      {lbl:'Cob. completa',val:fmtN(s.cob9),sub:'con 9 marcas',col:'var(--pu-l)'},
+    ].map(function(k){
+      return '<div class="kpi-card"><div class="kpi-lbl">'+k.lbl+'</div>'+
+        '<div class="kpi-val" style="color:'+k.col+'">'+k.val+'</div>'+
+        '<div class="kpi-sub">'+k.sub+'</div></div>';
+    }).join('');
+  }
+
+  // Cobertura por marca
+  var mkCob=[0,0,0,0,0,0,0,0,0], totCli=0;
+  if(typeof GUIA_DATA!=='undefined'){
+    for(var cid2 in GUIA_DATA){
+      var d2=GUIA_DATA[cid2];
+      if(d2.v!==v) continue;
+      totCli++;
+      for(var mi=0;mi<9;mi++){ if(d2.u[mi]>=3) mkCob[mi]++; }
     }
-    if (results.length >= 20) break;
   }
+  var cobHtml='';
+  for(var mi=0;mi<MARCAS.length;mi++){
+    var pct=totCli?Math.round(mkCob[mi]/totCli*100):0;
+    var col=pct>=70?'var(--gr)':pct>=50?'var(--am)':'var(--rd)';
+    cobHtml+='<div class="cob-bar-row">'+
+      '<div class="cob-bar-mk" style="color:'+MK_COLORS[MARCAS[mi]]+'">'+MARCAS[mi]+'</div>'+
+      '<div class="cob-bar-track"><div class="cob-bar-fill" style="width:'+pct+'%;background:'+col+'"></div></div>'+
+      '<div class="cob-bar-pct" style="color:'+col+'">'+pct+'%</div>'+
+    '</div>';
+  }
+  document.getElementById('dash-cob').innerHTML = cobHtml;
+}
 
-  if (!results.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon"></div><div class="empty-title">Sin resultados</div><div class="empty-desc">No se encontro "'+q+'"<br>Proba con codigo o nombre completo</div></div>';
+function irBusqueda(){
+  ir('v-busqueda');
+  var lbl=document.getElementById('busq-vend-lbl');
+  if(lbl) lbl.textContent = VEND_NOMBRES[VEND_ACTIVO]||'';
+  setTimeout(function(){ document.getElementById('busq-input').focus(); },100);
+}
+function irDashboard(){ ir('v-dashboard'); }
+
+// -- BUSQUEDA --------------------------------------------------------------
+var searchTimer=null;
+function buscar(q){
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(function(){ _buscar(q.trim()); },200);
+}
+function _buscar(q){
+  var el=document.getElementById('busq-results');
+  if(!q||q.length<2){
+    el.innerHTML='<div class="empty"><div class="empty-ico"></div>'+
+      '<div class="empty-tit">Busca un cliente</div>'+
+      '<div class="empty-desc">Ingresa el codigo o nombre</div></div>';
     return;
   }
-
-  el.innerHTML = results.map(([cid,d]) => {
-    const nok = d.u.filter(x=>x>=3).length;
-    const cls = nok>=7?'cob-ok':nok>=5?'cob-med':'cob-bad';
-    return '<div class="result-item" onclick="verFicha(\''+cid+'\')">' +
-      '<div class="ri-code mono">#'+cid+'</div>' +
-      '<div style="flex:1"><div class="ri-nom">'+d.n+'</div>' +
-      '<div class="ri-loc">'+d.l+'</div></div>' +
-      '<span class="ri-cob '+cls+'">'+nok+'/9</span>' +
+  if(typeof GUIA_DATA==='undefined'){
+    el.innerHTML='<div class="empty"><div class="empty-tit" style="color:var(--rd-l)">Sin datos</div></div>';
+    return;
+  }
+  var ql=q.toLowerCase(), esNum=/^\d+$/.test(q), results=[];
+  for(var cid in GUIA_DATA){
+    var d=GUIA_DATA[cid];
+    if(d.v!==VEND_ACTIVO) continue;
+    if(esNum){ if(cid.startsWith(q)) results.push([cid,d]); }
+    else{ if(d.n.toLowerCase().includes(ql)||d.l.toLowerCase().includes(ql)) results.push([cid,d]); }
+    if(results.length>=20) break;
+  }
+  if(!results.length){
+    el.innerHTML='<div class="empty"><div class="empty-ico"></div>'+
+      '<div class="empty-tit">Sin resultados</div>'+
+      '<div class="empty-desc">No se encontro "'+q+'"</div></div>';
+    return;
+  }
+  el.innerHTML=results.map(function(r){
+    var cid=r[0], d=r[1];
+    var nok=d.u.filter(function(x){return x>=3;}).length;
+    var cls=nok>=7?'cob-ok':nok>=5?'cob-med':'cob-bad';
+    return '<div class="result-item" onclick="verFicha(\''+cid+'\')">'+
+      '<div class="ri-cod mono">#'+cid+'</div>'+
+      '<div style="flex:1"><div class="ri-nom">'+d.n+'</div>'+
+      '<div class="ri-loc">'+d.l+'</div></div>'+
+      '<span class="ri-cob '+cls+'">'+nok+'/9</span>'+
     '</div>';
   }).join('');
 }
 
 // -- FICHA CLIENTE ---------------------------------------------------------
-function verFicha(cid) {
-  var d = GUIA_DATA[cid];
-  if (!d) return;
-
-  var dias = d.ds || [];
-  var diasNombres = dias.map(function(x){return x[0];});
-  var esHoyDia = diasNombres.indexOf(HOY_DIA) >= 0;
+function verFicha(cid){
+  var d=GUIA_DATA[cid];
+  if(!d) return;
 
   // Alerta zona
-  var alertaEl = document.getElementById('alerta-zona');
-  if (diasNombres.length === 0) {
-    alertaEl.innerHTML = '<div class="alerta-zona az-warn"><div class="az-icon">!</div><div class="az-text">Sin dia de visita asignado</div></div>';
-  } else if (!esHoyDia) {
-    alertaEl.innerHTML = '<div class="alerta-zona az-warn"><div class="az-icon">!</div><div class="az-text"><strong>FUERA DE ZONA</strong> &mdash; Hoy es ' + HOY_DIA + '. Dia asignado: <strong>' + diasNombres.join(' / ') + '</strong></div></div>';
+  var dias=d.ds||[], diasNom=dias.map(function(x){return x[0];});
+  var esHoy=diasNom.indexOf(HOY_DIA)>=0;
+  var zonaEl=document.getElementById('ficha-alerta-zona');
+  if(!diasNom.length){
+    zonaEl.innerHTML='<div class="zona-alerta zona-warn"><div class="zona-icon">!</div>'+
+      '<div class="zona-txt">Sin dia de visita asignado</div></div>';
+  } else if(!esHoy){
+    zonaEl.innerHTML='<div class="zona-alerta zona-warn"><div class="zona-icon">!</div>'+
+      '<div class="zona-txt"><strong>FUERA DE ZONA</strong> - Hoy es '+HOY_DIA+'. '+
+      'Dia asignado: <strong>'+diasNom.join(' / ')+'</strong></div></div>';
   } else {
-    alertaEl.innerHTML = '<div class="alerta-zona az-ok"><div class="az-icon">OK</div><div class="az-text"><strong>En zona</strong> &mdash; Hoy es el dia de visita asignado.</div></div>';
+    zonaEl.innerHTML='<div class="zona-alerta zona-ok"><div class="zona-icon"></div>'+
+      '<div class="zona-txt"><strong>En zona</strong> - Dia de visita asignado.</div></div>';
   }
 
-  // Header cliente
-  var vNom = VEND_NOMBRES[d.v] || 'V'+d.v;
-  var diasStr = diasNombres.length ? diasNombres.join(' / ') : '-';
-  var segMap = {A:'Premium',B:'Medio',C:'Basico',P:'Prioritario'};
-  document.getElementById('cli-header').innerHTML =
-    '<div class="cli-nom">' + d.n + '</div>' +
-    '<div class="cli-dir">' + (d.d || '-') + (d.l ? ' &middot; ' + d.l : '') + '</div>' +
-    '<div class="cli-meta">' +
-    '<span class="pill pill-bl">#' + cid + '</span>' +
-    '<span class="pill">' + vNom + '</span>' +
-    '<span class="pill pill-pu">' + diasStr + '</span>' +
-    (d.s ? '<span class="pill">' + (segMap[d.s] || d.s) + '</span>' : '') +
+  // Header
+  var vNom=VEND_NOMBRES[d.v]||'V'+d.v;
+  document.getElementById('ficha-head').innerHTML=
+    '<div class="cli-nom">'+d.n+'</div>'+
+    '<div class="cli-dir">'+(d.d||'')+(d.l?'  '+d.l:'')+'</div>'+
+    '<div class="cli-pills">'+
+    '<span class="pill pill-bl">#'+cid+'</span>'+
+    '<span class="pill">'+vNom+'</span>'+
+    (diasNom.length?'<span class="pill" style="background:var(--pu-d);border-color:var(--pu);color:var(--pu-l)">'+diasNom.join(' / ')+'</span>':'')+
     '</div>';
+
+  // Datos abril
+  var abrUds=(typeof ABR_DATA!=='undefined'&&ABR_DATA[cid])||null;
 
   // KPIs
-  var abrCli = (typeof ABR_DATA !== 'undefined' && ABR_DATA[cid]) ? ABR_DATA[cid] : null;
-  var nOk = 0;
-  for (var ii=0; ii<d.u.length; ii++) {
-    var refU = abrCli ? Math.round(abrCli[ii]) : Math.round(d.u[ii]);
-    if (refU >= 3) nOk++;
+  var nOk=0;
+  for(var i=0;i<9;i++){
+    var ref=abrUds?Math.round(abrUds[i]):Math.round(d.u[i]);
+    if(ref>=3) nOk++;
   }
-  var nFalt = 9 - nOk;
-  var cobPct = Math.round(nOk/9*100);
-  var colCob = cobPct>=78 ? '#2dd98a' : cobPct>=56 ? '#f5a623' : '#f54f4f';
-  document.getElementById('cli-kpis').innerHTML =
-    '<div class="kpi-card">' +
-      '<div class="kpi-lbl">Cobertura marzo</div>' +
-      '<div class="kpi-val" style="color:' + colCob + '">' + nOk + '<span style="font-size:14px;color:var(--tx3)">/9</span></div>' +
-      '<div class="cob-bar"><div class="cob-fill" style="width:' + cobPct + '%;background:' + colCob + '"></div></div>' +
-      '<div class="kpi-sub">' + nFalt + ' marca' + (nFalt!==1?'s':'') + ' sin cobertura</div>' +
-    '</div>' +
-    '<div class="kpi-card">' +
-      '<div class="kpi-lbl">Importe marzo</div>' +
-      '<div class="kpi-val" style="font-size:16px">' + fmtM(d.i) + '</div>' +
-      '<div class="kpi-sub">PepsiCo venta real</div>' +
+  var cobPct=Math.round(nOk/9*100);
+  var colCob=cobPct>=78?'var(--gr-l)':cobPct>=56?'var(--am-l)':'var(--rd-l)';
+  document.getElementById('ficha-kpis').innerHTML=
+    '<div class="kpi-card">'+
+      '<div class="kpi-lbl">Cobertura</div>'+
+      '<div class="kpi-val" style="color:'+colCob+'">'+nOk+'/9</div>'+
+      '<div class="kpi-sub">'+cobPct+'% de marcas</div>'+
+    '</div>'+
+    '<div class="kpi-card">'+
+      '<div class="kpi-lbl">Importe mes ant.</div>'+
+      '<div class="kpi-val" style="font-size:16px">'+fmtM(d.i)+'</div>'+
+      '<div class="kpi-sub">PepsiCo</div>'+
     '</div>';
 
-  // Tabla marcas
-  var mkColors = {Lays:'#f5e642',Doritos:'#f5a623',Cheetos:'#f57d23','3D':'#a57af5',Pep:'#4f8ef5',Pehuamar:'#2dd98a',Twistos:'#f54f7d',Tostitos:'#f5c842',Quaker:'#c07af5'};
-  var mkHtml = '<div class="mk-row mk-header">' +
-    '<div>Marca</div>' +
-    '<div style="text-align:center">Est.</div>' +
-    '<div style="text-align:center">Act.</div>' +
-    '<div style="text-align:center">Sug.</div>' +
-    '<div style="text-align:center">Ant.</div>' +
-  '</div>';
+  // Marcas - tarjetas verticales
+  var marcasHtml='';
+  var faltantes=[];
+  for(var mi=0;mi<MARCAS.length;mi++){
+    var mk=MARCAS[mi];
+    var udsAnt=Math.round(d.u[mi]);
+    var udsAct=abrUds?Math.round(abrUds[mi]):0;
+    var udsRef=abrUds!==null?udsAct:udsAnt;
+    var ok=udsRef>=3;
+    var cerca=!ok&&udsRef>0;
+    var cardClass=ok?'ok':cerca?'cerca':'falta';
+    var badgeClass=ok?'bdg-ok':cerca?'bdg-cerca':'bdg-falta';
+    var badgeTxt=ok?'OK':cerca?'Cerca':'Falta';
+    var sugMin=ok?0:Math.max(0,3-udsRef);
+    var col=MK_COLORS[mk]||'var(--tx)';
 
-  // Unidades de abril (mes actual)
-  var abrCli = (typeof ABR_DATA !== 'undefined' && ABR_DATA[cid]) ? ABR_DATA[cid] : null;
-
-  for (var mi=0; mi<MARCAS.length; mi++) {
-    var mk = MARCAS[mi];
-    var udsMar = Math.round(d.u[mi]);    // marzo (mes anterior)
-    var udsAbr = abrCli ? Math.round(abrCli[mi]) : 0;  // abril (mes actual)
-    // Cobertura se evalua sobre mes actual si hay datos, sino sobre marzo
-    var udsRef = abrCli !== null ? udsAbr : udsMar;
-    var ok = udsRef >= 3;
-    var sugMin = ok ? 0 : Math.max(0, 3 - udsRef);
-    var col = mkColors[mk] || '#e8ecf8';
-    // Mes actual (abril)
-    var udsTxt = abrCli !== null ? (udsAbr > 0 ? String(udsAbr) : '-') : '?';
-    var udsColor = ok ? '#7effc5' : (udsRef > 0 ? '#ffd080' : '#ffaaaa');
-    var sugTxt = sugMin > 0 ? '+' + sugMin : '-';
-    // Mes anterior (marzo) como referencia
-    var histTxt = udsMar > 0 ? String(udsMar) : '-';
-    var rowClass = ok ? 'mk-ok' : 'mk-falt';
-    var badgeClass = ok ? 'bOK' : 'bFALT';
-    var badgeTxt = ok ? 'OK' : 'Falta';
-
-    mkHtml +=
-      '<div class="mk-row ' + rowClass + '">' +
-        '<div class="mk-nom" style="color:' + col + '">' + mk + '</div>' +
-        '<div style="text-align:center"><span class="mk-badge ' + badgeClass + '">' + badgeTxt + '</span></div>' +
-        '<div class="mk-uds" style="color:' + udsColor + ';text-align:center">' + udsTxt + '</div>' +
-        '<div class="mk-sug' + (sugMin===0?' sug-zero':'') + '" style="text-align:center">' + sugTxt + '</div>' +
-        '<div class="mk-hist" style="text-align:center">' + histTxt + '</div>' +
+    marcasHtml+=
+      '<div class="marca-card '+cardClass+'">'+
+        '<div class="marca-header">'+
+          '<div class="marca-nombre" style="color:'+col+'">'+mk+'</div>'+
+          '<span class="marca-badge '+badgeClass+'">'+badgeTxt+'</span>'+
+        '</div>'+
+        '<div class="marca-datos">'+
+          '<div class="marca-dato">'+
+            '<div class="dato-lbl">Mes act.</div>'+
+            '<div class="dato-val '+(udsAct>0?(ok?'verde':'amarillo'):'gris')+'">'+
+              (abrUds!==null?(udsAct>0?udsAct+'u':'-'):'?')+
+            '</div>'+
+          '</div>'+
+          '<div class="marca-dato">'+
+            '<div class="dato-lbl">Sugerido</div>'+
+            '<div class="dato-val '+(sugMin>0?'amarillo':'gris')+'">'+
+              (sugMin>0?'+'+sugMin+'u':'-')+
+            '</div>'+
+          '</div>'+
+          '<div class="marca-dato">'+
+            '<div class="dato-lbl">Mes ant.</div>'+
+            '<div class="dato-val azul">'+(udsAnt>0?udsAnt+'u':'-')+'</div>'+
+          '</div>'+
+        '</div>'+
       '</div>';
+
+    if(!ok) faltantes.push({mk:mk,col:col,sugMin:sugMin,udsAct:udsAct,udsAnt:udsAnt});
   }
-  document.getElementById('marcas-table').innerHTML = mkHtml;
+  document.getElementById('ficha-marcas').innerHTML=marcasHtml;
 
   // Pedido sugerido
-  var faltantes = [];
-  for (var fi=0; fi<MARCAS.length; fi++) {
-    var udsAbrF = abrCli ? Math.round(abrCli[fi]) : 0;
-    var udsMarF = Math.round(d.u[fi]);
-    var udsRefF = abrCli !== null ? udsAbrF : udsMarF;
-    if (udsRefF < 3) faltantes.push({mk:MARCAS[fi], udsAbr:udsAbrF, udsMar:udsMarF});
-  }
-  var pedEl = document.getElementById('pedido-box');
-  if (!faltantes.length) {
-    pedEl.innerHTML =
-      '<div class="ped-header"><span>Pedido sugerido</span><span style="color:#7effc5">Cobertura completa</span></div>' +
-      '<div class="ped-empty">Este cliente tiene todas las marcas cubiertas.</div>';
+  var pedSec=document.getElementById('seccion-pedido');
+  var pedEl=document.getElementById('ficha-pedido');
+  if(faltantes.length){
+    pedSec.style.display='block';
+    pedEl.innerHTML=faltantes.map(function(f){
+      return '<div class="pedido-card">'+
+        '<div class="pedido-mk" style="color:'+f.col+'">'+f.mk+'</div>'+
+        '<div class="pedido-vals">'+
+          '<div class="pedido-dato">'+
+            '<span class="pedido-num" style="color:var(--am-l)">+'+f.sugMin+'</span>'+
+            '<span class="pedido-sub">min.</span>'+
+          '</div>'+
+          '<div class="pedido-dato">'+
+            '<span class="pedido-num" style="color:var(--bl-l)">'+(f.udsAct>0?f.udsAct+' u':'-')+'</span>'+
+            '<span class="pedido-sub">mes act.</span>'+
+          '</div>'+
+          '<div class="pedido-dato">'+
+            '<span class="pedido-num" style="color:var(--tx2)">'+(f.udsAnt>0?f.udsAnt+' u':'-')+'</span>'+
+            '<span class="pedido-sub">mes ant.</span>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
   } else {
-    var pedHtml = '<div class="ped-header"><span>Pedido minimo sugerido</span><span style="color:#ffd080">' + faltantes.length + ' marca' + (faltantes.length!==1?'s':'') + '</span></div>';
-    for (var pi=0; pi<faltantes.length; pi++) {
-      var fmk = faltantes[pi].mk;
-      var fuds = faltantes[pi].uds;
-      var fudsAbr = faltantes[pi].udsAbr;
-      var fudsMar = faltantes[pi].udsMar;
-      var fudsRef = abrCli !== null ? fudsAbr : fudsMar;
-      var fsugMin = Math.max(0, 3-fudsRef);
-      var fcol = mkColors[fmk] || '#e8ecf8';
-      pedHtml +=
-        '<div class="ped-row">' +
-          '<div class="ped-mk" style="color:' + fcol + '">' + fmk + '</div>' +
-          '<div class="ped-vals">' +
-            '<div><span class="ped-min">+' + fsugMin + '</span><span class="ped-lbl">min. cob.</span></div>' +
-            '<div><span class="ped-hist">' + (fudsAbr>0?String(fudsAbr):'-') + '</span><span class="ped-lbl">mes act.</span></div>' +
-            '<div><span class="ped-hist" style="color:#8b93ac">' + (fudsMar>0?String(fudsMar):'-') + '</span><span class="ped-lbl">mes ant.</span></div>' +
-          '</div>' +
-        '</div>';
-    }
-    pedEl.innerHTML = pedHtml;
+    pedSec.style.display='none';
   }
 
-  // Recordatorio de otros proveedores
-    var provSection = document.getElementById('otros-prov-section');
-  if (provSection) {
-    var provsDet = (typeof OTROS_PROV_DET !== 'undefined' && OTROS_PROV_DET[cid]) ? OTROS_PROV_DET[cid] : {};
-    // Mostrar TODOS los proveedores activos en la distribuidora, no solo los que compro
-    var provNames = typeof TODOS_PROV_ACTIVOS !== 'undefined' ? TODOS_PROV_ACTIVOS : Object.keys(provsDet);
+  // Otros proveedores
+  var provsDet=(typeof OTROS_PROV_DET!=='undefined'&&OTROS_PROV_DET[cid])||{};
+  var todosP=typeof TODOS_PROV_ACTIVOS!=='undefined'?TODOS_PROV_ACTIVOS:Object.keys(provsDet);
+  var provsHtml='';
+  todosP.forEach(function(prov,idx){
+    var vals=provsDet[prov]||[0,0,0,0];
+    var marU=vals[0]||0, marI=vals[1]||0, actU=vals[2]||0, actI=vals[3]||0;
+    var estado, badgeClass, cardClass;
+    if(actI>0){ estado='Activo'; badgeClass='bdg-ok'; cardClass='activo'; }
+    else if(marI>0){ estado='Inactivo'; badgeClass='bdg-falta'; cardClass='inactivo'; }
+    else { estado='Nunca'; badgeClass=''; cardClass='nunca'; }
+    var col=PROV_COLORS[idx%PROV_COLORS.length];
+    var ofrecer=(marI>0&&actI===0)?(marU>0?'+'+marU:'si'):(actI>0?'OK':'-');
+    var ofCol=(marI>0&&actI===0)?'var(--am-l)':(actI>0?'var(--gr-l)':'var(--tx3)');
 
-    var html = '<div style="margin:0 16px 14px">';
-    html += '<div class="sec-title" style="margin-bottom:8px">Otros proveedores</div>';
-
-    if (provNames.length === 0) {
-      html += '<div style="background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px 16px;font-size:12px;color:var(--tx3)">Sin otros proveedores en el mes anterior</div>';
-    } else {
-      // Tabla igual que marcas PepsiCo
-      html += '<div class="marcas-table">';
-      // Header
-      html += '<div class="mk-row mk-header">' +
-        '<div>Proveedor</div>' +
-        '<div style="text-align:center">Estado</div>' +
-        '<div style="text-align:center">Mar.</div>' +
-        '<div style="text-align:center">Act.</div>' +
-        '<div style="text-align:center">Ofr.</div>' +
-        '</div>';
-
-      var colores = ['#4d8ef0','#f0a500','#2ecc8a','#a07cf0','#f04d4d','#f57d23','#4dcef0','#c07af5','#f5c842','#888780'];
-
-      provNames.forEach(function(prov, idx) {
-        var vals = provsDet[prov] || [0,0,0,0]; // [mar_uds, mar_imp, abr_uds, abr_imp]
-        var marU  = vals[0] || 0;
-        var marI  = vals[1] || 0;
-        var abrU  = vals[2] || 0;
-        var abrI  = vals[3] || 0;
-        var col   = colores[idx % colores.length];
-
-        // Estado: compro este mes, compro solo mes pasado, no compro nunca
-        var estado, estadoClass;
-        if (abrI > 0) {
-          estado = 'Activo'; estadoClass = 'bOK';
-        } else if (marI > 0) {
-          estado = 'Inactivo'; estadoClass = 'bFALT';
-        } else {
-          estado = 'Nunca'; estadoClass = 'bNEUT';
-        }
-
-        // Sugerido: si compro el mes pasado pero no este mes -> ofrecer cantidad del mes pasado
-        var ofrecer = (marI > 0 && abrI === 0) ? (marU > 0 ? '+'+marU : 'si') : (marI > 0 && abrI > 0 ? 'OK' : '-');
-        var ofrecerColor = (marI > 0 && abrI === 0) ? '#ffd080' : (abrI > 0 ? '#7effc5' : '#8b93a8');
-
-        html += '<div class="mk-row ' + (abrI > 0 ? 'mk-ok' : 'mk-falt') + '">' +
-          '<div class="mk-nom" style="color:' + col + ';font-size:12px">' + prov + '</div>' +
-          '<div style="text-align:center"><span class="mk-badge ' + estadoClass + '">' + estado + '</span></div>' +
-          '<div class="mk-uds" style="color:' + (marI>0?'#a0c0ff':'#555f78') + ';text-align:center">' + (marU>0?marU+' u':'-') + '</div>' +
-          '<div class="mk-uds" style="color:' + (abrI>0?'#7effc5':'#555f78') + ';text-align:center">' + (abrU>0?abrU+' u':'-') + '</div>' +
-          '<div style="text-align:center;font-weight:700;font-size:13px;color:' + ofrecerColor + '">' + ofrecer + '</div>' +
-        '</div>';
-      });
-
-      html += '</div>';
-    }
-
-    html += '</div>';
-    provSection.innerHTML = html;
-  }
-
-  // Mostrar ficha
-  document.getElementById('vista-busqueda').style.display = 'none';
-  document.getElementById('vista-ficha').style.display = 'block';
-  window.scrollTo(0,0);
-}
-
-function volverBusqueda() {
-  document.getElementById('vista-ficha').style.display = 'none';
-  document.getElementById('vista-busqueda').style.display = 'block';
-}
-function volverDashboard() {
-  document.getElementById('vista-ficha').style.display = 'none';
-  document.getElementById('vista-busqueda').style.display = 'none';
-  document.getElementById('vista-dashboard').style.display = 'block';
-  window.scrollTo(0,0);
-}
-
-
-// -- LOGIN ------------------------------------------------------------------
-let VEND_ACTIVO = null;
-
-const VEND_VALIDOS = [31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,51,52,53,54,55,56,57,58,59];
-
-
-// =============================================================================
-// RESUMEN DEL VENDEDOR (home tras login)
-// =============================================================================
-function renderResumenVendedor() {
-  if (!VEND_ACTIVO) return;
-  var datos = typeof VEND_RESUMEN !== 'undefined' ? VEND_RESUMEN[String(VEND_ACTIVO)] : null;
-  if (!datos) {
-    irBusqueda();
-    return;
-  }
-
-  // Seleccionar el periodo mas reciente disponible
-  var periodos = Object.keys(datos).sort();
-  var periodo  = periodos[periodos.length - 1];
-  var d = datos[periodo];
-
-  document.getElementById('res-periodo').textContent = periodo;
-
-  // KPIs
-  var avPct = d.apr || 0;
-  var avColor = avPct >= 100 ? '#2dd98a' : avPct >= 85 ? '#f5a623' : '#f54f4f';
-  var cccPct = d.pcc || 0;
-  var cccColor = cccPct >= 50 ? '#2dd98a' : cccPct >= 30 ? '#f5a623' : '#f54f4f';
-
-  document.getElementById('res-kpis').innerHTML =
-    '<div class="kpi-card">' +
-      '<div class="kpi-lbl">Avance objetivo</div>' +
-      '<div class="kpi-val" style="color:'+avColor+'">' + (avPct||0) + '%</div>' +
-      '<div style="height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin:6px 0 3px">' +
-        '<div style="height:100%;width:'+Math.min(avPct,100)+'%;background:'+avColor+';border-radius:2px"></div>' +
-      '</div>' +
-      '<div class="kpi-sub">' + (d.kr||0) + 'kg / ' + (d.ot||0) + 'kg obj</div>' +
-    '</div>' +
-    '<div class="kpi-card">' +
-      '<div class="kpi-lbl">CCC / Cartera</div>' +
-      '<div class="kpi-val" style="color:'+cccColor+'">' + cccPct + '%</div>' +
-      '<div style="height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin:6px 0 3px">' +
-        '<div style="height:100%;width:'+Math.min(cccPct,100)+'%;background:'+cccColor+';border-radius:2px"></div>' +
-      '</div>' +
-      '<div class="kpi-sub">' + (d.ccc||0) + ' / ' + (d.cart||0) + ' clientes</div>' +
-    '</div>' +
-    '<div class="kpi-card">' +
-      '<div class="kpi-lbl">Importe PepsiCo</div>' +
-      '<div class="kpi-val" style="font-size:18px">' + fmtM(d.pv||0) + '</div>' +
-      '<div class="kpi-sub">venta real neta</div>' +
-    '</div>' +
-    '<div class="kpi-card">' +
-      '<div class="kpi-lbl">Devolucion</div>' +
-      '<div class="kpi-val" style="font-size:18px;color:'+(d.pdp>3?'#f54f4f':d.pdp>2?'#f5a623':'#2dd98a')+'">' + (d.pdp||0).toFixed(1) + '%</div>' +
-      '<div class="kpi-sub">del importe PepsiCo</div>' +
-    '</div>';
-
-  // Tabla categorias
-  var cats = [
-    ['Cereales/Quaker', d.cat.c],
-    ['Twistos',         d.cat.cr],
-    ['Salty Plat+Gold', d.cat.pg],
-    ['Salty Silv+Bro',  d.cat.sb],
-  ];
-  var catColors = ['#c07af5','#f54f7d','#f5a623','#8b93a8'];
-
-  var catHtml =
-    '<div class="mk-row mk-header">' +
-      '<div>Categoria</div>' +
-      '<div style="text-align:center">Real kg</div>' +
-      '<div style="text-align:center">Obj kg</div>' +
-      '<div style="text-align:center">Avance</div>' +
-      '<div style="text-align:center">Estado</div>' +
-    '</div>';
-
-  cats.forEach(function(item, i) {
-    var nom = item[0]; var c = item[1] || {};
-    var r = c.r || 0; var o = c.o || 0;
-    var pct = c.pr || 0;
-    var col = pct >= 100 ? '#2dd98a' : pct >= 85 ? '#f5a623' : '#f54f4f';
-    var badge = pct >= 100 ? 'bOK' : pct >= 85 ? 'bNEUT' : 'bFALT';
-    var badgeTxt = pct >= 100 ? 'OK' : pct >= 85 ? 'cerca' : 'bajo';
-    catHtml +=
-      '<div class="mk-row ' + (o === 0 ? 'mk-ok' : '') + '">' +
-        '<div class="mk-nom" style="color:' + catColors[i] + ';font-size:12px">' + nom + '</div>' +
-        '<div style="text-align:center;font-family:DM Mono,monospace;font-size:13px;font-weight:600">' + r + '</div>' +
-        '<div style="text-align:center;font-size:12px;color:var(--tx3)">' + (o||'-') + '</div>' +
-        '<div style="text-align:center;font-weight:700;color:' + col + ';font-family:DM Mono,monospace">' + (o ? pct+'%' : '-') + '</div>' +
-        '<div style="text-align:center">' + (o ? '<span class="mk-badge '+badge+'">'+badgeTxt+'</span>' : '-') + '</div>' +
+    provsHtml+=
+      '<div class="prov-card '+cardClass+'">'+
+        '<div class="prov-header">'+
+          '<div class="prov-nombre" style="color:'+col+'">'+prov+'</div>'+
+          '<span class="prov-badge '+badgeClass+'" style="'+(badgeClass?'':'background:var(--bg3);color:var(--tx3)')+'">'+estado+'</span>'+
+        '</div>'+
+        (cardClass!=='nunca'?
+          '<div class="prov-datos">'+
+            '<div class="prov-dato"><div class="dato-lbl">Mes ant.</div>'+
+              '<div class="dato-val azul">'+(marU>0?marU+'u':'-')+'</div></div>'+
+            '<div class="prov-dato"><div class="dato-lbl">Mes act.</div>'+
+              '<div class="dato-val '+(actU>0?'verde':'gris')+'">'+(actU>0?actU+'u':'-')+'</div></div>'+
+            '<div class="prov-dato"><div class="dato-lbl">Ofrecer</div>'+
+              '<div class="dato-val" style="color:'+ofCol+'">'+ofrecer+'</div></div>'+
+          '</div>':'')+
       '</div>';
   });
-  document.getElementById('res-cat-table').innerHTML = catHtml;
+  document.getElementById('ficha-provs').innerHTML=provsHtml||
+    '<div style="font-size:12px;color:var(--tx3);padding:12px">Sin datos de otros proveedores</div>';
 
-  // Devolucion y cambio
-  var dColor = (d.pdp||0) > 3 ? '#f54f4f' : (d.pdp||0) > 2 ? '#f5a623' : '#2dd98a';
-  var cColor = (d.pcp||0) > 1.5 ? '#f5a623' : '#2dd98a';
-  document.getElementById('res-devol').innerHTML =
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
-      '<div style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:12px 14px">' +
-        '<div class="kpi-lbl">Devolucion</div>' +
-        '<div style="font-size:22px;font-weight:700;color:'+dColor+';font-family:DM Mono,monospace">' + (d.pdp||0).toFixed(2) + '%</div>' +
-        '<div class="kpi-sub">del importe PepsiCo</div>' +
-      '</div>' +
-      '<div style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:12px 14px">' +
-        '<div class="kpi-lbl">Cambio/Invendible</div>' +
-        '<div style="font-size:22px;font-weight:700;color:'+cColor+';font-family:DM Mono,monospace">' + (d.pcp||0).toFixed(2) + '%</div>' +
-        '<div class="kpi-sub">del importe PepsiCo</div>' +
-      '</div>' +
-    '</div>';
-
-  // Mostrar resumen
-  document.getElementById('vista-login').style.display = 'none';
-  document.getElementById('vista-resumen').style.display = 'block';
-  document.getElementById('vista-busqueda').style.display = 'none';
-  document.getElementById('vista-ficha').style.display = 'none';
-  window.scrollTo(0,0);
-}
-
-function irBusqueda() {
-  document.getElementById('vista-resumen').style.display = 'none';
-  document.getElementById('vista-busqueda').style.display = 'block';
-  document.getElementById('search-input').focus();
-}
-
-
-// =============================================================================
-// DASHBOARD DEL VENDEDOR (post-login)
-// =============================================================================
-function mostrarDashboard() {
-  var v = VEND_ACTIVO;
-  var s = (typeof VEND_STATS !== 'undefined' && VEND_STATS[String(v)]) ? VEND_STATS[String(v)] : null;
-  var nom = VEND_NOMBRES[v] || 'Vendedor ' + v;
-  var mesaColors = {300:'#4d8ef0',400:'#2ecc8a',500:'#f0a500',600:'#a07cf0'};
-  var mesa = 0;
-  // Detectar mesa desde GUIA_DATA
-  for (var cid in GUIA_DATA) {
-    if (GUIA_DATA[cid].v === v) { mesa = GUIA_DATA[cid].m; break; }
-  }
-  var mc = mesaColors[mesa] || '#888';
-
-  document.getElementById('dash-nom-vend').textContent = nom;
-  document.getElementById('dash-pills').innerHTML =
-    '<span style="padding:3px 10px;border-radius:20px;font-size:11px;background:' + mc + '22;border:1px solid ' + mc + ';color:' + mc + '">Mesa ' + mesa + '</span>' +
-    '<span style="padding:3px 10px;border-radius:20px;font-size:11px;background:var(--bg3);border:1px solid var(--brd2);color:var(--tx2)">V' + v + '</span>' +
-    '<span style="padding:3px 10px;border-radius:20px;font-size:11px;background:var(--bg3);border:1px solid var(--brd2);color:var(--tx2)">' + HOY_DIA + ' ' + new Date().getDate() + '/' + (new Date().getMonth()+1) + '</span>';
-
-  if (!s) {
-    document.getElementById('dash-kpis').innerHTML = '<div style="grid-column:span 2;text-align:center;color:var(--tx3);padding:20px;font-size:12px">Sin datos de resumen disponibles</div>';
-    return;
-  }
-
-  // KPIs
-  var kpis = [
-    { lbl:'Cartera total', val: fmtN(s.cart), sub:'clientes asignados', col:'bl' },
-    { lbl:'CCC marzo', val: fmtN(s.ccc_m) + ' (' + s.pcc_m + '%)', sub:'compraron el mes pasado', col: s.pcc_m>=60?'gr':s.pcc_m>=40?'am':'rd' },
-    { lbl:'CCC abril', val: fmtN(s.ccc_a) + ' (' + s.pcc_a + '%)', sub:'compraron este mes', col: s.pcc_a>=20?'gr':s.pcc_a>=10?'am':'rd' },
-    { lbl:'Cob. completa', val: fmtN(s.cob9), sub:'clientes con 9 marcas', col:'pu' },
-  ];
-  document.getElementById('dash-kpis').innerHTML = kpis.map(function(k) {
-    return '<div class="kpi-card">' +
-      '<div class="kpi-lbl">' + k.lbl + '</div>' +
-      '<div class="kpi-val" style="color:var(--' + k.col + '-l,var(--tx));font-size:18px">' + k.val + '</div>' +
-      '<div class="kpi-sub" style="color:var(--tx3)">' + k.sub + '</div>' +
-    '</div>';
-  }).join('');
-
-  // Barras de cobertura por marca
-  var MARCAS_COB = ['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker'];
-  var mkColors = {Lays:'#f5e642',Doritos:'#f5a623',Cheetos:'#f57d23','3D':'#a57af5',Pep:'#4f8ef5',Pehuamar:'#2dd98a',Twistos:'#f54f7d',Tostitos:'#f5c842',Quaker:'#c07af5'};
-  // Calcular cobertura por marca de los clientes del vendedor
-  var mkCob = [0,0,0,0,0,0,0,0,0];
-  var totalCli = 0;
-  for (var cid in GUIA_DATA) {
-    var d = GUIA_DATA[cid];
-    if (d.v !== v) continue;
-    totalCli++;
-    for (var mi=0; mi<9; mi++) {
-      if (d.u[mi] >= 3) mkCob[mi]++;
-    }
-  }
-  var cobHtml = '';
-  for (var mi=0; mi<MARCAS_COB.length; mi++) {
-    var pct = totalCli ? Math.round(mkCob[mi]/totalCli*100) : 0;
-    var col = pct>=70?'var(--gr)':pct>=50?'var(--am)':'var(--rd)';
-    var mkColor = mkColors[MARCAS_COB[mi]] || 'var(--tx)';
-    cobHtml +=
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">' +
-        '<div style="font-size:11px;font-weight:600;min-width:70px;color:' + mkColor + '">' + MARCAS_COB[mi] + '</div>' +
-        '<div style="flex:1;background:var(--bg3);border-radius:3px;height:7px;overflow:hidden">' +
-          '<div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:3px"></div>' +
-        '</div>' +
-        '<div style="font-size:11px;font-weight:700;font-family:DM Mono,monospace;min-width:36px;color:' + col + '">' + pct + '%</div>' +
-      '</div>';
-  }
-  document.getElementById('dash-cob-bars').innerHTML = cobHtml;
-
-  // Mostrar dashboard
-  document.getElementById('vista-login').style.display = 'none';
-  document.getElementById('vista-dashboard').style.display = 'block';
-  window.scrollTo(0,0);
-}
-
-function irABusqueda() {
-  document.getElementById('vista-dashboard').style.display = 'none';
-  document.getElementById('vista-busqueda').style.display = 'block';
-  var lbl = document.getElementById('search-vend-label');
-  if (lbl) lbl.textContent = VEND_NOMBRES[VEND_ACTIVO] || '';
-  document.getElementById('search-input').focus();
-}
-
-function doLogout() {
-  VEND_ACTIVO = null;
-  document.getElementById('vista-dashboard').style.display = 'none';
-  document.getElementById('vista-busqueda').style.display = 'none';
-  document.getElementById('vista-login').style.display = 'flex';
-  document.getElementById('login-vend').value = '';
-  document.getElementById('login-pass').value = '';
-  document.getElementById('tb-vend-nom').style.display = 'none';
-}
-
-function doLogin() {
-  const vend = parseInt(document.getElementById('login-vend').value || '0');
-  const pass = document.getElementById('login-pass').value.trim();
-  const errEl = document.getElementById('login-error');
-
-  if (!vend || !VEND_VALIDOS.includes(vend)) {
-    errEl.textContent = 'Numero de vendedor invalido';
-    errEl.style.display = 'block'; return;
-  }
-  const passCorrecta = String(vend) + String(vend);
-  if (pass !== passCorrecta) {
-    errEl.textContent = 'Contrasena incorrecta';
-    errEl.style.display = 'block'; return;
-  }
-
-  // Login correcto
-  VEND_ACTIVO = vend;
-  errEl.style.display = 'none';
-  var nomVend = VEND_NOMBRES[vend] || 'V'+vend;
-  var tbNom = document.getElementById('tb-vend-nom');
-  if (tbNom) { tbNom.textContent = nomVend; tbNom.style.display = 'block'; }
-  mostrarDashboard();
-}
-
-// Filtrar busqueda solo a clientes del vendedor activo
-function clienteDelVendedor(d) {
-  if (!VEND_ACTIVO) return false;
-  // El cliente pertenece al vendedor si d.v === VEND_ACTIVO
-  // o si tiene un dia de visita asignado por ese vendedor
-  return d.v === VEND_ACTIVO || d.ds.some(x => x[1] === VEND_ACTIVO);
-}
-
-function fmtN(v) {
-  if (v === undefined || v === null) return '0';
-  return Math.round(v).toLocaleString('es-AR');
-}
-function fmtM(v) {
-  if (!v) return '$0';
-  if (v >= 1e9) return '$'+(v/1e9).toFixed(1)+'B';
-  if (v >= 1e6) return '$'+(v/1e6).toFixed(1)+'M';
-  if (v >= 1e3) return '$'+(v/1e3).toFixed(0)+'k';
-  return '$'+v;
+  ir('v-ficha');
 }
 </script>
 
-<!-- DATOS EMBEBIDOS - reemplazar con el JSON real -->
 <script>
 // __GUIA_DATA__
 </script>
@@ -966,13 +658,8 @@ function fmtM(v) {
 <script>
 // __ABR_DATA__
 </script>
-
 <script>
 // __OTROS_PROV__
 </script>
-<script>
-const VEND_RESUMEN={"31":{"nom":"VILLALBA MAX.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":274,"a_ccc":107,"a_pcc":39.1,"a_imp":14768273,"a_kr":405,"a_ot":2421,"a_apr":16.7,"a_pp":20.1,"m_ccc":223,"m_pcc":81.4,"m_imp":88777327,"m_kr":2445,"m_ot":2421,"m_apr":101.0},"32":{"nom":"OLIVARES EDGAR","mesa":400,"sup":"CLAUDIO ALVARADO","cart":286,"a_ccc":65,"a_pcc":22.7,"a_imp":7845825,"a_kr":250,"a_ot":1547,"a_apr":16.2,"a_pp":19.4,"m_ccc":218,"m_pcc":76.2,"m_imp":50007578,"m_kr":1426,"m_ot":1547,"m_apr":92.2},"33":{"nom":"ORDO\u00d1EZ ISMAEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":247,"a_ccc":70,"a_pcc":28.3,"a_imp":10854279,"a_kr":364,"a_ot":1787,"a_apr":20.4,"a_pp":24.4,"m_ccc":168,"m_pcc":68.0,"m_imp":74877786,"m_kr":1783,"m_ot":1787,"m_apr":99.8},"34":{"nom":"BALDO JULIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":263,"a_ccc":61,"a_pcc":23.2,"a_imp":4956235,"a_kr":132,"a_ot":1628,"a_apr":8.1,"a_pp":9.7,"m_ccc":192,"m_pcc":73.0,"m_imp":49863989,"m_kr":1402,"m_ot":1628,"m_apr":86.1},"35":{"nom":"BAZAN LUCIANO","mesa":400,"sup":"CLAUDIO ALVARADO","cart":275,"a_ccc":91,"a_pcc":33.1,"a_imp":9929741,"a_kr":310,"a_ot":1548,"a_apr":20.0,"a_pp":24.0,"m_ccc":235,"m_pcc":85.5,"m_imp":54674851,"m_kr":1660,"m_ot":1548,"m_apr":107.2},"36":{"nom":"NEIRA NAHUEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":254,"a_ccc":82,"a_pcc":32.3,"a_imp":8908806,"a_kr":259,"a_ot":2739,"a_apr":9.5,"a_pp":11.3,"m_ccc":196,"m_pcc":77.2,"m_imp":61433839,"m_kr":2129,"m_ot":2739,"m_apr":77.7},"37":{"nom":"SCORRANI IGN.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":272,"a_ccc":82,"a_pcc":30.1,"a_imp":9466999,"a_kr":305,"a_ot":1628,"a_apr":18.7,"a_pp":22.5,"m_ccc":194,"m_pcc":71.3,"m_imp":50063985,"m_kr":1546,"m_ot":1628,"m_apr":95.0},"38":{"nom":"MARTINEZ MAU.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":304,"a_ccc":109,"a_pcc":35.9,"a_imp":9975612,"a_kr":292,"a_ot":2461,"a_apr":11.9,"a_pp":14.2,"m_ccc":219,"m_pcc":72.0,"m_imp":58292329,"m_kr":1926,"m_ot":2461,"m_apr":78.3},"39":{"nom":"MERLO SEBASTIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":299,"a_ccc":94,"a_pcc":31.4,"a_imp":8007588,"a_kr":269,"a_ot":2243,"a_apr":12.0,"a_pp":14.4,"m_ccc":229,"m_pcc":76.6,"m_imp":57954152,"m_kr":1939,"m_ot":2243,"m_apr":86.4},"41":{"nom":"CISTERNA DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":305,"a_ccc":68,"a_pcc":22.3,"a_imp":5001349,"a_kr":145,"a_ot":1166,"a_apr":12.4,"a_pp":14.9,"m_ccc":209,"m_pcc":68.5,"m_imp":35127177,"m_kr":1015,"m_ot":1166,"m_apr":87.0},"42":{"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULCI","cart":282,"a_ccc":73,"a_pcc":25.9,"a_imp":6649488,"a_kr":188,"a_ot":1375,"a_apr":13.7,"a_pp":16.4,"m_ccc":180,"m_pcc":63.8,"m_imp":44958496,"m_kr":1423,"m_ot":1375,"m_apr":103.5},"43":{"nom":"RUEDA CUJAR","mesa":500,"sup":"MARIANO TRIULCI","cart":280,"a_ccc":73,"a_pcc":26.1,"a_imp":5954060,"a_kr":159,"a_ot":1328,"a_apr":12.0,"a_pp":14.4,"m_ccc":228,"m_pcc":81.4,"m_imp":37964662,"m_kr":1119,"m_ot":1328,"m_apr":84.3},"44":{"nom":"BERNAHOLA AGU.","mesa":500,"sup":"MARIANO TRIULCI","cart":315,"a_ccc":71,"a_pcc":22.5,"a_imp":6402422,"a_kr":209,"a_ot":1222,"a_apr":17.1,"a_pp":20.5,"m_ccc":172,"m_pcc":54.6,"m_imp":39147641,"m_kr":1191,"m_ot":1222,"m_apr":97.5},"45":{"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","cart":337,"a_ccc":76,"a_pcc":22.6,"a_imp":7394685,"a_kr":206,"a_ot":1153,"a_apr":17.9,"a_pp":21.4,"m_ccc":209,"m_pcc":62.0,"m_imp":43957151,"m_kr":1321,"m_ot":1153,"m_apr":114.6},"46":{"nom":"OCHOA ROXANA","mesa":500,"sup":"MARIANO TRIULCI","cart":256,"a_ccc":77,"a_pcc":30.1,"a_imp":5691485,"a_kr":163,"a_ot":1200,"a_apr":13.6,"a_pp":16.3,"m_ccc":186,"m_pcc":72.7,"m_imp":40247032,"m_kr":1243,"m_ot":1200,"m_apr":103.6},"47":{"nom":"CACERES YANINA","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":61,"a_pcc":20.5,"a_imp":4882574,"a_kr":145,"a_ot":1199,"a_apr":12.1,"a_pp":14.5,"m_ccc":190,"m_pcc":64.0,"m_imp":36458445,"m_kr":1039,"m_ot":1199,"m_apr":86.7},"48":{"nom":"SALDE MARCELA","mesa":500,"sup":"MARIANO TRIULCI","cart":313,"a_ccc":80,"a_pcc":25.6,"a_imp":6452350,"a_kr":175,"a_ot":2632,"a_apr":6.6,"a_pp":8.0,"m_ccc":184,"m_pcc":58.8,"m_imp":79430337,"m_kr":2503,"m_ot":2632,"m_apr":95.1},"49":{"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","cart":317,"a_ccc":57,"a_pcc":18.0,"a_imp":4486694,"a_kr":129,"a_ot":1166,"a_apr":11.1,"a_pp":13.3,"m_ccc":186,"m_pcc":58.7,"m_imp":31526583,"m_kr":914,"m_ot":1166,"m_apr":78.4},"51":{"nom":"GONZALEZ CAND.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":245,"a_ccc":109,"a_pcc":44.5,"a_imp":11693917,"a_kr":277,"a_ot":1846,"a_apr":15.0,"a_pp":18.0,"m_ccc":189,"m_pcc":77.1,"m_imp":58822255,"m_kr":1541,"m_ot":1846,"m_apr":83.5},"52":{"nom":"MARTINEZ DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":332,"a_ccc":82,"a_pcc":24.7,"a_imp":7372625,"a_kr":202,"a_ot":1438,"a_apr":14.0,"a_pp":16.9,"m_ccc":235,"m_pcc":70.8,"m_imp":44973200,"m_kr":1331,"m_ot":1438,"m_apr":92.6},"53":{"nom":"CARRIZO EZE.","mesa":300,"sup":"NATALIA PEREZ","cart":303,"a_ccc":84,"a_pcc":27.7,"a_imp":6887270,"a_kr":170,"a_ot":1451,"a_apr":11.7,"a_pp":14.1,"m_ccc":225,"m_pcc":74.3,"m_imp":42747885,"m_kr":1143,"m_ot":1451,"m_apr":78.8},"54":{"nom":"MORENO JOHAN","mesa":500,"sup":"MARIANO TRIULCI","cart":360,"a_ccc":70,"a_pcc":19.4,"a_imp":5379696,"a_kr":162,"a_ot":1351,"a_apr":12.0,"a_pp":14.4,"m_ccc":213,"m_pcc":59.2,"m_imp":40725802,"m_kr":1249,"m_ot":1351,"m_apr":92.5},"55":{"nom":"PULIDO EFRAIM","mesa":300,"sup":"NATALIA PEREZ","cart":315,"a_ccc":70,"a_pcc":22.2,"a_imp":6652244,"a_kr":202,"a_ot":1177,"a_apr":17.2,"a_pp":20.6,"m_ccc":175,"m_pcc":55.6,"m_imp":41730782,"m_kr":1293,"m_ot":1177,"m_apr":109.9},"56":{"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","cart":292,"a_ccc":51,"a_pcc":17.5,"a_imp":4896551,"a_kr":154,"a_ot":2096,"a_apr":7.3,"a_pp":8.8,"m_ccc":192,"m_pcc":65.8,"m_imp":51734056,"m_kr":1772,"m_ot":2096,"m_apr":84.5},"57":{"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","cart":274,"a_ccc":68,"a_pcc":24.8,"a_imp":6204887,"a_kr":177,"a_ot":1153,"a_apr":15.4,"a_pp":18.4,"m_ccc":197,"m_pcc":71.9,"m_imp":36446145,"m_kr":1052,"m_ot":1153,"m_apr":91.2},"58":{"nom":"GONZALEZ MARC.","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":76,"a_pcc":25.6,"a_imp":8588524,"a_kr":258,"a_ot":1446,"a_apr":17.8,"a_pp":21.4,"m_ccc":216,"m_pcc":72.7,"m_imp":50471152,"m_kr":1467,"m_ot":1446,"m_apr":101.5},"59":{"nom":"AVENDA\u00d1O SERGIO","mesa":300,"sup":"NATALIA PEREZ","cart":298,"a_ccc":48,"a_pcc":16.1,"a_imp":5960907,"a_kr":178,"a_ot":1600,"a_apr":11.1,"a_pp":13.4,"m_ccc":176,"m_pcc":59.1,"m_imp":36662513,"m_kr":1178,"m_ot":1600,"m_apr":73.6},"61":{"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","cart":558,"a_ccc":86,"a_pcc":15.4,"a_imp":6502017,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":252,"m_pcc":45.2,"m_imp":44237676,"m_kr":1,"m_ot":0,"m_apr":null},"62":{"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","cart":525,"a_ccc":26,"a_pcc":5.0,"a_imp":1433027,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":190,"m_pcc":36.2,"m_imp":23370801,"m_kr":0,"m_ot":0,"m_apr":null},"63":{"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","cart":527,"a_ccc":89,"a_pcc":16.9,"a_imp":8097355,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":241,"m_pcc":45.7,"m_imp":38010349,"m_kr":0,"m_ot":0,"m_apr":null},"64":{"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","cart":370,"a_ccc":77,"a_pcc":20.8,"a_imp":15361904,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":182,"m_pcc":49.2,"m_imp":62716339,"m_kr":0,"m_ot":0,"m_apr":null},"65":{"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","cart":593,"a_ccc":79,"a_pcc":13.3,"a_imp":15357055,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":278,"m_pcc":46.9,"m_imp":70286390,"m_kr":3,"m_ot":0,"m_apr":null}};
-</script>
-
 </body>
 </html>
