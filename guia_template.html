@@ -17,7 +17,7 @@
   --pu:#a57af5;--pu-d:#1a0f35;--pu-l:#d4bcff;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-size:14px}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-size:14px;scroll-behavior:auto}
 
 /* TOPBAR */
 .topbar{position:sticky;top:0;z-index:100;background:rgba(10,12,16,.95);
@@ -33,11 +33,12 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
 
 /* VISTAS */
 .vista{display:none;min-height:100vh;padding-bottom:80px}
+.vista.activa{display:block;}
 .vista.activa{display:block}
 
 /* ── LOGIN ── */
 #v-login{display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:32px 20px;min-height:100vh}
+  justify-content:center;padding:32px 20px;min-height:100vh;position:relative}
 .login-box{width:100%;max-width:320px}
 .login-logo{text-align:center;margin-bottom:28px}
 .login-logo-icon{display:inline-flex;align-items:center;justify-content:center;
@@ -143,33 +144,25 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
 .seccion-titulo{font-size:10px;color:var(--tx3);text-transform:uppercase;
   letter-spacing:.07em;font-weight:600;margin-bottom:8px}
 
-/* Tarjeta de marca */
-.marca-card{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;
-  margin-bottom:6px;overflow:hidden}
-.marca-card.ok{border-left:3px solid var(--gr)}
-.marca-card.falta{border-left:3px solid var(--rd)}
-.marca-card.cerca{border-left:3px solid var(--am)}
-
-.marca-header{display:flex;align-items:center;padding:10px 12px;gap:10px}
-.marca-nombre{font-size:13px;font-weight:700;flex:1}
-.marca-badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;
-  font-family:'DM Mono',monospace}
-.bdg-ok{background:var(--gr-d);color:var(--gr-l)}
-.bdg-falta{background:var(--rd-d);color:var(--rd-l)}
-.bdg-cerca{background:var(--am-d);color:var(--am-l)}
-
-.marca-datos{display:flex;border-top:1px solid var(--brd);
-  divide-x:var(--brd)}
-.marca-dato{flex:1;padding:7px 10px;text-align:center;border-right:1px solid var(--brd)}
-.marca-dato:last-child{border-right:none}
-.dato-lbl{font-size:9px;color:var(--tx3);text-transform:uppercase;
-  letter-spacing:.05em;margin-bottom:3px}
-.dato-val{font-size:14px;font-weight:700;font-family:'DM Mono',monospace}
-.dato-val.verde{color:var(--gr-l)}
-.dato-val.rojo{color:var(--rd-l)}
-.dato-val.amarillo{color:var(--am-l)}
-.dato-val.gris{color:var(--tx3)}
-.dato-val.azul{color:var(--bl-l)}
+/* Tabla compacta de marcas */
+.mk-tabla{width:100%;border-collapse:collapse;font-size:12px}
+.mk-tabla thead td{
+  font-size:9px;color:var(--tx3);text-transform:uppercase;
+  letter-spacing:.05em;padding:5px 6px;border-bottom:1px solid var(--brd);
+  font-family:'DM Mono',monospace;text-align:center}
+.mk-tabla thead td:first-child{text-align:left}
+.mk-tabla tbody tr{border-bottom:1px solid var(--brd)}
+.mk-tabla tbody tr:last-child{border-bottom:none}
+.mk-tabla tbody tr.ok{background:rgba(45,217,138,.04)}
+.mk-tabla tbody tr.falta{background:rgba(245,79,79,.04)}
+.mk-tabla tbody td{padding:7px 6px;vertical-align:middle}
+.mk-tabla tbody td:not(:first-child){text-align:center;
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:600}
+.mk-nom-cell{display:flex;align-items:center;gap:5px}
+.mk-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.mk-cob-bar{height:3px;border-radius:2px;background:var(--bg4);
+  margin-top:3px;overflow:hidden}
+.mk-cob-fill{height:100%;border-radius:2px}
 
 /* Pedido sugerido */
 .pedido-card{background:var(--bg2);border:1px solid var(--brd);
@@ -288,7 +281,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
   </div>
   <div class="kpi-grid" id="dash-kpis"></div>
   <div class="cob-section">
-    <div class="sec-lbl">Cobertura de tus clientes (mes anterior)</div>
+    <div class="sec-lbl">Cobertura mes actual vs objetivo</div>
     <div id="dash-cob"></div>
   </div>
   <button class="btn-buscar" onclick="irBusqueda()">Buscar cliente</button>
@@ -425,7 +418,14 @@ function ir(id){
     if(el) el.classList.remove('activa');
   });
   var target = document.getElementById(id);
-  if(target){ target.classList.add('activa'); window.scrollTo(0,0); }
+  if(target){
+    target.classList.add('activa');
+    // Scroll al top de multiples formas para compatibilidad movil
+    window.scrollTo(0,0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    target.scrollTop = 0;
+  }
 }
 
 // -- LOGIN -----------------------------------------------------------------
@@ -487,24 +487,36 @@ function renderDashboard(){
   }
 
   // Cobertura por marca
-  var mkCob=[0,0,0,0,0,0,0,0,0], totCli=0;
-  if(typeof GUIA_DATA!=='undefined'){
-    for(var cid2 in GUIA_DATA){
-      var d2=GUIA_DATA[cid2];
-      if(d2.v!==v) continue;
-      totCli++;
-      for(var mi=0;mi<9;mi++){ if(d2.u[mi]>=3) mkCob[mi]++; }
-    }
-  }
-  var cobHtml='';
+  // Cobertura mes actual desde VEND_STATS.cob_abr
+  var cart = s ? s.cart : 0;
+  var cobAbr = s ? (s.cob_abr || {}) : {};
+  var TARGETS_LOCAL = {Lays:94.9,Doritos:98.0,Cheetos:83.9,'3D':85.7,
+    Pep:62.3,Pehuamar:20.7,Twistos:79.4,Tostitos:28.4,Quaker:4.6};
+
+  var cobHtml = '<div style="font-size:9px;color:var(--tx3);display:flex;justify-content:space-between;margin-bottom:6px">' +
+    '<span>MARCA</span><span style="text-align:right">ACT. vs OBJ.</span></div>';
+
   for(var mi=0;mi<MARCAS.length;mi++){
-    var pct=totCli?Math.round(mkCob[mi]/totCli*100):0;
-    var col=pct>=70?'var(--gr)':pct>=50?'var(--am)':'var(--rd)';
-    cobHtml+='<div class="cob-bar-row">'+
-      '<div class="cob-bar-mk" style="color:'+MK_COLORS[MARCAS[mi]]+'">'+MARCAS[mi]+'</div>'+
-      '<div class="cob-bar-track"><div class="cob-bar-fill" style="width:'+pct+'%;background:'+col+'"></div></div>'+
-      '<div class="cob-bar-pct" style="color:'+col+'">'+pct+'%</div>'+
-    '</div>';
+    var mk2 = MARCAS[mi];
+    var nAct = cobAbr[mk2] || 0;
+    var pctAct = cart ? Math.round(nAct/cart*100) : 0;
+    var pctObj = TARGETS_LOCAL[mk2] || 0;
+    var col = pctAct >= pctObj ? 'var(--gr)' : pctAct >= pctObj*0.5 ? 'var(--am)' : 'var(--rd)';
+    var fillW = pctObj > 0 ? Math.min(Math.round(pctAct/pctObj*100), 100) : 0;
+    cobHtml +=
+      '<div style="margin-bottom:7px">'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:2px">'+
+          '<span style="font-size:11px;font-weight:600;color:'+MK_COLORS[mk2]+'">'+mk2+'</span>'+
+          '<span style="font-size:10px;font-family:DM Mono,monospace;color:'+col+'">'+
+            pctAct+'% <span style="color:var(--tx3)">/ obj '+pctObj+'%</span>'+
+          '</span>'+
+        '</div>'+
+        '<div style="height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;position:relative">'+
+          '<div style="height:100%;width:'+fillW+'%;background:'+col+';border-radius:3px"></div>'+
+          // Lnea objetivo al 100% del track = objetivo real
+          '<div style="position:absolute;top:0;bottom:0;right:0;width:2px;background:rgba(255,255,255,.2)"></div>'+
+        '</div>'+
+      '</div>';
   }
   document.getElementById('dash-cob').innerHTML = cobHtml;
 }
@@ -618,7 +630,15 @@ function verFicha(cid){
     '</div>';
 
   // Marcas - tarjetas verticales
-  var marcasHtml='';
+  // Tabla compacta de marcas
+  var marcasHtml = '<table class="mk-tabla">'+
+    '<thead><tr>'+
+      '<td>Marca</td>'+
+      '<td>Mes act.</td>'+
+      '<td>Sug.</td>'+
+      '<td>Mes ant.</td>'+
+    '</tr></thead><tbody>';
+
   var faltantes=[];
   for(var mi=0;mi<MARCAS.length;mi++){
     var mk=MARCAS[mi];
@@ -627,58 +647,34 @@ function verFicha(cid){
     var udsRef=abrUds!==null?udsAct:udsAnt;
     var ok=udsRef>=3;
     var cerca=!ok&&udsRef>0;
-    var cardClass=ok?'ok':cerca?'cerca':'falta';
-    var badgeClass=ok?'bdg-ok':cerca?'bdg-cerca':'bdg-falta';
-    var badgeTxt=ok?'OK':cerca?'Cerca':'Falta';
     var sugMin=ok?0:Math.max(0,3-udsRef);
     var col=MK_COLORS[mk]||'var(--tx)';
+    var rowClass=ok?'ok':'falta';
+    var dotCol=ok?'var(--gr)':cerca?'var(--am)':'var(--rd)';
+    var actCol=ok?'var(--gr-l)':cerca?'var(--am-l)':'var(--rd-l)';
+    var objPct=MK_TARGETS[mk]||0;
+    var fillW=ok?100:(udsRef>0?Math.min(Math.round(udsRef/3*100),99):0);
 
     marcasHtml+=
-      '<div class="marca-card '+cardClass+'">'+
-        '<div class="marca-header">'+
-          '<div class="marca-nombre" style="color:'+col+'">'+mk+'</div>'+
-          '<span class="marca-badge '+badgeClass+'">'+badgeTxt+'</span>'+
-        '</div>'+
-        '<div class="marca-datos">'+
-          '<div class="marca-dato">'+
-            '<div class="dato-lbl">Mes act.</div>'+
-            '<div class="dato-val '+(udsAct>0?(ok?'verde':'amarillo'):'gris')+'">'+
-              (abrUds!==null?(udsAct>0?udsAct+'u':'-'):'?')+
-            '</div>'+
+      '<tr class="'+rowClass+'">'+
+        '<td>'+
+          '<div class="mk-nom-cell">'+
+            '<div class="mk-dot" style="background:'+dotCol+'"></div>'+
+            '<div>'+
+              '<div style="font-size:12px;font-weight:700;color:'+col+'">'+mk+'</div>'+
+              (objPct?'<div class="mk-cob-bar">'+
+                '<div class="mk-cob-fill" style="width:'+fillW+'%;background:'+dotCol+'"></div>'+
+              '</div>':'')+'</div>'+
           '</div>'+
-          '<div class="marca-dato">'+
-            '<div class="dato-lbl">Sugerido</div>'+
-            '<div class="dato-val '+(sugMin>0?'amarillo':'gris')+'">'+
-              (sugMin>0?'+'+sugMin+'u':'-')+
-            '</div>'+
-          '</div>'+
-          '<div class="marca-dato">'+
-            '<div class="dato-lbl">Mes ant.</div>'+
-            '<div class="dato-val azul">'+(udsAnt>0?udsAnt+'u':'-')+'</div>'+
-          '</div>'+
-        '</div>'+
-        // Barra de objetivo de cobertura
-        (function(){
-          var objPct = MK_TARGETS[mk] || 0;
-          if (!objPct) return '';
-          var colBar = ok?'var(--gr)':'var(--rd)';
-          var fillW = ok ? 100 : Math.round(udsRef/3*100);
-          return '<div style="padding:6px 12px 8px;border-top:1px solid var(--brd)">'+
-            '<div style="display:flex;justify-content:space-between;margin-bottom:3px">'+
-              '<span style="font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em">Obj cobertura 611</span>'+
-              '<span style="font-size:10px;font-weight:700;font-family:DM Mono,monospace;color:'+(ok?'var(--gr-l)':'var(--rd-l)')+'">'+
-                (ok?'Logrado':'Falta')+'  obj '+objPct+'%'+
-              '</span>'+
-            '</div>'+
-            '<div style="height:4px;background:var(--bg4);border-radius:2px;overflow:hidden">'+
-              '<div style="height:100%;width:'+(ok?100:Math.min(Math.round(udsRef/3*100),99))+'%;background:'+colBar+';border-radius:2px"></div>'+
-            '</div>'+
-          '</div>';
-        })() +
-      '</div>';
+        '</td>'+
+        '<td style="color:'+actCol+'">'+(abrUds!==null?(udsAct>0?udsAct+'u':'-'):'?')+'</td>'+
+        '<td style="color:'+(sugMin>0?'var(--am-l)':'var(--tx3)')+'">'+(sugMin>0?'+'+sugMin:'--')+'</td>'+
+        '<td style="color:var(--bl-l)">'+(udsAnt>0?udsAnt+'u':'-')+'</td>'+
+      '</tr>';
 
     if(!ok) faltantes.push({mk:mk,col:col,sugMin:sugMin,udsAct:udsAct,udsAnt:udsAnt});
   }
+  marcasHtml+='</tbody></table>';
   document.getElementById('ficha-marcas').innerHTML=marcasHtml;
 
   // Pedido sugerido
