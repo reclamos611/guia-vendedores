@@ -240,7 +240,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Sora',sa
 <body>
 
 <!-- TOPBAR -->
-<div class="topbar">
+<div class="topbar" id="main-topbar">
   <div class="logo-pill">611 PEP</div>
   <div class="tb-title">Guia de Visita</div>
   <div class="tb-right">
@@ -388,9 +388,8 @@ var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','
 // Fecha en topbar
 document.getElementById('tb-fecha').textContent =
   HOY_DIA + ' ' + HOY.getDate() + '/' + MESES[HOY.getMonth()];
-// Ocultar topbar al inicio (empieza en login)
-var tbInicio = document.querySelector('.topbar');
-if(tbInicio) tbInicio.style.display = 'none';
+// topbar se maneja en ir()
+document.getElementById('main-topbar').style.display='none';
 
 // -- UTILS -----------------------------------------------------------------
 function fmtN(v){ return Math.round(v||0).toLocaleString('es-AR'); }
@@ -423,12 +422,11 @@ function ir(id){
   var target = document.getElementById(id);
   if(target){
     target.classList.add('activa');
-    // Scroll al top de multiples formas para compatibilidad movil
-    window.scrollTo(0,0);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
     target.scrollTop = 0;
   }
+  // Topbar: oculto solo en login
+  var tb = document.getElementById('main-topbar');
+  if(tb) tb.style.display = (id==='v-login') ? 'none' : 'flex';
 }
 
 // -- LOGIN -----------------------------------------------------------------
