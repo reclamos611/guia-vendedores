@@ -32,44 +32,65 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Detectar archivos Excel automaticamente en la carpeta data/
 DATA_DIR = os.path.join(BASE_DIR, "data")
-xlsx_files = sorted([f for f in os.listdir(DATA_DIR) if f.endswith('.xlsx') and not f.startswith('~')])
+xlsx_files = [f for f in os.listdir(DATA_DIR) if f.endswith('.xlsx') and not f.startswith('~')]
 print(f"Archivos encontrados en data/: {xlsx_files}")
 
-# El mas reciente es el mes actual, el anterior es el mes pasado
-# Si hay solo uno, se usa para ambos (historial y actual)
 if len(xlsx_files) == 0:
     print("ERROR: No hay archivos .xlsx en la carpeta data/")
     sys.exit(1)
-elif len(xlsx_files) == 1:
-    archivo_actual   = os.path.join(DATA_DIR, xlsx_files[0])
-    archivo_anterior = os.path.join(DATA_DIR, xlsx_files[0])
-    print(f"Un solo archivo detectado — se usa para mes actual y anterior: {xlsx_files[0]}")
-else:
-    # Ordenados por fecha de modificacion: el mas nuevo = actual, el anterior = historial
-    xlsx_con_fecha = sorted(
-        [(f, os.path.getmtime(os.path.join(DATA_DIR, f))) for f in xlsx_files],
-        key=lambda x: x[1], reverse=True
-    )
-    archivo_actual   = os.path.join(DATA_DIR, xlsx_con_fecha[0][0])
-    archivo_anterior = os.path.join(DATA_DIR, xlsx_con_fecha[1][0])
-    print(f"Mes actual:   {xlsx_con_fecha[0][0]}")
-    print(f"Mes anterior: {xlsx_con_fecha[1][0]}")
 
-# Buscar maestro y cliente_zona (cualquier nombre que contenga esas palabras)
-def find_file(keyword):
-    matches = [f for f in xlsx_files if keyword.lower() in f.lower()]
-    if matches:
-        return os.path.join(DATA_DIR, matches[0])
+# Palabras clave para identificar cada tipo de archivo
+KEYWORDS_MAESTRO = ['maestro', 'master', 'clientes']
+KEYWORDS_ZONA    = ['zona', 'cliente_zona', 'cliente zona', 'ruta']
+KEYWORDS_EXCLUIR = KEYWORDS_MAESTRO + KEYWORDS_ZONA
+
+def find_file_by_keywords(files, keywords):
+    for f in files:
+        fl = f.lower()
+        if any(k in fl for k in keywords):
+            return os.path.join(DATA_DIR, f)
     return None
 
-maestro_auto    = find_file('maestro')
-cliente_zona_auto = find_file('zona') or find_file('cliente_zona')
+def find_ventas(files, excluir_keywords):
+    """Archivos que NO son maestro ni zona = sabanas de ventas"""
+    ventas = []
+    for f in files:
+        fl = f.lower()
+        if not any(k in fl for k in excluir_keywords):
+            ventas.append(f)
+    return ventas
+
+maestro_file    = find_file_by_keywords(xlsx_files, KEYWORDS_MAESTRO)
+zona_file       = find_file_by_keywords(xlsx_files, KEYWORDS_ZONA)
+ventas_files    = find_ventas(xlsx_files, KEYWORDS_EXCLUIR)
+
+print(f"Maestro clientes: {os.path.basename(maestro_file) if maestro_file else 'NO encontrado'}")
+print(f"Cliente zona:     {os.path.basename(zona_file) if zona_file else 'NO encontrado'}")
+print(f"Sabanas de venta: {ventas_files}")
+
+if not ventas_files:
+    print("ERROR: No se encontro ningun archivo de ventas en data/")
+    print("Asegurate de subir la sabana de ventas. No debe tener 'maestro' ni 'zona' en el nombre.")
+    sys.exit(1)
+
+# Si hay mas de una sabana, ordenar por fecha y tomar la mas nueva como actual
+if len(ventas_files) > 1:
+    ventas_fecha = sorted(ventas_files,
+        key=lambda f: os.path.getmtime(os.path.join(DATA_DIR, f)), reverse=True)
+    archivo_actual   = os.path.join(DATA_DIR, ventas_fecha[0])
+    archivo_anterior = os.path.join(DATA_DIR, ventas_fecha[1])
+    print(f"Mes actual (mas reciente):  {ventas_fecha[0]}")
+    print(f"Mes anterior:               {ventas_fecha[1]}")
+else:
+    archivo_actual   = os.path.join(DATA_DIR, ventas_files[0])
+    archivo_anterior = os.path.join(DATA_DIR, ventas_files[0])
+    print(f"Una sola sabana — usada para mes actual y anterior: {ventas_files[0]}")
 
 FILES = {
     "venta_actual":   archivo_actual,
     "venta_anterior": archivo_anterior,
-    "maestro":        maestro_auto or archivo_actual,
-    "cliente_zona":   cliente_zona_auto or archivo_actual,
+    "maestro":        maestro_file or archivo_actual,
+    "cliente_zona":   zona_file or archivo_actual,
     "template":       os.path.join(BASE_DIR, "guia_template.html"),
     "output":         os.path.join(BASE_DIR, "guia_visita_611.html"),
 }
