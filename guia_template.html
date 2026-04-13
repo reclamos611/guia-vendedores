@@ -21,9 +21,15 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   font-family:Sora,sans-serif;font-size:14px}
 
 /* PAGINAS - sistema simple */
-.page{display:none}
-.page.show{display:block;min-height:100vh;background:var(--bg)}
-body{background:var(--bg)}
+.page{
+  display:none;
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  min-height:100%;
+  background:var(--bg);
+}
+.page.show{display:block}
 
 /* TOPBAR */
 .topbar{position:sticky;top:0;z-index:50;
@@ -39,7 +45,7 @@ body{background:var(--bg)}
 .tb-date{font-size:10px;color:var(--tx3);font-family:'DM Mono',monospace}
 
 /* LOGIN */
-#pg-login{min-height:100vh;display:flex;flex-direction:column;
+#pg-login{min-height:100%;display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:32px 20px;background:var(--bg)}
 #pg-login.show{display:flex}
 .login-box{width:100%;max-width:320px}
@@ -347,7 +353,8 @@ function mostrar(id){
     document.getElementById(p).className='page';
   });
   document.getElementById(id).className='page show';
-  window.scrollTo(0,0);
+  document.body.scrollTop=0;
+  document.documentElement.scrollTop=0;
   var tb=document.getElementById('topbar');
   tb.style.display=id==='pg-login'?'none':'flex';
 }
