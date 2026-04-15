@@ -168,112 +168,36 @@ def find_all_ventas():
     return ventas
 
 def find_all_objetivos():
-    """Encuentra todos los archivos de objetivos por mes."""
+    """
+    Encuentra archivos de objetivos por mes. Soporta dos formatos:
+      objetivos_kg_abril.xlsx  + objetivos_ccc_abril.xlsx  (dos archivos separados)
+      objetivos_abril.xlsx                                  (un solo archivo combinado)
+    Retorna: {mes_num: {'kg': path_o_None, 'ccc': path_o_None}}
+    """
+    MESES = [('enero',1),('febrero',2),('marzo',3),('abril',4),
+             ('mayo',5),('junio',6),('julio',7),('agosto',8),
+             ('septiembre',9),('octubre',10),('noviembre',11),('diciembre',12)]
     objetivos = {}
     for f in sorted(os.listdir(DATA_DIR)):
         if not f.endswith('.xlsx'): continue
         fl = f.lower()
-        if 'objetivo' in fl or 'obj_' in fl:
-            path = os.path.join(DATA_DIR, f)
-            # Detectar mes del nombre
-            for mes_n, mes_num in [
-                ('enero',1),('febrero',2),('marzo',3),('abril',4),
-                ('mayo',5),('junio',6),('julio',7),('agosto',8),
-                ('septiembre',9),('octubre',10),('noviembre',11),('diciembre',12)
-            ]:
-                if mes_n in fl:
-                    objetivos[mes_num] = path
-                    break
+        if 'objetivo' not in fl and 'obj_' not in fl: continue
+        path = os.path.join(DATA_DIR, f)
+        for mes_n, mes_num in MESES:
+            if mes_n not in fl: continue
+            if mes_num not in objetivos:
+                objetivos[mes_num] = {'kg': None, 'ccc': None}
+            if 'ccc' in fl:
+                objetivos[mes_num]['ccc'] = path
+                print(f"  Objetivo CCC: {f} -> mes {mes_num}")
+            elif 'kg' in fl:
+                objetivos[mes_num]['kg'] = path
+                print(f"  Objetivo KG:  {f} -> mes {mes_num}")
+            else:
+                objetivos[mes_num]['kg'] = path
+                print(f"  Objetivo:     {f} -> mes {mes_num}")
+            break
     return objetivos
-
-# ─── LEER ARCHIVOS BASE ───────────────────────────────────────
-
-print("\nBuscando archivos...")
-
-# Maestro clientes
-maestro_path = find_file("maestro_clientes.xlsx") or find_file("maestro cliente.xlsx", ["maestro"])
-zona_path    = find_file("cliente_zona.xlsx") or find_file("cliente zona.xlsx", ["zona"])
-lista_path   = find_file("lista_precios.xlsx") or find_file("lista de precios.xlsx", ["lista","precio"])
-
-# Sábanas de venta
-ventas_files = find_all_ventas()
-print(f"  Archivos de venta encontrados: {list(ventas_files.keys())}")
-
-# Objetivos por mes
-objetivos_files = find_all_objetivos()
-print(f"  Archivos de objetivos: {list(objetivos_files.keys())}")
-
-if not ventas_files:
-    print("ERROR: No hay archivos de venta en data/")
-    sys.exit(1)
-
-# ─── LISTA DE PRECIOS (categorias PG/SB) ─────────────────────
-
-desc_cat = {}
-if lista_path:
-    try:
-        df_p = pd.read_excel(lista_path, sheet_name='Centro', header=1)
-        cat_col = [c for c in df_p.columns if 'Gold' in str(c) or 'Bronze' in str(c)]
-        if cat_col:
-            cat_col = cat_col[0]
-            for _, row in df_p.dropna(subset=[cat_col]).iterrows():
-                for field in ['Producto - Descripcion','Referencia']:
-                    val = str(row.get(field,'')).lower().strip()
-                    if val and val != 'nan':
-                        desc_cat[val] = str(row[cat_col])
-        print(f"  Lista precios: {len(desc_cat)} articulos clasificados")
-    except Exception as e:
-        print(f"  Lista precios: no disponible ({e})")
-
-# ─── CLIENTE ZONA ─────────────────────────────────────────────
-
-print("\nProcesando cliente zona...")
-dias_map = {}
-cartera_cz = {}
-
-if zona_path:
-    df_cz = pd.read_excel(zona_path)
-    if 'estado' in df_cz.columns:
-        df_cz = df_cz[df_cz['estado']=='A']
-    for _, row in df_cz.iterrows():
-        cid  = si(row['cliente_codigo'])
-        zona = str(si(row.get('zona_codigo',0)))
-        vend = si(row.get('vendedor',0)) if 'vendedor' in df_cz.columns else si(zona[:-1]) if len(zona)>1 else 0
-        dia  = si(zona[-1]) if len(zona)>0 else 0
-        if cid > 0 and vend > 0:
-            if cid not in dias_map: dias_map[cid] = []
-            if 1 <= dia <= 6:
-                dias_map[cid].append([DIA_MAP[dia], vend])
-            if 10 <= vend <= 65:
-                if vend not in cartera_cz: cartera_cz[vend] = set()
-                cartera_cz[vend].add(cid)
-    cartera_cz = {v: len(c) for v, c in cartera_cz.items()}
-    print(f"  Cartera calculada: {len(cartera_cz)} vendedores")
-    print(f"  V51: {cartera_cz.get(51,'N/A')}")
-
-# ─── MAESTRO CLIENTES ─────────────────────────────────────────
-
-print("Procesando maestro clientes...")
-mc_dict = {}
-if maestro_path:
-    df_mc = pd.read_excel(maestro_path)
-    if 'estado' in df_mc.columns:
-        df_mc = df_mc[df_mc['estado']=='A']
-    for _, row in df_mc.iterrows():
-        cid = si(row.get('codigo',0))
-        if cid <= 0: continue
-        mc_dict[cid] = {
-            'n': clean_str(row.get('razon_social',''), 30),
-            'd': clean_str(row.get('direccion',''), 35),
-            'l': clean_str(row.get('localidad',''), 20),
-            's': str(row.get('Segmento','')).strip()[:1],
-            'v': si(row.get('vendedor',0)),
-            'm': SUP_MAP.get(si(row.get('vendedor',0)),{}).get('mesa',0),
-            'ds': dias_map.get(cid,[])[:3],
-        }
-    print(f"  Maestro: {len(mc_dict)} clientes activos")
-
-# ─── LEER OBJETIVOS POR MES ───────────────────────────────────
 
 def leer_objetivos_mes(path):
     """Lee archivo de objetivos (PG+SB) y retorna dict {vend: {pg, sb, total}}"""
@@ -377,8 +301,8 @@ OBJ_CCC_ABR = {
 
 def get_obj_for_mes(mes_num):
     """Retorna objetivos para un mes dado. Lee archivo si existe, sino usa base."""
-    # Buscar archivo de objetivos para este mes
-    obj_path = objetivos_files.get(mes_num)
+    obj_paths = objetivos_files.get(mes_num, {})
+    obj_path = obj_paths.get('kg') if isinstance(obj_paths, dict) else obj_paths
     if obj_path:
         obj = leer_objetivos_mes(obj_path)
         if obj:
@@ -407,9 +331,14 @@ def get_obj_for_mes(mes_num):
     return {v: dict(d) for v, d in OBJ_BASE.items()}
 
 def get_ccc_obj_for_mes(mes_num):
+    # Primero buscar archivo
+    obj_paths = objetivos_files.get(mes_num, {})
+    ccc_path = obj_paths.get('ccc') if isinstance(obj_paths, dict) else None
+    if ccc_path:
+        return leer_objetivos_ccc(ccc_path)
+    # Fallback: abril usa hardcoded
     if mes_num == 4:
         return OBJ_CCC_ABR
-    # Sin archivo, retornar vacío (no hay objetivos CCC para otros meses aun)
     return {}
 
 # ─── DETERMINAR MES DE UN ARCHIVO ─────────────────────────────
