@@ -30,67 +30,57 @@ print("=" * 60)
 # ── CONFIGURACION ──────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Detectar archivos Excel automaticamente en la carpeta data/
+# Archivos con nombres fijos en la carpeta data/
+# venta_actual.xlsx   → sabana del mes en curso (se pisa cada dia)
+# venta_anterior.xlsx → sabana del mes cerrado (se renueva al cambiar de mes)
+# maestro_clientes.xlsx y cliente_zona.xlsx → se actualizan cuando cambian
+
 DATA_DIR = os.path.join(BASE_DIR, "data")
-xlsx_files = [f for f in os.listdir(DATA_DIR) if f.endswith('.xlsx') and not f.startswith('~')]
-print(f"Archivos encontrados en data/: {xlsx_files}")
 
-if len(xlsx_files) == 0:
-    print("ERROR: No hay archivos .xlsx en la carpeta data/")
-    sys.exit(1)
+def find_fixed(name):
+    path = os.path.join(DATA_DIR, name)
+    return path if os.path.exists(path) else None
 
-# Palabras clave para identificar cada tipo de archivo
-KEYWORDS_MAESTRO = ['maestro', 'master', 'clientes']
-KEYWORDS_ZONA    = ['zona', 'cliente_zona', 'cliente zona', 'ruta']
-KEYWORDS_EXCLUIR = KEYWORDS_MAESTRO + KEYWORDS_ZONA
-
-def find_file_by_keywords(files, keywords):
-    for f in files:
-        fl = f.lower()
-        if any(k in fl for k in keywords):
+def find_keyword(keyword):
+    for f in os.listdir(DATA_DIR):
+        if keyword in f.lower() and f.endswith('.xlsx'):
             return os.path.join(DATA_DIR, f)
     return None
 
-def find_ventas(files, excluir_keywords):
-    """Archivos que NO son maestro ni zona = sabanas de ventas"""
-    ventas = []
-    for f in files:
-        fl = f.lower()
-        if not any(k in fl for k in excluir_keywords):
-            ventas.append(f)
-    return ventas
+archivo_actual   = find_fixed("venta_actual.xlsx")
+archivo_anterior = find_fixed("venta_anterior.xlsx")
+maestro_file     = find_fixed("maestro_clientes.xlsx") or find_keyword("maestro")
+zona_file        = find_fixed("cliente_zona.xlsx")     or find_keyword("zona")
 
-maestro_file    = find_file_by_keywords(xlsx_files, KEYWORDS_MAESTRO)
-zona_file       = find_file_by_keywords(xlsx_files, KEYWORDS_ZONA)
-ventas_files    = find_ventas(xlsx_files, KEYWORDS_EXCLUIR)
+# Fallback: si no existe venta_actual, buscar cualquier xlsx que no sea maestro/zona/anterior
+if not archivo_actual:
+    todos = sorted([f for f in os.listdir(DATA_DIR)
+        if f.endswith('.xlsx') and not f.startswith('~')
+        and not any(k in f.lower() for k in ['maestro','zona','anterior','clientes'])])
+    if todos:
+        archivo_actual = os.path.join(DATA_DIR, todos[-1])
+        print(f"Usando como venta actual: {todos[-1]}")
 
-print(f"Maestro clientes: {os.path.basename(maestro_file) if maestro_file else 'NO encontrado'}")
-print(f"Cliente zona:     {os.path.basename(zona_file) if zona_file else 'NO encontrado'}")
-print(f"Sabanas de venta: {ventas_files}")
+# Si no hay anterior, usar la actual (no hay historial del mes pasado)
+if not archivo_anterior:
+    archivo_anterior = archivo_actual
+    print("Sin venta_anterior.xlsx — usando venta_actual como referencia")
 
-if not ventas_files:
-    print("ERROR: No se encontro ningun archivo de ventas en data/")
-    print("Asegurate de subir la sabana de ventas. No debe tener 'maestro' ni 'zona' en el nombre.")
+print(f"Venta actual:   {os.path.basename(archivo_actual) if archivo_actual else 'NO ENCONTRADO'}")
+print(f"Venta anterior: {os.path.basename(archivo_anterior) if archivo_anterior else 'NO ENCONTRADO'}")
+print(f"Maestro:        {os.path.basename(maestro_file) if maestro_file else 'NO encontrado'}")
+print(f"Cliente zona:   {os.path.basename(zona_file) if zona_file else 'NO encontrado'}")
+
+if not archivo_actual:
+    print("\nERROR: No se encontro ningun archivo de ventas.")
+    print("Nombra la sabana como venta_actual.xlsx y subila a data/")
     sys.exit(1)
-
-# Si hay mas de una sabana, ordenar por fecha y tomar la mas nueva como actual
-if len(ventas_files) > 1:
-    ventas_fecha = sorted(ventas_files,
-        key=lambda f: os.path.getmtime(os.path.join(DATA_DIR, f)), reverse=True)
-    archivo_actual   = os.path.join(DATA_DIR, ventas_fecha[0])
-    archivo_anterior = os.path.join(DATA_DIR, ventas_fecha[1])
-    print(f"Mes actual (mas reciente):  {ventas_fecha[0]}")
-    print(f"Mes anterior:               {ventas_fecha[1]}")
-else:
-    archivo_actual   = os.path.join(DATA_DIR, ventas_files[0])
-    archivo_anterior = os.path.join(DATA_DIR, ventas_files[0])
-    print(f"Una sola sabana — usada para mes actual y anterior: {ventas_files[0]}")
 
 FILES = {
     "venta_actual":   archivo_actual,
     "venta_anterior": archivo_anterior,
     "maestro":        maestro_file or archivo_actual,
-    "cliente_zona":   zona_file or archivo_actual,
+    "cliente_zona":   zona_file    or archivo_actual,
     "template":       os.path.join(BASE_DIR, "guia_template.html"),
     "output":         os.path.join(BASE_DIR, "guia_visita_611.html"),
 }
