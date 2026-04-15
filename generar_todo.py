@@ -709,14 +709,20 @@ MK_TARGETS = {'Lays':94.9,'Doritos':98.0,'Cheetos':83.9,'3D':85.7,
     'Pep':62.3,'Pehuamar':20.7,'Twistos':79.4,'Tostitos':28.4,'Quaker':4.6}
 
 # Cobertura mes actual por vendedor por marca
+# Usar mc_dict para obtener el vendedor (cubre clientes nuevos que no estan en guia)
 cob_abr = {}
-for cid, uds in cli_act.items():
-    d = guia.get(str(cid),{})
-    v = d.get('v',0)
+for cid_int, uds in cli_act.items():
+    cid_str = str(cid_int)
+    # Buscar vendedor: primero en guia, luego en mc_dict
+    d = guia.get(cid_str, {})
+    v = d.get('v', 0)
+    if not v:
+        mc = mc_dict.get(int(cid_int) if isinstance(cid_int,str) else cid_int, {})
+        v = mc.get('v', 0)
     if v not in SUP_MAP: continue
     if v not in cob_abr: cob_abr[v] = {mk:0 for mk in MARCAS}
-    for idx, mk in enumerate(MARCAS):
-        if uds[idx] >= 3:
+    for mk_idx, mk in enumerate(MARCAS):
+        if len(uds) > mk_idx and uds[mk_idx] >= 3:
             cob_abr[v][mk] += 1
 
 vend_stats = {}
@@ -794,7 +800,7 @@ else:
 # ─── GENERAR MAS ANALYTICS ────────────────────────────────────
 
 print("\nGenerando mas_analytics_v9.html...")
-dash_template = os.path.join(BASE_DIR, "mas_template.html")
+dash_template = os.path.join(BASE_DIR, "dashboard_template.html")
 dash_output   = os.path.join(BASE_DIR, "mas_analytics_v9.html")
 
 if os.path.exists(dash_template):
