@@ -38,12 +38,18 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 def find_fixed(name):
-    path = os.path.join(DATA_DIR, name)
-    return path if os.path.exists(path) else None
+    # Buscar ignorando mayusculas/minusculas y espacios vs guiones bajos
+    name_norm = name.lower().replace('_',' ')
+    for f in os.listdir(DATA_DIR):
+        if not f.endswith('.xlsx'): continue
+        f_norm = f.lower().replace('_',' ')
+        if f_norm == name_norm or f.lower() == name.lower():
+            return os.path.join(DATA_DIR, f)
+    return None
 
 def find_keyword(keyword):
-    for f in os.listdir(DATA_DIR):
-        if keyword in f.lower() and f.endswith('.xlsx'):
+    for f in sorted(os.listdir(DATA_DIR)):
+        if keyword in f.lower() and f.endswith('.xlsx') and not f.startswith('~'):
             return os.path.join(DATA_DIR, f)
     return None
 
@@ -54,9 +60,10 @@ zona_file        = find_fixed("cliente_zona.xlsx")     or find_keyword("zona")
 
 # Fallback: si no existe venta_actual, buscar cualquier xlsx que no sea maestro/zona/anterior
 if not archivo_actual:
+    excluir = ['maestro','zona','anterior','clientes','template','guia']
     todos = sorted([f for f in os.listdir(DATA_DIR)
         if f.endswith('.xlsx') and not f.startswith('~')
-        and not any(k in f.lower() for k in ['maestro','zona','anterior','clientes'])])
+        and not any(k in f.lower() for k in excluir)])
     if todos:
         archivo_actual = os.path.join(DATA_DIR, todos[-1])
         print(f"Usando como venta actual: {todos[-1]}")
@@ -156,6 +163,10 @@ if not os.path.exists(FILES['template']):
 print("\nProcesando cliente zona...")
 df_cz = pd.read_excel(FILES['cliente_zona'])
 dias_map = {}
+# Filtrar solo clientes activos (estado=A)
+if 'estado' in df_cz.columns:
+    df_cz = df_cz[df_cz['estado'] == 'A']
+
 for _, row in df_cz.iterrows():
     cid = si(row['cliente_codigo'])
     zona = str(si(row.get('zona_codigo', 0)))
@@ -290,9 +301,22 @@ for cid, d in cli_ant.items():
 abr_data = {str(k): [max(0,round(x)) for x in v] for k,v in cli_act.items()}
 
 # ── STATS POR VENDEDOR ────────────────────────────────────────
-CARTERA_CZ = {31:274,32:286,33:247,34:263,35:275,36:254,37:272,38:304,39:299,
-    41:305,42:282,43:280,44:315,45:337,46:256,47:297,48:313,49:317,
-    51:245,52:332,53:303,54:360,55:315,56:292,57:274,58:297,59:298}
+# Cartera calculada desde cliente_zona estado=A
+# Calcular cartera dinamicamente desde cliente_zona (ya filtrado por estado A)
+cartera_por_vend = {}
+for _, row in df_cz.iterrows():
+    cid = si(row['cliente_codigo'])
+    zona = str(si(row.get('zona_codigo', 0)))
+    if 'vendedor' in df_cz.columns:
+        vend = si(row.get('vendedor', 0))
+    else:
+        vend = si(zona[:-1]) if len(zona) > 1 else 0
+    if cid > 0 and 10 <= vend <= 65:
+        if vend not in cartera_por_vend:
+            cartera_por_vend[vend] = set()
+        cartera_por_vend[vend].add(cid)
+CARTERA_CZ = {v: len(clientes) for v, clientes in cartera_por_vend.items()}
+print(f"Cartera calculada: {CARTERA_CZ}")
 
 vend_stats = {}
 for cid, d in guia.items():
