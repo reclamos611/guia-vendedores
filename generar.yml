@@ -25,7 +25,7 @@ jobs:
         run: python generar_todo.py
 
       - name: Publicar archivos generados
-        run: |
+        run: python generar_todo.py
           git config user.name 'GitHub Actions'
           git config user.email 'actions@github.com'
           git add guia_visita_611.html mas_analytics_v9.html
