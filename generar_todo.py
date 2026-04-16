@@ -52,6 +52,14 @@ for v in [31,32,33,34,35,36,37,38,39,51]: SUP_MAP[v]={'sup':'CLAUDIO ALVARADO','
 for v in [42,43,44,46,47,48,54,58]: SUP_MAP[v]={'sup':'MARIANO TRIULCI','mesa':500}
 for v in [61,62,63,64,65]: SUP_MAP[v]={'sup':'NATALIA PEREZ','mesa':600}
 
+def get_mesa(v):
+    s = SUP_MAP.get(v,{})
+    return s.get('mesa',0) if isinstance(s,dict) else s
+
+def get_sup(v):
+    s = SUP_MAP.get(v,{})
+    return s.get('sup','') if isinstance(s,dict) else ''
+
 MARCAS = ['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker']
 MARCAS_KW = {
     'Lays':['lays'],'Doritos':['doritos'],'Cheetos':['cheetos'],'3D':['3d'],
@@ -122,6 +130,7 @@ def classify_art(art):
 
 # Detectar si PG o SB por lista de precios
 ART_CAT_CACHE = {}
+desc_cat = {}  # Se llena si hay lista_precios.xlsx
 def classify_art_full(art, desc_cat={}):
     a = str(art).lower().strip()
     if a in ART_CAT_CACHE: return ART_CAT_CACHE[a]
@@ -346,8 +355,8 @@ def get_ccc_obj_for_mes(mes_num):
 def detect_mes(filepath):
     """Lee algunas filas para determinar el mes del archivo."""
     try:
-        df = pd.read_excel(filepath, usecols=['fecha'], nrows=100)
-        fechas = pd.to_datetime(df['fecha'], errors='coerce').dropna()
+        df = pd.read_excel(filepath, usecols=['Fecha'], nrows=100)
+        fechas = pd.to_datetime(df['Fecha'], errors='coerce').dropna()
         if len(fechas) > 0:
             mes = fechas.mode()[0].month
             anio = fechas.mode()[0].year
@@ -414,7 +423,7 @@ def procesar_ventas(filepath, obj_vend, cartera_cz):
         tipo = str(row.get('tipo_venta',''))
         pep  = bool(row['_pep'])
         crea = bool(row['_crea'])
-        mesa = SUP_MAP.get(v,{}).get('mesa',0)
+        mesa = get_mesa(v)
 
         if v not in vend_acc:
             vend_acc[v] = {
@@ -449,7 +458,7 @@ def procesar_ventas(filepath, obj_vend, cartera_cz):
     for v, d in vend_acc.items():
         if v not in SUP_MAP: continue
         obj  = obj_vend.get(v,{})
-        mesa = SUP_MAP[v]['mesa']
+        mesa = get_mesa(v)
         kr   = round(d['pep_kg'])
         kc   = round(d['pep_crea_kg'])
         kt   = kr + kc
@@ -473,7 +482,7 @@ def procesar_ventas(filepath, obj_vend, cartera_cz):
 
         perf.append({
             'cod':v,'nom':VEND_NOMBRES[v],
-            'mesa':mesa,'sup':SUP_MAP[v]['sup'],
+            'mesa':mesa,'sup':get_sup(v),
             'cart':cart,'ccc':ccc_n,
             'pcc':round(ccc_n/cart*100,1) if cart else 0,
             'kr':kr,'kc':kc,'kt':kt,'ot':ot,'apr':apr,
@@ -584,7 +593,7 @@ if maestro_path:
             'd': clean_str(row.get('direccion',''), 35),
             'l': clean_str(row.get('localidad',''), 20),
             'v': si(row.get('vendedor',0)),
-            'm': SUP_MAP.get(si(row.get('vendedor',0)),{}).get('mesa',0),
+            'm': (SUP_MAP.get(si(row.get('vendedor',0))) or {}).get('mesa',0),
             'ds': dias_map.get(cid,[])[:3],
         }
     print(f"  Maestro: {len(mc_dict)} clientes activos")
