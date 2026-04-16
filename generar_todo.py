@@ -292,7 +292,10 @@ def construir(datos, mes_num, anio, etiq):
             for idx,mk in enumerate(MARCAS):
                 if uds[idx]>=3: cob_g[mk]+=1
     vendedores_flat=[p for p in perf]
-    return {"periodo":etiq,"vendedores":vendedores_flat,"kpis_global":{"cartera":tot_cart,"ccc":tot_ccc,"ccc_pep":tot_ccc,
+    return {"periodo":etiq,"vendedores":vendedores_flat,
+        "cobertura":{mk:{"clientes":cob_g[mk],"pct":round(cob_g[mk]/tot_cart*100,1) if tot_cart else 0,
+            "objetivo":TARGETS.get(mk,0)} for mk in MARCAS},
+        "kpis_global":{"cartera":tot_cart,"ccc":tot_ccc,"ccc_pep":tot_ccc,
         "cobertura_cartera":round(tot_ccc/tot_cart*100,1) if tot_cart else 0,
         "toneladas":round(tot_kr/1000,2),"importe":tot_pv,"unidades":0,
         "ticket":round(tot_pv/tot_ccc) if tot_ccc else 0,"mix_imp":0},
