@@ -517,6 +517,10 @@ venta_anterior_path = find_file("venta_anterior.xlsx")
 
 # Si no hay con nombre fijo, tomar los mas recientes del listado
 todos_ventas = find_all_ventas()
+
+# Objetivos por mes
+objetivos_files = find_all_objetivos()
+print(f"  Archivos de objetivos: {list(objetivos_files.keys())}")
 if not venta_actual_path and todos_ventas:
     # El mas reciente es el actual
     recientes = sorted(todos_ventas.items(),
