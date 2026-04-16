@@ -544,6 +544,51 @@ if not mes_actual:
 periodo_actual = f"{MESES_ES[mes_actual]} {anio_actual}"
 print(f"  Mes actual: {periodo_actual}")
 
+# ── LEER CLIENTE ZONA Y MAESTRO (necesarios para cartera_cz) ──
+print("\nProcesando cliente zona...")
+zona_path   = find_file("cliente_zona.xlsx",   ["zona"])
+maestro_path= find_file("maestro_clientes.xlsx",["maestro"])
+
+dias_map   = {}
+cartera_cz = {}
+if zona_path:
+    df_cz = pd.read_excel(zona_path)
+    if 'estado' in df_cz.columns:
+        df_cz = df_cz[df_cz['estado']=='A']
+    for _, row in df_cz.iterrows():
+        cid  = si(row['cliente_codigo'])
+        zona = str(si(row.get('zona_codigo',0)))
+        vend = si(row.get('vendedor',0)) if 'vendedor' in df_cz.columns else si(zona[:-1]) if len(zona)>1 else 0
+        dia  = si(zona[-1]) if len(zona)>0 else 0
+        if cid > 0 and vend > 0:
+            if cid not in dias_map: dias_map[cid] = []
+            if 1 <= dia <= 6:
+                dias_map[cid].append([DIA_MAP[dia], vend])
+            if 10 <= vend <= 65:
+                if vend not in cartera_cz: cartera_cz[vend] = set()
+                cartera_cz[vend].add(cid)
+    cartera_cz = {v: len(c) for v, c in cartera_cz.items()}
+    print(f"  Cartera: {len(cartera_cz)} vendedores | V51={cartera_cz.get(51,0)}")
+
+print("Procesando maestro clientes...")
+mc_dict = {}
+if maestro_path:
+    df_mc = pd.read_excel(maestro_path)
+    if 'estado' in df_mc.columns:
+        df_mc = df_mc[df_mc['estado']=='A']
+    for _, row in df_mc.iterrows():
+        cid = si(row.get('codigo',0))
+        if cid <= 0: continue
+        mc_dict[cid] = {
+            'n': clean_str(row.get('razon_social',''), 30),
+            'd': clean_str(row.get('direccion',''), 35),
+            'l': clean_str(row.get('localidad',''), 20),
+            'v': si(row.get('vendedor',0)),
+            'm': SUP_MAP.get(si(row.get('vendedor',0)),{}).get('mesa',0),
+            'ds': dias_map.get(cid,[])[:3],
+        }
+    print(f"  Maestro: {len(mc_dict)} clientes activos")
+
 # Objetivos del mes actual
 obj_actual = get_obj_for_mes(mes_actual)
 ccc_obj_actual = get_ccc_obj_for_mes(mes_actual)
