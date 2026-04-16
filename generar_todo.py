@@ -864,14 +864,76 @@ dash_output   = os.path.join(BASE_DIR, "mas_analytics_v9.html")
 if os.path.exists(dash_template):
     with open(dash_template,'r',encoding='utf-8') as f:
         html_dash = f.read()
-    html_dash = html_dash.replace('// __PERF_DATA__',    perf_js)
-    html_dash = html_dash.replace('// __CARTERA_BASE__', cartera_js)
+
+    # Convertir PERF_DATA al formato DATA_MARZO que espera el dashboard
+    data_periodos = {}
+    for periodo_label, pdata in PERF_DATA.items():
+        perf_list = pdata.get('perf', [])
+        tot_cart = sum(p.get('cart',0) for p in perf_list if p.get('mesa') in [300,400,500])
+        tot_ccc  = sum(p.get('ccc',0)  for p in perf_list if p.get('mesa') in [300,400,500])
+        tot_ton  = sum(p.get('kr',0)   for p in perf_list if p.get('mesa') in [300,400,500]) / 1000
+        tot_imp  = sum(p.get('pv',0)   for p in perf_list if p.get('mesa') in [300,400,500])
+        kpis_global = {
+            'cartera':tot_cart,'ccc':tot_ccc,'ccc_pep':tot_ccc,
+            'cobertura_cartera':round(tot_ccc/tot_cart*100,1) if tot_cart else 0,
+            'toneladas':round(tot_ton,2),'importe':round(tot_imp),
+            'unidades':0,'ticket':round(tot_imp/tot_ccc) if tot_ccc else 0,'mix_imp':0,
+        }
+        por_mesa = {}
+        for mesa in [300,400,500]:
+            pvs = [p for p in perf_list if p.get('mesa')==mesa]
+            if not pvs: continue
+            cart_m = sum(p.get('cart',0) for p in pvs)
+            ccc_m  = sum(p.get('ccc',0)  for p in pvs)
+            ton_m  = sum(p.get('kr',0)   for p in pvs) / 1000
+            imp_m  = sum(p.get('pv',0)   for p in pvs)
+            cob = {}
+            for mk in MARCAS:
+                n_ok = sum(p.get('mk_cob',{}).get(mk,0) for p in pvs)
+                cob[mk] = {'clientes':n_ok,'pct':round(n_ok/cart_m*100,1) if cart_m else 0}
+            por_mesa[str(mesa)] = {
+                'kpis':{'cartera':cart_m,'ccc':ccc_m,'ccc_pep':ccc_m,
+                    'cobertura_cartera':round(ccc_m/cart_m*100,1) if cart_m else 0,
+                    'toneladas':round(ton_m,2),'importe':round(imp_m),
+                    'unidades':0,'ticket':round(imp_m/ccc_m) if ccc_m else 0,'mix_imp':0},
+                'cobertura':cob,
+                'sup':pvs[0].get('sup','') if pvs else '',
+            }
+        vendedores = []
+        for p in perf_list:
+            vendedores.append({
+                'cod_ven':p.get('cod'),'nom':p.get('nom',''),
+                'imp':p.get('pv',0),'ton':round(p.get('kr',0)/1000,3),
+                'cli':p.get('ccc',0),'cart':p.get('cart',0),'pcc':p.get('pcc',0),
+                'uds':0,'ticket':round(p.get('pv',0)/p.get('ccc',1)) if p.get('ccc') else 0,
+                'mesa':p.get('mesa'),'sup':p.get('sup',''),
+                'apr':p.get('apr'),'apr_pg':p.get('apr_pg'),'apr_sb':p.get('apr_sb'),
+                'ot':p.get('ot',0),'kr':p.get('kr',0),
+                'kr_pg':p.get('kr_pg',0),'kr_sb':p.get('kr_sb',0),
+                'ot_pg':p.get('ot_pg',0),'ot_sb':p.get('ot_sb',0),
+                'obj_ccc':p.get('obj_ccc',0),'mk_cob':p.get('mk_cob',{}),
+            })
+        data_periodos[periodo_label] = {
+            'periodo':periodo_label,'kpis_global':kpis_global,
+            'por_mesa':por_mesa,'vendedores':vendedores,
+            'clientes':[],'cobertura_global':{},'sup_map':{},
+            'dias_trab':pdata.get('dias_trab',0),'dias_hab':pdata.get('dias_hab',22),
+        }
+
+    ultimo = list(data_periodos.values())[-1] if data_periodos else {}
+    periodos_js   = 'const DATA_PERIODOS=' + json.dumps(data_periodos, ensure_ascii=True, separators=(',',':')) + ';'
+    data_marzo_js = 'const DATA_MARZO='    + json.dumps(ultimo,        ensure_ascii=True, separators=(',',':')) + ';'
+
+    html_dash = html_dash.replace('// __DATA_PERIODOS__', periodos_js + '\n' + data_marzo_js)
+    html_dash = html_dash.replace('// __PERF_DATA__',     perf_js)
+    html_dash = html_dash.replace('// __CARTERA_DATA__',  cartera_js)
     html_dash = html_dash.replace('__FECHA_GENERACION__', fecha)
     with open(dash_output,'w',encoding='utf-8') as f:
         f.write(html_dash)
     print(f"  OK: {os.path.getsize(dash_output)/1024:.0f} KB")
 else:
-    print("  SKIP: mas_template.html no encontrado")
+    print("  SKIP: dashboard_template.html no encontrado")
+
 
 print(f"\n{'='*60}")
 print(f"Generacion completada: {fecha}")
