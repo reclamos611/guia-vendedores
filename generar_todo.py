@@ -248,7 +248,7 @@ def construir(datos, mes_num, anio, etiq):
         kr=round(d.get("kg",0),2); pv=round(d.get("pv",0)); n_ccc=len(d.get("ccc",set()))
         tend=round(kr/dias_trab*dias_hab,2) if dias_trab else 0
         cat=d.get("cat",{}); mk_c=mk_cob_vend.get(v,{mk:0 for mk in MARCAS})
-        perf.append({"cod":v,"nom":VNOM.get(v,f"V{v}"),"mesa":mesa,"sup":SUP_NOM.get(mesa,""),
+        perf.append({"cod":v,"nom":VNOM.get(v,f"V{v}"),"mesa":mesa,"sup":SUP_NOM.get(mesa,""),"ton":round(kr/1000,3),"imp":pv,"cli":n_ccc,"ticket":round(pv/n_ccc) if n_ccc else 0,
             "cart":cart,"ccc":n_ccc,"pcc":round(n_ccc/cart*100,1) if cart else 0,
             "obj_ccc":obj_ccc_n,"apc":round(n_ccc/obj_ccc_n*100,1) if obj_ccc_n else 0,
             "kr":kr,"ot":obj_tot,"apr":round(kr/obj_tot*100,1) if obj_tot else 0,
@@ -274,11 +274,9 @@ def construir(datos, mes_num, anio, etiq):
                     if uds[idx]>=3: cob_m[mk]+=1
         por_mesa[str(mesa)]={"kpis":{"cartera":cart_m,"ccc":ccc_m,"ccc_pep":ccc_m,
             "cobertura_cartera":round(ccc_m/cart_m*100,1) if cart_m else 0,
-            "toneladas":round(kr_m/1000,2),"importe":pv_m,"unidades":0,
-            "ticket":round(pv_m/ccc_m) if ccc_m else 0,"mix_imp":0},
-            "cobertura_marcas":{mk:{"clientes":cob_m[mk],
-                "pct":round(cob_m[mk]/cart_m*100,1) if cart_m else 0,
-                "objetivo":TARGETS.get(mk,0)} for mk in MARCAS},
+            "toneladas":round(kr_m/1000,2),"ton":round(kr_m/1000,3),"importe":pv_m,"imp":pv_m,"unidades":0,"uds":0,
+            "ticket":round(pv_m/ccc_m) if ccc_m else 0,"mix_imp":0,"mix":0},
+            "cobertura_marcas":{mk:{"clientes":cob_m[mk],"pct":round(cob_m[mk]/cart_m*100,1) if cart_m else 0,"objetivo":TARGETS.get(mk,0)} for mk in MARCAS},"cob":{mk:{"clientes":cob_m[mk],"pct":round(cob_m[mk]/cart_m*100,1) if cart_m else 0,"objetivo":TARGETS.get(mk,0)} for mk in MARCAS},
             "vendedores":pvs}
         mesas_resumen[str(mesa)]={"kg_real":kr_m,"obj_total":ot_m,
             "avance_pct":round(kr_m/ot_m*100,1) if ot_m else 0,
@@ -293,7 +291,8 @@ def construir(datos, mes_num, anio, etiq):
         if mc_dict.get(cid,{}).get("m",0) in [300,400,500]:
             for idx,mk in enumerate(MARCAS):
                 if uds[idx]>=3: cob_g[mk]+=1
-    return {"periodo":etiq,"kpis_global":{"cartera":tot_cart,"ccc":tot_ccc,"ccc_pep":tot_ccc,
+    vendedores_flat=[p for p in perf]
+    return {"periodo":etiq,"vendedores":vendedores_flat,"kpis_global":{"cartera":tot_cart,"ccc":tot_ccc,"ccc_pep":tot_ccc,
         "cobertura_cartera":round(tot_ccc/tot_cart*100,1) if tot_cart else 0,
         "toneladas":round(tot_kr/1000,2),"importe":tot_pv,"unidades":0,
         "ticket":round(tot_pv/tot_ccc) if tot_ccc else 0,"mix_imp":0},
