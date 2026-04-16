@@ -922,9 +922,14 @@ if os.path.exists(dash_template):
 
     ultimo = list(data_periodos.values())[-1] if data_periodos else {}
     periodos_js   = 'const DATA_PERIODOS=' + json.dumps(data_periodos, ensure_ascii=True, separators=(',',':')) + ';'
-    data_marzo_js = 'const DATA_MARZO='    + json.dumps(ultimo,        ensure_ascii=True, separators=(',',':')) + ';'
+    data_marzo_js = 'const DATA_MARZO='    + json.dumps(ultimo, ensure_ascii=True, separators=(',',':')) + ';'
 
-    html_dash = html_dash.replace('// __DATA_PERIODOS__', periodos_js + '\n' + data_marzo_js)
+    # SEMANAS_DATA y PROV_DATA vacios por ahora (tendencia semanal y proveedores)
+    semanas_js = 'const SEMANAS_DATA={};'
+    prov_js    = 'const PROV_DATA={};'
+
+    html_dash = html_dash.replace('// __DATA_PERIODOS__',
+        periodos_js + '\n' + data_marzo_js + '\n' + semanas_js + '\n' + prov_js)
     html_dash = html_dash.replace('// __PERF_DATA__',     perf_js)
     html_dash = html_dash.replace('// __CARTERA_DATA__',  cartera_js)
     html_dash = html_dash.replace('__FECHA_GENERACION__', fecha)
