@@ -193,18 +193,6 @@ tr:hover td{background:var(--bg3)}
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M4 7h6M7 4v6"/></svg>
       Cobertura marcas
     </div>
-    <div class="nav-item" onclick="navTo('objetivos',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="3"/><circle cx="7" cy="7" r="1"/></svg>
-      Objetivos vendedores
-    </div>
-    <div class="nav-item" onclick="navTo('tendencia',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><polyline points="1,11 4,7 7,9 10,4 13,2"/><line x1="10" y1="2" x2="13" y2="2"/><line x1="13" y1="2" x2="13" y2="5"/></svg>
-      Tendencia semanal
-    </div>
-    <div class="nav-item" onclick="navTo('clientes',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 3h10v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"/><line x1="4" y1="6" x2="10" y2="6"/><line x1="4" y1="9" x2="8" y2="9"/></svg>
-      Clientes
-    </div>
     <div class="nav-item" onclick="navTo('rechazo',this)">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12L12 2M2 2l10 10"/></svg>
       Rechazo y cambio
@@ -214,19 +202,11 @@ tr:hover td{background:var(--bg3)}
       Alertas
     </div>
     <div class="nav-sec">Gestión</div>
-    <div class="nav-item" onclick="navTo('historia',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3l2 1.5"/></svg>
-      Historial períodos
-    </div>
     <div class="nav-item" onclick="openUpload()">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v2a1 1 0 001 1h8a1 1 0 001-1v-2"/></svg>
       Cargar nuevo mes
     </div>
-    <div class="nav-item" onclick="navTo('config',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="2"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.5 2.5l.7.7M10.8 10.8l.7.7M10.8 3.2l-.7.7M3.2 10.8l-.7.7"/></svg>
-      Configuración
     </div>
-  </div>
   <div class="sb-footer">
     <div class="periodo-lbl">Período activo</div>
     <div class="periodo-val" id="sb-periodo">—</div>
@@ -298,7 +278,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- POR MESA -->
-    <div id="sec-mesas" class="sec">
+<div id="sec-mesas" class="sec">
       <div class="tabs" id="mesa-tabs">
         <button class="tab on" onclick="setMesaTab(300,this)">Mesa 300 — Natalia Perez</button>
         <button class="tab" onclick="setMesaTab(400,this)">Mesa 400 — Claudio Alvarado</button>
@@ -308,7 +288,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- VENDEDORES -->
-    <div id="sec-vendedores" class="sec">
+<div id="sec-vendedores" class="sec">
       <div class="card">
         <div class="card-title">Ranking de vendedores <small>Acumulado período activo · PepsiCo</small></div>
         <div class="ch-wrap" style="height:380px"><canvas id="ch-vend-imp"></canvas></div>
@@ -333,7 +313,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- COBERTURA MARCAS -->
-    <div id="sec-cobertura" class="sec">
+<div id="sec-cobertura" class="sec">
       <div class="kpi-grid" id="kpi-cobertura" style="grid-template-columns:repeat(3,1fr)"></div>
       <div class="card">
         <div class="card-title">Cobertura por marca y mesa <small>% clientes CCC con ≥3 uds netas · meta ≥70%</small></div>
@@ -343,189 +323,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- CLIENTES -->
-    <div id="sec-clientes" class="sec">
-      <div class="g4" id="kpi-clientes"></div>
-      <div class="card">
-        <div class="card-title">Detalle de clientes CCC <small id="cli-count">—</small></div>
-        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-          <input type="search" class="cli-search" id="cli-search" placeholder="Buscar nombre, ID, localidad…" oninput="filterClientes()" style="flex:1;min-width:200px">
-          <select id="cli-f-mesa" onchange="filterClientes()">
-            <option value="all">Todas las mesas</option>
-            <option value="300">Mesa 300</option><option value="400">Mesa 400</option><option value="500">Mesa 500</option>
-          </select>
-          <select id="cli-f-vend" onchange="filterClientes()"><option value="all">Todos los vendedores</option></select>
-          <select id="cli-f-dia" onchange="filterClientes()">
-            <option value="all">Todos los días</option>
-            <option value="Lunes">Lunes</option><option value="Martes">Martes</option>
-            <option value="Miercoles">Miércoles</option><option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option><option value="Sabado">Sábado</option>
-          </select>
-          <select id="cli-f-cob" onchange="filterClientes()">
-            <option value="all">Todas las coberturas</option>
-            <option value="critico">Crítico (&lt;5 marcas)</option>
-            <option value="desarrollo">En desarrollo (5–6)</option>
-            <option value="bueno">Bueno (7–8)</option>
-            <option value="completo">Completo (9)</option>
-          </select>
-        </div>
-        <div id="cli-table-wrap">
-          <table>
-            <thead><tr>
-              <th>Cliente</th><th>Localidad</th><th>Canal</th><th>Día visita</th>
-              <th>Vend.</th><th>Mesa</th>
-              <th class="num">Toneladas</th><th class="num">Importe</th>
-              <th class="num">Marcas</th><th>Estado</th>
-            </tr></thead>
-            <tbody id="cli-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ALERTAS -->
-    <div id="sec-alertas" class="sec">
-      <div class="g4" id="kpi-alertas"></div>
-      <div class="g2">
-        <div>
-          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Alertas críticas</h3>
-          <div id="alertas-rd"></div>
-        </div>
-        <div>
-          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Oportunidades</h3>
-          <div id="alertas-am"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Oportunidad por marca <small>clientes sin cobertura por mesa</small></div>
-        <table>
-          <thead><tr><th>Marca</th><th class="num">Mesa 300</th><th class="num">Mesa 400</th><th class="num">Mesa 500</th><th class="num">Total</th><th class="num">%CCC sin cob.</th><th>Prioridad</th></tr></thead>
-          <tbody id="oport-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- HISTORIAL -->
-    <div id="sec-historia" class="sec">
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">Períodos cargados</div>
-          <div id="hist-list"></div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--brd)">
-            <button class="btn-upload" onclick="openUpload()">+ Cargar nuevo período</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">Evolución de toneladas <small>histórico</small></div>
-          <div class="ch-wrap" style="height:220px"><canvas id="ch-hist-ton"></canvas></div>
-          <div class="card-title" style="margin-top:16px">Evolución CCC <small>% cobertura cartera</small></div>
-          <div class="ch-wrap" style="height:180px"><canvas id="ch-hist-ccc"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- OBJETIVOS VENDEDORES -->
-    <div id="sec-objetivos" class="sec">
-      <div class="topbar" style="background:transparent;border:none;padding:0 0 14px;margin-bottom:0">
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <select id="obj-periodo" onchange="renderObjetivos()">
-            <option value="Mar 2026">Marzo 2026 (cierre)</option>
-            <option value="Abr 2026" selected>Abril 2026 (25 días)</option>
-          </select>
-          <select id="obj-mesa" onchange="renderObjetivos()">
-            <option value="all">Todas las mesas</option>
-            <option value="300">Mesa 300 — Natalia Perez</option>
-            <option value="400">Mesa 400 — Claudio Alvarado</option>
-            <option value="500">Mesa 500 — Mariano Triulci</option>
-            <option value="600">Mesa 600 — Otras marcas</option>
-          </select>
-  
-        </div>
-      </div>
-      <div class="g3" id="obj-kpis" style="margin-bottom:14px"></div>
-      <div class="card">
-        <div class="card-title">Avance vs objetivo por vendedor <small id="obj-subtitle"></small></div>
-        <div style="height:380px;position:relative"><canvas id="ch-obj-vend"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Detalle por categoría y vendedor</div>
-        <div style="overflow-x:auto">
-        <table style="min-width:800px">
-          <thead><tr>
-            <th>Vendedor</th><th>Mesa</th>
-            <th class="num">Cereales/Quaker<br><small>kg / obj</small></th>
-            <th class="num">Twistos<br><small>kg / obj</small></th>
-            <th class="num">Salty Plat+Gold<br><small>kg / obj</small></th>
-            <th class="num">Salty Silver+Bronze<br><small>kg / obj</small></th>
-            <th class="num">TOTAL<br><small>kg / obj</small></th>
-            <th class="num">% Real</th>
-            <th class="num">CCC/Cartera</th>
-            <th>Estado</th>
-          </tr></thead>
-          <tbody id="obj-tbody"></tbody>
-        </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- TENDENCIA SEMANAL -->
-    <div id="sec-tendencia" class="sec">
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
-        <select id="ten-mesa" onchange="renderTendencia()">
-          <option value="all">Todas las mesas PepsiCo</option>
-          <option value="300">Mesa 300</option>
-          <option value="400">Mesa 400</option>
-          <option value="500">Mesa 500</option>
-        </select>
-        <select id="ten-metrica" onchange="renderTendencia()">
-          <option value="cli">Clientes con compra</option>
-          <option value="imp">Importe $</option>
-          <option value="kg">Kilogramos</option>
-        </select>
-        <div style="padding:4px 12px;background:var(--bg3);border:1px solid var(--brd);border-radius:7px;font-size:11px;color:var(--tx2)">
-          Comparando <span style="color:var(--bl-l)">Marzo 2026</span> vs <span style="color:var(--am-l)">Abril 2026</span>
-        </div>
-      </div>
-
-      <!-- KPIs semana 1 comparativo -->
-      <div class="g4" id="ten-kpis" style="margin-bottom:14px"></div>
-
-      <!-- Gráfico comparativo semanal -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Comparativa semanal Marzo vs Abril <small id="ten-subtitle">por semana del mes (días 1-7, 8-14, 15-21, 22-28, 29+)</small></div>
-        <div style="height:300px"><canvas id="ch-ten-comp"></canvas></div>
-      </div>
-
-      <!-- Variación % semana a semana -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Variación Abril vs Marzo (misma semana) <small>% de cambio</small></div>
-        <div style="height:220px"><canvas id="ch-ten-var"></canvas></div>
-      </div>
-
-      <!-- Proyección -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Proyección fin de mes <small id="ten-proj-sub"></small></div>
-        <div class="g3" id="ten-proj-kpis"></div>
-        <div style="height:260px;margin-top:14px"><canvas id="ch-ten-proj"></canvas></div>
-      </div>
-
-      <!-- Tabla semana x semana -->
-      <div class="card">
-        <div class="card-title">Detalle semanal</div>
-        <table>
-          <thead><tr>
-            <th>Semana</th><th>Días</th>
-            <th class="num">Marzo — valor</th>
-            <th class="num">Abril — valor</th>
-            <th class="num">Variación</th>
-            <th>Tendencia</th>
-          </tr></thead>
-          <tbody id="ten-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- RECHAZO Y CAMBIO -->
-    <div id="sec-rechazo" class="sec">
+<div id="sec-rechazo" class="sec">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
         <select id="rec-periodo" onchange="renderRechazo()">
           <option value="Mar 2026">Marzo 2026</option>
@@ -588,191 +386,28 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- CONFIGURACIÓN -->
-    <div id="sec-config" class="sec">
+<div id="sec-alertas" class="sec">
+      <div class="g4" id="kpi-alertas"></div>
       <div class="g2">
-
-        <!-- VENTA CREATIVA -->
-        <div class="card">
-          <div class="card-title">Venta creativa — camiones excluidos</div>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <span style="font-size:12px;color:var(--tx2)">Filtro activo</span>
-            <div id="vc-toggle" onclick="toggleVentaCreativa()"
-              style="width:44px;height:24px;border-radius:12px;background:var(--rd);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0">
-              <div id="vc-thumb" style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left .2s"></div>
-            </div>
-            <span id="vc-label" style="font-size:11px;color:var(--gr-l);font-weight:600">ON — excluyendo venta creativa</span>
-          </div>
-          <div style="font-size:11px;color:var(--tx3);margin-bottom:10px">Camiones en esta lista se excluyen del análisis cuando el filtro está ON</div>
-          <div id="camion-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px"></div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input type="number" id="camion-input" placeholder="Nro. camión" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:12px;width:140px;outline:none;font-family:Sora,sans-serif">
-            <button onclick="addCamion()" style="padding:8px 14px;background:var(--bl-d);border:1px solid var(--bl);border-radius:8px;color:var(--bl-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Agregar</button>
-          </div>
+        <div>
+          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Alertas críticas</h3>
+          <div id="alertas-rd"></div>
         </div>
-
-        <!-- ARCHIVOS DE REFERENCIA -->
-        <div class="card">
-          <div class="card-title">Archivos de referencia</div>
-          <div style="margin-bottom:14px">
-            <div style="font-size:11px;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Maestro clientes</div>
-            <div id="ref-mc-status" style="font-size:11px;color:var(--tx3);margin-bottom:8px">No cargado — usando datos de la sábana de ventas</div>
-            <label style="padding:7px 14px;background:var(--bg3);border:1px solid var(--brd2);border-radius:8px;color:var(--tx2);font-size:11px;cursor:pointer;display:inline-block">
-              Subir maestro clientes (.xlsx)
-              <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="loadRefFile('mc',this.files)">
-            </label>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Cliente zona (días de visita)</div>
-            <div id="ref-cz-status" style="font-size:11px;color:var(--tx3);margin-bottom:8px">No cargado — días de visita no disponibles</div>
-            <label style="padding:7px 14px;background:var(--bg3);border:1px solid var(--brd2);border-radius:8px;color:var(--tx2);font-size:11px;cursor:pointer;display:inline-block">
-              Subir cliente zona (.xlsx)
-              <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="loadRefFile('cz',this.files)">
-            </label>
-          </div>
+        <div>
+          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Oportunidades</h3>
+          <div id="alertas-am"></div>
         </div>
       </div>
-
-      <!-- DÍAS HÁBILES -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Días hábiles del período activo</div>
-        <div style="font-size:11px;color:var(--tx2);margin-bottom:14px;line-height:1.6">
-          Usados para proyección a fin de mes y comparativa semanal.
-          Actualizá estos valores cada vez que cargues un mes nuevo.
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div>
-            <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Días hábiles totales del mes</div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <input type="number" id="cfg-dias-total" value="26" min="1" max="31"
-                style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:16px;font-family:DM Mono,monospace;width:90px;outline:none;text-align:center"
-                onchange="updateDias()">
-              <span style="font-size:11px;color:var(--tx3)">días en el mes</span>
-            </div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Días hábiles transcurridos</div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <input type="number" id="cfg-dias-actual" value="5" min="1" max="31"
-                style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:16px;font-family:DM Mono,monospace;width:90px;outline:none;text-align:center"
-                onchange="updateDias()">
-              <span style="font-size:11px;color:var(--tx3)">días transcurridos</span>
-            </div>
-          </div>
-        </div>
-        <div id="cfg-dias-preview" style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:8px;font-size:11px;color:var(--tx2)"></div>
-      </div>
-
-      <!-- OBJETIVOS POR CATEGORÍA -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Objetivos por categoria (Platinum+Gold / Silver+Bronze)
-          <button onclick="saveObjCat()" style="padding:6px 12px;background:var(--gr-d);border:1px solid var(--gr);border-radius:7px;color:var(--gr-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Guardar</button>
-        </div>
-        <div style="font-size:11px;color:var(--tx2);margin-bottom:12px">Objetivos mensuales para el mix de categorias. Se muestran en el ejecutivo como referencia.</div>
-        <table>
-          <thead><tr><th>Mesa</th><th class="num">Plat+Gold obj kg</th><th class="num">Silv+Bronze obj kg</th><th class="num">Plat+Gold obj $</th><th class="num">Silv+Bronze obj $</th></tr></thead>
-          <tbody>
-            <tr><td>Mesa 300</td><td><input id="oc-300-pgk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-300-sbk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-300-pgp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td><td><input id="oc-300-sbp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td></tr>
-            <tr><td>Mesa 400</td><td><input id="oc-400-pgk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-400-sbk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-400-pgp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td><td><input id="oc-400-sbp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td></tr>
-            <tr><td>Mesa 500</td><td><input id="oc-500-pgk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-500-sbk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-500-pgp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td><td><input id="oc-500-sbp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- OBJETIVOS POR VENDEDOR -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Objetivos por vendedor — KG mensuales
-          <button onclick="saveObjVend()" style="padding:6px 12px;background:var(--gr-d);border:1px solid var(--gr);border-radius:7px;color:var(--gr-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Guardar y recalcular</button>
-        </div>
-        <div style="font-size:11px;color:var(--tx2);margin-bottom:12px;line-height:1.6">
-          Objetivos mensuales en KG por vendedor y categoria. Poner 0 si el vendedor no trabaja esa categoria.
-          Para mesa 600 ingresar el objetivo en $ (columna Total).
-        </div>
-        <div style="overflow-x:auto">
-        <table style="min-width:700px;font-size:11px">
-          <thead><tr>
-            <th>Vend.</th><th>Nombre</th><th>Mesa</th>
-            <th class="num">Cereales kg</th>
-            <th class="num">Twistos kg</th>
-            <th class="num">Salty PG kg</th>
-            <th class="num">Salty SB kg</th>
-            <th class="num">Total $ (M600)</th>
-          </tr></thead>
-          <tbody id="obj-vend-tbody"></tbody>
-        </table>
-        </div>
-      </div>
-
-      <!-- ESTRUCTURA DE VENTAS -->
       <div class="card">
-        <div class="card-title">Estructura de ventas — vendedor / mesa / supervisor
-          <button onclick="saveEstructura()" style="padding:6px 12px;background:var(--gr-d);border:1px solid var(--gr);border-radius:7px;color:var(--gr-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Guardar cambios</button>
-        </div>
-        <div style="font-size:11px;color:var(--tx3);margin-bottom:12px">Editá la mesa y el nombre del supervisor para cada vendedor. Los cambios se aplican al dashboard inmediatamente.</div>
+        <div class="card-title">Oportunidad por marca <small>clientes sin cobertura por mesa</small></div>
         <table>
-          <thead><tr><th>Cód. vendedor</th><th>Mesa</th><th>Supervisor</th><th>Acción</th></tr></thead>
-          <tbody id="estructura-tbody"></tbody>
+          <thead><tr><th>Marca</th><th class="num">Mesa 300</th><th class="num">Mesa 400</th><th class="num">Mesa 500</th><th class="num">Total</th><th class="num">%CCC sin cob.</th><th>Prioridad</th></tr></thead>
+          <tbody id="oport-tbody"></tbody>
         </table>
-        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-          <input type="number" id="new-vend-cod" placeholder="Cód. vendedor" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:7px 10px;border-radius:7px;font-size:12px;width:130px;outline:none;font-family:Sora,sans-serif">
-          <select id="new-vend-mesa" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:7px 10px;border-radius:7px;font-size:12px;font-family:Sora,sans-serif">
-            <option value="300">Mesa 300</option><option value="400">Mesa 400</option>
-            <option value="500">Mesa 500</option><option value="600">Mesa 600</option>
-          </select>
-          <input type="text" id="new-vend-sup" placeholder="Nombre supervisor" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:7px 10px;border-radius:7px;font-size:12px;flex:1;outline:none;font-family:Sora,sans-serif">
-          <button onclick="addVendedor()" style="padding:7px 14px;background:var(--bl-d);border:1px solid var(--bl);border-radius:7px;color:var(--bl-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Agregar</button>
-        </div>
       </div>
     </div>
 
-  </div>
-</main>
-
-<!-- UPLOAD MODAL -->
-<div class="upload-modal" id="upload-modal">
-  <div class="upload-box" style="width:560px">
-    <div class="upload-title">Cargar datos</div>
-    <div class="upload-sub">Podés subir cada archivo por separado. La sábana de ventas es obligatoria para actualizar el análisis.</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
-      <div>
-        <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Sábana de ventas <span style="color:var(--rd-l)">*</span></div>
-        <div id="slot-venta-status" style="font-size:10px;color:var(--tx3);margin-bottom:5px;min-height:14px"></div>
-        <label style="display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px dashed var(--brd2);border-radius:8px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;gap:6px" id="slot-venta-lbl">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V10"/></svg>
-          Subir Excel
-          <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleSlot('venta',this.files)">
-        </label>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Maestro clientes</div>
-        <div id="slot-mc-status" style="font-size:10px;color:var(--tx3);margin-bottom:5px;min-height:14px"></div>
-        <label style="display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px dashed var(--brd2);border-radius:8px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;gap:6px">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V10"/></svg>
-          Subir Excel
-          <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleSlot('mc',this.files)">
-        </label>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Cliente zona</div>
-        <div id="slot-cz-status" style="font-size:10px;color:var(--tx3);margin-bottom:5px;min-height:14px"></div>
-        <label style="display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px dashed var(--brd2);border-radius:8px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;gap:6px">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V10"/></svg>
-          Subir Excel
-          <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleSlot('cz',this.files)">
-        </label>
-      </div>
-    </div>
-
-    <div class="progress-bar" id="prog-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-    <div id="proc-status" style="font-size:11px;color:var(--tx2);margin-top:6px;min-height:16px"></div>
-    <div style="display:flex;gap:8px;margin-top:14px">
-      <button class="btn-process" id="proc-btn" disabled onclick="processUpload()">Procesar ventas</button>
-      <button class="btn-cancel" onclick="closeUpload()">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-
+    <!-- HISTORIAL -->
 <script>
 const DATA_MARZO=
 {"periodo":"Abr 2026","vendedores":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":1.333,"imp":38379389,"cli":187,"ticket":205237,"cart":239,"ccc":187,"pcc":78.2,"obj_ccc":214,"apc":87.4,"kr":1333.12,"ot":2790,"apr":47.8,"tend":1960.47,"apt":70.3,"pv":38379389,"pd":271438,"pc":235695,"pdp":0.71,"cat":{"salty_pg":{"r":1124.9,"o":2080},"salty_sb":{"r":44.7,"o":710},"crackers":{"r":99.5,"o":0},"cereales":{"r":64.1,"o":0}},"mk_cob":{"Lays":160,"Doritos":170,"Cheetos":99,"3D":111,"Pep":39,"Pehuamar":32,"Twistos":93,"Tostitos":19,"Quaker":8}},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.734,"imp":20532188,"cli":141,"ticket":145618,"cart":223,"ccc":141,"pcc":63.2,"obj_ccc":201,"apc":70.1,"kr":734.28,"ot":1584,"apr":46.4,"tend":1079.82,"apt":68.2,"pv":20532188,"pd":492348,"pc":368011,"pdp":2.4,"cat":{"salty_pg":{"r":585.1,"o":1029},"salty_sb":{"r":53.2,"o":555},"crackers":{"r":75.0,"o":0},"cereales":{"r":21.0,"o":0}},"mk_cob":{"Lays":120,"Doritos":127,"Cheetos":69,"3D":74,"Pep":25,"Pehuamar":32,"Twistos":62,"Tostitos":16,"Quaker":6}},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.795,"imp":21684592,"cli":121,"ticket":179212,"cart":239,"ccc":121,"pcc":50.6,"obj_ccc":215,"apc":56.3,"kr":795.42,"ot":1836,"apr":43.3,"tend":1169.74,"apt":63.7,"pv":21684592,"pd":582457,"pc":272614,"pdp":2.69,"cat":{"salty_pg":{"r":639.7,"o":1315},"salty_sb":{"r":42.7,"o":521},"crackers":{"r":69.9,"o":0},"cereales":{"r":43.1,"o":0}},"mk_cob":{"Lays":115,"Doritos":116,"Cheetos":48,"3D":79,"Pep":14,"Pehuamar":27,"Twistos":61,"Tostitos":7,"Quaker":7}},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.446,"imp":12487329,"cli":126,"ticket":99106,"cart":224,"ccc":126,"pcc":56.2,"obj_ccc":202,"apc":62.4,"kr":446.45,"ot":1350,"apr":33.1,"tend":656.54,"apt":48.6,"pv":12487329,"pd":304500,"pc":140786,"pdp":2.44,"cat":{"salty_pg":{"r":361.9,"o":1031},"salty_sb":{"r":9.7,"o":319},"crackers":{"r":58.5,"o":0},"cereales":{"r":16.3,"o":0}},"mk_cob":{"Lays":106,"Doritos":114,"Cheetos":69,"3D":68,"Pep":29,"Pehuamar":12,"Twistos":78,"Tostitos":3,"Quaker":6}},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.789,"imp":21311468,"cli":158,"ticket":134883,"cart":261,"ccc":158,"pcc":60.5,"obj_ccc":222,"apc":71.2,"kr":788.99,"ot":1530,"apr":51.6,"tend":1160.28,"apt":75.8,"pv":21311468,"pd":431460,"pc":106186,"pdp":2.02,"cat":{"salty_pg":{"r":608.8,"o":1172},"salty_sb":{"r":41.3,"o":358},"crackers":{"r":85.9,"o":0},"cereales":{"r":53.0,"o":0}},"mk_cob":{"Lays":146,"Doritos":142,"Cheetos":81,"3D":89,"Pep":36,"Pehuamar":19,"Twistos":73,"Tostitos":9,"Quaker":5}},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.666,"imp":17642835,"cli":134,"ticket":131663,"cart":228,"ccc":134,"pcc":58.8,"obj_ccc":205,"apc":65.4,"kr":665.88,"ot":2016,"apr":33.0,"tend":979.24,"apt":48.6,"pv":17642835,"pd":400060,"pc":226182,"pdp":2.27,"cat":{"salty_pg":{"r":511.1,"o":1401},"salty_sb":{"r":32.1,"o":615},"crackers":{"r":88.1,"o":0},"cereales":{"r":34.6,"o":0}},"mk_cob":{"Lays":123,"Doritos":116,"Cheetos":87,"3D":72,"Pep":42,"Pehuamar":20,"Twistos":75,"Tostitos":7,"Quaker":2}},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.864,"imp":23815039,"cli":153,"ticket":155654,"cart":208,"ccc":153,"pcc":73.6,"obj_ccc":202,"apc":75.7,"kr":863.74,"ot":1530,"apr":56.5,"tend":1270.21,"apt":83.0,"pv":23815039,"pd":176036,"pc":74093,"pdp":0.74,"cat":{"salty_pg":{"r":693.2,"o":1145},"salty_sb":{"r":30.2,"o":385},"crackers":{"r":86.6,"o":0},"cereales":{"r":53.7,"o":0}},"mk_cob":{"Lays":138,"Doritos":146,"Cheetos":84,"3D":89,"Pep":25,"Pehuamar":19,"Twistos":85,"Tostitos":2,"Quaker":10}},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.869,"imp":22936840,"cli":189,"ticket":121359,"cart":287,"ccc":189,"pcc":65.9,"obj_ccc":224,"apc":84.4,"kr":868.55,"ot":1710,"apr":50.8,"tend":1277.28,"apt":74.7,"pv":22936840,"pd":533307,"pc":253100,"pdp":2.33,"cat":{"salty_pg":{"r":682.9,"o":1099},"salty_sb":{"r":61.8,"o":611},"crackers":{"r":61.6,"o":0},"cereales":{"r":62.4,"o":0}},"mk_cob":{"Lays":161,"Doritos":173,"Cheetos":105,"3D":109,"Pep":44,"Pehuamar":23,"Twistos":74,"Tostitos":14,"Quaker":11}},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.624,"imp":16605885,"cli":162,"ticket":102505,"cart":261,"ccc":162,"pcc":62.1,"obj_ccc":222,"apc":73.0,"kr":624.47,"ot":1800,"apr":34.7,"tend":918.34,"apt":51.0,"pv":16605885,"pd":918901,"pc":87101,"pdp":5.53,"cat":{"salty_pg":{"r":519.7,"o":1263},"salty_sb":{"r":30.2,"o":537},"crackers":{"r":59.0,"o":0},"cereales":{"r":15.6,"o":0}},"mk_cob":{"Lays":143,"Doritos":148,"Cheetos":106,"3D":89,"Pep":91,"Pehuamar":18,"Twistos":67,"Tostitos":5,"Quaker":6}},{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","ton":0.527,"imp":15982588,"cli":172,"ticket":92922,"cart":300,"ccc":172,"pcc":57.3,"obj_ccc":210,"apc":81.9,"kr":526.89,"ot":1225,"apr":43.0,"tend":774.84,"apt":63.3,"pv":15982588,"pd":503013,"pc":191350,"pdp":3.15,"cat":{"salty_pg":{"r":438.5,"o":894},"salty_sb":{"r":17.6,"o":331},"crackers":{"r":47.6,"o":0},"cereales":{"r":23.2,"o":0}},"mk_cob":{"Lays":126,"Doritos":150,"Cheetos":75,"3D":92,"Pep":17,"Pehuamar":26,"Twistos":59,"Tostitos":4,"Quaker":13}},{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.629,"imp":17914782,"cli":147,"ticket":121869,"cart":277,"ccc":147,"pcc":53.1,"obj_ccc":213,"apc":69.0,"kr":628.98,"ot":1600,"apr":39.3,"tend":924.97,"apt":57.8,"pv":17914782,"pd":286646,"pc":218584,"pdp":1.6,"cat":{"salty_pg":{"r":474.6,"o":1077},"salty_sb":{"r":42.5,"o":523},"crackers":{"r":73.5,"o":0},"cereales":{"r":38.4,"o":0}},"mk_cob":{"Lays":121,"Doritos":134,"Cheetos":58,"3D":76,"Pep":28,"Pehuamar":28,"Twistos":76,"Tostitos":12,"Quaker":12}},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","ton":0.584,"imp":16920448,"cli":173,"ticket":97806,"cart":274,"ccc":173,"pcc":63.1,"obj_ccc":211,"apc":82.0,"kr":583.64,"ot":1232,"apr":47.4,"tend":858.29,"apt":69.7,"pv":16920448,"pd":727858,"pc":760857,"pdp":4.3,"cat":{"salty_pg":{"r":467.9,"o":877},"salty_sb":{"r":14.9,"o":355},"crackers":{"r":62.2,"o":0},"cereales":{"r":38.7,"o":0}},"mk_cob":{"Lays":114,"Doritos":131,"Cheetos":69,"3D":67,"Pep":25,"Pehuamar":25,"Twistos":66,"Tostitos":21,"Quaker":15}},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.617,"imp":17518835,"cli":131,"ticket":133732,"cart":313,"ccc":131,"pcc":41.9,"obj_ccc":215,"apc":60.9,"kr":616.98,"ot":1359,"apr":45.4,"tend":907.32,"apt":66.8,"pv":17518835,"pd":364443,"pc":372247,"pdp":2.08,"cat":{"salty_pg":{"r":508.2,"o":952},"salty_sb":{"r":24.7,"o":407},"crackers":{"r":60.3,"o":0},"cereales":{"r":23.7,"o":0}},"mk_cob":{"Lays":107,"Doritos":117,"Cheetos":67,"3D":84,"Pep":13,"Pehuamar":26,"Twistos":54,"Tostitos":6,"Quaker":7}},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","ton":0.638,"imp":18291032,"cli":158,"ticket":115766,"cart":330,"ccc":158,"pcc":47.9,"obj_ccc":220,"apc":71.8,"kr":637.86,"ot":1488,"apr":42.9,"tend":938.03,"apt":63.0,"pv":18291032,"pd":479391,"pc":464192,"pdp":2.62,"cat":{"salty_pg":{"r":503.7,"o":1110},"salty_sb":{"r":21.8,"o":378},"crackers":{"r":83.7,"o":0},"cereales":{"r":28.6,"o":0}},"mk_cob":{"Lays":117,"Doritos":140,"Cheetos":72,"3D":95,"Pep":26,"Pehuamar":26,"Twistos":89,"Tostitos":8,"Quaker":9}},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.542,"imp":15453368,"cli":152,"ticket":101667,"cart":251,"ccc":152,"pcc":60.6,"obj_ccc":213,"apc":71.4,"kr":541.7,"ot":1359,"apr":39.9,"tend":796.62,"apt":58.6,"pv":15453368,"pd":845358,"pc":218178,"pdp":5.47,"cat":{"salty_pg":{"r":463.7,"o":1053},"salty_sb":{"r":14.4,"o":306},"crackers":{"r":59.7,"o":0},"cereales":{"r":3.9,"o":0}},"mk_cob":{"Lays":129,"Doritos":143,"Cheetos":72,"3D":86,"Pep":33,"Pehuamar":22,"Twistos":67,"Tostitos":5,"Quaker":2}},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.475,"imp":14336484,"cli":141,"ticket":101677,"cart":279,"ccc":141,"pcc":50.5,"obj_ccc":215,"apc":65.6,"kr":474.56,"ot":1207,"apr":39.3,"tend":697.88,"apt":57.8,"pv":14336484,"pd":408324,"pc":265464,"pdp":2.85,"cat":{"salty_pg":{"r":394.8,"o":956},"salty_sb":{"r":13.4,"o":251},"crackers":{"r":60.2,"o":0},"cereales":{"r":6.2,"o":0}},"mk_cob":{"Lays":99,"Doritos":127,"Cheetos":76,"3D":87,"Pep":24,"Pehuamar":11,"Twistos":58,"Tostitos":14,"Quaker":3}},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","ton":1.199,"imp":36279908,"cli":141,"ticket":257304,"cart":307,"ccc":141,"pcc":45.9,"obj_ccc":216,"apc":65.3,"kr":1199.04,"ot":2896,"apr":41.4,"tend":1763.29,"apt":60.9,"pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"cat":{"salty_pg":{"r":1002.7,"o":2094},"salty_sb":{"r":35.5,"o":802},"crackers":{"r":101.6,"o":0},"cereales":{"r":59.2,"o":0}},"mk_cob":{"Lays":110,"Doritos":120,"Cheetos":56,"3D":77,"Pep":21,"Pehuamar":18,"Twistos":66,"Tostitos":10,"Quaker":8}},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.435,"imp":12731833,"cli":128,"ticket":99467,"cart":306,"ccc":128,"pcc":41.8,"obj_ccc":208,"apc":61.5,"kr":434.64,"ot":1063,"apr":40.9,"tend":639.18,"apt":60.1,"pv":12731833,"pd":1054616,"pc":231208,"pdp":8.28,"cat":{"salty_pg":{"r":358.9,"o":806},"salty_sb":{"r":10.3,"o":257},"crackers":{"r":56.3,"o":0},"cereales":{"r":9.2,"o":0}},"mk_cob":{"Lays":106,"Doritos":120,"Cheetos":64,"3D":77,"Pep":17,"Pehuamar":14,"Twistos":62,"Tostitos":3,"Quaker":5}},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.742,"imp":23554995,"cli":169,"ticket":139379,"cart":195,"ccc":169,"pcc":86.7,"obj_ccc":193,"apc":87.6,"kr":742.02,"ot":1854,"apr":40.0,"tend":1091.21,"apt":58.9,"pv":23554995,"pd":167448,"pc":160187,"pdp":0.71,"cat":{"salty_pg":{"r":607.7,"o":1208},"salty_sb":{"r":30.1,"o":646},"crackers":{"r":77.3,"o":0},"cereales":{"r":26.9,"o":0}},"mk_cob":{"Lays":142,"Doritos":155,"Cheetos":80,"3D":82,"Pep":34,"Pehuamar":46,"Twistos":81,"Tostitos":28,"Quaker":12}},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.751,"imp":21709767,"cli":197,"ticket":110202,"cart":313,"ccc":197,"pcc":62.9,"obj_ccc":213,"apc":92.5,"kr":751.15,"ot":1513,"apr":49.6,"tend":1104.63,"apt":73.0,"pv":21709767,"pd":1150811,"pc":368415,"pdp":5.3,"cat":{"salty_pg":{"r":606.0,"o":1067},"salty_sb":{"r":48.4,"o":446},"crackers":{"r":72.9,"o":0},"cereales":{"r":23.8,"o":0}},"mk_cob":{"Lays":150,"Doritos":180,"Cheetos":88,"3D":114,"Pep":40,"Pehuamar":39,"Twistos":90,"Tostitos":10,"Quaker":13}},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","ton":0.499,"imp":15906023,"cli":159,"ticket":100038,"cart":294,"ccc":159,"pcc":54.1,"obj_ccc":215,"apc":74.0,"kr":498.58,"ot":1300,"apr":38.4,"tend":733.21,"apt":56.4,"pv":15906023,"pd":97857,"pc":178203,"pdp":0.62,"cat":{"salty_pg":{"r":403.5,"o":937},"salty_sb":{"r":12.1,"o":363},"crackers":{"r":71.2,"o":0},"cereales":{"r":11.7,"o":0}},"mk_cob":{"Lays":123,"Doritos":140,"Cheetos":70,"3D":77,"Pep":22,"Pehuamar":23,"Twistos":71,"Tostitos":6,"Quaker":6}},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.726,"imp":20866711,"cli":173,"ticket":120617,"cart":305,"ccc":173,"pcc":56.7,"obj_ccc":213,"apc":81.2,"kr":726.12,"ot":1435,"apr":50.6,"tend":1067.82,"apt":74.4,"pv":20866711,"pd":857359,"pc":378453,"pdp":4.11,"cat":{"salty_pg":{"r":608.9,"o":1040},"salty_sb":{"r":26.6,"o":395},"crackers":{"r":80.7,"o":0},"cereales":{"r":9.9,"o":0}},"mk_cob":{"Lays":155,"Doritos":162,"Cheetos":98,"3D":93,"Pep":19,"Pehuamar":31,"Twistos":82,"Tostitos":10,"Quaker":3}},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","ton":0.767,"imp":21179191,"cli":137,"ticket":154593,"cart":281,"ccc":137,"pcc":48.8,"obj_ccc":211,"apc":64.9,"kr":767.31,"ot":1525,"apr":50.3,"tend":1128.4,"apt":74.0,"pv":21179191,"pd":508236,"pc":458148,"pdp":2.4,"cat":{"salty_pg":{"r":592.7,"o":1011},"salty_sb":{"r":20.7,"o":514},"crackers":{"r":93.9,"o":0},"cereales":{"r":60.0,"o":0}},"mk_cob":{"Lays":109,"Doritos":129,"Cheetos":72,"3D":84,"Pep":32,"Pehuamar":27,"Twistos":71,"Tostitos":11,"Quaker":11}},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","ton":0.726,"imp":20714367,"cli":128,"ticket":161831,"cart":267,"ccc":128,"pcc":47.9,"obj_ccc":213,"apc":60.1,"kr":726.29,"ot":1913,"apr":38.0,"tend":1068.07,"apt":55.8,"pv":20714367,"pd":657710,"pc":134136,"pdp":3.18,"cat":{"salty_pg":{"r":586.3,"o":1236},"salty_sb":{"r":23.5,"o":677},"crackers":{"r":80.2,"o":0},"cereales":{"r":36.2,"o":0}},"mk_cob":{"Lays":108,"Doritos":113,"Cheetos":74,"3D":80,"Pep":27,"Pehuamar":19,"Twistos":64,"Tostitos":22,"Quaker":6}},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","ton":0.583,"imp":16675233,"cli":149,"ticket":111914,"cart":241,"ccc":149,"pcc":61.8,"obj_ccc":211,"apc":70.6,"kr":582.87,"ot":1163,"apr":50.1,"tend":857.16,"apt":73.7,"pv":16675233,"pd":813345,"pc":210954,"pdp":4.88,"cat":{"salty_pg":{"r":451.8,"o":879},"salty_sb":{"r":31.9,"o":284},"crackers":{"r":79.4,"o":0},"cereales":{"r":19.8,"o":0}},"mk_cob":{"Lays":125,"Doritos":131,"Cheetos":69,"3D":85,"Pep":30,"Pehuamar":27,"Twistos":88,"Tostitos":5,"Quaker":3}},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.815,"imp":24331093,"cli":170,"ticket":143124,"cart":259,"ccc":170,"pcc":65.6,"obj_ccc":212,"apc":80.2,"kr":815.18,"ot":1613,"apr":50.5,"tend":1198.79,"apt":74.3,"pv":24331093,"pd":575483,"pc":394117,"pdp":2.37,"cat":{"salty_pg":{"r":653.3,"o":1284},"salty_sb":{"r":25.7,"o":329},"crackers":{"r":113.2,"o":0},"cereales":{"r":22.9,"o":0}},"mk_cob":{"Lays":132,"Doritos":148,"Cheetos":72,"3D":90,"Pep":35,"Pehuamar":32,"Twistos":81,"Tostitos":13,"Quaker":15}},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","ton":0.737,"imp":20980910,"cli":129,"ticket":162643,"cart":269,"ccc":129,"pcc":48.0,"obj_ccc":210,"apc":61.4,"kr":737.12,"ot":1313,"apr":56.1,"tend":1084.0,"apt":82.6,"pv":20980910,"pd":308572,"pc":284113,"pdp":1.47,"cat":{"salty_pg":{"r":579.7,"o":871},"salty_sb":{"r":32.4,"o":442},"crackers":{"r":79.6,"o":0},"cereales":{"r":45.4,"o":0}},"mk_cob":{"Lays":111,"Doritos":118,"Cheetos":71,"3D":79,"Pep":29,"Pehuamar":19,"Twistos":71,"Tostitos":25,"Quaker":7}},{"cod":61,"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":544,"ccc":0,"pcc":0.0,"obj_ccc":381,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":62,"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":498,"ccc":0,"pcc":0.0,"obj_ccc":349,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":63,"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":527,"ccc":0,"pcc":0.0,"obj_ccc":369,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":64,"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":341,"ccc":0,"pcc":0.0,"obj_ccc":239,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":65,"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":564,"ccc":0,"pcc":0.0,"obj_ccc":395,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}}],"cobertura":{"Lays":{"clientes":3396,"pct":47.0,"objetivo":94.9},"Doritos":{"clientes":3710,"pct":51.3,"objetivo":98.0},"Cheetos":{"clientes":2051,"pct":28.4,"objetivo":83.9},"3D":{"clientes":2305,"pct":31.9,"objetivo":85.7},"Pep":{"clientes":817,"pct":11.3,"objetivo":62.3},"Pehuamar":{"clientes":661,"pct":9.1,"objetivo":20.7},"Twistos":{"clientes":1964,"pct":27.2,"objetivo":79.4},"Tostitos":{"clientes":295,"pct":4.1,"objetivo":28.4},"Quaker":{"clientes":211,"pct":2.9,"objetivo":4.6}},"kpis_global":{"cartera":7231,"ccc":4125,"ccc_pep":4125,"cobertura_cartera":57.0,"toneladas":19.11,"importe":546743133,"unidades":0,"ticket":132544,"mix_imp":0},"cobertura_marcas":{"Lays":{"clientes":3396,"pct":47.0,"objetivo":94.9},"Doritos":{"clientes":3710,"pct":51.3,"objetivo":98.0},"Cheetos":{"clientes":2051,"pct":28.4,"objetivo":83.9},"3D":{"clientes":2305,"pct":31.9,"objetivo":85.7},"Pep":{"clientes":817,"pct":11.3,"objetivo":62.3},"Pehuamar":{"clientes":661,"pct":9.1,"objetivo":20.7},"Twistos":{"clientes":1964,"pct":27.2,"objetivo":79.4},"Tostitos":{"clientes":295,"pct":4.1,"objetivo":28.4},"Quaker":{"clientes":211,"pct":2.9,"objetivo":4.6}},"por_mesa":{"300":{"kpis":{"cartera":2601,"ccc":1357,"ccc_pep":1357,"cobertura_cartera":52.2,"toneladas":5.66,"ton":5.663,"importe":164170944,"imp":164170944,"unidades":0,"uds":0,"ticket":120981,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1075,"pct":41.3,"objetivo":94.9},"Doritos":{"clientes":1221,"pct":46.9,"objetivo":98.0},"Cheetos":{"clientes":655,"pct":25.2,"objetivo":83.9},"3D":{"clientes":783,"pct":30.1,"objetivo":85.7},"Pep":{"clientes":240,"pct":9.2,"objetivo":62.3},"Pehuamar":{"clientes":220,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":665,"pct":25.6,"objetivo":79.4},"Tostitos":{"clientes":94,"pct":3.6,"objetivo":28.4},"Quaker":{"clientes":73,"pct":2.8,"objetivo":4.6}},"cob":{"Lays":{"clientes":1075,"pct":41.3,"objetivo":94.9},"Doritos":{"clientes":1221,"pct":46.9,"objetivo":98.0},"Cheetos":{"clientes":655,"pct":25.2,"objetivo":83.9},"3D":{"clientes":783,"pct":30.1,"objetivo":85.7},"Pep":{"clientes":240,"pct":9.2,"objetivo":62.3},"Pehuamar":{"clientes":220,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":665,"pct":25.6,"objetivo":79.4},"Tostitos":{"clientes":94,"pct":3.6,"objetivo":28.4},"Quaker":{"clientes":73,"pct":2.8,"objetivo":4.6}},"vendedores":[{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","ton":0.527,"imp":15982588,"cli":172,"ticket":92922,"cart":300,"ccc":172,"pcc":57.3,"obj_ccc":210,"apc":81.9,"kr":526.89,"ot":1225,"apr":43.0,"tend":774.84,"apt":63.3,"pv":15982588,"pd":503013,"pc":191350,"pdp":3.15,"cat":{"salty_pg":{"r":438.5,"o":894},"salty_sb":{"r":17.6,"o":331},"crackers":{"r":47.6,"o":0},"cereales":{"r":23.2,"o":0}},"mk_cob":{"Lays":126,"Doritos":150,"Cheetos":75,"3D":92,"Pep":17,"Pehuamar":26,"Twistos":59,"Tostitos":4,"Quaker":13}},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","ton":0.638,"imp":18291032,"cli":158,"ticket":115766,"cart":330,"ccc":158,"pcc":47.9,"obj_ccc":220,"apc":71.8,"kr":637.86,"ot":1488,"apr":42.9,"tend":938.03,"apt":63.0,"pv":18291032,"pd":479391,"pc":464192,"pdp":2.62,"cat":{"salty_pg":{"r":503.7,"o":1110},"salty_sb":{"r":21.8,"o":378},"crackers":{"r":83.7,"o":0},"cereales":{"r":28.6,"o":0}},"mk_cob":{"Lays":117,"Doritos":140,"Cheetos":72,"3D":95,"Pep":26,"Pehuamar":26,"Twistos":89,"Tostitos":8,"Quaker":9}},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.435,"imp":12731833,"cli":128,"ticket":99467,"cart":306,"ccc":128,"pcc":41.8,"obj_ccc":208,"apc":61.5,"kr":434.64,"ot":1063,"apr":40.9,"tend":639.18,"apt":60.1,"pv":12731833,"pd":1054616,"pc":231208,"pdp":8.28,"cat":{"salty_pg":{"r":358.9,"o":806},"salty_sb":{"r":10.3,"o":257},"crackers":{"r":56.3,"o":0},"cereales":{"r":9.2,"o":0}},"mk_cob":{"Lays":106,"Doritos":120,"Cheetos":64,"3D":77,"Pep":17,"Pehuamar":14,"Twistos":62,"Tostitos":3,"Quaker":5}},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.751,"imp":21709767,"cli":197,"ticket":110202,"cart":313,"ccc":197,"pcc":62.9,"obj_ccc":213,"apc":92.5,"kr":751.15,"ot":1513,"apr":49.6,"tend":1104.63,"apt":73.0,"pv":21709767,"pd":1150811,"pc":368415,"pdp":5.3,"cat":{"salty_pg":{"r":606.0,"o":1067},"salty_sb":{"r":48.4,"o":446},"crackers":{"r":72.9,"o":0},"cereales":{"r":23.8,"o":0}},"mk_cob":{"Lays":150,"Doritos":180,"Cheetos":88,"3D":114,"Pep":40,"Pehuamar":39,"Twistos":90,"Tostitos":10,"Quaker":13}},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","ton":0.499,"imp":15906023,"cli":159,"ticket":100038,"cart":294,"ccc":159,"pcc":54.1,"obj_ccc":215,"apc":74.0,"kr":498.58,"ot":1300,"apr":38.4,"tend":733.21,"apt":56.4,"pv":15906023,"pd":97857,"pc":178203,"pdp":0.62,"cat":{"salty_pg":{"r":403.5,"o":937},"salty_sb":{"r":12.1,"o":363},"crackers":{"r":71.2,"o":0},"cereales":{"r":11.7,"o":0}},"mk_cob":{"Lays":123,"Doritos":140,"Cheetos":70,"3D":77,"Pep":22,"Pehuamar":23,"Twistos":71,"Tostitos":6,"Quaker":6}},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","ton":0.767,"imp":21179191,"cli":137,"ticket":154593,"cart":281,"ccc":137,"pcc":48.8,"obj_ccc":211,"apc":64.9,"kr":767.31,"ot":1525,"apr":50.3,"tend":1128.4,"apt":74.0,"pv":21179191,"pd":508236,"pc":458148,"pdp":2.4,"cat":{"salty_pg":{"r":592.7,"o":1011},"salty_sb":{"r":20.7,"o":514},"crackers":{"r":93.9,"o":0},"cereales":{"r":60.0,"o":0}},"mk_cob":{"Lays":109,"Doritos":129,"Cheetos":72,"3D":84,"Pep":32,"Pehuamar":27,"Twistos":71,"Tostitos":11,"Quaker":11}},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","ton":0.726,"imp":20714367,"cli":128,"ticket":161831,"cart":267,"ccc":128,"pcc":47.9,"obj_ccc":213,"apc":60.1,"kr":726.29,"ot":1913,"apr":38.0,"tend":1068.07,"apt":55.8,"pv":20714367,"pd":657710,"pc":134136,"pdp":3.18,"cat":{"salty_pg":{"r":586.3,"o":1236},"salty_sb":{"r":23.5,"o":677},"crackers":{"r":80.2,"o":0},"cereales":{"r":36.2,"o":0}},"mk_cob":{"Lays":108,"Doritos":113,"Cheetos":74,"3D":80,"Pep":27,"Pehuamar":19,"Twistos":64,"Tostitos":22,"Quaker":6}},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","ton":0.583,"imp":16675233,"cli":149,"ticket":111914,"cart":241,"ccc":149,"pcc":61.8,"obj_ccc":211,"apc":70.6,"kr":582.87,"ot":1163,"apr":50.1,"tend":857.16,"apt":73.7,"pv":16675233,"pd":813345,"pc":210954,"pdp":4.88,"cat":{"salty_pg":{"r":451.8,"o":879},"salty_sb":{"r":31.9,"o":284},"crackers":{"r":79.4,"o":0},"cereales":{"r":19.8,"o":0}},"mk_cob":{"Lays":125,"Doritos":131,"Cheetos":69,"3D":85,"Pep":30,"Pehuamar":27,"Twistos":88,"Tostitos":5,"Quaker":3}},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","ton":0.737,"imp":20980910,"cli":129,"ticket":162643,"cart":269,"ccc":129,"pcc":48.0,"obj_ccc":210,"apc":61.4,"kr":737.12,"ot":1313,"apr":56.1,"tend":1084.0,"apt":82.6,"pv":20980910,"pd":308572,"pc":284113,"pdp":1.47,"cat":{"salty_pg":{"r":579.7,"o":871},"salty_sb":{"r":32.4,"o":442},"crackers":{"r":79.6,"o":0},"cereales":{"r":45.4,"o":0}},"mk_cob":{"Lays":111,"Doritos":118,"Cheetos":71,"3D":79,"Pep":29,"Pehuamar":19,"Twistos":71,"Tostitos":25,"Quaker":7}}]},"400":{"kpis":{"cartera":2365,"ccc":1540,"ccc_pep":1540,"cobertura_cartera":65.1,"toneladas":7.86,"ton":7.863,"importe":218950560,"imp":218950560,"unidades":0,"uds":0,"ticket":142176,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1354,"pct":57.3,"objetivo":94.9},"Doritos":{"clientes":1407,"pct":59.5,"objetivo":98.0},"Cheetos":{"clientes":828,"pct":35.0,"objetivo":83.9},"3D":{"clientes":862,"pct":36.4,"objetivo":85.7},"Pep":{"clientes":379,"pct":16.0,"objetivo":62.3},"Pehuamar":{"clientes":248,"pct":10.5,"objetivo":20.7},"Twistos":{"clientes":749,"pct":31.7,"objetivo":79.4},"Tostitos":{"clientes":110,"pct":4.7,"objetivo":28.4},"Quaker":{"clientes":73,"pct":3.1,"objetivo":4.6}},"cob":{"Lays":{"clientes":1354,"pct":57.3,"objetivo":94.9},"Doritos":{"clientes":1407,"pct":59.5,"objetivo":98.0},"Cheetos":{"clientes":828,"pct":35.0,"objetivo":83.9},"3D":{"clientes":862,"pct":36.4,"objetivo":85.7},"Pep":{"clientes":379,"pct":16.0,"objetivo":62.3},"Pehuamar":{"clientes":248,"pct":10.5,"objetivo":20.7},"Twistos":{"clientes":749,"pct":31.7,"objetivo":79.4},"Tostitos":{"clientes":110,"pct":4.7,"objetivo":28.4},"Quaker":{"clientes":73,"pct":3.1,"objetivo":4.6}},"vendedores":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":1.333,"imp":38379389,"cli":187,"ticket":205237,"cart":239,"ccc":187,"pcc":78.2,"obj_ccc":214,"apc":87.4,"kr":1333.12,"ot":2790,"apr":47.8,"tend":1960.47,"apt":70.3,"pv":38379389,"pd":271438,"pc":235695,"pdp":0.71,"cat":{"salty_pg":{"r":1124.9,"o":2080},"salty_sb":{"r":44.7,"o":710},"crackers":{"r":99.5,"o":0},"cereales":{"r":64.1,"o":0}},"mk_cob":{"Lays":160,"Doritos":170,"Cheetos":99,"3D":111,"Pep":39,"Pehuamar":32,"Twistos":93,"Tostitos":19,"Quaker":8}},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.734,"imp":20532188,"cli":141,"ticket":145618,"cart":223,"ccc":141,"pcc":63.2,"obj_ccc":201,"apc":70.1,"kr":734.28,"ot":1584,"apr":46.4,"tend":1079.82,"apt":68.2,"pv":20532188,"pd":492348,"pc":368011,"pdp":2.4,"cat":{"salty_pg":{"r":585.1,"o":1029},"salty_sb":{"r":53.2,"o":555},"crackers":{"r":75.0,"o":0},"cereales":{"r":21.0,"o":0}},"mk_cob":{"Lays":120,"Doritos":127,"Cheetos":69,"3D":74,"Pep":25,"Pehuamar":32,"Twistos":62,"Tostitos":16,"Quaker":6}},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.795,"imp":21684592,"cli":121,"ticket":179212,"cart":239,"ccc":121,"pcc":50.6,"obj_ccc":215,"apc":56.3,"kr":795.42,"ot":1836,"apr":43.3,"tend":1169.74,"apt":63.7,"pv":21684592,"pd":582457,"pc":272614,"pdp":2.69,"cat":{"salty_pg":{"r":639.7,"o":1315},"salty_sb":{"r":42.7,"o":521},"crackers":{"r":69.9,"o":0},"cereales":{"r":43.1,"o":0}},"mk_cob":{"Lays":115,"Doritos":116,"Cheetos":48,"3D":79,"Pep":14,"Pehuamar":27,"Twistos":61,"Tostitos":7,"Quaker":7}},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.446,"imp":12487329,"cli":126,"ticket":99106,"cart":224,"ccc":126,"pcc":56.2,"obj_ccc":202,"apc":62.4,"kr":446.45,"ot":1350,"apr":33.1,"tend":656.54,"apt":48.6,"pv":12487329,"pd":304500,"pc":140786,"pdp":2.44,"cat":{"salty_pg":{"r":361.9,"o":1031},"salty_sb":{"r":9.7,"o":319},"crackers":{"r":58.5,"o":0},"cereales":{"r":16.3,"o":0}},"mk_cob":{"Lays":106,"Doritos":114,"Cheetos":69,"3D":68,"Pep":29,"Pehuamar":12,"Twistos":78,"Tostitos":3,"Quaker":6}},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.789,"imp":21311468,"cli":158,"ticket":134883,"cart":261,"ccc":158,"pcc":60.5,"obj_ccc":222,"apc":71.2,"kr":788.99,"ot":1530,"apr":51.6,"tend":1160.28,"apt":75.8,"pv":21311468,"pd":431460,"pc":106186,"pdp":2.02,"cat":{"salty_pg":{"r":608.8,"o":1172},"salty_sb":{"r":41.3,"o":358},"crackers":{"r":85.9,"o":0},"cereales":{"r":53.0,"o":0}},"mk_cob":{"Lays":146,"Doritos":142,"Cheetos":81,"3D":89,"Pep":36,"Pehuamar":19,"Twistos":73,"Tostitos":9,"Quaker":5}},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.666,"imp":17642835,"cli":134,"ticket":131663,"cart":228,"ccc":134,"pcc":58.8,"obj_ccc":205,"apc":65.4,"kr":665.88,"ot":2016,"apr":33.0,"tend":979.24,"apt":48.6,"pv":17642835,"pd":400060,"pc":226182,"pdp":2.27,"cat":{"salty_pg":{"r":511.1,"o":1401},"salty_sb":{"r":32.1,"o":615},"crackers":{"r":88.1,"o":0},"cereales":{"r":34.6,"o":0}},"mk_cob":{"Lays":123,"Doritos":116,"Cheetos":87,"3D":72,"Pep":42,"Pehuamar":20,"Twistos":75,"Tostitos":7,"Quaker":2}},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.864,"imp":23815039,"cli":153,"ticket":155654,"cart":208,"ccc":153,"pcc":73.6,"obj_ccc":202,"apc":75.7,"kr":863.74,"ot":1530,"apr":56.5,"tend":1270.21,"apt":83.0,"pv":23815039,"pd":176036,"pc":74093,"pdp":0.74,"cat":{"salty_pg":{"r":693.2,"o":1145},"salty_sb":{"r":30.2,"o":385},"crackers":{"r":86.6,"o":0},"cereales":{"r":53.7,"o":0}},"mk_cob":{"Lays":138,"Doritos":146,"Cheetos":84,"3D":89,"Pep":25,"Pehuamar":19,"Twistos":85,"Tostitos":2,"Quaker":10}},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.869,"imp":22936840,"cli":189,"ticket":121359,"cart":287,"ccc":189,"pcc":65.9,"obj_ccc":224,"apc":84.4,"kr":868.55,"ot":1710,"apr":50.8,"tend":1277.28,"apt":74.7,"pv":22936840,"pd":533307,"pc":253100,"pdp":2.33,"cat":{"salty_pg":{"r":682.9,"o":1099},"salty_sb":{"r":61.8,"o":611},"crackers":{"r":61.6,"o":0},"cereales":{"r":62.4,"o":0}},"mk_cob":{"Lays":161,"Doritos":173,"Cheetos":105,"3D":109,"Pep":44,"Pehuamar":23,"Twistos":74,"Tostitos":14,"Quaker":11}},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.624,"imp":16605885,"cli":162,"ticket":102505,"cart":261,"ccc":162,"pcc":62.1,"obj_ccc":222,"apc":73.0,"kr":624.47,"ot":1800,"apr":34.7,"tend":918.34,"apt":51.0,"pv":16605885,"pd":918901,"pc":87101,"pdp":5.53,"cat":{"salty_pg":{"r":519.7,"o":1263},"salty_sb":{"r":30.2,"o":537},"crackers":{"r":59.0,"o":0},"cereales":{"r":15.6,"o":0}},"mk_cob":{"Lays":143,"Doritos":148,"Cheetos":106,"3D":89,"Pep":91,"Pehuamar":18,"Twistos":67,"Tostitos":5,"Quaker":6}},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.742,"imp":23554995,"cli":169,"ticket":139379,"cart":195,"ccc":169,"pcc":86.7,"obj_ccc":193,"apc":87.6,"kr":742.02,"ot":1854,"apr":40.0,"tend":1091.21,"apt":58.9,"pv":23554995,"pd":167448,"pc":160187,"pdp":0.71,"cat":{"salty_pg":{"r":607.7,"o":1208},"salty_sb":{"r":30.1,"o":646},"crackers":{"r":77.3,"o":0},"cereales":{"r":26.9,"o":0}},"mk_cob":{"Lays":142,"Doritos":155,"Cheetos":80,"3D":82,"Pep":34,"Pehuamar":46,"Twistos":81,"Tostitos":28,"Quaker":12}}]},"500":{"kpis":{"cartera":2265,"ccc":1228,"ccc_pep":1228,"cobertura_cartera":54.2,"toneladas":5.59,"ton":5.586,"importe":163621629,"imp":163621629,"unidades":0,"uds":0,"ticket":133242,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":967,"pct":42.7,"objetivo":94.9},"Doritos":{"clientes":1082,"pct":47.8,"objetivo":98.0},"Cheetos":{"clientes":568,"pct":25.1,"objetivo":83.9},"3D":{"clientes":660,"pct":29.1,"objetivo":85.7},"Pep":{"clientes":198,"pct":8.7,"objetivo":62.3},"Pehuamar":{"clientes":193,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":550,"pct":24.3,"objetivo":79.4},"Tostitos":{"clientes":91,"pct":4.0,"objetivo":28.4},"Quaker":{"clientes":65,"pct":2.9,"objetivo":4.6}},"cob":{"Lays":{"clientes":967,"pct":42.7,"objetivo":94.9},"Doritos":{"clientes":1082,"pct":47.8,"objetivo":98.0},"Cheetos":{"clientes":568,"pct":25.1,"objetivo":83.9},"3D":{"clientes":660,"pct":29.1,"objetivo":85.7},"Pep":{"clientes":198,"pct":8.7,"objetivo":62.3},"Pehuamar":{"clientes":193,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":550,"pct":24.3,"objetivo":79.4},"Tostitos":{"clientes":91,"pct":4.0,"objetivo":28.4},"Quaker":{"clientes":65,"pct":2.9,"objetivo":4.6}},"vendedores":[{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.629,"imp":17914782,"cli":147,"ticket":121869,"cart":277,"ccc":147,"pcc":53.1,"obj_ccc":213,"apc":69.0,"kr":628.98,"ot":1600,"apr":39.3,"tend":924.97,"apt":57.8,"pv":17914782,"pd":286646,"pc":218584,"pdp":1.6,"cat":{"salty_pg":{"r":474.6,"o":1077},"salty_sb":{"r":42.5,"o":523},"crackers":{"r":73.5,"o":0},"cereales":{"r":38.4,"o":0}},"mk_cob":{"Lays":121,"Doritos":134,"Cheetos":58,"3D":76,"Pep":28,"Pehuamar":28,"Twistos":76,"Tostitos":12,"Quaker":12}},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","ton":0.584,"imp":16920448,"cli":173,"ticket":97806,"cart":274,"ccc":173,"pcc":63.1,"obj_ccc":211,"apc":82.0,"kr":583.64,"ot":1232,"apr":47.4,"tend":858.29,"apt":69.7,"pv":16920448,"pd":727858,"pc":760857,"pdp":4.3,"cat":{"salty_pg":{"r":467.9,"o":877},"salty_sb":{"r":14.9,"o":355},"crackers":{"r":62.2,"o":0},"cereales":{"r":38.7,"o":0}},"mk_cob":{"Lays":114,"Doritos":131,"Cheetos":69,"3D":67,"Pep":25,"Pehuamar":25,"Twistos":66,"Tostitos":21,"Quaker":15}},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.617,"imp":17518835,"cli":131,"ticket":133732,"cart":313,"ccc":131,"pcc":41.9,"obj_ccc":215,"apc":60.9,"kr":616.98,"ot":1359,"apr":45.4,"tend":907.32,"apt":66.8,"pv":17518835,"pd":364443,"pc":372247,"pdp":2.08,"cat":{"salty_pg":{"r":508.2,"o":952},"salty_sb":{"r":24.7,"o":407},"crackers":{"r":60.3,"o":0},"cereales":{"r":23.7,"o":0}},"mk_cob":{"Lays":107,"Doritos":117,"Cheetos":67,"3D":84,"Pep":13,"Pehuamar":26,"Twistos":54,"Tostitos":6,"Quaker":7}},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.542,"imp":15453368,"cli":152,"ticket":101667,"cart":251,"ccc":152,"pcc":60.6,"obj_ccc":213,"apc":71.4,"kr":541.7,"ot":1359,"apr":39.9,"tend":796.62,"apt":58.6,"pv":15453368,"pd":845358,"pc":218178,"pdp":5.47,"cat":{"salty_pg":{"r":463.7,"o":1053},"salty_sb":{"r":14.4,"o":306},"crackers":{"r":59.7,"o":0},"cereales":{"r":3.9,"o":0}},"mk_cob":{"Lays":129,"Doritos":143,"Cheetos":72,"3D":86,"Pep":33,"Pehuamar":22,"Twistos":67,"Tostitos":5,"Quaker":2}},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.475,"imp":14336484,"cli":141,"ticket":101677,"cart":279,"ccc":141,"pcc":50.5,"obj_ccc":215,"apc":65.6,"kr":474.56,"ot":1207,"apr":39.3,"tend":697.88,"apt":57.8,"pv":14336484,"pd":408324,"pc":265464,"pdp":2.85,"cat":{"salty_pg":{"r":394.8,"o":956},"salty_sb":{"r":13.4,"o":251},"crackers":{"r":60.2,"o":0},"cereales":{"r":6.2,"o":0}},"mk_cob":{"Lays":99,"Doritos":127,"Cheetos":76,"3D":87,"Pep":24,"Pehuamar":11,"Twistos":58,"Tostitos":14,"Quaker":3}},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","ton":1.199,"imp":36279908,"cli":141,"ticket":257304,"cart":307,"ccc":141,"pcc":45.9,"obj_ccc":216,"apc":65.3,"kr":1199.04,"ot":2896,"apr":41.4,"tend":1763.29,"apt":60.9,"pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"cat":{"salty_pg":{"r":1002.7,"o":2094},"salty_sb":{"r":35.5,"o":802},"crackers":{"r":101.6,"o":0},"cereales":{"r":59.2,"o":0}},"mk_cob":{"Lays":110,"Doritos":120,"Cheetos":56,"3D":77,"Pep":21,"Pehuamar":18,"Twistos":66,"Tostitos":10,"Quaker":8}},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.726,"imp":20866711,"cli":173,"ticket":120617,"cart":305,"ccc":173,"pcc":56.7,"obj_ccc":213,"apc":81.2,"kr":726.12,"ot":1435,"apr":50.6,"tend":1067.82,"apt":74.4,"pv":20866711,"pd":857359,"pc":378453,"pdp":4.11,"cat":{"salty_pg":{"r":608.9,"o":1040},"salty_sb":{"r":26.6,"o":395},"crackers":{"r":80.7,"o":0},"cereales":{"r":9.9,"o":0}},"mk_cob":{"Lays":155,"Doritos":162,"Cheetos":98,"3D":93,"Pep":19,"Pehuamar":31,"Twistos":82,"Tostitos":10,"Quaker":3}},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.815,"imp":24331093,"cli":170,"ticket":143124,"cart":259,"ccc":170,"pcc":65.6,"obj_ccc":212,"apc":80.2,"kr":815.18,"ot":1613,"apr":50.5,"tend":1198.79,"apt":74.3,"pv":24331093,"pd":575483,"pc":394117,"pdp":2.37,"cat":{"salty_pg":{"r":653.3,"o":1284},"salty_sb":{"r":25.7,"o":329},"crackers":{"r":113.2,"o":0},"cereales":{"r":22.9,"o":0}},"mk_cob":{"Lays":132,"Doritos":148,"Cheetos":72,"3D":90,"Pep":35,"Pehuamar":32,"Twistos":81,"Tostitos":13,"Quaker":15}}]},"600":{"kpis":{"cartera":2474,"ccc":0,"ccc_pep":0,"cobertura_cartera":0.0,"toneladas":0.0,"ton":0.0,"importe":0,"imp":0,"unidades":0,"uds":0,"ticket":0,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":0,"pct":0.0,"objetivo":94.9},"Doritos":{"clientes":0,"pct":0.0,"objetivo":98.0},"Cheetos":{"clientes":0,"pct":0.0,"objetivo":83.9},"3D":{"clientes":0,"pct":0.0,"objetivo":85.7},"Pep":{"clientes":0,"pct":0.0,"objetivo":62.3},"Pehuamar":{"clientes":0,"pct":0.0,"objetivo":20.7},"Twistos":{"clientes":0,"pct":0.0,"objetivo":79.4},"Tostitos":{"clientes":0,"pct":0.0,"objetivo":28.4},"Quaker":{"clientes":0,"pct":0.0,"objetivo":4.6}},"cob":{"Lays":{"clientes":0,"pct":0.0,"objetivo":94.9},"Doritos":{"clientes":0,"pct":0.0,"objetivo":98.0},"Cheetos":{"clientes":0,"pct":0.0,"objetivo":83.9},"3D":{"clientes":0,"pct":0.0,"objetivo":85.7},"Pep":{"clientes":0,"pct":0.0,"objetivo":62.3},"Pehuamar":{"clientes":0,"pct":0.0,"objetivo":20.7},"Twistos":{"clientes":0,"pct":0.0,"objetivo":79.4},"Tostitos":{"clientes":0,"pct":0.0,"objetivo":28.4},"Quaker":{"clientes":0,"pct":0.0,"objetivo":4.6}},"vendedores":[{"cod":61,"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":544,"ccc":0,"pcc":0.0,"obj_ccc":381,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":62,"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":498,"ccc":0,"pcc":0.0,"obj_ccc":349,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":63,"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":527,"ccc":0,"pcc":0.0,"obj_ccc":369,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":64,"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":341,"ccc":0,"pcc":0.0,"obj_ccc":239,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":65,"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":564,"ccc":0,"pcc":0.0,"obj_ccc":395,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}}]}},"mesas_resumen":{"300":{"kg_real":5662.709999999999,"obj_total":12503,"avance_pct":45.3,"imp_real":164170944,"ccc":1357,"cartera":2601,"pct_ccc":52.2,"tend":8327.5,"apt":66.6},"400":{"kg_real":7862.92,"obj_total":18000,"avance_pct":43.7,"imp_real":218950560,"ccc":1540,"cartera":2365,"pct_ccc":65.1,"tend":11563.1,"apt":64.2},"500":{"kg_real":5586.200000000001,"obj_total":12701,"avance_pct":44.0,"imp_real":163621629,"ccc":1228,"cartera":2265,"pct_ccc":54.2,"tend":8215.0,"apt":64.7},"600":{"kg_real":0,"obj_total":0,"avance_pct":0,"imp_real":0,"ccc":0,"cartera":2474,"pct_ccc":0.0,"tend":0.0,"apt":0}},"dias_hab":25,"dias_trab":17};
@@ -780,9 +415,14 @@ const DATA_MARZO_CREA=
 {"periodo":"Abr 2026","vendedores":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":1.347,"imp":39092652,"cli":205,"ticket":190696,"cart":239,"ccc":205,"pcc":85.8,"obj_ccc":214,"apc":95.8,"kr":1347.44,"ot":2790,"apr":48.3,"tend":1772.95,"apt":63.5,"pv":39092652,"pd":271438,"pc":235695,"pdp":0.69,"cat":{"salty_pg":{"r":1139.2,"o":2080},"salty_sb":{"r":44.7,"o":710},"crackers":{"r":99.5,"o":0},"cereales":{"r":64.1,"o":0}},"mk_cob":{"Lays":184,"Doritos":189,"Cheetos":130,"3D":139,"Pep":40,"Pehuamar":32,"Twistos":93,"Tostitos":19,"Quaker":8}},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.752,"imp":21361167,"cli":157,"ticket":136058,"cart":223,"ccc":157,"pcc":70.4,"obj_ccc":201,"apc":78.1,"kr":751.98,"ot":1584,"apr":47.5,"tend":989.45,"apt":62.5,"pv":21361167,"pd":492348,"pc":368011,"pdp":2.3,"cat":{"salty_pg":{"r":601.4,"o":1029},"salty_sb":{"r":54.0,"o":555},"crackers":{"r":75.5,"o":0},"cereales":{"r":21.0,"o":0}},"mk_cob":{"Lays":141,"Doritos":148,"Cheetos":98,"3D":102,"Pep":25,"Pehuamar":32,"Twistos":63,"Tostitos":16,"Quaker":6}},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.817,"imp":22669293,"cli":157,"ticket":144390,"cart":239,"ccc":157,"pcc":65.7,"obj_ccc":215,"apc":73.0,"kr":817.45,"ot":1836,"apr":44.5,"tend":1075.59,"apt":58.6,"pv":22669293,"pd":582457,"pc":272614,"pdp":2.57,"cat":{"salty_pg":{"r":659.7,"o":1315},"salty_sb":{"r":42.7,"o":521},"crackers":{"r":71.9,"o":0},"cereales":{"r":43.1,"o":0}},"mk_cob":{"Lays":150,"Doritos":152,"Cheetos":89,"3D":117,"Pep":14,"Pehuamar":28,"Twistos":63,"Tostitos":7,"Quaker":7}},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.46,"imp":13163589,"cli":157,"ticket":83845,"cart":224,"ccc":157,"pcc":70.1,"obj_ccc":202,"apc":77.7,"kr":459.79,"ot":1350,"apr":34.1,"tend":604.99,"apt":44.8,"pv":13163589,"pd":304500,"pc":140786,"pdp":2.31,"cat":{"salty_pg":{"r":375.2,"o":1031},"salty_sb":{"r":9.7,"o":319},"crackers":{"r":58.5,"o":0},"cereales":{"r":16.3,"o":0}},"mk_cob":{"Lays":136,"Doritos":144,"Cheetos":102,"3D":101,"Pep":29,"Pehuamar":12,"Twistos":78,"Tostitos":3,"Quaker":6}},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.805,"imp":22139468,"cli":187,"ticket":118393,"cart":261,"ccc":187,"pcc":71.6,"obj_ccc":222,"apc":84.2,"kr":805.13,"ot":1530,"apr":52.6,"tend":1059.38,"apt":69.2,"pv":22139468,"pd":431460,"pc":106186,"pdp":1.95,"cat":{"salty_pg":{"r":625.0,"o":1172},"salty_sb":{"r":41.3,"o":358},"crackers":{"r":85.9,"o":0},"cereales":{"r":53.0,"o":0}},"mk_cob":{"Lays":174,"Doritos":173,"Cheetos":116,"3D":127,"Pep":36,"Pehuamar":19,"Twistos":73,"Tostitos":9,"Quaker":5}},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.677,"imp":18233595,"cli":155,"ticket":117636,"cart":228,"ccc":155,"pcc":68.0,"obj_ccc":205,"apc":75.6,"kr":677.47,"ot":2016,"apr":33.6,"tend":891.41,"apt":44.2,"pv":18233595,"pd":400060,"pc":226182,"pdp":2.19,"cat":{"salty_pg":{"r":522.6,"o":1401},"salty_sb":{"r":32.1,"o":615},"crackers":{"r":88.1,"o":0},"cereales":{"r":34.6,"o":0}},"mk_cob":{"Lays":144,"Doritos":139,"Cheetos":113,"3D":98,"Pep":42,"Pehuamar":20,"Twistos":75,"Tostitos":7,"Quaker":2}},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.875,"imp":24408467,"cli":170,"ticket":143579,"cart":208,"ccc":170,"pcc":81.7,"obj_ccc":202,"apc":84.2,"kr":875.33,"ot":1530,"apr":57.2,"tend":1151.75,"apt":75.3,"pv":24408467,"pd":176036,"pc":74093,"pdp":0.72,"cat":{"salty_pg":{"r":704.8,"o":1145},"salty_sb":{"r":30.2,"o":385},"crackers":{"r":86.6,"o":0},"cereales":{"r":53.7,"o":0}},"mk_cob":{"Lays":157,"Doritos":164,"Cheetos":111,"3D":115,"Pep":25,"Pehuamar":19,"Twistos":85,"Tostitos":2,"Quaker":10}},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.886,"imp":23814837,"cli":221,"ticket":107759,"cart":287,"ccc":221,"pcc":77.0,"obj_ccc":224,"apc":98.7,"kr":885.75,"ot":1710,"apr":51.8,"tend":1165.46,"apt":68.2,"pv":23814837,"pd":533307,"pc":253100,"pdp":2.24,"cat":{"salty_pg":{"r":700.1,"o":1099},"salty_sb":{"r":61.8,"o":611},"crackers":{"r":61.6,"o":0},"cereales":{"r":62.4,"o":0}},"mk_cob":{"Lays":197,"Doritos":209,"Cheetos":147,"3D":150,"Pep":44,"Pehuamar":23,"Twistos":74,"Tostitos":14,"Quaker":11}},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.64,"imp":17394445,"cli":192,"ticket":90596,"cart":261,"ccc":192,"pcc":73.6,"obj_ccc":222,"apc":86.5,"kr":640.03,"ot":1800,"apr":35.6,"tend":842.14,"apt":46.8,"pv":17394445,"pd":918901,"pc":87101,"pdp":5.28,"cat":{"salty_pg":{"r":535.2,"o":1263},"salty_sb":{"r":30.2,"o":537},"crackers":{"r":59.0,"o":0},"cereales":{"r":15.6,"o":0}},"mk_cob":{"Lays":177,"Doritos":184,"Cheetos":142,"3D":126,"Pep":91,"Pehuamar":18,"Twistos":67,"Tostitos":5,"Quaker":6}},{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","ton":0.552,"imp":17278589,"cli":219,"ticket":78898,"cart":300,"ccc":219,"pcc":73.0,"obj_ccc":210,"apc":104.3,"kr":552.17,"ot":1225,"apr":45.1,"tend":726.54,"apt":59.3,"pv":17278589,"pd":503013,"pc":191350,"pdp":2.91,"cat":{"salty_pg":{"r":463.7,"o":894},"salty_sb":{"r":17.6,"o":331},"crackers":{"r":47.6,"o":0},"cereales":{"r":23.2,"o":0}},"mk_cob":{"Lays":179,"Doritos":200,"Cheetos":136,"3D":150,"Pep":17,"Pehuamar":26,"Twistos":59,"Tostitos":4,"Quaker":13}},{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.644,"imp":18705018,"cli":182,"ticket":102775,"cart":277,"ccc":182,"pcc":65.7,"obj_ccc":213,"apc":85.4,"kr":644.43,"ot":1600,"apr":40.3,"tend":847.93,"apt":53.0,"pv":18705018,"pd":286646,"pc":218584,"pdp":1.53,"cat":{"salty_pg":{"r":490.0,"o":1077},"salty_sb":{"r":42.5,"o":523},"crackers":{"r":73.5,"o":0},"cereales":{"r":38.4,"o":0}},"mk_cob":{"Lays":156,"Doritos":170,"Cheetos":100,"3D":115,"Pep":28,"Pehuamar":28,"Twistos":76,"Tostitos":12,"Quaker":12}},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","ton":0.603,"imp":17878549,"cli":204,"ticket":87640,"cart":274,"ccc":204,"pcc":74.5,"obj_ccc":211,"apc":96.7,"kr":603.16,"ot":1232,"apr":49.0,"tend":793.63,"apt":64.4,"pv":17878549,"pd":727858,"pc":775000,"pdp":4.07,"cat":{"salty_pg":{"r":487.0,"o":877},"salty_sb":{"r":14.9,"o":355},"crackers":{"r":62.6,"o":0},"cereales":{"r":38.7,"o":0}},"mk_cob":{"Lays":156,"Doritos":173,"Cheetos":116,"3D":112,"Pep":25,"Pehuamar":25,"Twistos":67,"Tostitos":21,"Quaker":15}},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.642,"imp":18778385,"cli":195,"ticket":96299,"cart":313,"ccc":195,"pcc":62.3,"obj_ccc":215,"apc":90.7,"kr":641.55,"ot":1359,"apr":47.2,"tend":844.14,"apt":62.1,"pv":18778385,"pd":364443,"pc":372247,"pdp":1.94,"cat":{"salty_pg":{"r":532.7,"o":952},"salty_sb":{"r":24.7,"o":407},"crackers":{"r":60.3,"o":0},"cereales":{"r":23.7,"o":0}},"mk_cob":{"Lays":173,"Doritos":183,"Cheetos":134,"3D":149,"Pep":13,"Pehuamar":26,"Twistos":54,"Tostitos":6,"Quaker":7}},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","ton":0.658,"imp":19329357,"cli":207,"ticket":93379,"cart":330,"ccc":207,"pcc":62.7,"obj_ccc":220,"apc":94.1,"kr":658.22,"ot":1488,"apr":44.2,"tend":866.08,"apt":58.2,"pv":19329357,"pd":479391,"pc":464192,"pdp":2.48,"cat":{"salty_pg":{"r":524.1,"o":1110},"salty_sb":{"r":21.8,"o":378},"crackers":{"r":83.7,"o":0},"cereales":{"r":28.6,"o":0}},"mk_cob":{"Lays":166,"Doritos":190,"Cheetos":125,"3D":147,"Pep":26,"Pehuamar":26,"Twistos":89,"Tostitos":8,"Quaker":9}},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.543,"imp":15511225,"cli":153,"ticket":101381,"cart":251,"ccc":153,"pcc":61.0,"obj_ccc":213,"apc":71.8,"kr":543.36,"ot":1359,"apr":40.0,"tend":714.95,"apt":52.6,"pv":15511225,"pd":845358,"pc":218178,"pdp":5.45,"cat":{"salty_pg":{"r":465.2,"o":1053},"salty_sb":{"r":14.4,"o":306},"crackers":{"r":59.9,"o":0},"cereales":{"r":3.9,"o":0}},"mk_cob":{"Lays":130,"Doritos":145,"Cheetos":73,"3D":87,"Pep":33,"Pehuamar":22,"Twistos":67,"Tostitos":5,"Quaker":2}},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.477,"imp":14444484,"cli":145,"ticket":99617,"cart":279,"ccc":145,"pcc":52.0,"obj_ccc":215,"apc":67.4,"kr":476.67,"ot":1207,"apr":39.5,"tend":627.2,"apt":52.0,"pv":14444484,"pd":408324,"pc":265464,"pdp":2.83,"cat":{"salty_pg":{"r":396.9,"o":956},"salty_sb":{"r":13.4,"o":251},"crackers":{"r":60.2,"o":0},"cereales":{"r":6.2,"o":0}},"mk_cob":{"Lays":103,"Doritos":131,"Cheetos":82,"3D":92,"Pep":24,"Pehuamar":11,"Twistos":58,"Tostitos":14,"Quaker":3}},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","ton":1.199,"imp":36279908,"cli":141,"ticket":257304,"cart":307,"ccc":141,"pcc":45.9,"obj_ccc":216,"apc":65.3,"kr":1199.04,"ot":2896,"apr":41.4,"tend":1577.68,"apt":54.5,"pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"cat":{"salty_pg":{"r":1002.7,"o":2094},"salty_sb":{"r":35.5,"o":802},"crackers":{"r":101.6,"o":0},"cereales":{"r":59.2,"o":0}},"mk_cob":{"Lays":110,"Doritos":120,"Cheetos":56,"3D":77,"Pep":21,"Pehuamar":18,"Twistos":66,"Tostitos":10,"Quaker":8}},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.456,"imp":13841619,"cli":182,"ticket":76053,"cart":306,"ccc":182,"pcc":59.5,"obj_ccc":208,"apc":87.5,"kr":456.4,"ot":1063,"apr":42.9,"tend":600.53,"apt":56.5,"pv":13841619,"pd":1054616,"pc":231208,"pdp":7.62,"cat":{"salty_pg":{"r":380.6,"o":806},"salty_sb":{"r":10.3,"o":257},"crackers":{"r":56.3,"o":0},"cereales":{"r":9.2,"o":0}},"mk_cob":{"Lays":160,"Doritos":175,"Cheetos":123,"3D":135,"Pep":17,"Pehuamar":14,"Twistos":62,"Tostitos":3,"Quaker":5}},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.749,"imp":23895195,"cli":174,"ticket":137329,"cart":195,"ccc":174,"pcc":89.2,"obj_ccc":193,"apc":90.2,"kr":748.69,"ot":1854,"apr":40.4,"tend":985.12,"apt":53.1,"pv":23895195,"pd":167448,"pc":160187,"pdp":0.7,"cat":{"salty_pg":{"r":614.3,"o":1208},"salty_sb":{"r":30.1,"o":646},"crackers":{"r":77.3,"o":0},"cereales":{"r":26.9,"o":0}},"mk_cob":{"Lays":151,"Doritos":162,"Cheetos":91,"3D":95,"Pep":34,"Pehuamar":46,"Twistos":81,"Tostitos":28,"Quaker":12}},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.77,"imp":22424061,"cli":207,"ticket":108329,"cart":313,"ccc":207,"pcc":66.1,"obj_ccc":213,"apc":97.2,"kr":769.68,"ot":1513,"apr":50.9,"tend":1012.74,"apt":66.9,"pv":22424061,"pd":1150811,"pc":368415,"pdp":5.13,"cat":{"salty_pg":{"r":620.0,"o":1067},"salty_sb":{"r":49.9,"o":446},"crackers":{"r":75.9,"o":0},"cereales":{"r":23.8,"o":0}},"mk_cob":{"Lays":163,"Doritos":190,"Cheetos":102,"3D":128,"Pep":40,"Pehuamar":40,"Twistos":91,"Tostitos":10,"Quaker":13}},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","ton":0.515,"imp":16725452,"cli":199,"ticket":84047,"cart":294,"ccc":199,"pcc":67.7,"obj_ccc":215,"apc":92.6,"kr":514.62,"ot":1300,"apr":39.6,"tend":677.13,"apt":52.1,"pv":16725452,"pd":97857,"pc":178203,"pdp":0.59,"cat":{"salty_pg":{"r":419.5,"o":937},"salty_sb":{"r":12.1,"o":363},"crackers":{"r":71.2,"o":0},"cereales":{"r":11.7,"o":0}},"mk_cob":{"Lays":165,"Doritos":181,"Cheetos":114,"3D":120,"Pep":22,"Pehuamar":23,"Twistos":71,"Tostitos":6,"Quaker":6}},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.743,"imp":21724047,"cli":213,"ticket":101991,"cart":305,"ccc":213,"pcc":69.8,"obj_ccc":213,"apc":100.0,"kr":742.96,"ot":1435,"apr":51.8,"tend":977.58,"apt":68.1,"pv":21724047,"pd":857359,"pc":378453,"pdp":3.95,"cat":{"salty_pg":{"r":625.7,"o":1040},"salty_sb":{"r":26.6,"o":395},"crackers":{"r":80.7,"o":0},"cereales":{"r":9.9,"o":0}},"mk_cob":{"Lays":194,"Doritos":201,"Cheetos":141,"3D":136,"Pep":19,"Pehuamar":31,"Twistos":82,"Tostitos":10,"Quaker":3}},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","ton":0.79,"imp":22020962,"cli":164,"ticket":134274,"cart":281,"ccc":164,"pcc":58.4,"obj_ccc":211,"apc":77.7,"kr":789.64,"ot":1525,"apr":51.8,"tend":1039.0,"apt":68.1,"pv":22020962,"pd":508236,"pc":458148,"pdp":2.31,"cat":{"salty_pg":{"r":611.0,"o":1011},"salty_sb":{"r":21.1,"o":514},"crackers":{"r":95.5,"o":0},"cereales":{"r":62.0,"o":0}},"mk_cob":{"Lays":136,"Doritos":158,"Cheetos":103,"3D":114,"Pep":32,"Pehuamar":27,"Twistos":71,"Tostitos":11,"Quaker":11}},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","ton":0.732,"imp":20999307,"cli":141,"ticket":148931,"cart":267,"ccc":141,"pcc":52.8,"obj_ccc":213,"apc":66.2,"kr":731.91,"ot":1913,"apr":38.3,"tend":963.04,"apt":50.3,"pv":20999307,"pd":657710,"pc":134136,"pdp":3.13,"cat":{"salty_pg":{"r":591.9,"o":1236},"salty_sb":{"r":23.5,"o":677},"crackers":{"r":80.2,"o":0},"cereales":{"r":36.2,"o":0}},"mk_cob":{"Lays":121,"Doritos":126,"Cheetos":87,"3D":93,"Pep":27,"Pehuamar":19,"Twistos":64,"Tostitos":22,"Quaker":6}},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","ton":0.589,"imp":16876876,"cli":151,"ticket":111767,"cart":241,"ccc":151,"pcc":62.7,"obj_ccc":211,"apc":71.6,"kr":589.29,"ot":1163,"apr":50.7,"tend":775.38,"apt":66.7,"pv":16876876,"pd":813345,"pc":210954,"pdp":4.82,"cat":{"salty_pg":{"r":455.9,"o":879},"salty_sb":{"r":32.6,"o":284},"crackers":{"r":81.0,"o":0},"cereales":{"r":19.8,"o":0}},"mk_cob":{"Lays":127,"Doritos":134,"Cheetos":71,"3D":89,"Pep":30,"Pehuamar":27,"Twistos":89,"Tostitos":5,"Quaker":3}},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.829,"imp":25014643,"cli":195,"ticket":128280,"cart":259,"ccc":195,"pcc":75.3,"obj_ccc":212,"apc":92.0,"kr":828.52,"ot":1613,"apr":51.4,"tend":1090.16,"apt":67.6,"pv":25014643,"pd":575483,"pc":394117,"pdp":2.3,"cat":{"salty_pg":{"r":666.7,"o":1284},"salty_sb":{"r":25.7,"o":329},"crackers":{"r":113.2,"o":0},"cereales":{"r":22.9,"o":0}},"mk_cob":{"Lays":158,"Doritos":176,"Cheetos":103,"3D":121,"Pep":35,"Pehuamar":32,"Twistos":81,"Tostitos":13,"Quaker":15}},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","ton":0.757,"imp":22018259,"cli":172,"ticket":128013,"cart":269,"ccc":172,"pcc":63.9,"obj_ccc":210,"apc":81.9,"kr":757.47,"ot":1313,"apr":57.7,"tend":996.67,"apt":75.9,"pv":22018259,"pd":308572,"pc":284113,"pdp":1.4,"cat":{"salty_pg":{"r":600.1,"o":871},"salty_sb":{"r":32.4,"o":442},"crackers":{"r":79.6,"o":0},"cereales":{"r":45.4,"o":0}},"mk_cob":{"Lays":157,"Doritos":163,"Cheetos":122,"3D":127,"Pep":29,"Pehuamar":19,"Twistos":71,"Tostitos":25,"Quaker":7}},{"cod":61,"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":544,"ccc":0,"pcc":0.0,"obj_ccc":381,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":62,"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":498,"ccc":0,"pcc":0.0,"obj_ccc":349,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":63,"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":527,"ccc":0,"pcc":0.0,"obj_ccc":369,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":64,"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":341,"ccc":0,"pcc":0.0,"obj_ccc":239,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":65,"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":564,"ccc":0,"pcc":0.0,"obj_ccc":395,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}}],"cobertura":{"Lays":{"clientes":4165,"pct":57.6,"objetivo":94.9},"Doritos":{"clientes":4480,"pct":62.0,"objetivo":98.0},"Cheetos":{"clientes":2927,"pct":40.5,"objetivo":83.9},"3D":{"clientes":3162,"pct":43.7,"objetivo":85.7},"Pep":{"clientes":818,"pct":11.3,"objetivo":62.3},"Pehuamar":{"clientes":663,"pct":9.2,"objetivo":20.7},"Twistos":{"clientes":1970,"pct":27.2,"objetivo":79.4},"Tostitos":{"clientes":295,"pct":4.1,"objetivo":28.4},"Quaker":{"clientes":211,"pct":2.9,"objetivo":4.6}},"kpis_global":{"cartera":7231,"ccc":4845,"ccc_pep":4845,"cobertura_cartera":67.0,"toneladas":19.51,"importe":566023449,"unidades":0,"ticket":116826,"mix_imp":0},"cobertura_marcas":{"Lays":{"clientes":4165,"pct":57.6,"objetivo":94.9},"Doritos":{"clientes":4480,"pct":62.0,"objetivo":98.0},"Cheetos":{"clientes":2927,"pct":40.5,"objetivo":83.9},"3D":{"clientes":3162,"pct":43.7,"objetivo":85.7},"Pep":{"clientes":818,"pct":11.3,"objetivo":62.3},"Pehuamar":{"clientes":663,"pct":9.2,"objetivo":20.7},"Twistos":{"clientes":1970,"pct":27.2,"objetivo":79.4},"Tostitos":{"clientes":295,"pct":4.1,"objetivo":28.4},"Quaker":{"clientes":211,"pct":2.9,"objetivo":4.6}},"por_mesa":{"300":{"kpis":{"cartera":2601,"ccc":1642,"ccc_pep":1642,"cobertura_cartera":63.1,"toneladas":5.82,"ton":5.819,"importe":171514482,"imp":171514482,"unidades":0,"uds":0,"ticket":104455,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1374,"pct":52.8,"objetivo":94.9},"Doritos":{"clientes":1517,"pct":58.3,"objetivo":98.0},"Cheetos":{"clientes":983,"pct":37.8,"objetivo":83.9},"3D":{"clientes":1103,"pct":42.4,"objetivo":85.7},"Pep":{"clientes":240,"pct":9.2,"objetivo":62.3},"Pehuamar":{"clientes":221,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":667,"pct":25.6,"objetivo":79.4},"Tostitos":{"clientes":94,"pct":3.6,"objetivo":28.4},"Quaker":{"clientes":73,"pct":2.8,"objetivo":4.6}},"cob":{"Lays":{"clientes":1374,"pct":52.8,"objetivo":94.9},"Doritos":{"clientes":1517,"pct":58.3,"objetivo":98.0},"Cheetos":{"clientes":983,"pct":37.8,"objetivo":83.9},"3D":{"clientes":1103,"pct":42.4,"objetivo":85.7},"Pep":{"clientes":240,"pct":9.2,"objetivo":62.3},"Pehuamar":{"clientes":221,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":667,"pct":25.6,"objetivo":79.4},"Tostitos":{"clientes":94,"pct":3.6,"objetivo":28.4},"Quaker":{"clientes":73,"pct":2.8,"objetivo":4.6}},"vendedores":[{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","ton":0.552,"imp":17278589,"cli":219,"ticket":78898,"cart":300,"ccc":219,"pcc":73.0,"obj_ccc":210,"apc":104.3,"kr":552.17,"ot":1225,"apr":45.1,"tend":726.54,"apt":59.3,"pv":17278589,"pd":503013,"pc":191350,"pdp":2.91,"cat":{"salty_pg":{"r":463.7,"o":894},"salty_sb":{"r":17.6,"o":331},"crackers":{"r":47.6,"o":0},"cereales":{"r":23.2,"o":0}},"mk_cob":{"Lays":179,"Doritos":200,"Cheetos":136,"3D":150,"Pep":17,"Pehuamar":26,"Twistos":59,"Tostitos":4,"Quaker":13}},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","ton":0.658,"imp":19329357,"cli":207,"ticket":93379,"cart":330,"ccc":207,"pcc":62.7,"obj_ccc":220,"apc":94.1,"kr":658.22,"ot":1488,"apr":44.2,"tend":866.08,"apt":58.2,"pv":19329357,"pd":479391,"pc":464192,"pdp":2.48,"cat":{"salty_pg":{"r":524.1,"o":1110},"salty_sb":{"r":21.8,"o":378},"crackers":{"r":83.7,"o":0},"cereales":{"r":28.6,"o":0}},"mk_cob":{"Lays":166,"Doritos":190,"Cheetos":125,"3D":147,"Pep":26,"Pehuamar":26,"Twistos":89,"Tostitos":8,"Quaker":9}},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.456,"imp":13841619,"cli":182,"ticket":76053,"cart":306,"ccc":182,"pcc":59.5,"obj_ccc":208,"apc":87.5,"kr":456.4,"ot":1063,"apr":42.9,"tend":600.53,"apt":56.5,"pv":13841619,"pd":1054616,"pc":231208,"pdp":7.62,"cat":{"salty_pg":{"r":380.6,"o":806},"salty_sb":{"r":10.3,"o":257},"crackers":{"r":56.3,"o":0},"cereales":{"r":9.2,"o":0}},"mk_cob":{"Lays":160,"Doritos":175,"Cheetos":123,"3D":135,"Pep":17,"Pehuamar":14,"Twistos":62,"Tostitos":3,"Quaker":5}},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.77,"imp":22424061,"cli":207,"ticket":108329,"cart":313,"ccc":207,"pcc":66.1,"obj_ccc":213,"apc":97.2,"kr":769.68,"ot":1513,"apr":50.9,"tend":1012.74,"apt":66.9,"pv":22424061,"pd":1150811,"pc":368415,"pdp":5.13,"cat":{"salty_pg":{"r":620.0,"o":1067},"salty_sb":{"r":49.9,"o":446},"crackers":{"r":75.9,"o":0},"cereales":{"r":23.8,"o":0}},"mk_cob":{"Lays":163,"Doritos":190,"Cheetos":102,"3D":128,"Pep":40,"Pehuamar":40,"Twistos":91,"Tostitos":10,"Quaker":13}},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","ton":0.515,"imp":16725452,"cli":199,"ticket":84047,"cart":294,"ccc":199,"pcc":67.7,"obj_ccc":215,"apc":92.6,"kr":514.62,"ot":1300,"apr":39.6,"tend":677.13,"apt":52.1,"pv":16725452,"pd":97857,"pc":178203,"pdp":0.59,"cat":{"salty_pg":{"r":419.5,"o":937},"salty_sb":{"r":12.1,"o":363},"crackers":{"r":71.2,"o":0},"cereales":{"r":11.7,"o":0}},"mk_cob":{"Lays":165,"Doritos":181,"Cheetos":114,"3D":120,"Pep":22,"Pehuamar":23,"Twistos":71,"Tostitos":6,"Quaker":6}},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","ton":0.79,"imp":22020962,"cli":164,"ticket":134274,"cart":281,"ccc":164,"pcc":58.4,"obj_ccc":211,"apc":77.7,"kr":789.64,"ot":1525,"apr":51.8,"tend":1039.0,"apt":68.1,"pv":22020962,"pd":508236,"pc":458148,"pdp":2.31,"cat":{"salty_pg":{"r":611.0,"o":1011},"salty_sb":{"r":21.1,"o":514},"crackers":{"r":95.5,"o":0},"cereales":{"r":62.0,"o":0}},"mk_cob":{"Lays":136,"Doritos":158,"Cheetos":103,"3D":114,"Pep":32,"Pehuamar":27,"Twistos":71,"Tostitos":11,"Quaker":11}},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","ton":0.732,"imp":20999307,"cli":141,"ticket":148931,"cart":267,"ccc":141,"pcc":52.8,"obj_ccc":213,"apc":66.2,"kr":731.91,"ot":1913,"apr":38.3,"tend":963.04,"apt":50.3,"pv":20999307,"pd":657710,"pc":134136,"pdp":3.13,"cat":{"salty_pg":{"r":591.9,"o":1236},"salty_sb":{"r":23.5,"o":677},"crackers":{"r":80.2,"o":0},"cereales":{"r":36.2,"o":0}},"mk_cob":{"Lays":121,"Doritos":126,"Cheetos":87,"3D":93,"Pep":27,"Pehuamar":19,"Twistos":64,"Tostitos":22,"Quaker":6}},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","ton":0.589,"imp":16876876,"cli":151,"ticket":111767,"cart":241,"ccc":151,"pcc":62.7,"obj_ccc":211,"apc":71.6,"kr":589.29,"ot":1163,"apr":50.7,"tend":775.38,"apt":66.7,"pv":16876876,"pd":813345,"pc":210954,"pdp":4.82,"cat":{"salty_pg":{"r":455.9,"o":879},"salty_sb":{"r":32.6,"o":284},"crackers":{"r":81.0,"o":0},"cereales":{"r":19.8,"o":0}},"mk_cob":{"Lays":127,"Doritos":134,"Cheetos":71,"3D":89,"Pep":30,"Pehuamar":27,"Twistos":89,"Tostitos":5,"Quaker":3}},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","ton":0.757,"imp":22018259,"cli":172,"ticket":128013,"cart":269,"ccc":172,"pcc":63.9,"obj_ccc":210,"apc":81.9,"kr":757.47,"ot":1313,"apr":57.7,"tend":996.67,"apt":75.9,"pv":22018259,"pd":308572,"pc":284113,"pdp":1.4,"cat":{"salty_pg":{"r":600.1,"o":871},"salty_sb":{"r":32.4,"o":442},"crackers":{"r":79.6,"o":0},"cereales":{"r":45.4,"o":0}},"mk_cob":{"Lays":157,"Doritos":163,"Cheetos":122,"3D":127,"Pep":29,"Pehuamar":19,"Twistos":71,"Tostitos":25,"Quaker":7}}]},"400":{"kpis":{"cartera":2365,"ccc":1775,"ccc_pep":1775,"cobertura_cartera":75.1,"toneladas":8.01,"ton":8.009,"importe":226172708,"imp":226172708,"unidades":0,"uds":0,"ticket":127421,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1611,"pct":68.1,"objetivo":94.9},"Doritos":{"clientes":1664,"pct":70.4,"objetivo":98.0},"Cheetos":{"clientes":1139,"pct":48.2,"objetivo":83.9},"3D":{"clientes":1170,"pct":49.5,"objetivo":85.7},"Pep":{"clientes":380,"pct":16.1,"objetivo":62.3},"Pehuamar":{"clientes":249,"pct":10.5,"objetivo":20.7},"Twistos":{"clientes":752,"pct":31.8,"objetivo":79.4},"Tostitos":{"clientes":110,"pct":4.7,"objetivo":28.4},"Quaker":{"clientes":73,"pct":3.1,"objetivo":4.6}},"cob":{"Lays":{"clientes":1611,"pct":68.1,"objetivo":94.9},"Doritos":{"clientes":1664,"pct":70.4,"objetivo":98.0},"Cheetos":{"clientes":1139,"pct":48.2,"objetivo":83.9},"3D":{"clientes":1170,"pct":49.5,"objetivo":85.7},"Pep":{"clientes":380,"pct":16.1,"objetivo":62.3},"Pehuamar":{"clientes":249,"pct":10.5,"objetivo":20.7},"Twistos":{"clientes":752,"pct":31.8,"objetivo":79.4},"Tostitos":{"clientes":110,"pct":4.7,"objetivo":28.4},"Quaker":{"clientes":73,"pct":3.1,"objetivo":4.6}},"vendedores":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":1.347,"imp":39092652,"cli":205,"ticket":190696,"cart":239,"ccc":205,"pcc":85.8,"obj_ccc":214,"apc":95.8,"kr":1347.44,"ot":2790,"apr":48.3,"tend":1772.95,"apt":63.5,"pv":39092652,"pd":271438,"pc":235695,"pdp":0.69,"cat":{"salty_pg":{"r":1139.2,"o":2080},"salty_sb":{"r":44.7,"o":710},"crackers":{"r":99.5,"o":0},"cereales":{"r":64.1,"o":0}},"mk_cob":{"Lays":184,"Doritos":189,"Cheetos":130,"3D":139,"Pep":40,"Pehuamar":32,"Twistos":93,"Tostitos":19,"Quaker":8}},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.752,"imp":21361167,"cli":157,"ticket":136058,"cart":223,"ccc":157,"pcc":70.4,"obj_ccc":201,"apc":78.1,"kr":751.98,"ot":1584,"apr":47.5,"tend":989.45,"apt":62.5,"pv":21361167,"pd":492348,"pc":368011,"pdp":2.3,"cat":{"salty_pg":{"r":601.4,"o":1029},"salty_sb":{"r":54.0,"o":555},"crackers":{"r":75.5,"o":0},"cereales":{"r":21.0,"o":0}},"mk_cob":{"Lays":141,"Doritos":148,"Cheetos":98,"3D":102,"Pep":25,"Pehuamar":32,"Twistos":63,"Tostitos":16,"Quaker":6}},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.817,"imp":22669293,"cli":157,"ticket":144390,"cart":239,"ccc":157,"pcc":65.7,"obj_ccc":215,"apc":73.0,"kr":817.45,"ot":1836,"apr":44.5,"tend":1075.59,"apt":58.6,"pv":22669293,"pd":582457,"pc":272614,"pdp":2.57,"cat":{"salty_pg":{"r":659.7,"o":1315},"salty_sb":{"r":42.7,"o":521},"crackers":{"r":71.9,"o":0},"cereales":{"r":43.1,"o":0}},"mk_cob":{"Lays":150,"Doritos":152,"Cheetos":89,"3D":117,"Pep":14,"Pehuamar":28,"Twistos":63,"Tostitos":7,"Quaker":7}},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.46,"imp":13163589,"cli":157,"ticket":83845,"cart":224,"ccc":157,"pcc":70.1,"obj_ccc":202,"apc":77.7,"kr":459.79,"ot":1350,"apr":34.1,"tend":604.99,"apt":44.8,"pv":13163589,"pd":304500,"pc":140786,"pdp":2.31,"cat":{"salty_pg":{"r":375.2,"o":1031},"salty_sb":{"r":9.7,"o":319},"crackers":{"r":58.5,"o":0},"cereales":{"r":16.3,"o":0}},"mk_cob":{"Lays":136,"Doritos":144,"Cheetos":102,"3D":101,"Pep":29,"Pehuamar":12,"Twistos":78,"Tostitos":3,"Quaker":6}},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.805,"imp":22139468,"cli":187,"ticket":118393,"cart":261,"ccc":187,"pcc":71.6,"obj_ccc":222,"apc":84.2,"kr":805.13,"ot":1530,"apr":52.6,"tend":1059.38,"apt":69.2,"pv":22139468,"pd":431460,"pc":106186,"pdp":1.95,"cat":{"salty_pg":{"r":625.0,"o":1172},"salty_sb":{"r":41.3,"o":358},"crackers":{"r":85.9,"o":0},"cereales":{"r":53.0,"o":0}},"mk_cob":{"Lays":174,"Doritos":173,"Cheetos":116,"3D":127,"Pep":36,"Pehuamar":19,"Twistos":73,"Tostitos":9,"Quaker":5}},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.677,"imp":18233595,"cli":155,"ticket":117636,"cart":228,"ccc":155,"pcc":68.0,"obj_ccc":205,"apc":75.6,"kr":677.47,"ot":2016,"apr":33.6,"tend":891.41,"apt":44.2,"pv":18233595,"pd":400060,"pc":226182,"pdp":2.19,"cat":{"salty_pg":{"r":522.6,"o":1401},"salty_sb":{"r":32.1,"o":615},"crackers":{"r":88.1,"o":0},"cereales":{"r":34.6,"o":0}},"mk_cob":{"Lays":144,"Doritos":139,"Cheetos":113,"3D":98,"Pep":42,"Pehuamar":20,"Twistos":75,"Tostitos":7,"Quaker":2}},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.875,"imp":24408467,"cli":170,"ticket":143579,"cart":208,"ccc":170,"pcc":81.7,"obj_ccc":202,"apc":84.2,"kr":875.33,"ot":1530,"apr":57.2,"tend":1151.75,"apt":75.3,"pv":24408467,"pd":176036,"pc":74093,"pdp":0.72,"cat":{"salty_pg":{"r":704.8,"o":1145},"salty_sb":{"r":30.2,"o":385},"crackers":{"r":86.6,"o":0},"cereales":{"r":53.7,"o":0}},"mk_cob":{"Lays":157,"Doritos":164,"Cheetos":111,"3D":115,"Pep":25,"Pehuamar":19,"Twistos":85,"Tostitos":2,"Quaker":10}},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.886,"imp":23814837,"cli":221,"ticket":107759,"cart":287,"ccc":221,"pcc":77.0,"obj_ccc":224,"apc":98.7,"kr":885.75,"ot":1710,"apr":51.8,"tend":1165.46,"apt":68.2,"pv":23814837,"pd":533307,"pc":253100,"pdp":2.24,"cat":{"salty_pg":{"r":700.1,"o":1099},"salty_sb":{"r":61.8,"o":611},"crackers":{"r":61.6,"o":0},"cereales":{"r":62.4,"o":0}},"mk_cob":{"Lays":197,"Doritos":209,"Cheetos":147,"3D":150,"Pep":44,"Pehuamar":23,"Twistos":74,"Tostitos":14,"Quaker":11}},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.64,"imp":17394445,"cli":192,"ticket":90596,"cart":261,"ccc":192,"pcc":73.6,"obj_ccc":222,"apc":86.5,"kr":640.03,"ot":1800,"apr":35.6,"tend":842.14,"apt":46.8,"pv":17394445,"pd":918901,"pc":87101,"pdp":5.28,"cat":{"salty_pg":{"r":535.2,"o":1263},"salty_sb":{"r":30.2,"o":537},"crackers":{"r":59.0,"o":0},"cereales":{"r":15.6,"o":0}},"mk_cob":{"Lays":177,"Doritos":184,"Cheetos":142,"3D":126,"Pep":91,"Pehuamar":18,"Twistos":67,"Tostitos":5,"Quaker":6}},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.749,"imp":23895195,"cli":174,"ticket":137329,"cart":195,"ccc":174,"pcc":89.2,"obj_ccc":193,"apc":90.2,"kr":748.69,"ot":1854,"apr":40.4,"tend":985.12,"apt":53.1,"pv":23895195,"pd":167448,"pc":160187,"pdp":0.7,"cat":{"salty_pg":{"r":614.3,"o":1208},"salty_sb":{"r":30.1,"o":646},"crackers":{"r":77.3,"o":0},"cereales":{"r":26.9,"o":0}},"mk_cob":{"Lays":151,"Doritos":162,"Cheetos":91,"3D":95,"Pep":34,"Pehuamar":46,"Twistos":81,"Tostitos":28,"Quaker":12}}]},"500":{"kpis":{"cartera":2265,"ccc":1428,"ccc_pep":1428,"cobertura_cartera":63.0,"toneladas":5.68,"ton":5.68,"importe":168336259,"imp":168336259,"unidades":0,"uds":0,"ticket":117883,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1180,"pct":52.1,"objetivo":94.9},"Doritos":{"clientes":1299,"pct":57.4,"objetivo":98.0},"Cheetos":{"clientes":805,"pct":35.5,"objetivo":83.9},"3D":{"clientes":889,"pct":39.2,"objetivo":85.7},"Pep":{"clientes":198,"pct":8.7,"objetivo":62.3},"Pehuamar":{"clientes":193,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":551,"pct":24.3,"objetivo":79.4},"Tostitos":{"clientes":91,"pct":4.0,"objetivo":28.4},"Quaker":{"clientes":65,"pct":2.9,"objetivo":4.6}},"cob":{"Lays":{"clientes":1180,"pct":52.1,"objetivo":94.9},"Doritos":{"clientes":1299,"pct":57.4,"objetivo":98.0},"Cheetos":{"clientes":805,"pct":35.5,"objetivo":83.9},"3D":{"clientes":889,"pct":39.2,"objetivo":85.7},"Pep":{"clientes":198,"pct":8.7,"objetivo":62.3},"Pehuamar":{"clientes":193,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":551,"pct":24.3,"objetivo":79.4},"Tostitos":{"clientes":91,"pct":4.0,"objetivo":28.4},"Quaker":{"clientes":65,"pct":2.9,"objetivo":4.6}},"vendedores":[{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.644,"imp":18705018,"cli":182,"ticket":102775,"cart":277,"ccc":182,"pcc":65.7,"obj_ccc":213,"apc":85.4,"kr":644.43,"ot":1600,"apr":40.3,"tend":847.93,"apt":53.0,"pv":18705018,"pd":286646,"pc":218584,"pdp":1.53,"cat":{"salty_pg":{"r":490.0,"o":1077},"salty_sb":{"r":42.5,"o":523},"crackers":{"r":73.5,"o":0},"cereales":{"r":38.4,"o":0}},"mk_cob":{"Lays":156,"Doritos":170,"Cheetos":100,"3D":115,"Pep":28,"Pehuamar":28,"Twistos":76,"Tostitos":12,"Quaker":12}},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","ton":0.603,"imp":17878549,"cli":204,"ticket":87640,"cart":274,"ccc":204,"pcc":74.5,"obj_ccc":211,"apc":96.7,"kr":603.16,"ot":1232,"apr":49.0,"tend":793.63,"apt":64.4,"pv":17878549,"pd":727858,"pc":775000,"pdp":4.07,"cat":{"salty_pg":{"r":487.0,"o":877},"salty_sb":{"r":14.9,"o":355},"crackers":{"r":62.6,"o":0},"cereales":{"r":38.7,"o":0}},"mk_cob":{"Lays":156,"Doritos":173,"Cheetos":116,"3D":112,"Pep":25,"Pehuamar":25,"Twistos":67,"Tostitos":21,"Quaker":15}},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.642,"imp":18778385,"cli":195,"ticket":96299,"cart":313,"ccc":195,"pcc":62.3,"obj_ccc":215,"apc":90.7,"kr":641.55,"ot":1359,"apr":47.2,"tend":844.14,"apt":62.1,"pv":18778385,"pd":364443,"pc":372247,"pdp":1.94,"cat":{"salty_pg":{"r":532.7,"o":952},"salty_sb":{"r":24.7,"o":407},"crackers":{"r":60.3,"o":0},"cereales":{"r":23.7,"o":0}},"mk_cob":{"Lays":173,"Doritos":183,"Cheetos":134,"3D":149,"Pep":13,"Pehuamar":26,"Twistos":54,"Tostitos":6,"Quaker":7}},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.543,"imp":15511225,"cli":153,"ticket":101381,"cart":251,"ccc":153,"pcc":61.0,"obj_ccc":213,"apc":71.8,"kr":543.36,"ot":1359,"apr":40.0,"tend":714.95,"apt":52.6,"pv":15511225,"pd":845358,"pc":218178,"pdp":5.45,"cat":{"salty_pg":{"r":465.2,"o":1053},"salty_sb":{"r":14.4,"o":306},"crackers":{"r":59.9,"o":0},"cereales":{"r":3.9,"o":0}},"mk_cob":{"Lays":130,"Doritos":145,"Cheetos":73,"3D":87,"Pep":33,"Pehuamar":22,"Twistos":67,"Tostitos":5,"Quaker":2}},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.477,"imp":14444484,"cli":145,"ticket":99617,"cart":279,"ccc":145,"pcc":52.0,"obj_ccc":215,"apc":67.4,"kr":476.67,"ot":1207,"apr":39.5,"tend":627.2,"apt":52.0,"pv":14444484,"pd":408324,"pc":265464,"pdp":2.83,"cat":{"salty_pg":{"r":396.9,"o":956},"salty_sb":{"r":13.4,"o":251},"crackers":{"r":60.2,"o":0},"cereales":{"r":6.2,"o":0}},"mk_cob":{"Lays":103,"Doritos":131,"Cheetos":82,"3D":92,"Pep":24,"Pehuamar":11,"Twistos":58,"Tostitos":14,"Quaker":3}},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","ton":1.199,"imp":36279908,"cli":141,"ticket":257304,"cart":307,"ccc":141,"pcc":45.9,"obj_ccc":216,"apc":65.3,"kr":1199.04,"ot":2896,"apr":41.4,"tend":1577.68,"apt":54.5,"pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"cat":{"salty_pg":{"r":1002.7,"o":2094},"salty_sb":{"r":35.5,"o":802},"crackers":{"r":101.6,"o":0},"cereales":{"r":59.2,"o":0}},"mk_cob":{"Lays":110,"Doritos":120,"Cheetos":56,"3D":77,"Pep":21,"Pehuamar":18,"Twistos":66,"Tostitos":10,"Quaker":8}},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.743,"imp":21724047,"cli":213,"ticket":101991,"cart":305,"ccc":213,"pcc":69.8,"obj_ccc":213,"apc":100.0,"kr":742.96,"ot":1435,"apr":51.8,"tend":977.58,"apt":68.1,"pv":21724047,"pd":857359,"pc":378453,"pdp":3.95,"cat":{"salty_pg":{"r":625.7,"o":1040},"salty_sb":{"r":26.6,"o":395},"crackers":{"r":80.7,"o":0},"cereales":{"r":9.9,"o":0}},"mk_cob":{"Lays":194,"Doritos":201,"Cheetos":141,"3D":136,"Pep":19,"Pehuamar":31,"Twistos":82,"Tostitos":10,"Quaker":3}},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.829,"imp":25014643,"cli":195,"ticket":128280,"cart":259,"ccc":195,"pcc":75.3,"obj_ccc":212,"apc":92.0,"kr":828.52,"ot":1613,"apr":51.4,"tend":1090.16,"apt":67.6,"pv":25014643,"pd":575483,"pc":394117,"pdp":2.3,"cat":{"salty_pg":{"r":666.7,"o":1284},"salty_sb":{"r":25.7,"o":329},"crackers":{"r":113.2,"o":0},"cereales":{"r":22.9,"o":0}},"mk_cob":{"Lays":158,"Doritos":176,"Cheetos":103,"3D":121,"Pep":35,"Pehuamar":32,"Twistos":81,"Tostitos":13,"Quaker":15}}]},"600":{"kpis":{"cartera":2474,"ccc":0,"ccc_pep":0,"cobertura_cartera":0.0,"toneladas":0.0,"ton":0.0,"importe":0,"imp":0,"unidades":0,"uds":0,"ticket":0,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":0,"pct":0.0,"objetivo":94.9},"Doritos":{"clientes":0,"pct":0.0,"objetivo":98.0},"Cheetos":{"clientes":0,"pct":0.0,"objetivo":83.9},"3D":{"clientes":0,"pct":0.0,"objetivo":85.7},"Pep":{"clientes":0,"pct":0.0,"objetivo":62.3},"Pehuamar":{"clientes":0,"pct":0.0,"objetivo":20.7},"Twistos":{"clientes":0,"pct":0.0,"objetivo":79.4},"Tostitos":{"clientes":0,"pct":0.0,"objetivo":28.4},"Quaker":{"clientes":0,"pct":0.0,"objetivo":4.6}},"cob":{"Lays":{"clientes":0,"pct":0.0,"objetivo":94.9},"Doritos":{"clientes":0,"pct":0.0,"objetivo":98.0},"Cheetos":{"clientes":0,"pct":0.0,"objetivo":83.9},"3D":{"clientes":0,"pct":0.0,"objetivo":85.7},"Pep":{"clientes":0,"pct":0.0,"objetivo":62.3},"Pehuamar":{"clientes":0,"pct":0.0,"objetivo":20.7},"Twistos":{"clientes":0,"pct":0.0,"objetivo":79.4},"Tostitos":{"clientes":0,"pct":0.0,"objetivo":28.4},"Quaker":{"clientes":0,"pct":0.0,"objetivo":4.6}},"vendedores":[{"cod":61,"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":544,"ccc":0,"pcc":0.0,"obj_ccc":381,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":62,"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":498,"ccc":0,"pcc":0.0,"obj_ccc":349,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":63,"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":527,"ccc":0,"pcc":0.0,"obj_ccc":369,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":64,"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":341,"ccc":0,"pcc":0.0,"obj_ccc":239,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":65,"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":564,"ccc":0,"pcc":0.0,"obj_ccc":395,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}}]}},"mesas_resumen":{"300":{"kg_real":5819.4,"obj_total":12503,"avance_pct":46.5,"imp_real":171514482,"ccc":1642,"cartera":2601,"pct_ccc":63.1,"tend":7657.1,"apt":61.2},"400":{"kg_real":8009.0599999999995,"obj_total":18000,"avance_pct":44.5,"imp_real":226172708,"ccc":1775,"cartera":2365,"pct_ccc":75.1,"tend":10538.2,"apt":58.5},"500":{"kg_real":5679.6900000000005,"obj_total":12701,"avance_pct":44.7,"imp_real":168336259,"ccc":1428,"cartera":2265,"pct_ccc":63.0,"tend":7473.3,"apt":58.8},"600":{"kg_real":0,"obj_total":0,"avance_pct":0,"imp_real":0,"ccc":0,"cartera":2474,"pct_ccc":0.0,"tend":0.0,"apt":0}},"dias_hab":25,"dias_trab":19};
 const DATA_PERIODOS={"Abr 2026":{"periodo":"Abr 2026","vendedores":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":1.333,"imp":38379389,"cli":187,"ticket":205237,"cart":239,"ccc":187,"pcc":78.2,"obj_ccc":214,"apc":87.4,"kr":1333.12,"ot":2790,"apr":47.8,"tend":1960.47,"apt":70.3,"pv":38379389,"pd":271438,"pc":235695,"pdp":0.71,"cat":{"salty_pg":{"r":1124.9,"o":2080},"salty_sb":{"r":44.7,"o":710},"crackers":{"r":99.5,"o":0},"cereales":{"r":64.1,"o":0}},"mk_cob":{"Lays":160,"Doritos":170,"Cheetos":99,"3D":111,"Pep":39,"Pehuamar":32,"Twistos":93,"Tostitos":19,"Quaker":8}},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.734,"imp":20532188,"cli":141,"ticket":145618,"cart":223,"ccc":141,"pcc":63.2,"obj_ccc":201,"apc":70.1,"kr":734.28,"ot":1584,"apr":46.4,"tend":1079.82,"apt":68.2,"pv":20532188,"pd":492348,"pc":368011,"pdp":2.4,"cat":{"salty_pg":{"r":585.1,"o":1029},"salty_sb":{"r":53.2,"o":555},"crackers":{"r":75.0,"o":0},"cereales":{"r":21.0,"o":0}},"mk_cob":{"Lays":120,"Doritos":127,"Cheetos":69,"3D":74,"Pep":25,"Pehuamar":32,"Twistos":62,"Tostitos":16,"Quaker":6}},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.795,"imp":21684592,"cli":121,"ticket":179212,"cart":239,"ccc":121,"pcc":50.6,"obj_ccc":215,"apc":56.3,"kr":795.42,"ot":1836,"apr":43.3,"tend":1169.74,"apt":63.7,"pv":21684592,"pd":582457,"pc":272614,"pdp":2.69,"cat":{"salty_pg":{"r":639.7,"o":1315},"salty_sb":{"r":42.7,"o":521},"crackers":{"r":69.9,"o":0},"cereales":{"r":43.1,"o":0}},"mk_cob":{"Lays":115,"Doritos":116,"Cheetos":48,"3D":79,"Pep":14,"Pehuamar":27,"Twistos":61,"Tostitos":7,"Quaker":7}},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.446,"imp":12487329,"cli":126,"ticket":99106,"cart":224,"ccc":126,"pcc":56.2,"obj_ccc":202,"apc":62.4,"kr":446.45,"ot":1350,"apr":33.1,"tend":656.54,"apt":48.6,"pv":12487329,"pd":304500,"pc":140786,"pdp":2.44,"cat":{"salty_pg":{"r":361.9,"o":1031},"salty_sb":{"r":9.7,"o":319},"crackers":{"r":58.5,"o":0},"cereales":{"r":16.3,"o":0}},"mk_cob":{"Lays":106,"Doritos":114,"Cheetos":69,"3D":68,"Pep":29,"Pehuamar":12,"Twistos":78,"Tostitos":3,"Quaker":6}},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.789,"imp":21311468,"cli":158,"ticket":134883,"cart":261,"ccc":158,"pcc":60.5,"obj_ccc":222,"apc":71.2,"kr":788.99,"ot":1530,"apr":51.6,"tend":1160.28,"apt":75.8,"pv":21311468,"pd":431460,"pc":106186,"pdp":2.02,"cat":{"salty_pg":{"r":608.8,"o":1172},"salty_sb":{"r":41.3,"o":358},"crackers":{"r":85.9,"o":0},"cereales":{"r":53.0,"o":0}},"mk_cob":{"Lays":146,"Doritos":142,"Cheetos":81,"3D":89,"Pep":36,"Pehuamar":19,"Twistos":73,"Tostitos":9,"Quaker":5}},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.666,"imp":17642835,"cli":134,"ticket":131663,"cart":228,"ccc":134,"pcc":58.8,"obj_ccc":205,"apc":65.4,"kr":665.88,"ot":2016,"apr":33.0,"tend":979.24,"apt":48.6,"pv":17642835,"pd":400060,"pc":226182,"pdp":2.27,"cat":{"salty_pg":{"r":511.1,"o":1401},"salty_sb":{"r":32.1,"o":615},"crackers":{"r":88.1,"o":0},"cereales":{"r":34.6,"o":0}},"mk_cob":{"Lays":123,"Doritos":116,"Cheetos":87,"3D":72,"Pep":42,"Pehuamar":20,"Twistos":75,"Tostitos":7,"Quaker":2}},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.864,"imp":23815039,"cli":153,"ticket":155654,"cart":208,"ccc":153,"pcc":73.6,"obj_ccc":202,"apc":75.7,"kr":863.74,"ot":1530,"apr":56.5,"tend":1270.21,"apt":83.0,"pv":23815039,"pd":176036,"pc":74093,"pdp":0.74,"cat":{"salty_pg":{"r":693.2,"o":1145},"salty_sb":{"r":30.2,"o":385},"crackers":{"r":86.6,"o":0},"cereales":{"r":53.7,"o":0}},"mk_cob":{"Lays":138,"Doritos":146,"Cheetos":84,"3D":89,"Pep":25,"Pehuamar":19,"Twistos":85,"Tostitos":2,"Quaker":10}},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.869,"imp":22936840,"cli":189,"ticket":121359,"cart":287,"ccc":189,"pcc":65.9,"obj_ccc":224,"apc":84.4,"kr":868.55,"ot":1710,"apr":50.8,"tend":1277.28,"apt":74.7,"pv":22936840,"pd":533307,"pc":253100,"pdp":2.33,"cat":{"salty_pg":{"r":682.9,"o":1099},"salty_sb":{"r":61.8,"o":611},"crackers":{"r":61.6,"o":0},"cereales":{"r":62.4,"o":0}},"mk_cob":{"Lays":161,"Doritos":173,"Cheetos":105,"3D":109,"Pep":44,"Pehuamar":23,"Twistos":74,"Tostitos":14,"Quaker":11}},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.624,"imp":16605885,"cli":162,"ticket":102505,"cart":261,"ccc":162,"pcc":62.1,"obj_ccc":222,"apc":73.0,"kr":624.47,"ot":1800,"apr":34.7,"tend":918.34,"apt":51.0,"pv":16605885,"pd":918901,"pc":87101,"pdp":5.53,"cat":{"salty_pg":{"r":519.7,"o":1263},"salty_sb":{"r":30.2,"o":537},"crackers":{"r":59.0,"o":0},"cereales":{"r":15.6,"o":0}},"mk_cob":{"Lays":143,"Doritos":148,"Cheetos":106,"3D":89,"Pep":91,"Pehuamar":18,"Twistos":67,"Tostitos":5,"Quaker":6}},{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","ton":0.527,"imp":15982588,"cli":172,"ticket":92922,"cart":300,"ccc":172,"pcc":57.3,"obj_ccc":210,"apc":81.9,"kr":526.89,"ot":1225,"apr":43.0,"tend":774.84,"apt":63.3,"pv":15982588,"pd":503013,"pc":191350,"pdp":3.15,"cat":{"salty_pg":{"r":438.5,"o":894},"salty_sb":{"r":17.6,"o":331},"crackers":{"r":47.6,"o":0},"cereales":{"r":23.2,"o":0}},"mk_cob":{"Lays":126,"Doritos":150,"Cheetos":75,"3D":92,"Pep":17,"Pehuamar":26,"Twistos":59,"Tostitos":4,"Quaker":13}},{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.629,"imp":17914782,"cli":147,"ticket":121869,"cart":277,"ccc":147,"pcc":53.1,"obj_ccc":213,"apc":69.0,"kr":628.98,"ot":1600,"apr":39.3,"tend":924.97,"apt":57.8,"pv":17914782,"pd":286646,"pc":218584,"pdp":1.6,"cat":{"salty_pg":{"r":474.6,"o":1077},"salty_sb":{"r":42.5,"o":523},"crackers":{"r":73.5,"o":0},"cereales":{"r":38.4,"o":0}},"mk_cob":{"Lays":121,"Doritos":134,"Cheetos":58,"3D":76,"Pep":28,"Pehuamar":28,"Twistos":76,"Tostitos":12,"Quaker":12}},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","ton":0.584,"imp":16920448,"cli":173,"ticket":97806,"cart":274,"ccc":173,"pcc":63.1,"obj_ccc":211,"apc":82.0,"kr":583.64,"ot":1232,"apr":47.4,"tend":858.29,"apt":69.7,"pv":16920448,"pd":727858,"pc":760857,"pdp":4.3,"cat":{"salty_pg":{"r":467.9,"o":877},"salty_sb":{"r":14.9,"o":355},"crackers":{"r":62.2,"o":0},"cereales":{"r":38.7,"o":0}},"mk_cob":{"Lays":114,"Doritos":131,"Cheetos":69,"3D":67,"Pep":25,"Pehuamar":25,"Twistos":66,"Tostitos":21,"Quaker":15}},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.617,"imp":17518835,"cli":131,"ticket":133732,"cart":313,"ccc":131,"pcc":41.9,"obj_ccc":215,"apc":60.9,"kr":616.98,"ot":1359,"apr":45.4,"tend":907.32,"apt":66.8,"pv":17518835,"pd":364443,"pc":372247,"pdp":2.08,"cat":{"salty_pg":{"r":508.2,"o":952},"salty_sb":{"r":24.7,"o":407},"crackers":{"r":60.3,"o":0},"cereales":{"r":23.7,"o":0}},"mk_cob":{"Lays":107,"Doritos":117,"Cheetos":67,"3D":84,"Pep":13,"Pehuamar":26,"Twistos":54,"Tostitos":6,"Quaker":7}},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","ton":0.638,"imp":18291032,"cli":158,"ticket":115766,"cart":330,"ccc":158,"pcc":47.9,"obj_ccc":220,"apc":71.8,"kr":637.86,"ot":1488,"apr":42.9,"tend":938.03,"apt":63.0,"pv":18291032,"pd":479391,"pc":464192,"pdp":2.62,"cat":{"salty_pg":{"r":503.7,"o":1110},"salty_sb":{"r":21.8,"o":378},"crackers":{"r":83.7,"o":0},"cereales":{"r":28.6,"o":0}},"mk_cob":{"Lays":117,"Doritos":140,"Cheetos":72,"3D":95,"Pep":26,"Pehuamar":26,"Twistos":89,"Tostitos":8,"Quaker":9}},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.542,"imp":15453368,"cli":152,"ticket":101667,"cart":251,"ccc":152,"pcc":60.6,"obj_ccc":213,"apc":71.4,"kr":541.7,"ot":1359,"apr":39.9,"tend":796.62,"apt":58.6,"pv":15453368,"pd":845358,"pc":218178,"pdp":5.47,"cat":{"salty_pg":{"r":463.7,"o":1053},"salty_sb":{"r":14.4,"o":306},"crackers":{"r":59.7,"o":0},"cereales":{"r":3.9,"o":0}},"mk_cob":{"Lays":129,"Doritos":143,"Cheetos":72,"3D":86,"Pep":33,"Pehuamar":22,"Twistos":67,"Tostitos":5,"Quaker":2}},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.475,"imp":14336484,"cli":141,"ticket":101677,"cart":279,"ccc":141,"pcc":50.5,"obj_ccc":215,"apc":65.6,"kr":474.56,"ot":1207,"apr":39.3,"tend":697.88,"apt":57.8,"pv":14336484,"pd":408324,"pc":265464,"pdp":2.85,"cat":{"salty_pg":{"r":394.8,"o":956},"salty_sb":{"r":13.4,"o":251},"crackers":{"r":60.2,"o":0},"cereales":{"r":6.2,"o":0}},"mk_cob":{"Lays":99,"Doritos":127,"Cheetos":76,"3D":87,"Pep":24,"Pehuamar":11,"Twistos":58,"Tostitos":14,"Quaker":3}},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","ton":1.199,"imp":36279908,"cli":141,"ticket":257304,"cart":307,"ccc":141,"pcc":45.9,"obj_ccc":216,"apc":65.3,"kr":1199.04,"ot":2896,"apr":41.4,"tend":1763.29,"apt":60.9,"pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"cat":{"salty_pg":{"r":1002.7,"o":2094},"salty_sb":{"r":35.5,"o":802},"crackers":{"r":101.6,"o":0},"cereales":{"r":59.2,"o":0}},"mk_cob":{"Lays":110,"Doritos":120,"Cheetos":56,"3D":77,"Pep":21,"Pehuamar":18,"Twistos":66,"Tostitos":10,"Quaker":8}},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.435,"imp":12731833,"cli":128,"ticket":99467,"cart":306,"ccc":128,"pcc":41.8,"obj_ccc":208,"apc":61.5,"kr":434.64,"ot":1063,"apr":40.9,"tend":639.18,"apt":60.1,"pv":12731833,"pd":1054616,"pc":231208,"pdp":8.28,"cat":{"salty_pg":{"r":358.9,"o":806},"salty_sb":{"r":10.3,"o":257},"crackers":{"r":56.3,"o":0},"cereales":{"r":9.2,"o":0}},"mk_cob":{"Lays":106,"Doritos":120,"Cheetos":64,"3D":77,"Pep":17,"Pehuamar":14,"Twistos":62,"Tostitos":3,"Quaker":5}},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.742,"imp":23554995,"cli":169,"ticket":139379,"cart":195,"ccc":169,"pcc":86.7,"obj_ccc":193,"apc":87.6,"kr":742.02,"ot":1854,"apr":40.0,"tend":1091.21,"apt":58.9,"pv":23554995,"pd":167448,"pc":160187,"pdp":0.71,"cat":{"salty_pg":{"r":607.7,"o":1208},"salty_sb":{"r":30.1,"o":646},"crackers":{"r":77.3,"o":0},"cereales":{"r":26.9,"o":0}},"mk_cob":{"Lays":142,"Doritos":155,"Cheetos":80,"3D":82,"Pep":34,"Pehuamar":46,"Twistos":81,"Tostitos":28,"Quaker":12}},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.751,"imp":21709767,"cli":197,"ticket":110202,"cart":313,"ccc":197,"pcc":62.9,"obj_ccc":213,"apc":92.5,"kr":751.15,"ot":1513,"apr":49.6,"tend":1104.63,"apt":73.0,"pv":21709767,"pd":1150811,"pc":368415,"pdp":5.3,"cat":{"salty_pg":{"r":606.0,"o":1067},"salty_sb":{"r":48.4,"o":446},"crackers":{"r":72.9,"o":0},"cereales":{"r":23.8,"o":0}},"mk_cob":{"Lays":150,"Doritos":180,"Cheetos":88,"3D":114,"Pep":40,"Pehuamar":39,"Twistos":90,"Tostitos":10,"Quaker":13}},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","ton":0.499,"imp":15906023,"cli":159,"ticket":100038,"cart":294,"ccc":159,"pcc":54.1,"obj_ccc":215,"apc":74.0,"kr":498.58,"ot":1300,"apr":38.4,"tend":733.21,"apt":56.4,"pv":15906023,"pd":97857,"pc":178203,"pdp":0.62,"cat":{"salty_pg":{"r":403.5,"o":937},"salty_sb":{"r":12.1,"o":363},"crackers":{"r":71.2,"o":0},"cereales":{"r":11.7,"o":0}},"mk_cob":{"Lays":123,"Doritos":140,"Cheetos":70,"3D":77,"Pep":22,"Pehuamar":23,"Twistos":71,"Tostitos":6,"Quaker":6}},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.726,"imp":20866711,"cli":173,"ticket":120617,"cart":305,"ccc":173,"pcc":56.7,"obj_ccc":213,"apc":81.2,"kr":726.12,"ot":1435,"apr":50.6,"tend":1067.82,"apt":74.4,"pv":20866711,"pd":857359,"pc":378453,"pdp":4.11,"cat":{"salty_pg":{"r":608.9,"o":1040},"salty_sb":{"r":26.6,"o":395},"crackers":{"r":80.7,"o":0},"cereales":{"r":9.9,"o":0}},"mk_cob":{"Lays":155,"Doritos":162,"Cheetos":98,"3D":93,"Pep":19,"Pehuamar":31,"Twistos":82,"Tostitos":10,"Quaker":3}},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","ton":0.767,"imp":21179191,"cli":137,"ticket":154593,"cart":281,"ccc":137,"pcc":48.8,"obj_ccc":211,"apc":64.9,"kr":767.31,"ot":1525,"apr":50.3,"tend":1128.4,"apt":74.0,"pv":21179191,"pd":508236,"pc":458148,"pdp":2.4,"cat":{"salty_pg":{"r":592.7,"o":1011},"salty_sb":{"r":20.7,"o":514},"crackers":{"r":93.9,"o":0},"cereales":{"r":60.0,"o":0}},"mk_cob":{"Lays":109,"Doritos":129,"Cheetos":72,"3D":84,"Pep":32,"Pehuamar":27,"Twistos":71,"Tostitos":11,"Quaker":11}},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","ton":0.726,"imp":20714367,"cli":128,"ticket":161831,"cart":267,"ccc":128,"pcc":47.9,"obj_ccc":213,"apc":60.1,"kr":726.29,"ot":1913,"apr":38.0,"tend":1068.07,"apt":55.8,"pv":20714367,"pd":657710,"pc":134136,"pdp":3.18,"cat":{"salty_pg":{"r":586.3,"o":1236},"salty_sb":{"r":23.5,"o":677},"crackers":{"r":80.2,"o":0},"cereales":{"r":36.2,"o":0}},"mk_cob":{"Lays":108,"Doritos":113,"Cheetos":74,"3D":80,"Pep":27,"Pehuamar":19,"Twistos":64,"Tostitos":22,"Quaker":6}},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","ton":0.583,"imp":16675233,"cli":149,"ticket":111914,"cart":241,"ccc":149,"pcc":61.8,"obj_ccc":211,"apc":70.6,"kr":582.87,"ot":1163,"apr":50.1,"tend":857.16,"apt":73.7,"pv":16675233,"pd":813345,"pc":210954,"pdp":4.88,"cat":{"salty_pg":{"r":451.8,"o":879},"salty_sb":{"r":31.9,"o":284},"crackers":{"r":79.4,"o":0},"cereales":{"r":19.8,"o":0}},"mk_cob":{"Lays":125,"Doritos":131,"Cheetos":69,"3D":85,"Pep":30,"Pehuamar":27,"Twistos":88,"Tostitos":5,"Quaker":3}},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.815,"imp":24331093,"cli":170,"ticket":143124,"cart":259,"ccc":170,"pcc":65.6,"obj_ccc":212,"apc":80.2,"kr":815.18,"ot":1613,"apr":50.5,"tend":1198.79,"apt":74.3,"pv":24331093,"pd":575483,"pc":394117,"pdp":2.37,"cat":{"salty_pg":{"r":653.3,"o":1284},"salty_sb":{"r":25.7,"o":329},"crackers":{"r":113.2,"o":0},"cereales":{"r":22.9,"o":0}},"mk_cob":{"Lays":132,"Doritos":148,"Cheetos":72,"3D":90,"Pep":35,"Pehuamar":32,"Twistos":81,"Tostitos":13,"Quaker":15}},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","ton":0.737,"imp":20980910,"cli":129,"ticket":162643,"cart":269,"ccc":129,"pcc":48.0,"obj_ccc":210,"apc":61.4,"kr":737.12,"ot":1313,"apr":56.1,"tend":1084.0,"apt":82.6,"pv":20980910,"pd":308572,"pc":284113,"pdp":1.47,"cat":{"salty_pg":{"r":579.7,"o":871},"salty_sb":{"r":32.4,"o":442},"crackers":{"r":79.6,"o":0},"cereales":{"r":45.4,"o":0}},"mk_cob":{"Lays":111,"Doritos":118,"Cheetos":71,"3D":79,"Pep":29,"Pehuamar":19,"Twistos":71,"Tostitos":25,"Quaker":7}},{"cod":61,"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":544,"ccc":0,"pcc":0.0,"obj_ccc":381,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":62,"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":498,"ccc":0,"pcc":0.0,"obj_ccc":349,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":63,"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":527,"ccc":0,"pcc":0.0,"obj_ccc":369,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":64,"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":341,"ccc":0,"pcc":0.0,"obj_ccc":239,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":65,"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":564,"ccc":0,"pcc":0.0,"obj_ccc":395,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}}],"cobertura":{"Lays":{"clientes":3396,"pct":47.0,"objetivo":94.9},"Doritos":{"clientes":3710,"pct":51.3,"objetivo":98.0},"Cheetos":{"clientes":2051,"pct":28.4,"objetivo":83.9},"3D":{"clientes":2305,"pct":31.9,"objetivo":85.7},"Pep":{"clientes":817,"pct":11.3,"objetivo":62.3},"Pehuamar":{"clientes":661,"pct":9.1,"objetivo":20.7},"Twistos":{"clientes":1964,"pct":27.2,"objetivo":79.4},"Tostitos":{"clientes":295,"pct":4.1,"objetivo":28.4},"Quaker":{"clientes":211,"pct":2.9,"objetivo":4.6}},"kpis_global":{"cartera":7231,"ccc":4125,"ccc_pep":4125,"cobertura_cartera":57.0,"toneladas":19.11,"importe":546743133,"unidades":0,"ticket":132544,"mix_imp":0},"cobertura_marcas":{"Lays":{"clientes":3396,"pct":47.0,"objetivo":94.9},"Doritos":{"clientes":3710,"pct":51.3,"objetivo":98.0},"Cheetos":{"clientes":2051,"pct":28.4,"objetivo":83.9},"3D":{"clientes":2305,"pct":31.9,"objetivo":85.7},"Pep":{"clientes":817,"pct":11.3,"objetivo":62.3},"Pehuamar":{"clientes":661,"pct":9.1,"objetivo":20.7},"Twistos":{"clientes":1964,"pct":27.2,"objetivo":79.4},"Tostitos":{"clientes":295,"pct":4.1,"objetivo":28.4},"Quaker":{"clientes":211,"pct":2.9,"objetivo":4.6}},"por_mesa":{"300":{"kpis":{"cartera":2601,"ccc":1357,"ccc_pep":1357,"cobertura_cartera":52.2,"toneladas":5.66,"ton":5.663,"importe":164170944,"imp":164170944,"unidades":0,"uds":0,"ticket":120981,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1075,"pct":41.3,"objetivo":94.9},"Doritos":{"clientes":1221,"pct":46.9,"objetivo":98.0},"Cheetos":{"clientes":655,"pct":25.2,"objetivo":83.9},"3D":{"clientes":783,"pct":30.1,"objetivo":85.7},"Pep":{"clientes":240,"pct":9.2,"objetivo":62.3},"Pehuamar":{"clientes":220,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":665,"pct":25.6,"objetivo":79.4},"Tostitos":{"clientes":94,"pct":3.6,"objetivo":28.4},"Quaker":{"clientes":73,"pct":2.8,"objetivo":4.6}},"cob":{"Lays":{"clientes":1075,"pct":41.3,"objetivo":94.9},"Doritos":{"clientes":1221,"pct":46.9,"objetivo":98.0},"Cheetos":{"clientes":655,"pct":25.2,"objetivo":83.9},"3D":{"clientes":783,"pct":30.1,"objetivo":85.7},"Pep":{"clientes":240,"pct":9.2,"objetivo":62.3},"Pehuamar":{"clientes":220,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":665,"pct":25.6,"objetivo":79.4},"Tostitos":{"clientes":94,"pct":3.6,"objetivo":28.4},"Quaker":{"clientes":73,"pct":2.8,"objetivo":4.6}},"vendedores":[{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","ton":0.527,"imp":15982588,"cli":172,"ticket":92922,"cart":300,"ccc":172,"pcc":57.3,"obj_ccc":210,"apc":81.9,"kr":526.89,"ot":1225,"apr":43.0,"tend":774.84,"apt":63.3,"pv":15982588,"pd":503013,"pc":191350,"pdp":3.15,"cat":{"salty_pg":{"r":438.5,"o":894},"salty_sb":{"r":17.6,"o":331},"crackers":{"r":47.6,"o":0},"cereales":{"r":23.2,"o":0}},"mk_cob":{"Lays":126,"Doritos":150,"Cheetos":75,"3D":92,"Pep":17,"Pehuamar":26,"Twistos":59,"Tostitos":4,"Quaker":13}},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","ton":0.638,"imp":18291032,"cli":158,"ticket":115766,"cart":330,"ccc":158,"pcc":47.9,"obj_ccc":220,"apc":71.8,"kr":637.86,"ot":1488,"apr":42.9,"tend":938.03,"apt":63.0,"pv":18291032,"pd":479391,"pc":464192,"pdp":2.62,"cat":{"salty_pg":{"r":503.7,"o":1110},"salty_sb":{"r":21.8,"o":378},"crackers":{"r":83.7,"o":0},"cereales":{"r":28.6,"o":0}},"mk_cob":{"Lays":117,"Doritos":140,"Cheetos":72,"3D":95,"Pep":26,"Pehuamar":26,"Twistos":89,"Tostitos":8,"Quaker":9}},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.435,"imp":12731833,"cli":128,"ticket":99467,"cart":306,"ccc":128,"pcc":41.8,"obj_ccc":208,"apc":61.5,"kr":434.64,"ot":1063,"apr":40.9,"tend":639.18,"apt":60.1,"pv":12731833,"pd":1054616,"pc":231208,"pdp":8.28,"cat":{"salty_pg":{"r":358.9,"o":806},"salty_sb":{"r":10.3,"o":257},"crackers":{"r":56.3,"o":0},"cereales":{"r":9.2,"o":0}},"mk_cob":{"Lays":106,"Doritos":120,"Cheetos":64,"3D":77,"Pep":17,"Pehuamar":14,"Twistos":62,"Tostitos":3,"Quaker":5}},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","ton":0.751,"imp":21709767,"cli":197,"ticket":110202,"cart":313,"ccc":197,"pcc":62.9,"obj_ccc":213,"apc":92.5,"kr":751.15,"ot":1513,"apr":49.6,"tend":1104.63,"apt":73.0,"pv":21709767,"pd":1150811,"pc":368415,"pdp":5.3,"cat":{"salty_pg":{"r":606.0,"o":1067},"salty_sb":{"r":48.4,"o":446},"crackers":{"r":72.9,"o":0},"cereales":{"r":23.8,"o":0}},"mk_cob":{"Lays":150,"Doritos":180,"Cheetos":88,"3D":114,"Pep":40,"Pehuamar":39,"Twistos":90,"Tostitos":10,"Quaker":13}},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","ton":0.499,"imp":15906023,"cli":159,"ticket":100038,"cart":294,"ccc":159,"pcc":54.1,"obj_ccc":215,"apc":74.0,"kr":498.58,"ot":1300,"apr":38.4,"tend":733.21,"apt":56.4,"pv":15906023,"pd":97857,"pc":178203,"pdp":0.62,"cat":{"salty_pg":{"r":403.5,"o":937},"salty_sb":{"r":12.1,"o":363},"crackers":{"r":71.2,"o":0},"cereales":{"r":11.7,"o":0}},"mk_cob":{"Lays":123,"Doritos":140,"Cheetos":70,"3D":77,"Pep":22,"Pehuamar":23,"Twistos":71,"Tostitos":6,"Quaker":6}},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","ton":0.767,"imp":21179191,"cli":137,"ticket":154593,"cart":281,"ccc":137,"pcc":48.8,"obj_ccc":211,"apc":64.9,"kr":767.31,"ot":1525,"apr":50.3,"tend":1128.4,"apt":74.0,"pv":21179191,"pd":508236,"pc":458148,"pdp":2.4,"cat":{"salty_pg":{"r":592.7,"o":1011},"salty_sb":{"r":20.7,"o":514},"crackers":{"r":93.9,"o":0},"cereales":{"r":60.0,"o":0}},"mk_cob":{"Lays":109,"Doritos":129,"Cheetos":72,"3D":84,"Pep":32,"Pehuamar":27,"Twistos":71,"Tostitos":11,"Quaker":11}},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","ton":0.726,"imp":20714367,"cli":128,"ticket":161831,"cart":267,"ccc":128,"pcc":47.9,"obj_ccc":213,"apc":60.1,"kr":726.29,"ot":1913,"apr":38.0,"tend":1068.07,"apt":55.8,"pv":20714367,"pd":657710,"pc":134136,"pdp":3.18,"cat":{"salty_pg":{"r":586.3,"o":1236},"salty_sb":{"r":23.5,"o":677},"crackers":{"r":80.2,"o":0},"cereales":{"r":36.2,"o":0}},"mk_cob":{"Lays":108,"Doritos":113,"Cheetos":74,"3D":80,"Pep":27,"Pehuamar":19,"Twistos":64,"Tostitos":22,"Quaker":6}},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","ton":0.583,"imp":16675233,"cli":149,"ticket":111914,"cart":241,"ccc":149,"pcc":61.8,"obj_ccc":211,"apc":70.6,"kr":582.87,"ot":1163,"apr":50.1,"tend":857.16,"apt":73.7,"pv":16675233,"pd":813345,"pc":210954,"pdp":4.88,"cat":{"salty_pg":{"r":451.8,"o":879},"salty_sb":{"r":31.9,"o":284},"crackers":{"r":79.4,"o":0},"cereales":{"r":19.8,"o":0}},"mk_cob":{"Lays":125,"Doritos":131,"Cheetos":69,"3D":85,"Pep":30,"Pehuamar":27,"Twistos":88,"Tostitos":5,"Quaker":3}},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","ton":0.737,"imp":20980910,"cli":129,"ticket":162643,"cart":269,"ccc":129,"pcc":48.0,"obj_ccc":210,"apc":61.4,"kr":737.12,"ot":1313,"apr":56.1,"tend":1084.0,"apt":82.6,"pv":20980910,"pd":308572,"pc":284113,"pdp":1.47,"cat":{"salty_pg":{"r":579.7,"o":871},"salty_sb":{"r":32.4,"o":442},"crackers":{"r":79.6,"o":0},"cereales":{"r":45.4,"o":0}},"mk_cob":{"Lays":111,"Doritos":118,"Cheetos":71,"3D":79,"Pep":29,"Pehuamar":19,"Twistos":71,"Tostitos":25,"Quaker":7}}]},"400":{"kpis":{"cartera":2365,"ccc":1540,"ccc_pep":1540,"cobertura_cartera":65.1,"toneladas":7.86,"ton":7.863,"importe":218950560,"imp":218950560,"unidades":0,"uds":0,"ticket":142176,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":1354,"pct":57.3,"objetivo":94.9},"Doritos":{"clientes":1407,"pct":59.5,"objetivo":98.0},"Cheetos":{"clientes":828,"pct":35.0,"objetivo":83.9},"3D":{"clientes":862,"pct":36.4,"objetivo":85.7},"Pep":{"clientes":379,"pct":16.0,"objetivo":62.3},"Pehuamar":{"clientes":248,"pct":10.5,"objetivo":20.7},"Twistos":{"clientes":749,"pct":31.7,"objetivo":79.4},"Tostitos":{"clientes":110,"pct":4.7,"objetivo":28.4},"Quaker":{"clientes":73,"pct":3.1,"objetivo":4.6}},"cob":{"Lays":{"clientes":1354,"pct":57.3,"objetivo":94.9},"Doritos":{"clientes":1407,"pct":59.5,"objetivo":98.0},"Cheetos":{"clientes":828,"pct":35.0,"objetivo":83.9},"3D":{"clientes":862,"pct":36.4,"objetivo":85.7},"Pep":{"clientes":379,"pct":16.0,"objetivo":62.3},"Pehuamar":{"clientes":248,"pct":10.5,"objetivo":20.7},"Twistos":{"clientes":749,"pct":31.7,"objetivo":79.4},"Tostitos":{"clientes":110,"pct":4.7,"objetivo":28.4},"Quaker":{"clientes":73,"pct":3.1,"objetivo":4.6}},"vendedores":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":1.333,"imp":38379389,"cli":187,"ticket":205237,"cart":239,"ccc":187,"pcc":78.2,"obj_ccc":214,"apc":87.4,"kr":1333.12,"ot":2790,"apr":47.8,"tend":1960.47,"apt":70.3,"pv":38379389,"pd":271438,"pc":235695,"pdp":0.71,"cat":{"salty_pg":{"r":1124.9,"o":2080},"salty_sb":{"r":44.7,"o":710},"crackers":{"r":99.5,"o":0},"cereales":{"r":64.1,"o":0}},"mk_cob":{"Lays":160,"Doritos":170,"Cheetos":99,"3D":111,"Pep":39,"Pehuamar":32,"Twistos":93,"Tostitos":19,"Quaker":8}},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.734,"imp":20532188,"cli":141,"ticket":145618,"cart":223,"ccc":141,"pcc":63.2,"obj_ccc":201,"apc":70.1,"kr":734.28,"ot":1584,"apr":46.4,"tend":1079.82,"apt":68.2,"pv":20532188,"pd":492348,"pc":368011,"pdp":2.4,"cat":{"salty_pg":{"r":585.1,"o":1029},"salty_sb":{"r":53.2,"o":555},"crackers":{"r":75.0,"o":0},"cereales":{"r":21.0,"o":0}},"mk_cob":{"Lays":120,"Doritos":127,"Cheetos":69,"3D":74,"Pep":25,"Pehuamar":32,"Twistos":62,"Tostitos":16,"Quaker":6}},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.795,"imp":21684592,"cli":121,"ticket":179212,"cart":239,"ccc":121,"pcc":50.6,"obj_ccc":215,"apc":56.3,"kr":795.42,"ot":1836,"apr":43.3,"tend":1169.74,"apt":63.7,"pv":21684592,"pd":582457,"pc":272614,"pdp":2.69,"cat":{"salty_pg":{"r":639.7,"o":1315},"salty_sb":{"r":42.7,"o":521},"crackers":{"r":69.9,"o":0},"cereales":{"r":43.1,"o":0}},"mk_cob":{"Lays":115,"Doritos":116,"Cheetos":48,"3D":79,"Pep":14,"Pehuamar":27,"Twistos":61,"Tostitos":7,"Quaker":7}},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.446,"imp":12487329,"cli":126,"ticket":99106,"cart":224,"ccc":126,"pcc":56.2,"obj_ccc":202,"apc":62.4,"kr":446.45,"ot":1350,"apr":33.1,"tend":656.54,"apt":48.6,"pv":12487329,"pd":304500,"pc":140786,"pdp":2.44,"cat":{"salty_pg":{"r":361.9,"o":1031},"salty_sb":{"r":9.7,"o":319},"crackers":{"r":58.5,"o":0},"cereales":{"r":16.3,"o":0}},"mk_cob":{"Lays":106,"Doritos":114,"Cheetos":69,"3D":68,"Pep":29,"Pehuamar":12,"Twistos":78,"Tostitos":3,"Quaker":6}},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.789,"imp":21311468,"cli":158,"ticket":134883,"cart":261,"ccc":158,"pcc":60.5,"obj_ccc":222,"apc":71.2,"kr":788.99,"ot":1530,"apr":51.6,"tend":1160.28,"apt":75.8,"pv":21311468,"pd":431460,"pc":106186,"pdp":2.02,"cat":{"salty_pg":{"r":608.8,"o":1172},"salty_sb":{"r":41.3,"o":358},"crackers":{"r":85.9,"o":0},"cereales":{"r":53.0,"o":0}},"mk_cob":{"Lays":146,"Doritos":142,"Cheetos":81,"3D":89,"Pep":36,"Pehuamar":19,"Twistos":73,"Tostitos":9,"Quaker":5}},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.666,"imp":17642835,"cli":134,"ticket":131663,"cart":228,"ccc":134,"pcc":58.8,"obj_ccc":205,"apc":65.4,"kr":665.88,"ot":2016,"apr":33.0,"tend":979.24,"apt":48.6,"pv":17642835,"pd":400060,"pc":226182,"pdp":2.27,"cat":{"salty_pg":{"r":511.1,"o":1401},"salty_sb":{"r":32.1,"o":615},"crackers":{"r":88.1,"o":0},"cereales":{"r":34.6,"o":0}},"mk_cob":{"Lays":123,"Doritos":116,"Cheetos":87,"3D":72,"Pep":42,"Pehuamar":20,"Twistos":75,"Tostitos":7,"Quaker":2}},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.864,"imp":23815039,"cli":153,"ticket":155654,"cart":208,"ccc":153,"pcc":73.6,"obj_ccc":202,"apc":75.7,"kr":863.74,"ot":1530,"apr":56.5,"tend":1270.21,"apt":83.0,"pv":23815039,"pd":176036,"pc":74093,"pdp":0.74,"cat":{"salty_pg":{"r":693.2,"o":1145},"salty_sb":{"r":30.2,"o":385},"crackers":{"r":86.6,"o":0},"cereales":{"r":53.7,"o":0}},"mk_cob":{"Lays":138,"Doritos":146,"Cheetos":84,"3D":89,"Pep":25,"Pehuamar":19,"Twistos":85,"Tostitos":2,"Quaker":10}},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.869,"imp":22936840,"cli":189,"ticket":121359,"cart":287,"ccc":189,"pcc":65.9,"obj_ccc":224,"apc":84.4,"kr":868.55,"ot":1710,"apr":50.8,"tend":1277.28,"apt":74.7,"pv":22936840,"pd":533307,"pc":253100,"pdp":2.33,"cat":{"salty_pg":{"r":682.9,"o":1099},"salty_sb":{"r":61.8,"o":611},"crackers":{"r":61.6,"o":0},"cereales":{"r":62.4,"o":0}},"mk_cob":{"Lays":161,"Doritos":173,"Cheetos":105,"3D":109,"Pep":44,"Pehuamar":23,"Twistos":74,"Tostitos":14,"Quaker":11}},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.624,"imp":16605885,"cli":162,"ticket":102505,"cart":261,"ccc":162,"pcc":62.1,"obj_ccc":222,"apc":73.0,"kr":624.47,"ot":1800,"apr":34.7,"tend":918.34,"apt":51.0,"pv":16605885,"pd":918901,"pc":87101,"pdp":5.53,"cat":{"salty_pg":{"r":519.7,"o":1263},"salty_sb":{"r":30.2,"o":537},"crackers":{"r":59.0,"o":0},"cereales":{"r":15.6,"o":0}},"mk_cob":{"Lays":143,"Doritos":148,"Cheetos":106,"3D":89,"Pep":91,"Pehuamar":18,"Twistos":67,"Tostitos":5,"Quaker":6}},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","ton":0.742,"imp":23554995,"cli":169,"ticket":139379,"cart":195,"ccc":169,"pcc":86.7,"obj_ccc":193,"apc":87.6,"kr":742.02,"ot":1854,"apr":40.0,"tend":1091.21,"apt":58.9,"pv":23554995,"pd":167448,"pc":160187,"pdp":0.71,"cat":{"salty_pg":{"r":607.7,"o":1208},"salty_sb":{"r":30.1,"o":646},"crackers":{"r":77.3,"o":0},"cereales":{"r":26.9,"o":0}},"mk_cob":{"Lays":142,"Doritos":155,"Cheetos":80,"3D":82,"Pep":34,"Pehuamar":46,"Twistos":81,"Tostitos":28,"Quaker":12}}]},"500":{"kpis":{"cartera":2265,"ccc":1228,"ccc_pep":1228,"cobertura_cartera":54.2,"toneladas":5.59,"ton":5.586,"importe":163621629,"imp":163621629,"unidades":0,"uds":0,"ticket":133242,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":967,"pct":42.7,"objetivo":94.9},"Doritos":{"clientes":1082,"pct":47.8,"objetivo":98.0},"Cheetos":{"clientes":568,"pct":25.1,"objetivo":83.9},"3D":{"clientes":660,"pct":29.1,"objetivo":85.7},"Pep":{"clientes":198,"pct":8.7,"objetivo":62.3},"Pehuamar":{"clientes":193,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":550,"pct":24.3,"objetivo":79.4},"Tostitos":{"clientes":91,"pct":4.0,"objetivo":28.4},"Quaker":{"clientes":65,"pct":2.9,"objetivo":4.6}},"cob":{"Lays":{"clientes":967,"pct":42.7,"objetivo":94.9},"Doritos":{"clientes":1082,"pct":47.8,"objetivo":98.0},"Cheetos":{"clientes":568,"pct":25.1,"objetivo":83.9},"3D":{"clientes":660,"pct":29.1,"objetivo":85.7},"Pep":{"clientes":198,"pct":8.7,"objetivo":62.3},"Pehuamar":{"clientes":193,"pct":8.5,"objetivo":20.7},"Twistos":{"clientes":550,"pct":24.3,"objetivo":79.4},"Tostitos":{"clientes":91,"pct":4.0,"objetivo":28.4},"Quaker":{"clientes":65,"pct":2.9,"objetivo":4.6}},"vendedores":[{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.629,"imp":17914782,"cli":147,"ticket":121869,"cart":277,"ccc":147,"pcc":53.1,"obj_ccc":213,"apc":69.0,"kr":628.98,"ot":1600,"apr":39.3,"tend":924.97,"apt":57.8,"pv":17914782,"pd":286646,"pc":218584,"pdp":1.6,"cat":{"salty_pg":{"r":474.6,"o":1077},"salty_sb":{"r":42.5,"o":523},"crackers":{"r":73.5,"o":0},"cereales":{"r":38.4,"o":0}},"mk_cob":{"Lays":121,"Doritos":134,"Cheetos":58,"3D":76,"Pep":28,"Pehuamar":28,"Twistos":76,"Tostitos":12,"Quaker":12}},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","ton":0.584,"imp":16920448,"cli":173,"ticket":97806,"cart":274,"ccc":173,"pcc":63.1,"obj_ccc":211,"apc":82.0,"kr":583.64,"ot":1232,"apr":47.4,"tend":858.29,"apt":69.7,"pv":16920448,"pd":727858,"pc":760857,"pdp":4.3,"cat":{"salty_pg":{"r":467.9,"o":877},"salty_sb":{"r":14.9,"o":355},"crackers":{"r":62.2,"o":0},"cereales":{"r":38.7,"o":0}},"mk_cob":{"Lays":114,"Doritos":131,"Cheetos":69,"3D":67,"Pep":25,"Pehuamar":25,"Twistos":66,"Tostitos":21,"Quaker":15}},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.617,"imp":17518835,"cli":131,"ticket":133732,"cart":313,"ccc":131,"pcc":41.9,"obj_ccc":215,"apc":60.9,"kr":616.98,"ot":1359,"apr":45.4,"tend":907.32,"apt":66.8,"pv":17518835,"pd":364443,"pc":372247,"pdp":2.08,"cat":{"salty_pg":{"r":508.2,"o":952},"salty_sb":{"r":24.7,"o":407},"crackers":{"r":60.3,"o":0},"cereales":{"r":23.7,"o":0}},"mk_cob":{"Lays":107,"Doritos":117,"Cheetos":67,"3D":84,"Pep":13,"Pehuamar":26,"Twistos":54,"Tostitos":6,"Quaker":7}},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.542,"imp":15453368,"cli":152,"ticket":101667,"cart":251,"ccc":152,"pcc":60.6,"obj_ccc":213,"apc":71.4,"kr":541.7,"ot":1359,"apr":39.9,"tend":796.62,"apt":58.6,"pv":15453368,"pd":845358,"pc":218178,"pdp":5.47,"cat":{"salty_pg":{"r":463.7,"o":1053},"salty_sb":{"r":14.4,"o":306},"crackers":{"r":59.7,"o":0},"cereales":{"r":3.9,"o":0}},"mk_cob":{"Lays":129,"Doritos":143,"Cheetos":72,"3D":86,"Pep":33,"Pehuamar":22,"Twistos":67,"Tostitos":5,"Quaker":2}},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","ton":0.475,"imp":14336484,"cli":141,"ticket":101677,"cart":279,"ccc":141,"pcc":50.5,"obj_ccc":215,"apc":65.6,"kr":474.56,"ot":1207,"apr":39.3,"tend":697.88,"apt":57.8,"pv":14336484,"pd":408324,"pc":265464,"pdp":2.85,"cat":{"salty_pg":{"r":394.8,"o":956},"salty_sb":{"r":13.4,"o":251},"crackers":{"r":60.2,"o":0},"cereales":{"r":6.2,"o":0}},"mk_cob":{"Lays":99,"Doritos":127,"Cheetos":76,"3D":87,"Pep":24,"Pehuamar":11,"Twistos":58,"Tostitos":14,"Quaker":3}},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","ton":1.199,"imp":36279908,"cli":141,"ticket":257304,"cart":307,"ccc":141,"pcc":45.9,"obj_ccc":216,"apc":65.3,"kr":1199.04,"ot":2896,"apr":41.4,"tend":1763.29,"apt":60.9,"pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"cat":{"salty_pg":{"r":1002.7,"o":2094},"salty_sb":{"r":35.5,"o":802},"crackers":{"r":101.6,"o":0},"cereales":{"r":59.2,"o":0}},"mk_cob":{"Lays":110,"Doritos":120,"Cheetos":56,"3D":77,"Pep":21,"Pehuamar":18,"Twistos":66,"Tostitos":10,"Quaker":8}},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","ton":0.726,"imp":20866711,"cli":173,"ticket":120617,"cart":305,"ccc":173,"pcc":56.7,"obj_ccc":213,"apc":81.2,"kr":726.12,"ot":1435,"apr":50.6,"tend":1067.82,"apt":74.4,"pv":20866711,"pd":857359,"pc":378453,"pdp":4.11,"cat":{"salty_pg":{"r":608.9,"o":1040},"salty_sb":{"r":26.6,"o":395},"crackers":{"r":80.7,"o":0},"cereales":{"r":9.9,"o":0}},"mk_cob":{"Lays":155,"Doritos":162,"Cheetos":98,"3D":93,"Pep":19,"Pehuamar":31,"Twistos":82,"Tostitos":10,"Quaker":3}},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","ton":0.815,"imp":24331093,"cli":170,"ticket":143124,"cart":259,"ccc":170,"pcc":65.6,"obj_ccc":212,"apc":80.2,"kr":815.18,"ot":1613,"apr":50.5,"tend":1198.79,"apt":74.3,"pv":24331093,"pd":575483,"pc":394117,"pdp":2.37,"cat":{"salty_pg":{"r":653.3,"o":1284},"salty_sb":{"r":25.7,"o":329},"crackers":{"r":113.2,"o":0},"cereales":{"r":22.9,"o":0}},"mk_cob":{"Lays":132,"Doritos":148,"Cheetos":72,"3D":90,"Pep":35,"Pehuamar":32,"Twistos":81,"Tostitos":13,"Quaker":15}}]},"600":{"kpis":{"cartera":2474,"ccc":0,"ccc_pep":0,"cobertura_cartera":0.0,"toneladas":0.0,"ton":0.0,"importe":0,"imp":0,"unidades":0,"uds":0,"ticket":0,"mix_imp":0,"mix":0},"cobertura_marcas":{"Lays":{"clientes":0,"pct":0.0,"objetivo":94.9},"Doritos":{"clientes":0,"pct":0.0,"objetivo":98.0},"Cheetos":{"clientes":0,"pct":0.0,"objetivo":83.9},"3D":{"clientes":0,"pct":0.0,"objetivo":85.7},"Pep":{"clientes":0,"pct":0.0,"objetivo":62.3},"Pehuamar":{"clientes":0,"pct":0.0,"objetivo":20.7},"Twistos":{"clientes":0,"pct":0.0,"objetivo":79.4},"Tostitos":{"clientes":0,"pct":0.0,"objetivo":28.4},"Quaker":{"clientes":0,"pct":0.0,"objetivo":4.6}},"cob":{"Lays":{"clientes":0,"pct":0.0,"objetivo":94.9},"Doritos":{"clientes":0,"pct":0.0,"objetivo":98.0},"Cheetos":{"clientes":0,"pct":0.0,"objetivo":83.9},"3D":{"clientes":0,"pct":0.0,"objetivo":85.7},"Pep":{"clientes":0,"pct":0.0,"objetivo":62.3},"Pehuamar":{"clientes":0,"pct":0.0,"objetivo":20.7},"Twistos":{"clientes":0,"pct":0.0,"objetivo":79.4},"Tostitos":{"clientes":0,"pct":0.0,"objetivo":28.4},"Quaker":{"clientes":0,"pct":0.0,"objetivo":4.6}},"vendedores":[{"cod":61,"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":544,"ccc":0,"pcc":0.0,"obj_ccc":381,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":62,"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":498,"ccc":0,"pcc":0.0,"obj_ccc":349,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":63,"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":527,"ccc":0,"pcc":0.0,"obj_ccc":369,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":64,"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":341,"ccc":0,"pcc":0.0,"obj_ccc":239,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}},{"cod":65,"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","ton":0.0,"imp":0,"cli":0,"ticket":0,"cart":564,"ccc":0,"pcc":0.0,"obj_ccc":395,"apc":0.0,"kr":0,"ot":0,"apr":0,"tend":0.0,"apt":0,"pv":0,"pd":0,"pc":0,"pdp":0,"cat":{"salty_pg":{"r":0,"o":0},"salty_sb":{"r":0,"o":0},"crackers":{"r":0,"o":0},"cereales":{"r":0,"o":0}},"mk_cob":{"Lays":0,"Doritos":0,"Cheetos":0,"3D":0,"Pep":0,"Pehuamar":0,"Twistos":0,"Tostitos":0,"Quaker":0}}]}},"mesas_resumen":{"300":{"kg_real":5662.709999999999,"obj_total":12503,"avance_pct":45.3,"imp_real":164170944,"ccc":1357,"cartera":2601,"pct_ccc":52.2,"tend":8327.5,"apt":66.6},"400":{"kg_real":7862.92,"obj_total":18000,"avance_pct":43.7,"imp_real":218950560,"ccc":1540,"cartera":2365,"pct_ccc":65.1,"tend":11563.1,"apt":64.2},"500":{"kg_real":5586.200000000001,"obj_total":12701,"avance_pct":44.0,"imp_real":163621629,"ccc":1228,"cartera":2265,"pct_ccc":54.2,"tend":8215.0,"apt":64.7},"600":{"kg_real":0,"obj_total":0,"avance_pct":0,"imp_real":0,"ccc":0,"cartera":2474,"pct_ccc":0.0,"tend":0.0,"apt":0}},"dias_hab":25,"dias_trab":17}};
 const CARTERA_VEND_BASE={"34":224,"35":261,"36":228,"45":330,"51":195,"38":287,"37":208,"54":305,"65":564,"31":239,"39":261,"64":341,"33":239,"32":223,"61":544,"62":498,"63":527,"44":313,"59":269,"46":251,"52":313,"55":281,"47":279,"53":294,"43":274,"58":259,"41":300,"42":277,"49":306,"57":241,"56":267,"48":307};
+const RECHAZO_DATA={"Abr 2026":{"perf":[{"cod":31,"nom":"MAXIMILIANO EZEQUIEL VILLALBA","mesa":400,"sup":"CLAUDIO ALVARADO","pv":38379389,"pd":271438,"pc":235695,"pdp":0.71,"pcp":0.61,"tv":38379389,"td":271438,"tc":235695,"tdp":0.71,"tcp":0.61},{"cod":32,"nom":"EDGAR FABIAN ARIEL OLIVARES","mesa":400,"sup":"CLAUDIO ALVARADO","pv":20532188,"pd":492348,"pc":368011,"pdp":2.4,"pcp":1.79,"tv":20532188,"td":492348,"tc":368011,"tdp":2.4,"tcp":1.79},{"cod":33,"nom":"ISMAEL ORDOEZ","mesa":400,"sup":"CLAUDIO ALVARADO","pv":21684592,"pd":582457,"pc":272614,"pdp":2.69,"pcp":1.26,"tv":21684592,"td":582457,"tc":272614,"tdp":2.69,"tcp":1.26},{"cod":34,"nom":"BALDO JULIAN MARCELO","mesa":400,"sup":"CLAUDIO ALVARADO","pv":12487329,"pd":304500,"pc":140786,"pdp":2.44,"pcp":1.13,"tv":12487329,"td":304500,"tc":140786,"tdp":2.44,"tcp":1.13},{"cod":35,"nom":"LUCIANO MANUEL BAZAN","mesa":400,"sup":"CLAUDIO ALVARADO","pv":21311468,"pd":431460,"pc":106186,"pdp":2.02,"pcp":0.5,"tv":21311468,"td":431460,"tc":106186,"tdp":2.02,"tcp":0.5},{"cod":36,"nom":"NAHUEL NEIRA","mesa":400,"sup":"CLAUDIO ALVARADO","pv":17642835,"pd":400060,"pc":226182,"pdp":2.27,"pcp":1.28,"tv":17642835,"td":400060,"tc":226182,"tdp":2.27,"tcp":1.28},{"cod":37,"nom":"IGNACIO MATIAS SCORRANI","mesa":400,"sup":"CLAUDIO ALVARADO","pv":23815039,"pd":176036,"pc":74093,"pdp":0.74,"pcp":0.31,"tv":23815039,"td":176036,"tc":74093,"tdp":0.74,"tcp":0.31},{"cod":38,"nom":"MAURICIO MARTINEZ","mesa":400,"sup":"CLAUDIO ALVARADO","pv":22936840,"pd":533307,"pc":253100,"pdp":2.33,"pcp":1.1,"tv":22936840,"td":533307,"tc":253100,"tdp":2.33,"tcp":1.1},{"cod":39,"nom":"SEBASTIAN MERLO","mesa":400,"sup":"CLAUDIO ALVARADO","pv":16605885,"pd":918901,"pc":87101,"pdp":5.53,"pcp":0.52,"tv":16605885,"td":918901,"tc":87101,"tdp":5.53,"tcp":0.52},{"cod":41,"nom":"CISTENA DIEGO SEBASTIAN","mesa":300,"sup":"NATALIA PEREZ","pv":15982588,"pd":503013,"pc":191350,"pdp":3.15,"pcp":1.2,"tv":15982588,"td":503013,"tc":191350,"tdp":3.15,"tcp":1.2},{"cod":42,"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULICI","pv":17914782,"pd":286646,"pc":218584,"pdp":1.6,"pcp":1.22,"tv":17914782,"td":286646,"tc":218584,"tdp":1.6,"tcp":1.22},{"cod":43,"nom":"RUEDA CUAJAR ALEXANDER","mesa":500,"sup":"MARIANO TRIULICI","pv":16920448,"pd":727858,"pc":760857,"pdp":4.3,"pcp":4.5,"tv":16920448,"td":727858,"tc":760857,"tdp":4.3,"tcp":4.5},{"cod":44,"nom":"BERNAHOLA AGUSTIN","mesa":500,"sup":"MARIANO TRIULICI","pv":17518835,"pd":364443,"pc":372247,"pdp":2.08,"pcp":2.12,"tv":17518835,"td":364443,"tc":372247,"tdp":2.08,"tcp":2.12},{"cod":45,"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","pv":18291032,"pd":479391,"pc":464192,"pdp":2.62,"pcp":2.54,"tv":18291032,"td":479391,"tc":464192,"tdp":2.62,"tcp":2.54},{"cod":46,"nom":"UCHOA LOZANO","mesa":500,"sup":"MARIANO TRIULICI","pv":15453368,"pd":845358,"pc":218178,"pdp":5.47,"pcp":1.41,"tv":15453368,"td":845358,"tc":218178,"tdp":5.47,"tcp":1.41},{"cod":47,"nom":"CACERES YANINA BELEN","mesa":500,"sup":"MARIANO TRIULICI","pv":14336484,"pd":408324,"pc":265464,"pdp":2.85,"pcp":1.85,"tv":14336484,"td":408324,"tc":265464,"tdp":2.85,"tcp":1.85},{"cod":48,"nom":"SALDE MARCELA ANTONIA","mesa":500,"sup":"MARIANO TRIULICI","pv":36279908,"pd":352070,"pc":706159,"pdp":0.97,"pcp":1.95,"tv":36279908,"td":352070,"tc":706159,"tdp":0.97,"tcp":1.95},{"cod":49,"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","pv":12731833,"pd":1054616,"pc":231208,"pdp":8.28,"pcp":1.82,"tv":12731833,"td":1054616,"tc":231208,"tdp":8.28,"tcp":1.82},{"cod":51,"nom":"GONZALEZ CANDELARIA","mesa":400,"sup":"CLAUDIO ALVARADO","pv":23554995,"pd":167448,"pc":160187,"pdp":0.71,"pcp":0.68,"tv":23554995,"td":167448,"tc":160187,"tdp":0.71,"tcp":0.68},{"cod":52,"nom":"MARTINEZ MATIAS","mesa":300,"sup":"NATALIA PEREZ","pv":21709767,"pd":1150811,"pc":368415,"pdp":5.3,"pcp":1.7,"tv":21709767,"td":1150811,"tc":368415,"tdp":5.3,"tcp":1.7},{"cod":53,"nom":"CARRIZO EZEQUIEL","mesa":300,"sup":"NATALIA PEREZ","pv":15906023,"pd":97857,"pc":178203,"pdp":0.62,"pcp":1.12,"tv":15906023,"td":97857,"tc":178203,"tdp":0.62,"tcp":1.12},{"cod":54,"nom":"JUHAN MORENO","mesa":500,"sup":"MARIANO TRIULICI","pv":20866711,"pd":857359,"pc":378453,"pdp":4.11,"pcp":1.81,"tv":20866711,"td":857359,"tc":378453,"tdp":4.11,"tcp":1.81},{"cod":55,"nom":"PULIDO EFRAIN","mesa":300,"sup":"NATALIA PEREZ","pv":21179191,"pd":508236,"pc":458148,"pdp":2.4,"pcp":2.16,"tv":21179191,"td":508236,"tc":458148,"tdp":2.4,"tcp":2.16},{"cod":56,"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","pv":20714367,"pd":657710,"pc":134136,"pdp":3.18,"pcp":0.65,"tv":20714367,"td":657710,"tc":134136,"tdp":3.18,"tcp":0.65},{"cod":57,"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","pv":16675233,"pd":813345,"pc":210954,"pdp":4.88,"pcp":1.27,"tv":16675233,"td":813345,"tc":210954,"tdp":4.88,"tcp":1.27},{"cod":58,"nom":"GONZALEZ MARCELA LUCIANA","mesa":500,"sup":"MARIANO TRIULICI","pv":24331093,"pd":575483,"pc":394117,"pdp":2.37,"pcp":1.62,"tv":24331093,"td":575483,"tc":394117,"tdp":2.37,"tcp":1.62},{"cod":59,"nom":"SERGIO AVENDAO","mesa":300,"sup":"NATALIA PEREZ","pv":20980910,"pd":308572,"pc":284113,"pdp":1.47,"pcp":1.35,"tv":20980910,"td":308572,"tc":284113,"tdp":1.47,"tcp":1.35}],"stats":{}}};
 </script>
 
 <script>
+
+
+
+
 
 // ===========================================================================
 // CONFIGURACIN FIJA
@@ -1121,30 +761,7 @@ function loadPreCalculado(jsonData) {
 // ===========================================================================
 // PERSISTENCIA localStorage
 // ===========================================================================
-function saveDB() {
-  try {
-    const toSave = Object.fromEntries(
-      Object.entries(DB).map(([k, v]) => [k, { ...v, clientes: undefined }])
-    );
-    localStorage.setItem('rumbo_db_meta', JSON.stringify({ periodos: Object.keys(DB), activo: PERIODO_ACTIVO }));
-    Object.entries(DB).forEach(([k, v]) => {
-      try { localStorage.setItem('rumbo_' + k.replace(/\s/g,'_'), JSON.stringify(v)); } catch(e) {}
-    });
-  } catch(e) {}
-}
 
-function loadDB() {
-  try {
-    const meta = JSON.parse(localStorage.getItem('rumbo_db_meta') || '{}');
-    if (meta.periodos) {
-      meta.periodos.forEach(p => {
-        const d = localStorage.getItem('rumbo_' + p.replace(/\s/g,'_'));
-        if (d) DB[p] = JSON.parse(d);
-      });
-      PERIODO_ACTIVO = meta.activo || meta.periodos[0] || null;
-    }
-  } catch(e) {}
-}
 
 // ===========================================================================
 // HELPERS
@@ -1182,11 +799,7 @@ function navTo(id, el) {
 }
 
 function renderSection(id) {
-  if (id === 'historia') { renderHistoria(); return; }
-  if (id === 'config') { renderConfig(); return; }
-  if (id === 'objetivos') { renderObjetivos(); return; }
   if (id === 'rechazo') { renderRechazo(); return; }
-  if (id === 'tendencia') { renderTendencia(); return; }
 
   // Si hay proveedor no-PepsiCo activo, usar datos de PROV_DATA
   if (PROV_ACTIVO !== 'PepsiCo') {
@@ -1194,7 +807,7 @@ function renderSection(id) {
     if (pd) {
       if (id === 'ejecutivo') renderEjecutivoProv(pd, PERIODO_ACTIVO || 'Mar 2026');
       else if (id === 'vendedores') renderVendedoresProv(pd);
-      else if (id === 'mesas' || id === 'cobertura' || id === 'clientes' || id === 'alertas') {
+      else if (id === 'mesas' || id === 'cobertura' || id === 'alertas') {
         var sec = document.getElementById('sec-'+id);
         if (sec) sec.innerHTML = '<div class="empty"><div class="empty-icon">?</div><div class="empty-title">Vista no disponible para ' + PROV_ACTIVO + '</div><div class="empty-desc">Esta seccion muestra datos de PepsiCo.<br>Selecciona PepsiCo en el filtro de proveedor.</div></div>';
       }
@@ -1208,7 +821,6 @@ function renderSection(id) {
   else if (id === 'mesas') renderMesas(d);
   else if (id === 'vendedores') renderVendedores(d);
   else if (id === 'cobertura') renderCobertura(d);
-  else if (id === 'clientes') renderClientes(d);
   else if (id === 'alertas') renderAlertas(d);
 }
 
@@ -1556,32 +1168,6 @@ function renderCobertura(d) {
 // ===========================================================================
 // RENDER: CLIENTES
 // ===========================================================================
-function renderClientes(d) {
-  const clis = Object.entries(d.clientes || {});
-  const tot = clis.length;
-  const crit = clis.filter(([,c])=>c.n_ok<5).length;
-  const comp = clis.filter(([,c])=>c.n_ok===9).length;
-
-  const cartTotal = (CFG.maestroClientes
-    ? CFG.maestroClientes.filter(r => r.estado === 'A').length
-    : d.kpis?.cartera) || tot;
-  const pctCCC = Math.round(tot/cartTotal*100);
-  document.getElementById('kpi-clientes').innerHTML = `
-    <div class="kpi bl"><div class="kpi-lbl">Cartera total dist.</div><div class="kpi-val">${fmtN(cartTotal)}</div><div class="kpi-sub muted">clientes estado A</div></div>
-    <div class="kpi gr"><div class="kpi-lbl">CCC / Cartera</div><div class="kpi-val">${pctCCC}%</div><div class="kpi-sub ok">${fmtN(tot)} compraron</div></div>
-    <div class="kpi rd"><div class="kpi-lbl">Crticos &lt;5 marcas</div><div class="kpi-val">${fmtN(crit)}</div><div class="kpi-sub crit">${Math.round(crit/tot*100)}% de CCC</div></div>
-    <div class="kpi gr"><div class="kpi-lbl">Cobertura completa</div><div class="kpi-val">${fmtN(comp)}</div><div class="kpi-sub ok">${Math.round(comp/tot*100)}% de CCC</div></div>
-    <div class="kpi am"><div class="kpi-lbl">Con oportunidad</div><div class="kpi-val">${fmtN(tot-comp)}</div><div class="kpi-sub warn">marcas por desarrollar</div></div>
-  `;
-
-  // Cargar vendedores en filtro
-  const vends = [...new Set(clis.map(([,c])=>c.vend).filter(v=>v>0))].sort((a,b)=>a-b);
-  const vSel = document.getElementById('cli-f-vend');
-  vSel.innerHTML = '<option value="all">Todos los vendedores</option>' + vends.map(v=>`<option value="${v}">Vendedor ${v}</option>`).join('');
-
-  CLI_FILTERED = clis;
-  filterClientes();
-}
 
 function filterClientes() {
   const d = getData();
@@ -1693,39 +1279,6 @@ function renderAlertas(d) {
 // ===========================================================================
 // RENDER: HISTORIAL
 // ===========================================================================
-function renderHistoria() {
-  const periodos = Object.keys(DB).sort();
-  document.getElementById('hist-list').innerHTML = periodos.length
-    ? periodos.map(p => `<div class="hist-item ${p===PERIODO_ACTIVO?'hist-active':''}" onclick="setPeriodo('${p}')">
-        <div>
-          <div class="hist-per">${p}</div>
-          <div class="hist-meta">${fmtT(DB[p].kpis?.ton||0)}  ${fmtM(DB[p].kpis?.imp||0)}  CCC ${DB[p].kpis?.cobertura_cartera||0}%</div>
-        </div>
-        ${p===PERIODO_ACTIVO?'<span class="bdg bdg-bl">activo</span>':''}
-      </div>`).join('')
-    : '<div class="empty" style="padding:20px"><div class="empty-icon"></div><div class="empty-title">Sin perodos cargados</div></div>';
-
-  // Evolucin histrica
-  if (periodos.length > 0) {
-    destroyChart('hist-ton');
-    charts['hist-ton'] = new Chart(document.getElementById('ch-hist-ton'), {
-      type:'line',
-      data:{ labels:periodos,
-        datasets:[{label:'Toneladas',data:periodos.map(p=>DB[p].kpis?.ton||0),borderColor:'#4d8ef0',backgroundColor:'#4d8ef022',fill:true,tension:.3,pointRadius:4}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-        scales:{y:{ticks:{color:'#8b93a8',callback:v=>v+'t'},grid:{color:'#2a2f3e'}},x:{ticks:{color:'#8b93a8'},grid:{display:false}}}}
-    });
-
-    destroyChart('hist-ccc');
-    charts['hist-ccc'] = new Chart(document.getElementById('ch-hist-ccc'), {
-      type:'line',
-      data:{ labels:periodos,
-        datasets:[{label:'% CCC',data:periodos.map(p=>DB[p].kpis?.cobertura_cartera||0),borderColor:'#2ecc8a',backgroundColor:'#2ecc8a22',fill:true,tension:.3,pointRadius:4}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-        scales:{y:{min:0,max:100,ticks:{color:'#8b93a8',callback:v=>v+'%'},grid:{color:'#2a2f3e'}},x:{ticks:{color:'#8b93a8'},grid:{display:false}}}}
-    });
-  }
-}
 
 function setPeriodo(p) {
   PERIODO_ACTIVO = p;
@@ -1739,7 +1292,6 @@ function setPeriodo(p) {
 // ===========================================================================
 let uploadedFile = null;
 
-function openUpload() { document.getElementById('upload-modal').classList.add('open'); }
 function closeUpload() {
   document.getElementById('upload-modal').classList.remove('open');
   uploadedFile=null;
@@ -1919,15 +1471,6 @@ if (dz) {
 // INIT
 // ===========================================================================
 
-// ===========================================================================
-// CONFIGURACIN - FUNCIONES
-// ===========================================================================
-
-function renderConfig() {
-  renderCamionList();
-  renderEstructuraTable();
-  renderObjVendConfig();
-}
 
 // VENTA CREATIVA TOGGLE
 function toggleVentaCreativa() {
@@ -2084,151 +1627,6 @@ function showNotif(msg, tipo='gr') {
 // ===========================================================================
 // RENDER: OBJETIVOS POR VENDEDOR
 // ===========================================================================
-function renderObjetivos() {
-  const periodo = document.getElementById('obj-periodo')?.value || 'Abr 2026';
-  const mesaF   = document.getElementById('obj-mesa')?.value || 'all';
-  const usaCrea = false;
-
-  const data = PERF_DATA[periodo];
-  if (!data) { document.getElementById('obj-tbody').innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--tx3);padding:20px">Sin datos para este perodo</td></tr>'; return; }
-
-  // Filtrar por mesa - mesa 600 se incluye si se selecciona explcitamente
-  let perf = data.perf.filter(p => {
-    if (mesaF === 'all') return [300,400,500].includes(p.mesa); // default: solo PepsiCo
-    if (mesaF === '600') return p.mesa === 600;
-    return String(p.mesa) === mesaF;
-  });
-  const dias = data.dias || 30;
-
-  // KPIs globales
-  const totKR = perf.reduce((a,p)=>a+p.kr,0);
-  const totKC = perf.reduce((a,p)=>a+p.kc,0);
-  const totOBJ = perf.reduce((a,p)=>a+p.ot,0);
-  const totCCC = perf.reduce((a,p)=>a+p.ccc,0);
-  const totCart = perf.reduce((a,p)=>a+p.cart,0);
-  const usaKg = usaCrea ? totKR+totKC : totKR;
-  const avPct = totOBJ ? Math.round(usaKg/totOBJ*100) : 0;
-  const avPctColor = avPct>=100?'var(--gr)':avPct>=85?'var(--am)':'var(--rd)';
-  // Proyeccin a fin de mes
-  const proj = dias<30 && totKR>0 ? Math.round(totKR/dias*30) : null;
-  const projPct = proj && totOBJ ? Math.round(proj/totOBJ*100) : null;
-  const pctCCC = totCart ? Math.round(totCCC/totCart*100) : 0;
-
-    // Tendencia de cierre
-  var diasTotal = CFG_DIAS ? (CFG_DIAS.total || 26) : 26;
-  var diasAct   = CFG_DIAS ? (CFG_DIAS.actual || dias) : dias;
-  // Mes cerrado: tendencia = avance real (no proyectar)
-  var mesCerrado = diasAct >= diasTotal;
-  var tendencia  = mesCerrado ? usaKg : (diasAct > 0 ? Math.round(usaKg / diasAct * diasTotal) : 0);
-  var tendPct    = totOBJ ? Math.round(tendencia/totOBJ*100) : 0;
-  var gapKg     = tendencia - totOBJ;
-  var tendColor = tendPct>=100?'var(--gr)':tendPct>=85?'var(--am)':'var(--rd)';
-
-  // Media del equipo
-  var perfsConObj = perf.filter(function(p){ return p.ot > 0; });
-  var mediaAvPct  = perfsConObj.length ? Math.round(perfsConObj.reduce(function(a,p){ return a+(p.apr||0); },0)/perfsConObj.length) : 0;
-
-  document.getElementById('obj-kpis').innerHTML =
-    '<div class="kpi ' + (avPct>=100?'gr':avPct>=85?'am':'rd') + '">' +
-      '<div class="kpi-lbl">Avance ' + (usaCrea?'total':'real') + '</div>' +
-      '<div class="kpi-val" style="color:' + avPctColor + '">' + avPct + '%</div>' +
-      '<div class="kpi-sub muted">' + fmtN(usaKg) + 'kg / ' + fmtN(totOBJ) + 'kg obj</div>' +
-    '</div>' +
-    '<div class="kpi ' + (tendPct>=100?'gr':tendPct>=85?'am':'rd') + '">' +
-      '<div class="kpi-lbl">Tendencia de cierre</div>' +
-      '<div class="kpi-val" style="color:' + tendColor + '">' + tendPct + '%</div>' +
-      '<div class="kpi-sub ' + (gapKg>=0?'ok':'crit') + '">' +
-        fmtN(tendencia) + 'kg proy. (' + (gapKg>=0?'+':'') + fmtN(gapKg) + 'kg)' +
-      '</div>' +
-    '</div>' +
-    '<div class="kpi bl">' +
-      '<div class="kpi-lbl">Media del equipo</div>' +
-      '<div class="kpi-val" style="font-size:20px">' + mediaAvPct + '%</div>' +
-      '<div class="kpi-sub muted">' + diasAct + '/' + diasTotal + ' dias habiles</div>' +
-    '</div>' +
-    '<div class="kpi ' + (pctCCC>=80?'gr':pctCCC>=65?'am':'rd') + '">' +
-      '<div class="kpi-lbl">CCC / Cartera</div>' +
-      '<div class="kpi-val">' + pctCCC + '%</div>' +
-      '<div class="kpi-sub muted">' + fmtN(totCCC) + ' / ' + fmtN(totCart) + '</div>' +
-    '</div>';
-  document.getElementById('obj-subtitle').textContent = periodo + (dias<30?' - '+dias+' das transcurridos':'') + (usaCrea?'  incluye venta creativa':'');
-
-  // Grfico horizontal por vendedor
-  const sorted = [...perf].sort((a,b) => (b.apr||0)-(a.apr||0));
-  const labels = sorted.map(p => 'V'+p.cod+' '+p.nom.split(' ')[0]);
-  // Para mesa 600 usar importe vs objetivo en $, para resto kg
-  const dataKg = sorted.map(p => {
-    if (p.mesa === 600) return p.tv || 0;
-    return usaCrea ? (p.kr+p.kc) : p.kr;
-  });
-  const dataObj600 = sorted.map(p => p.mesa===600 ? (p.obj_imp||0) : p.ot);
-  const dataObj = sorted.map((p,i) => p.mesa===600 ? (p.obj_imp||0) : p.ot);
-  const colors = sorted.map(p => {
-    let pct;
-    if (p.mesa===600) pct = p.apr_imp || 0;
-    else pct = p.ot ? (usaCrea?(p.kr+p.kc):p.kr)/p.ot*100 : 0;
-    return pct>=100?'#2ecc8a':pct>=85?'#f0a500':'#f04d4d';
-  });
-
-  const mediaKg = sorted.length ? Math.round(sorted.reduce((a,p)=>a+(usaCrea?p.kr+p.kc:p.kr),0)/sorted.length) : 0;
-  destroyChart('obj-vend');
-  const h = Math.max(340, sorted.length*22+60);
-  document.getElementById('ch-obj-vend').parentElement.style.height = h+'px';
-  charts['obj-vend'] = new Chart(document.getElementById('ch-obj-vend'), {
-    type:'bar',
-    data:{ labels,
-      datasets:[
-        { label:'Realizado', data:dataKg, backgroundColor:colors, borderRadius:3 },
-        { label:'Objetivo', data:dataObj, backgroundColor:'rgba(255,255,255,.08)', borderRadius:3,
-          borderColor:'rgba(255,255,255,.2)', borderWidth:1 },
-        { label:'Tendencia cierre', data:sorted.map(p => {
-            if (p.mesa===600) return p.apr_imp || 0;
-            const kr = usaCrea ? p.kr+p.kc : p.kr;
-            return mesCerrado ? kr : (diasAct>0 ? Math.round(kr/diasAct*diasTotal) : 0);
-          }), type:'line', borderColor:'#a07cf0', borderWidth:2, borderDash:[4,3],
-          backgroundColor:'transparent', pointRadius:3, pointBackgroundColor:'#a07cf0', tension:.2 },
-        { label:'Media ' + mediaKgAct + 'kg', data:sorted.map(()=>mediaKgAct),
-          type:'line', borderColor:'rgba(255,200,100,.5)', borderWidth:1.5, borderDash:[6,4],
-          backgroundColor:'transparent', pointRadius:0, tension:0 },
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
-      plugins:{ legend:{ labels:{ color:'#8b93a8', font:{size:10}, boxWidth:10 } } },
-      scales:{ x:{ ticks:{color:'#8b93a8',callback:v=>grupo==='600'?fmtM(v):v+'kg'}, grid:{color:'#2a2f3e'} },
-               y:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } }
-    }
-  });
-
-  // Tabla detalle
-  const cats = ['c','cr','pg','sb'];
-  const catLabels = {c:'Cereales/Quaker',cr:'Twistos',pg:'Salty Plat+Gold',sb:'Salty Silv+Bronze'};
-  document.getElementById('obj-tbody').innerHTML = sorted.map(p => {
-    const kg = usaCrea ? p.kr+p.kc : p.kr;
-    const pct = p.mesa===600 ? (p.apr_imp||0) : (p.ot ? Math.round(kg/p.ot*100) : 0);
-    const pctColor = pct>=100?'var(--gr)':pct>=85?'var(--am)':'var(--rd)';
-    const cccColor = p.pcc>=80?'var(--gr)':p.pcc>=65?'var(--am)':'var(--rd)';
-    const catCells = cats.map(cat => {
-      const c = p.cat[cat] || {};
-      const ckg = usaCrea ? (c.r||0)+(c.c||0) : (c.r||0);
-      const cpct = c.o ? Math.round(ckg/c.o*100) : 0;
-      const cc = cpct>=100?'var(--gr)':cpct>=85?'var(--am)':'var(--rd)';
-      return '<td class="num"><span style="color:'+cc+';font-weight:600">'+ckg+'</span><br><span style="color:var(--tx3);font-size:9px">/'+c.o+'kg</span></td>';
-    }).join('');
-    const projV = p.dias_mes && p.dias_mes<30 && p.kr>0 ? Math.round(p.kr/p.dias_mes*30) : null;
-    const projStr = projV ? '<br><span style="font-size:9px;color:var(--bl-l)">'+projV+'kg proyec.</span>' : '';
-    return '<tr>' +
-      '<td style="font-weight:600;white-space:nowrap">V'+p.cod+' '+p.nom+'</td>' +
-      '<td><span class="bdg" style="background:'+((MESA_COLORS||{})[p.mesa]||'#888')+'22;color:'+((MESA_COLORS||{})[p.mesa]||'#888')+'">'+p.mesa+'</span></td>' +
-      catCells +
-      '<td class="num">' + (p.mesa===600 ?
-        '<span style="color:'+pctColor+';font-weight:700">'+fmtM(p.tv)+'</span><br><span style="font-size:9px;color:var(--tx3)">obj '+fmtM(p.obj_imp)+'</span>' :
-        '<span style="color:'+pctColor+';font-weight:700">'+kg+'kg</span><br><span style="font-size:9px;color:var(--tx3)">/'+p.ot+'kg</span>'+projStr) + '</td>' +
-      '<td class="num"><span style="color:'+pctColor+';font-weight:700;font-size:14px">'+(p.mesa===600?(p.apr_imp||0):pct)+'%</span></td>' +
-      '<td class="num"><span style="color:'+cccColor+'">'+p.ccc+'/'+p.cart+'</span><br><span style="font-size:9px;color:var(--tx3)">'+p.pcc+'%</span></td>' +
-      '<td><span class="bdg '+(pct>=100?'bdg-gr':pct>=85?'bdg-am':'bdg-rd')+'">'+(pct>=100?'OK ':pct>=85?'cerca':'bajo')+'</span></td>' +
-    '</tr>';
-  }).join('');
-}
 
 
 // ===========================================================================
@@ -2374,158 +1772,6 @@ function updateDias() {
 // ===========================================================================
 // RENDER: TENDENCIA SEMANAL
 // ===========================================================================
-function renderTendencia() {
-  const mesaF  = document.getElementById('ten-mesa')?.value || 'all';
-  const metrica = document.getElementById('ten-metrica')?.value || 'cli';
-  const mLabel = {cli:'Clientes',imp:'Importe $',kg:'Kilogramos'};
-
-  // Obtener datos por semana
-  function getSemVal(periodo, sem) {
-    const d = SEMANAS_DATA[periodo];
-    if (!d) return 0;
-    if (mesaF === 'all') {
-      return (d.global[String(sem)] || {})[metrica] || 0;
-    } else {
-      return (d.por_mesa[sem+'_'+mesaF] || {})[metrica] || 0;
-    }
-  }
-
-  const sems = [1,2,3,4,5];
-  const marVals = sems.map(s => getSemVal('Mar 2026', s));
-  const abrVals = sems.map(s => getSemVal('Abr 2026', s));
-  const semLabels = ['Sem 1 (1-7)','Sem 2 (8-14)','Sem 3 (15-21)','Sem 4 (22-28)','Sem 5 (29+)'];
-
-  // Variacin %
-  const varPct = sems.map(s => {
-    const m = getSemVal('Mar 2026', s);
-    const a = getSemVal('Abr 2026', s);
-    return m ? Math.round((a-m)/m*100) : null;
-  });
-
-  // KPIs semana 1
-  const m1 = getSemVal('Mar 2026',1); const a1 = getSemVal('Abr 2026',1);
-  const v1 = m1 ? Math.round((a1-m1)/m1*100) : 0;
-  const m2 = getSemVal('Mar 2026',2); const a2 = getSemVal('Abr 2026',2);
-  const v2 = m2 ? Math.round((a2-m2)/m2*100) : null;
-
-  function fmtVal(v) {
-    if (metrica==='imp') return fmtM(v);
-    if (metrica==='kg') return fmtN(v)+'kg';
-    return fmtN(v);
-  }
-  function semColor(v) { return v>=0?'var(--gr)':v>=-10?'var(--am)':'var(--rd)'; }
-  function semClass(v) { return v>=0?'bdg-gr':v>=-10?'bdg-am':'bdg-rd'; }
-
-  document.getElementById('ten-kpis').innerHTML = [
-    ['Sem 1  Marzo', fmtVal(m1), '', 'bl'],
-    ['Sem 1  Abril', fmtVal(a1), (v1>=0?'+':'')+v1+'% vs marzo', v1>=0?'gr':v1>=-10?'am':'rd'],
-    v2!==null ? ['Sem 2  Abril', fmtVal(a2), (v2>=0?'+':'')+v2+'% vs marzo', v2>=0?'gr':v2>=-10?'am':'rd'] : null,
-    ['Proyeccin mes', fmtVal(CFG_DIAS.actual>0 ? Math.round(abrVals.reduce((a,b)=>a+b,0)/CFG_DIAS.actual*CFG_DIAS.total) : 0),
-      CFG_DIAS.actual+'/'+CFG_DIAS.total+' das hbiles', 'pu'],
-  ].filter(Boolean).map(([lbl,val,sub,col]) =>
-    '<div class="kpi '+col+'"><div class="kpi-lbl">'+lbl+'</div>' +
-    '<div class="kpi-val" style="font-size:18px">'+val+'</div>' +
-    (sub?'<div class="kpi-sub" style="color:'+(v1>=0&&col!=='bl'&&col!=='pu'?'var(--gr-l)':'var(--am-l)')+'">'+sub+'</div>':'') +
-    '</div>'
-  ).join('');
-
-  document.getElementById('ten-subtitle').textContent = mLabel[metrica] + (mesaF!=='all'?'  Mesa '+mesaF:'');
-
-  // Grfico comparativo
-  destroyChart('ten-comp');
-  charts['ten-comp'] = new Chart(document.getElementById('ch-ten-comp'), {
-    type:'bar',
-    data:{ labels:semLabels,
-      datasets:[
-        { label:'Marzo 2026', data:marVals, backgroundColor:'rgba(77,142,240,.7)', borderRadius:4 },
-        { label:'Abril 2026', data:abrVals, backgroundColor:'rgba(240,165,0,.8)', borderRadius:4 },
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ ticks:{color:'#8b93a8',callback:v=>metrica==='imp'?'$'+(v/1e6).toFixed(0)+'M':metrica==='kg'?v+'kg':v}, grid:{color:'#2a2f3e'} },
-               x:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } } }
-  });
-
-  // Grfico variacin %
-  destroyChart('ten-var');
-  const varColors = varPct.map(v => v===null?'transparent':v>=0?'#2ecc8a':v>=-10?'#f0a500':'#f04d4d');
-  charts['ten-var'] = new Chart(document.getElementById('ch-ten-var'), {
-    type:'bar',
-    data:{ labels:semLabels,
-      datasets:[
-        { label:'Variacin %', data:varPct.map(v=>v||0), backgroundColor:varColors, borderRadius:4 },
-        { label:'0%', data:sems.map(()=>0), type:'line', borderColor:'rgba(255,255,255,.3)',
-          borderWidth:1, borderDash:[4,4], pointRadius:0 }
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ ticks:{color:'#8b93a8',callback:v=>v+'%'}, grid:{color:'#2a2f3e'} },
-               x:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } } }
-  });
-
-  // Proyeccin
-  const realAcum = abrVals.reduce((a,b)=>a+b,0);
-  const proj = CFG_DIAS.actual>0 ? Math.round(realAcum/CFG_DIAS.actual*CFG_DIAS.total) : 0;
-  const marTotal = marVals.reduce((a,b)=>a+b,0);
-  const projVsObj = metrica==='kg' ? Math.round(proj/([300,400,500].reduce((a)=>a,0)||1)*100) : null;
-  const projVsMar = marTotal ? Math.round((proj-marTotal)/marTotal*100) : 0;
-
-  document.getElementById('ten-proj-sub').textContent =
-    CFG_DIAS.actual+' das hbiles transcurridos de '+CFG_DIAS.total;
-
-  document.getElementById('ten-proj-kpis').innerHTML = [
-    ['Real acumulado', fmtVal(realAcum), CFG_DIAS.actual+' das hbiles', 'bl'],
-    ['Proyeccin fin de mes', fmtVal(proj), 'a '+CFG_DIAS.total+' das hbiles', 'pu'],
-    ['vs Marzo total', fmtVal(marTotal), (projVsMar>=0?'+':'')+projVsMar+'%', projVsMar>=0?'gr':'rd'],
-  ].map(([lbl,val,sub,col]) =>
-    '<div class="kpi '+col+'"><div class="kpi-lbl">'+lbl+'</div>' +
-    '<div class="kpi-val" style="font-size:18px">'+val+'</div>' +
-    '<div class="kpi-sub muted">'+sub+'</div></div>'
-  ).join('');
-
-  // Grfico proyeccin: barras semana acumulado + lnea de proyeccin
-  const acumAbr = abrVals.map((v,i,a)=>a.slice(0,i+1).reduce((x,y)=>x+y,0));
-  const acumMar = marVals.map((v,i,a)=>a.slice(0,i+1).reduce((x,y)=>x+y,0));
-  destroyChart('ten-proj');
-  charts['ten-proj'] = new Chart(document.getElementById('ch-ten-proj'), {
-    type:'bar',
-    data:{ labels:semLabels,
-      datasets:[
-        { label:'Acum. Marzo', data:acumMar, backgroundColor:'rgba(77,142,240,.4)', borderRadius:3 },
-        { label:'Acum. Abril', data:acumAbr, backgroundColor:'rgba(240,165,0,.6)', borderRadius:3 },
-        { label:'Proy. Abril', data:sems.map((_,i)=>CFG_DIAS.actual>0?Math.round(realAcum/CFG_DIAS.actual*(7*(i+1))):0),
-          type:'line', borderColor:'#a07cf0', borderWidth:2, borderDash:[5,3], pointRadius:3,
-          backgroundColor:'transparent', tension:.3 },
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ ticks:{color:'#8b93a8',callback:v=>metrica==='imp'?'$'+(v/1e6).toFixed(0)+'M':metrica==='kg'?v+'kg':v}, grid:{color:'#2a2f3e'} },
-               x:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } } }
-  });
-
-  // Tabla
-  document.getElementById('ten-tbody').innerHTML = sems.map(s => {
-    const mv=getSemVal('Mar 2026',s); const av=getSemVal('Abr 2026',s);
-    if (!mv && !av) return '';
-    const vp=mv?Math.round((av-mv)/mv*100):null;
-    const dias_mar=(SEMANAS_DATA['Mar 2026']?.global[String(s)]?.dias||[]);
-    const dias_abr=(SEMANAS_DATA['Abr 2026']?.global[String(s)]?.dias||[]);
-    const diasStr=dias_abr.length?(dias_abr[0]+'-'+dias_abr[dias_abr.length-1]):'-';
-    const vc=vp!==null?(vp>=0?'var(--gr)':vp>=-10?'var(--am)':'var(--rd)'):'var(--tx3)';
-    const arrow=vp!==null?(vp>=0?'':''):'-';
-    return '<tr>' +
-      '<td style="font-weight:600">Semana '+s+'</td>' +
-      '<td style="font-size:10px;color:var(--tx3)">' + (dias_mar.length?dias_mar[0]+'-'+dias_mar[dias_mar.length-1]:'-') + ' / '+diasStr+'</td>' +
-      '<td class="num">'+fmtVal(mv)+'</td>' +
-      '<td class="num" style="color:var(--am-l)">'+fmtVal(av)+'</td>' +
-      '<td class="num"><span style="color:'+vc+';font-weight:700">'+(vp!==null?(vp>=0?'+':'')+vp+'%':'-')+'</span></td>' +
-      '<td><span class="bdg '+(vp===null?'':vp>=0?'bdg-gr':vp>=-10?'bdg-am':'bdg-rd')+'" style="font-size:14px">'+arrow+'</span></td>' +
-    '</tr>';
-  }).filter(Boolean).join('');
-}
 
 
 // =============================================================================
@@ -2765,30 +2011,14 @@ function saveObjVend() {
 // Inicializar estructura editable desde el mapa base
 Object.entries(SUP_MAP_BASE).forEach(([k,v]) => { CFG.estructura[k] = {...v}; });
 buildSupMap();
-loadDB();
-setTimeout(updateDias, 200);
-
-// Si no hay datos guardados, cargamos los pre-calculados de marzo 2026
-if (!PERIODO_ACTIVO || !DB[PERIODO_ACTIVO]) {
-  if (typeof DATA_MARZO !== 'undefined') {
-    loadPreCalculado(DATA_MARZO);
-  }
+// Cargar datos embebidos directamente
+if (typeof DATA_MARZO !== 'undefined') {
+  loadPreCalculado(DATA_MARZO);
 }
 
-// Renderizar
-if (PERIODO_ACTIVO && DB[PERIODO_ACTIVO]) {
-  renderAll();
-} else {
-  // Mostrar estado vaco con instrucciones
-  document.getElementById('sec-ejecutivo').innerHTML = `
-    <div class="empty">
-      <div class="empty-icon"></div>
-      <div class="empty-title">Sin datos cargados</div>
-      <div class="empty-desc">Hac clic en <strong>Cargar datos</strong> para subir la sbana de ventas mensual y comenzar el anlisis.</div>
-    </div>`;
-}
+
+
+
 
 </script>
-</body>
-
 </html>
