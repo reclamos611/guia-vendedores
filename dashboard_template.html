@@ -193,18 +193,6 @@ tr:hover td{background:var(--bg3)}
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M4 7h6M7 4v6"/></svg>
       Cobertura marcas
     </div>
-    <div class="nav-item" onclick="navTo('objetivos',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="3"/><circle cx="7" cy="7" r="1"/></svg>
-      Objetivos vendedores
-    </div>
-    <div class="nav-item" onclick="navTo('tendencia',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><polyline points="1,11 4,7 7,9 10,4 13,2"/><line x1="10" y1="2" x2="13" y2="2"/><line x1="13" y1="2" x2="13" y2="5"/></svg>
-      Tendencia semanal
-    </div>
-    <div class="nav-item" onclick="navTo('clientes',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 3h10v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"/><line x1="4" y1="6" x2="10" y2="6"/><line x1="4" y1="9" x2="8" y2="9"/></svg>
-      Clientes
-    </div>
     <div class="nav-item" onclick="navTo('rechazo',this)">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12L12 2M2 2l10 10"/></svg>
       Rechazo y cambio
@@ -214,19 +202,11 @@ tr:hover td{background:var(--bg3)}
       Alertas
     </div>
     <div class="nav-sec">Gestión</div>
-    <div class="nav-item" onclick="navTo('historia',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3l2 1.5"/></svg>
-      Historial períodos
-    </div>
     <div class="nav-item" onclick="openUpload()">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v2a1 1 0 001 1h8a1 1 0 001-1v-2"/></svg>
       Cargar nuevo mes
     </div>
-    <div class="nav-item" onclick="navTo('config',this)">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="2"/><path d="M7 1v1M7 12v1M1 7h1M12 7h1M2.5 2.5l.7.7M10.8 10.8l.7.7M10.8 3.2l-.7.7M3.2 10.8l-.7.7"/></svg>
-      Configuración
     </div>
-  </div>
   <div class="sb-footer">
     <div class="periodo-lbl">Período activo</div>
     <div class="periodo-val" id="sb-periodo">—</div>
@@ -298,7 +278,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- POR MESA -->
-    <div id="sec-mesas" class="sec">
+<div id="sec-mesas" class="sec">
       <div class="tabs" id="mesa-tabs">
         <button class="tab on" onclick="setMesaTab(300,this)">Mesa 300 — Natalia Perez</button>
         <button class="tab" onclick="setMesaTab(400,this)">Mesa 400 — Claudio Alvarado</button>
@@ -308,7 +288,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- VENDEDORES -->
-    <div id="sec-vendedores" class="sec">
+<div id="sec-vendedores" class="sec">
       <div class="card">
         <div class="card-title">Ranking de vendedores <small>Acumulado período activo · PepsiCo</small></div>
         <div class="ch-wrap" style="height:380px"><canvas id="ch-vend-imp"></canvas></div>
@@ -333,7 +313,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- COBERTURA MARCAS -->
-    <div id="sec-cobertura" class="sec">
+<div id="sec-cobertura" class="sec">
       <div class="kpi-grid" id="kpi-cobertura" style="grid-template-columns:repeat(3,1fr)"></div>
       <div class="card">
         <div class="card-title">Cobertura por marca y mesa <small>% clientes CCC con ≥3 uds netas · meta ≥70%</small></div>
@@ -343,189 +323,7 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- CLIENTES -->
-    <div id="sec-clientes" class="sec">
-      <div class="g4" id="kpi-clientes"></div>
-      <div class="card">
-        <div class="card-title">Detalle de clientes CCC <small id="cli-count">—</small></div>
-        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-          <input type="search" class="cli-search" id="cli-search" placeholder="Buscar nombre, ID, localidad…" oninput="filterClientes()" style="flex:1;min-width:200px">
-          <select id="cli-f-mesa" onchange="filterClientes()">
-            <option value="all">Todas las mesas</option>
-            <option value="300">Mesa 300</option><option value="400">Mesa 400</option><option value="500">Mesa 500</option>
-          </select>
-          <select id="cli-f-vend" onchange="filterClientes()"><option value="all">Todos los vendedores</option></select>
-          <select id="cli-f-dia" onchange="filterClientes()">
-            <option value="all">Todos los días</option>
-            <option value="Lunes">Lunes</option><option value="Martes">Martes</option>
-            <option value="Miercoles">Miércoles</option><option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option><option value="Sabado">Sábado</option>
-          </select>
-          <select id="cli-f-cob" onchange="filterClientes()">
-            <option value="all">Todas las coberturas</option>
-            <option value="critico">Crítico (&lt;5 marcas)</option>
-            <option value="desarrollo">En desarrollo (5–6)</option>
-            <option value="bueno">Bueno (7–8)</option>
-            <option value="completo">Completo (9)</option>
-          </select>
-        </div>
-        <div id="cli-table-wrap">
-          <table>
-            <thead><tr>
-              <th>Cliente</th><th>Localidad</th><th>Canal</th><th>Día visita</th>
-              <th>Vend.</th><th>Mesa</th>
-              <th class="num">Toneladas</th><th class="num">Importe</th>
-              <th class="num">Marcas</th><th>Estado</th>
-            </tr></thead>
-            <tbody id="cli-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ALERTAS -->
-    <div id="sec-alertas" class="sec">
-      <div class="g4" id="kpi-alertas"></div>
-      <div class="g2">
-        <div>
-          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Alertas críticas</h3>
-          <div id="alertas-rd"></div>
-        </div>
-        <div>
-          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Oportunidades</h3>
-          <div id="alertas-am"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Oportunidad por marca <small>clientes sin cobertura por mesa</small></div>
-        <table>
-          <thead><tr><th>Marca</th><th class="num">Mesa 300</th><th class="num">Mesa 400</th><th class="num">Mesa 500</th><th class="num">Total</th><th class="num">%CCC sin cob.</th><th>Prioridad</th></tr></thead>
-          <tbody id="oport-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- HISTORIAL -->
-    <div id="sec-historia" class="sec">
-      <div class="g2">
-        <div class="card">
-          <div class="card-title">Períodos cargados</div>
-          <div id="hist-list"></div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--brd)">
-            <button class="btn-upload" onclick="openUpload()">+ Cargar nuevo período</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">Evolución de toneladas <small>histórico</small></div>
-          <div class="ch-wrap" style="height:220px"><canvas id="ch-hist-ton"></canvas></div>
-          <div class="card-title" style="margin-top:16px">Evolución CCC <small>% cobertura cartera</small></div>
-          <div class="ch-wrap" style="height:180px"><canvas id="ch-hist-ccc"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- OBJETIVOS VENDEDORES -->
-    <div id="sec-objetivos" class="sec">
-      <div class="topbar" style="background:transparent;border:none;padding:0 0 14px;margin-bottom:0">
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <select id="obj-periodo" onchange="renderObjetivos()">
-            <option value="Mar 2026">Marzo 2026 (cierre)</option>
-            <option value="Abr 2026" selected>Abril 2026 (25 días)</option>
-          </select>
-          <select id="obj-mesa" onchange="renderObjetivos()">
-            <option value="all">Todas las mesas</option>
-            <option value="300">Mesa 300 — Natalia Perez</option>
-            <option value="400">Mesa 400 — Claudio Alvarado</option>
-            <option value="500">Mesa 500 — Mariano Triulci</option>
-            <option value="600">Mesa 600 — Otras marcas</option>
-          </select>
-  
-        </div>
-      </div>
-      <div class="g3" id="obj-kpis" style="margin-bottom:14px"></div>
-      <div class="card">
-        <div class="card-title">Avance vs objetivo por vendedor <small id="obj-subtitle"></small></div>
-        <div style="height:380px;position:relative"><canvas id="ch-obj-vend"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Detalle por categoría y vendedor</div>
-        <div style="overflow-x:auto">
-        <table style="min-width:800px">
-          <thead><tr>
-            <th>Vendedor</th><th>Mesa</th>
-            <th class="num">Cereales/Quaker<br><small>kg / obj</small></th>
-            <th class="num">Twistos<br><small>kg / obj</small></th>
-            <th class="num">Salty Plat+Gold<br><small>kg / obj</small></th>
-            <th class="num">Salty Silver+Bronze<br><small>kg / obj</small></th>
-            <th class="num">TOTAL<br><small>kg / obj</small></th>
-            <th class="num">% Real</th>
-            <th class="num">CCC/Cartera</th>
-            <th>Estado</th>
-          </tr></thead>
-          <tbody id="obj-tbody"></tbody>
-        </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- TENDENCIA SEMANAL -->
-    <div id="sec-tendencia" class="sec">
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
-        <select id="ten-mesa" onchange="renderTendencia()">
-          <option value="all">Todas las mesas PepsiCo</option>
-          <option value="300">Mesa 300</option>
-          <option value="400">Mesa 400</option>
-          <option value="500">Mesa 500</option>
-        </select>
-        <select id="ten-metrica" onchange="renderTendencia()">
-          <option value="cli">Clientes con compra</option>
-          <option value="imp">Importe $</option>
-          <option value="kg">Kilogramos</option>
-        </select>
-        <div style="padding:4px 12px;background:var(--bg3);border:1px solid var(--brd);border-radius:7px;font-size:11px;color:var(--tx2)">
-          Comparando <span style="color:var(--bl-l)">Marzo 2026</span> vs <span style="color:var(--am-l)">Abril 2026</span>
-        </div>
-      </div>
-
-      <!-- KPIs semana 1 comparativo -->
-      <div class="g4" id="ten-kpis" style="margin-bottom:14px"></div>
-
-      <!-- Gráfico comparativo semanal -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Comparativa semanal Marzo vs Abril <small id="ten-subtitle">por semana del mes (días 1-7, 8-14, 15-21, 22-28, 29+)</small></div>
-        <div style="height:300px"><canvas id="ch-ten-comp"></canvas></div>
-      </div>
-
-      <!-- Variación % semana a semana -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Variación Abril vs Marzo (misma semana) <small>% de cambio</small></div>
-        <div style="height:220px"><canvas id="ch-ten-var"></canvas></div>
-      </div>
-
-      <!-- Proyección -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Proyección fin de mes <small id="ten-proj-sub"></small></div>
-        <div class="g3" id="ten-proj-kpis"></div>
-        <div style="height:260px;margin-top:14px"><canvas id="ch-ten-proj"></canvas></div>
-      </div>
-
-      <!-- Tabla semana x semana -->
-      <div class="card">
-        <div class="card-title">Detalle semanal</div>
-        <table>
-          <thead><tr>
-            <th>Semana</th><th>Días</th>
-            <th class="num">Marzo — valor</th>
-            <th class="num">Abril — valor</th>
-            <th class="num">Variación</th>
-            <th>Tendencia</th>
-          </tr></thead>
-          <tbody id="ten-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- RECHAZO Y CAMBIO -->
-    <div id="sec-rechazo" class="sec">
+<div id="sec-rechazo" class="sec">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
         <select id="rec-periodo" onchange="renderRechazo()">
           <option value="Mar 2026">Marzo 2026</option>
@@ -588,191 +386,28 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- CONFIGURACIÓN -->
-    <div id="sec-config" class="sec">
+<div id="sec-alertas" class="sec">
+      <div class="g4" id="kpi-alertas"></div>
       <div class="g2">
-
-        <!-- VENTA CREATIVA -->
-        <div class="card">
-          <div class="card-title">Venta creativa — camiones excluidos</div>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <span style="font-size:12px;color:var(--tx2)">Filtro activo</span>
-            <div id="vc-toggle" onclick="toggleVentaCreativa()"
-              style="width:44px;height:24px;border-radius:12px;background:var(--rd);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0">
-              <div id="vc-thumb" style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left .2s"></div>
-            </div>
-            <span id="vc-label" style="font-size:11px;color:var(--gr-l);font-weight:600">ON — excluyendo venta creativa</span>
-          </div>
-          <div style="font-size:11px;color:var(--tx3);margin-bottom:10px">Camiones en esta lista se excluyen del análisis cuando el filtro está ON</div>
-          <div id="camion-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px"></div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input type="number" id="camion-input" placeholder="Nro. camión" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:12px;width:140px;outline:none;font-family:Sora,sans-serif">
-            <button onclick="addCamion()" style="padding:8px 14px;background:var(--bl-d);border:1px solid var(--bl);border-radius:8px;color:var(--bl-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Agregar</button>
-          </div>
+        <div>
+          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Alertas críticas</h3>
+          <div id="alertas-rd"></div>
         </div>
-
-        <!-- ARCHIVOS DE REFERENCIA -->
-        <div class="card">
-          <div class="card-title">Archivos de referencia</div>
-          <div style="margin-bottom:14px">
-            <div style="font-size:11px;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Maestro clientes</div>
-            <div id="ref-mc-status" style="font-size:11px;color:var(--tx3);margin-bottom:8px">No cargado — usando datos de la sábana de ventas</div>
-            <label style="padding:7px 14px;background:var(--bg3);border:1px solid var(--brd2);border-radius:8px;color:var(--tx2);font-size:11px;cursor:pointer;display:inline-block">
-              Subir maestro clientes (.xlsx)
-              <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="loadRefFile('mc',this.files)">
-            </label>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Cliente zona (días de visita)</div>
-            <div id="ref-cz-status" style="font-size:11px;color:var(--tx3);margin-bottom:8px">No cargado — días de visita no disponibles</div>
-            <label style="padding:7px 14px;background:var(--bg3);border:1px solid var(--brd2);border-radius:8px;color:var(--tx2);font-size:11px;cursor:pointer;display:inline-block">
-              Subir cliente zona (.xlsx)
-              <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="loadRefFile('cz',this.files)">
-            </label>
-          </div>
+        <div>
+          <h3 style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Oportunidades</h3>
+          <div id="alertas-am"></div>
         </div>
       </div>
-
-      <!-- DÍAS HÁBILES -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Días hábiles del período activo</div>
-        <div style="font-size:11px;color:var(--tx2);margin-bottom:14px;line-height:1.6">
-          Usados para proyección a fin de mes y comparativa semanal.
-          Actualizá estos valores cada vez que cargues un mes nuevo.
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div>
-            <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Días hábiles totales del mes</div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <input type="number" id="cfg-dias-total" value="26" min="1" max="31"
-                style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:16px;font-family:DM Mono,monospace;width:90px;outline:none;text-align:center"
-                onchange="updateDias()">
-              <span style="font-size:11px;color:var(--tx3)">días en el mes</span>
-            </div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Días hábiles transcurridos</div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <input type="number" id="cfg-dias-actual" value="5" min="1" max="31"
-                style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:16px;font-family:DM Mono,monospace;width:90px;outline:none;text-align:center"
-                onchange="updateDias()">
-              <span style="font-size:11px;color:var(--tx3)">días transcurridos</span>
-            </div>
-          </div>
-        </div>
-        <div id="cfg-dias-preview" style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:8px;font-size:11px;color:var(--tx2)"></div>
-      </div>
-
-      <!-- OBJETIVOS POR CATEGORÍA -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Objetivos por categoria (Platinum+Gold / Silver+Bronze)
-          <button onclick="saveObjCat()" style="padding:6px 12px;background:var(--gr-d);border:1px solid var(--gr);border-radius:7px;color:var(--gr-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Guardar</button>
-        </div>
-        <div style="font-size:11px;color:var(--tx2);margin-bottom:12px">Objetivos mensuales para el mix de categorias. Se muestran en el ejecutivo como referencia.</div>
-        <table>
-          <thead><tr><th>Mesa</th><th class="num">Plat+Gold obj kg</th><th class="num">Silv+Bronze obj kg</th><th class="num">Plat+Gold obj $</th><th class="num">Silv+Bronze obj $</th></tr></thead>
-          <tbody>
-            <tr><td>Mesa 300</td><td><input id="oc-300-pgk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-300-sbk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-300-pgp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td><td><input id="oc-300-sbp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td></tr>
-            <tr><td>Mesa 400</td><td><input id="oc-400-pgk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-400-sbk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-400-pgp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td><td><input id="oc-400-sbp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td></tr>
-            <tr><td>Mesa 500</td><td><input id="oc-500-pgk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-500-sbk" type="number" placeholder="kg" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:80px;outline:none"></td><td><input id="oc-500-pgp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td><td><input id="oc-500-sbp" type="number" placeholder="$" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:5px 8px;border-radius:6px;font-size:11px;width:100px;outline:none"></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- OBJETIVOS POR VENDEDOR -->
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Objetivos por vendedor — KG mensuales
-          <button onclick="saveObjVend()" style="padding:6px 12px;background:var(--gr-d);border:1px solid var(--gr);border-radius:7px;color:var(--gr-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Guardar y recalcular</button>
-        </div>
-        <div style="font-size:11px;color:var(--tx2);margin-bottom:12px;line-height:1.6">
-          Objetivos mensuales en KG por vendedor y categoria. Poner 0 si el vendedor no trabaja esa categoria.
-          Para mesa 600 ingresar el objetivo en $ (columna Total).
-        </div>
-        <div style="overflow-x:auto">
-        <table style="min-width:700px;font-size:11px">
-          <thead><tr>
-            <th>Vend.</th><th>Nombre</th><th>Mesa</th>
-            <th class="num">Cereales kg</th>
-            <th class="num">Twistos kg</th>
-            <th class="num">Salty PG kg</th>
-            <th class="num">Salty SB kg</th>
-            <th class="num">Total $ (M600)</th>
-          </tr></thead>
-          <tbody id="obj-vend-tbody"></tbody>
-        </table>
-        </div>
-      </div>
-
-      <!-- ESTRUCTURA DE VENTAS -->
       <div class="card">
-        <div class="card-title">Estructura de ventas — vendedor / mesa / supervisor
-          <button onclick="saveEstructura()" style="padding:6px 12px;background:var(--gr-d);border:1px solid var(--gr);border-radius:7px;color:var(--gr-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Guardar cambios</button>
-        </div>
-        <div style="font-size:11px;color:var(--tx3);margin-bottom:12px">Editá la mesa y el nombre del supervisor para cada vendedor. Los cambios se aplican al dashboard inmediatamente.</div>
+        <div class="card-title">Oportunidad por marca <small>clientes sin cobertura por mesa</small></div>
         <table>
-          <thead><tr><th>Cód. vendedor</th><th>Mesa</th><th>Supervisor</th><th>Acción</th></tr></thead>
-          <tbody id="estructura-tbody"></tbody>
+          <thead><tr><th>Marca</th><th class="num">Mesa 300</th><th class="num">Mesa 400</th><th class="num">Mesa 500</th><th class="num">Total</th><th class="num">%CCC sin cob.</th><th>Prioridad</th></tr></thead>
+          <tbody id="oport-tbody"></tbody>
         </table>
-        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-          <input type="number" id="new-vend-cod" placeholder="Cód. vendedor" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:7px 10px;border-radius:7px;font-size:12px;width:130px;outline:none;font-family:Sora,sans-serif">
-          <select id="new-vend-mesa" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:7px 10px;border-radius:7px;font-size:12px;font-family:Sora,sans-serif">
-            <option value="300">Mesa 300</option><option value="400">Mesa 400</option>
-            <option value="500">Mesa 500</option><option value="600">Mesa 600</option>
-          </select>
-          <input type="text" id="new-vend-sup" placeholder="Nombre supervisor" style="background:var(--bg3);border:1px solid var(--brd2);color:var(--tx);padding:7px 10px;border-radius:7px;font-size:12px;flex:1;outline:none;font-family:Sora,sans-serif">
-          <button onclick="addVendedor()" style="padding:7px 14px;background:var(--bl-d);border:1px solid var(--bl);border-radius:7px;color:var(--bl-l);font-size:11px;cursor:pointer;font-family:Sora,sans-serif">Agregar</button>
-        </div>
       </div>
     </div>
 
-  </div>
-</main>
-
-<!-- UPLOAD MODAL -->
-<div class="upload-modal" id="upload-modal">
-  <div class="upload-box" style="width:560px">
-    <div class="upload-title">Cargar datos</div>
-    <div class="upload-sub">Podés subir cada archivo por separado. La sábana de ventas es obligatoria para actualizar el análisis.</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
-      <div>
-        <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Sábana de ventas <span style="color:var(--rd-l)">*</span></div>
-        <div id="slot-venta-status" style="font-size:10px;color:var(--tx3);margin-bottom:5px;min-height:14px"></div>
-        <label style="display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px dashed var(--brd2);border-radius:8px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;gap:6px" id="slot-venta-lbl">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V10"/></svg>
-          Subir Excel
-          <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleSlot('venta',this.files)">
-        </label>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Maestro clientes</div>
-        <div id="slot-mc-status" style="font-size:10px;color:var(--tx3);margin-bottom:5px;min-height:14px"></div>
-        <label style="display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px dashed var(--brd2);border-radius:8px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;gap:6px">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V10"/></svg>
-          Subir Excel
-          <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleSlot('mc',this.files)">
-        </label>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Cliente zona</div>
-        <div id="slot-cz-status" style="font-size:10px;color:var(--tx3);margin-bottom:5px;min-height:14px"></div>
-        <label style="display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px dashed var(--brd2);border-radius:8px;cursor:pointer;font-size:11px;color:var(--tx2);transition:all .15s;gap:6px">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v1.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V10"/></svg>
-          Subir Excel
-          <input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleSlot('cz',this.files)">
-        </label>
-      </div>
-    </div>
-
-    <div class="progress-bar" id="prog-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-    <div id="proc-status" style="font-size:11px;color:var(--tx2);margin-top:6px;min-height:16px"></div>
-    <div style="display:flex;gap:8px;margin-top:14px">
-      <button class="btn-process" id="proc-btn" disabled onclick="processUpload()">Procesar ventas</button>
-      <button class="btn-cancel" onclick="closeUpload()">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-
+    <!-- HISTORIAL -->
 <script>
 // __PERF_DATA__
 </script>
@@ -783,6 +418,10 @@ tr:hover td{background:var(--bg3)}
 // __CARTERA_DATA__
 </script>
 <script>
+
+
+
+
 
 // ===========================================================================
 // CONFIGURACIN FIJA
@@ -1121,30 +760,7 @@ function loadPreCalculado(jsonData) {
 // ===========================================================================
 // PERSISTENCIA localStorage
 // ===========================================================================
-function saveDB() {
-  try {
-    const toSave = Object.fromEntries(
-      Object.entries(DB).map(([k, v]) => [k, { ...v, clientes: undefined }])
-    );
-    localStorage.setItem('rumbo_db_meta', JSON.stringify({ periodos: Object.keys(DB), activo: PERIODO_ACTIVO }));
-    Object.entries(DB).forEach(([k, v]) => {
-      try { localStorage.setItem('rumbo_' + k.replace(/\s/g,'_'), JSON.stringify(v)); } catch(e) {}
-    });
-  } catch(e) {}
-}
 
-function loadDB() {
-  try {
-    const meta = JSON.parse(localStorage.getItem('rumbo_db_meta') || '{}');
-    if (meta.periodos) {
-      meta.periodos.forEach(p => {
-        const d = localStorage.getItem('rumbo_' + p.replace(/\s/g,'_'));
-        if (d) DB[p] = JSON.parse(d);
-      });
-      PERIODO_ACTIVO = meta.activo || meta.periodos[0] || null;
-    }
-  } catch(e) {}
-}
 
 // ===========================================================================
 // HELPERS
@@ -1182,11 +798,7 @@ function navTo(id, el) {
 }
 
 function renderSection(id) {
-  if (id === 'historia') { renderHistoria(); return; }
-  if (id === 'config') { renderConfig(); return; }
-  if (id === 'objetivos') { renderObjetivos(); return; }
   if (id === 'rechazo') { renderRechazo(); return; }
-  if (id === 'tendencia') { renderTendencia(); return; }
 
   // Si hay proveedor no-PepsiCo activo, usar datos de PROV_DATA
   if (PROV_ACTIVO !== 'PepsiCo') {
@@ -1194,7 +806,7 @@ function renderSection(id) {
     if (pd) {
       if (id === 'ejecutivo') renderEjecutivoProv(pd, PERIODO_ACTIVO || 'Mar 2026');
       else if (id === 'vendedores') renderVendedoresProv(pd);
-      else if (id === 'mesas' || id === 'cobertura' || id === 'clientes' || id === 'alertas') {
+      else if (id === 'mesas' || id === 'cobertura' || id === 'alertas') {
         var sec = document.getElementById('sec-'+id);
         if (sec) sec.innerHTML = '<div class="empty"><div class="empty-icon">?</div><div class="empty-title">Vista no disponible para ' + PROV_ACTIVO + '</div><div class="empty-desc">Esta seccion muestra datos de PepsiCo.<br>Selecciona PepsiCo en el filtro de proveedor.</div></div>';
       }
@@ -1208,7 +820,6 @@ function renderSection(id) {
   else if (id === 'mesas') renderMesas(d);
   else if (id === 'vendedores') renderVendedores(d);
   else if (id === 'cobertura') renderCobertura(d);
-  else if (id === 'clientes') renderClientes(d);
   else if (id === 'alertas') renderAlertas(d);
 }
 
@@ -1556,32 +1167,6 @@ function renderCobertura(d) {
 // ===========================================================================
 // RENDER: CLIENTES
 // ===========================================================================
-function renderClientes(d) {
-  const clis = Object.entries(d.clientes || {});
-  const tot = clis.length;
-  const crit = clis.filter(([,c])=>c.n_ok<5).length;
-  const comp = clis.filter(([,c])=>c.n_ok===9).length;
-
-  const cartTotal = (CFG.maestroClientes
-    ? CFG.maestroClientes.filter(r => r.estado === 'A').length
-    : d.kpis?.cartera) || tot;
-  const pctCCC = Math.round(tot/cartTotal*100);
-  document.getElementById('kpi-clientes').innerHTML = `
-    <div class="kpi bl"><div class="kpi-lbl">Cartera total dist.</div><div class="kpi-val">${fmtN(cartTotal)}</div><div class="kpi-sub muted">clientes estado A</div></div>
-    <div class="kpi gr"><div class="kpi-lbl">CCC / Cartera</div><div class="kpi-val">${pctCCC}%</div><div class="kpi-sub ok">${fmtN(tot)} compraron</div></div>
-    <div class="kpi rd"><div class="kpi-lbl">Crticos &lt;5 marcas</div><div class="kpi-val">${fmtN(crit)}</div><div class="kpi-sub crit">${Math.round(crit/tot*100)}% de CCC</div></div>
-    <div class="kpi gr"><div class="kpi-lbl">Cobertura completa</div><div class="kpi-val">${fmtN(comp)}</div><div class="kpi-sub ok">${Math.round(comp/tot*100)}% de CCC</div></div>
-    <div class="kpi am"><div class="kpi-lbl">Con oportunidad</div><div class="kpi-val">${fmtN(tot-comp)}</div><div class="kpi-sub warn">marcas por desarrollar</div></div>
-  `;
-
-  // Cargar vendedores en filtro
-  const vends = [...new Set(clis.map(([,c])=>c.vend).filter(v=>v>0))].sort((a,b)=>a-b);
-  const vSel = document.getElementById('cli-f-vend');
-  vSel.innerHTML = '<option value="all">Todos los vendedores</option>' + vends.map(v=>`<option value="${v}">Vendedor ${v}</option>`).join('');
-
-  CLI_FILTERED = clis;
-  filterClientes();
-}
 
 function filterClientes() {
   const d = getData();
@@ -1693,39 +1278,6 @@ function renderAlertas(d) {
 // ===========================================================================
 // RENDER: HISTORIAL
 // ===========================================================================
-function renderHistoria() {
-  const periodos = Object.keys(DB).sort();
-  document.getElementById('hist-list').innerHTML = periodos.length
-    ? periodos.map(p => `<div class="hist-item ${p===PERIODO_ACTIVO?'hist-active':''}" onclick="setPeriodo('${p}')">
-        <div>
-          <div class="hist-per">${p}</div>
-          <div class="hist-meta">${fmtT(DB[p].kpis?.ton||0)}  ${fmtM(DB[p].kpis?.imp||0)}  CCC ${DB[p].kpis?.cobertura_cartera||0}%</div>
-        </div>
-        ${p===PERIODO_ACTIVO?'<span class="bdg bdg-bl">activo</span>':''}
-      </div>`).join('')
-    : '<div class="empty" style="padding:20px"><div class="empty-icon"></div><div class="empty-title">Sin perodos cargados</div></div>';
-
-  // Evolucin histrica
-  if (periodos.length > 0) {
-    destroyChart('hist-ton');
-    charts['hist-ton'] = new Chart(document.getElementById('ch-hist-ton'), {
-      type:'line',
-      data:{ labels:periodos,
-        datasets:[{label:'Toneladas',data:periodos.map(p=>DB[p].kpis?.ton||0),borderColor:'#4d8ef0',backgroundColor:'#4d8ef022',fill:true,tension:.3,pointRadius:4}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-        scales:{y:{ticks:{color:'#8b93a8',callback:v=>v+'t'},grid:{color:'#2a2f3e'}},x:{ticks:{color:'#8b93a8'},grid:{display:false}}}}
-    });
-
-    destroyChart('hist-ccc');
-    charts['hist-ccc'] = new Chart(document.getElementById('ch-hist-ccc'), {
-      type:'line',
-      data:{ labels:periodos,
-        datasets:[{label:'% CCC',data:periodos.map(p=>DB[p].kpis?.cobertura_cartera||0),borderColor:'#2ecc8a',backgroundColor:'#2ecc8a22',fill:true,tension:.3,pointRadius:4}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-        scales:{y:{min:0,max:100,ticks:{color:'#8b93a8',callback:v=>v+'%'},grid:{color:'#2a2f3e'}},x:{ticks:{color:'#8b93a8'},grid:{display:false}}}}
-    });
-  }
-}
 
 function setPeriodo(p) {
   PERIODO_ACTIVO = p;
@@ -1739,7 +1291,6 @@ function setPeriodo(p) {
 // ===========================================================================
 let uploadedFile = null;
 
-function openUpload() { document.getElementById('upload-modal').classList.add('open'); }
 function closeUpload() {
   document.getElementById('upload-modal').classList.remove('open');
   uploadedFile=null;
@@ -1919,15 +1470,6 @@ if (dz) {
 // INIT
 // ===========================================================================
 
-// ===========================================================================
-// CONFIGURACIN - FUNCIONES
-// ===========================================================================
-
-function renderConfig() {
-  renderCamionList();
-  renderEstructuraTable();
-  renderObjVendConfig();
-}
 
 // VENTA CREATIVA TOGGLE
 function toggleVentaCreativa() {
@@ -2084,151 +1626,6 @@ function showNotif(msg, tipo='gr') {
 // ===========================================================================
 // RENDER: OBJETIVOS POR VENDEDOR
 // ===========================================================================
-function renderObjetivos() {
-  const periodo = document.getElementById('obj-periodo')?.value || 'Abr 2026';
-  const mesaF   = document.getElementById('obj-mesa')?.value || 'all';
-  const usaCrea = false;
-
-  const data = PERF_DATA[periodo];
-  if (!data) { document.getElementById('obj-tbody').innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--tx3);padding:20px">Sin datos para este perodo</td></tr>'; return; }
-
-  // Filtrar por mesa - mesa 600 se incluye si se selecciona explcitamente
-  let perf = data.perf.filter(p => {
-    if (mesaF === 'all') return [300,400,500].includes(p.mesa); // default: solo PepsiCo
-    if (mesaF === '600') return p.mesa === 600;
-    return String(p.mesa) === mesaF;
-  });
-  const dias = data.dias || 30;
-
-  // KPIs globales
-  const totKR = perf.reduce((a,p)=>a+p.kr,0);
-  const totKC = perf.reduce((a,p)=>a+p.kc,0);
-  const totOBJ = perf.reduce((a,p)=>a+p.ot,0);
-  const totCCC = perf.reduce((a,p)=>a+p.ccc,0);
-  const totCart = perf.reduce((a,p)=>a+p.cart,0);
-  const usaKg = usaCrea ? totKR+totKC : totKR;
-  const avPct = totOBJ ? Math.round(usaKg/totOBJ*100) : 0;
-  const avPctColor = avPct>=100?'var(--gr)':avPct>=85?'var(--am)':'var(--rd)';
-  // Proyeccin a fin de mes
-  const proj = dias<30 && totKR>0 ? Math.round(totKR/dias*30) : null;
-  const projPct = proj && totOBJ ? Math.round(proj/totOBJ*100) : null;
-  const pctCCC = totCart ? Math.round(totCCC/totCart*100) : 0;
-
-    // Tendencia de cierre
-  var diasTotal = CFG_DIAS ? (CFG_DIAS.total || 26) : 26;
-  var diasAct   = CFG_DIAS ? (CFG_DIAS.actual || dias) : dias;
-  // Mes cerrado: tendencia = avance real (no proyectar)
-  var mesCerrado = diasAct >= diasTotal;
-  var tendencia  = mesCerrado ? usaKg : (diasAct > 0 ? Math.round(usaKg / diasAct * diasTotal) : 0);
-  var tendPct    = totOBJ ? Math.round(tendencia/totOBJ*100) : 0;
-  var gapKg     = tendencia - totOBJ;
-  var tendColor = tendPct>=100?'var(--gr)':tendPct>=85?'var(--am)':'var(--rd)';
-
-  // Media del equipo
-  var perfsConObj = perf.filter(function(p){ return p.ot > 0; });
-  var mediaAvPct  = perfsConObj.length ? Math.round(perfsConObj.reduce(function(a,p){ return a+(p.apr||0); },0)/perfsConObj.length) : 0;
-
-  document.getElementById('obj-kpis').innerHTML =
-    '<div class="kpi ' + (avPct>=100?'gr':avPct>=85?'am':'rd') + '">' +
-      '<div class="kpi-lbl">Avance ' + (usaCrea?'total':'real') + '</div>' +
-      '<div class="kpi-val" style="color:' + avPctColor + '">' + avPct + '%</div>' +
-      '<div class="kpi-sub muted">' + fmtN(usaKg) + 'kg / ' + fmtN(totOBJ) + 'kg obj</div>' +
-    '</div>' +
-    '<div class="kpi ' + (tendPct>=100?'gr':tendPct>=85?'am':'rd') + '">' +
-      '<div class="kpi-lbl">Tendencia de cierre</div>' +
-      '<div class="kpi-val" style="color:' + tendColor + '">' + tendPct + '%</div>' +
-      '<div class="kpi-sub ' + (gapKg>=0?'ok':'crit') + '">' +
-        fmtN(tendencia) + 'kg proy. (' + (gapKg>=0?'+':'') + fmtN(gapKg) + 'kg)' +
-      '</div>' +
-    '</div>' +
-    '<div class="kpi bl">' +
-      '<div class="kpi-lbl">Media del equipo</div>' +
-      '<div class="kpi-val" style="font-size:20px">' + mediaAvPct + '%</div>' +
-      '<div class="kpi-sub muted">' + diasAct + '/' + diasTotal + ' dias habiles</div>' +
-    '</div>' +
-    '<div class="kpi ' + (pctCCC>=80?'gr':pctCCC>=65?'am':'rd') + '">' +
-      '<div class="kpi-lbl">CCC / Cartera</div>' +
-      '<div class="kpi-val">' + pctCCC + '%</div>' +
-      '<div class="kpi-sub muted">' + fmtN(totCCC) + ' / ' + fmtN(totCart) + '</div>' +
-    '</div>';
-  document.getElementById('obj-subtitle').textContent = periodo + (dias<30?' - '+dias+' das transcurridos':'') + (usaCrea?'  incluye venta creativa':'');
-
-  // Grfico horizontal por vendedor
-  const sorted = [...perf].sort((a,b) => (b.apr||0)-(a.apr||0));
-  const labels = sorted.map(p => 'V'+p.cod+' '+p.nom.split(' ')[0]);
-  // Para mesa 600 usar importe vs objetivo en $, para resto kg
-  const dataKg = sorted.map(p => {
-    if (p.mesa === 600) return p.tv || 0;
-    return usaCrea ? (p.kr+p.kc) : p.kr;
-  });
-  const dataObj600 = sorted.map(p => p.mesa===600 ? (p.obj_imp||0) : p.ot);
-  const dataObj = sorted.map((p,i) => p.mesa===600 ? (p.obj_imp||0) : p.ot);
-  const colors = sorted.map(p => {
-    let pct;
-    if (p.mesa===600) pct = p.apr_imp || 0;
-    else pct = p.ot ? (usaCrea?(p.kr+p.kc):p.kr)/p.ot*100 : 0;
-    return pct>=100?'#2ecc8a':pct>=85?'#f0a500':'#f04d4d';
-  });
-
-  const mediaKg = sorted.length ? Math.round(sorted.reduce((a,p)=>a+(usaCrea?p.kr+p.kc:p.kr),0)/sorted.length) : 0;
-  destroyChart('obj-vend');
-  const h = Math.max(340, sorted.length*22+60);
-  document.getElementById('ch-obj-vend').parentElement.style.height = h+'px';
-  charts['obj-vend'] = new Chart(document.getElementById('ch-obj-vend'), {
-    type:'bar',
-    data:{ labels,
-      datasets:[
-        { label:'Realizado', data:dataKg, backgroundColor:colors, borderRadius:3 },
-        { label:'Objetivo', data:dataObj, backgroundColor:'rgba(255,255,255,.08)', borderRadius:3,
-          borderColor:'rgba(255,255,255,.2)', borderWidth:1 },
-        { label:'Tendencia cierre', data:sorted.map(p => {
-            if (p.mesa===600) return p.apr_imp || 0;
-            const kr = usaCrea ? p.kr+p.kc : p.kr;
-            return mesCerrado ? kr : (diasAct>0 ? Math.round(kr/diasAct*diasTotal) : 0);
-          }), type:'line', borderColor:'#a07cf0', borderWidth:2, borderDash:[4,3],
-          backgroundColor:'transparent', pointRadius:3, pointBackgroundColor:'#a07cf0', tension:.2 },
-        { label:'Media ' + mediaKgAct + 'kg', data:sorted.map(()=>mediaKgAct),
-          type:'line', borderColor:'rgba(255,200,100,.5)', borderWidth:1.5, borderDash:[6,4],
-          backgroundColor:'transparent', pointRadius:0, tension:0 },
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
-      plugins:{ legend:{ labels:{ color:'#8b93a8', font:{size:10}, boxWidth:10 } } },
-      scales:{ x:{ ticks:{color:'#8b93a8',callback:v=>grupo==='600'?fmtM(v):v+'kg'}, grid:{color:'#2a2f3e'} },
-               y:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } }
-    }
-  });
-
-  // Tabla detalle
-  const cats = ['c','cr','pg','sb'];
-  const catLabels = {c:'Cereales/Quaker',cr:'Twistos',pg:'Salty Plat+Gold',sb:'Salty Silv+Bronze'};
-  document.getElementById('obj-tbody').innerHTML = sorted.map(p => {
-    const kg = usaCrea ? p.kr+p.kc : p.kr;
-    const pct = p.mesa===600 ? (p.apr_imp||0) : (p.ot ? Math.round(kg/p.ot*100) : 0);
-    const pctColor = pct>=100?'var(--gr)':pct>=85?'var(--am)':'var(--rd)';
-    const cccColor = p.pcc>=80?'var(--gr)':p.pcc>=65?'var(--am)':'var(--rd)';
-    const catCells = cats.map(cat => {
-      const c = p.cat[cat] || {};
-      const ckg = usaCrea ? (c.r||0)+(c.c||0) : (c.r||0);
-      const cpct = c.o ? Math.round(ckg/c.o*100) : 0;
-      const cc = cpct>=100?'var(--gr)':cpct>=85?'var(--am)':'var(--rd)';
-      return '<td class="num"><span style="color:'+cc+';font-weight:600">'+ckg+'</span><br><span style="color:var(--tx3);font-size:9px">/'+c.o+'kg</span></td>';
-    }).join('');
-    const projV = p.dias_mes && p.dias_mes<30 && p.kr>0 ? Math.round(p.kr/p.dias_mes*30) : null;
-    const projStr = projV ? '<br><span style="font-size:9px;color:var(--bl-l)">'+projV+'kg proyec.</span>' : '';
-    return '<tr>' +
-      '<td style="font-weight:600;white-space:nowrap">V'+p.cod+' '+p.nom+'</td>' +
-      '<td><span class="bdg" style="background:'+((MESA_COLORS||{})[p.mesa]||'#888')+'22;color:'+((MESA_COLORS||{})[p.mesa]||'#888')+'">'+p.mesa+'</span></td>' +
-      catCells +
-      '<td class="num">' + (p.mesa===600 ?
-        '<span style="color:'+pctColor+';font-weight:700">'+fmtM(p.tv)+'</span><br><span style="font-size:9px;color:var(--tx3)">obj '+fmtM(p.obj_imp)+'</span>' :
-        '<span style="color:'+pctColor+';font-weight:700">'+kg+'kg</span><br><span style="font-size:9px;color:var(--tx3)">/'+p.ot+'kg</span>'+projStr) + '</td>' +
-      '<td class="num"><span style="color:'+pctColor+';font-weight:700;font-size:14px">'+(p.mesa===600?(p.apr_imp||0):pct)+'%</span></td>' +
-      '<td class="num"><span style="color:'+cccColor+'">'+p.ccc+'/'+p.cart+'</span><br><span style="font-size:9px;color:var(--tx3)">'+p.pcc+'%</span></td>' +
-      '<td><span class="bdg '+(pct>=100?'bdg-gr':pct>=85?'bdg-am':'bdg-rd')+'">'+(pct>=100?'OK ':pct>=85?'cerca':'bajo')+'</span></td>' +
-    '</tr>';
-  }).join('');
-}
 
 
 // ===========================================================================
@@ -2374,158 +1771,6 @@ function updateDias() {
 // ===========================================================================
 // RENDER: TENDENCIA SEMANAL
 // ===========================================================================
-function renderTendencia() {
-  const mesaF  = document.getElementById('ten-mesa')?.value || 'all';
-  const metrica = document.getElementById('ten-metrica')?.value || 'cli';
-  const mLabel = {cli:'Clientes',imp:'Importe $',kg:'Kilogramos'};
-
-  // Obtener datos por semana
-  function getSemVal(periodo, sem) {
-    const d = SEMANAS_DATA[periodo];
-    if (!d) return 0;
-    if (mesaF === 'all') {
-      return (d.global[String(sem)] || {})[metrica] || 0;
-    } else {
-      return (d.por_mesa[sem+'_'+mesaF] || {})[metrica] || 0;
-    }
-  }
-
-  const sems = [1,2,3,4,5];
-  const marVals = sems.map(s => getSemVal('Mar 2026', s));
-  const abrVals = sems.map(s => getSemVal('Abr 2026', s));
-  const semLabels = ['Sem 1 (1-7)','Sem 2 (8-14)','Sem 3 (15-21)','Sem 4 (22-28)','Sem 5 (29+)'];
-
-  // Variacin %
-  const varPct = sems.map(s => {
-    const m = getSemVal('Mar 2026', s);
-    const a = getSemVal('Abr 2026', s);
-    return m ? Math.round((a-m)/m*100) : null;
-  });
-
-  // KPIs semana 1
-  const m1 = getSemVal('Mar 2026',1); const a1 = getSemVal('Abr 2026',1);
-  const v1 = m1 ? Math.round((a1-m1)/m1*100) : 0;
-  const m2 = getSemVal('Mar 2026',2); const a2 = getSemVal('Abr 2026',2);
-  const v2 = m2 ? Math.round((a2-m2)/m2*100) : null;
-
-  function fmtVal(v) {
-    if (metrica==='imp') return fmtM(v);
-    if (metrica==='kg') return fmtN(v)+'kg';
-    return fmtN(v);
-  }
-  function semColor(v) { return v>=0?'var(--gr)':v>=-10?'var(--am)':'var(--rd)'; }
-  function semClass(v) { return v>=0?'bdg-gr':v>=-10?'bdg-am':'bdg-rd'; }
-
-  document.getElementById('ten-kpis').innerHTML = [
-    ['Sem 1  Marzo', fmtVal(m1), '', 'bl'],
-    ['Sem 1  Abril', fmtVal(a1), (v1>=0?'+':'')+v1+'% vs marzo', v1>=0?'gr':v1>=-10?'am':'rd'],
-    v2!==null ? ['Sem 2  Abril', fmtVal(a2), (v2>=0?'+':'')+v2+'% vs marzo', v2>=0?'gr':v2>=-10?'am':'rd'] : null,
-    ['Proyeccin mes', fmtVal(CFG_DIAS.actual>0 ? Math.round(abrVals.reduce((a,b)=>a+b,0)/CFG_DIAS.actual*CFG_DIAS.total) : 0),
-      CFG_DIAS.actual+'/'+CFG_DIAS.total+' das hbiles', 'pu'],
-  ].filter(Boolean).map(([lbl,val,sub,col]) =>
-    '<div class="kpi '+col+'"><div class="kpi-lbl">'+lbl+'</div>' +
-    '<div class="kpi-val" style="font-size:18px">'+val+'</div>' +
-    (sub?'<div class="kpi-sub" style="color:'+(v1>=0&&col!=='bl'&&col!=='pu'?'var(--gr-l)':'var(--am-l)')+'">'+sub+'</div>':'') +
-    '</div>'
-  ).join('');
-
-  document.getElementById('ten-subtitle').textContent = mLabel[metrica] + (mesaF!=='all'?'  Mesa '+mesaF:'');
-
-  // Grfico comparativo
-  destroyChart('ten-comp');
-  charts['ten-comp'] = new Chart(document.getElementById('ch-ten-comp'), {
-    type:'bar',
-    data:{ labels:semLabels,
-      datasets:[
-        { label:'Marzo 2026', data:marVals, backgroundColor:'rgba(77,142,240,.7)', borderRadius:4 },
-        { label:'Abril 2026', data:abrVals, backgroundColor:'rgba(240,165,0,.8)', borderRadius:4 },
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ ticks:{color:'#8b93a8',callback:v=>metrica==='imp'?'$'+(v/1e6).toFixed(0)+'M':metrica==='kg'?v+'kg':v}, grid:{color:'#2a2f3e'} },
-               x:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } } }
-  });
-
-  // Grfico variacin %
-  destroyChart('ten-var');
-  const varColors = varPct.map(v => v===null?'transparent':v>=0?'#2ecc8a':v>=-10?'#f0a500':'#f04d4d');
-  charts['ten-var'] = new Chart(document.getElementById('ch-ten-var'), {
-    type:'bar',
-    data:{ labels:semLabels,
-      datasets:[
-        { label:'Variacin %', data:varPct.map(v=>v||0), backgroundColor:varColors, borderRadius:4 },
-        { label:'0%', data:sems.map(()=>0), type:'line', borderColor:'rgba(255,255,255,.3)',
-          borderWidth:1, borderDash:[4,4], pointRadius:0 }
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ ticks:{color:'#8b93a8',callback:v=>v+'%'}, grid:{color:'#2a2f3e'} },
-               x:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } } }
-  });
-
-  // Proyeccin
-  const realAcum = abrVals.reduce((a,b)=>a+b,0);
-  const proj = CFG_DIAS.actual>0 ? Math.round(realAcum/CFG_DIAS.actual*CFG_DIAS.total) : 0;
-  const marTotal = marVals.reduce((a,b)=>a+b,0);
-  const projVsObj = metrica==='kg' ? Math.round(proj/([300,400,500].reduce((a)=>a,0)||1)*100) : null;
-  const projVsMar = marTotal ? Math.round((proj-marTotal)/marTotal*100) : 0;
-
-  document.getElementById('ten-proj-sub').textContent =
-    CFG_DIAS.actual+' das hbiles transcurridos de '+CFG_DIAS.total;
-
-  document.getElementById('ten-proj-kpis').innerHTML = [
-    ['Real acumulado', fmtVal(realAcum), CFG_DIAS.actual+' das hbiles', 'bl'],
-    ['Proyeccin fin de mes', fmtVal(proj), 'a '+CFG_DIAS.total+' das hbiles', 'pu'],
-    ['vs Marzo total', fmtVal(marTotal), (projVsMar>=0?'+':'')+projVsMar+'%', projVsMar>=0?'gr':'rd'],
-  ].map(([lbl,val,sub,col]) =>
-    '<div class="kpi '+col+'"><div class="kpi-lbl">'+lbl+'</div>' +
-    '<div class="kpi-val" style="font-size:18px">'+val+'</div>' +
-    '<div class="kpi-sub muted">'+sub+'</div></div>'
-  ).join('');
-
-  // Grfico proyeccin: barras semana acumulado + lnea de proyeccin
-  const acumAbr = abrVals.map((v,i,a)=>a.slice(0,i+1).reduce((x,y)=>x+y,0));
-  const acumMar = marVals.map((v,i,a)=>a.slice(0,i+1).reduce((x,y)=>x+y,0));
-  destroyChart('ten-proj');
-  charts['ten-proj'] = new Chart(document.getElementById('ch-ten-proj'), {
-    type:'bar',
-    data:{ labels:semLabels,
-      datasets:[
-        { label:'Acum. Marzo', data:acumMar, backgroundColor:'rgba(77,142,240,.4)', borderRadius:3 },
-        { label:'Acum. Abril', data:acumAbr, backgroundColor:'rgba(240,165,0,.6)', borderRadius:3 },
-        { label:'Proy. Abril', data:sems.map((_,i)=>CFG_DIAS.actual>0?Math.round(realAcum/CFG_DIAS.actual*(7*(i+1))):0),
-          type:'line', borderColor:'#a07cf0', borderWidth:2, borderDash:[5,3], pointRadius:3,
-          backgroundColor:'transparent', tension:.3 },
-      ]
-    },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ ticks:{color:'#8b93a8',callback:v=>metrica==='imp'?'$'+(v/1e6).toFixed(0)+'M':metrica==='kg'?v+'kg':v}, grid:{color:'#2a2f3e'} },
-               x:{ ticks:{color:'#8b93a8',font:{size:10}}, grid:{display:false} } } }
-  });
-
-  // Tabla
-  document.getElementById('ten-tbody').innerHTML = sems.map(s => {
-    const mv=getSemVal('Mar 2026',s); const av=getSemVal('Abr 2026',s);
-    if (!mv && !av) return '';
-    const vp=mv?Math.round((av-mv)/mv*100):null;
-    const dias_mar=(SEMANAS_DATA['Mar 2026']?.global[String(s)]?.dias||[]);
-    const dias_abr=(SEMANAS_DATA['Abr 2026']?.global[String(s)]?.dias||[]);
-    const diasStr=dias_abr.length?(dias_abr[0]+'-'+dias_abr[dias_abr.length-1]):'-';
-    const vc=vp!==null?(vp>=0?'var(--gr)':vp>=-10?'var(--am)':'var(--rd)'):'var(--tx3)';
-    const arrow=vp!==null?(vp>=0?'':''):'-';
-    return '<tr>' +
-      '<td style="font-weight:600">Semana '+s+'</td>' +
-      '<td style="font-size:10px;color:var(--tx3)">' + (dias_mar.length?dias_mar[0]+'-'+dias_mar[dias_mar.length-1]:'-') + ' / '+diasStr+'</td>' +
-      '<td class="num">'+fmtVal(mv)+'</td>' +
-      '<td class="num" style="color:var(--am-l)">'+fmtVal(av)+'</td>' +
-      '<td class="num"><span style="color:'+vc+';font-weight:700">'+(vp!==null?(vp>=0?'+':'')+vp+'%':'-')+'</span></td>' +
-      '<td><span class="bdg '+(vp===null?'':vp>=0?'bdg-gr':vp>=-10?'bdg-am':'bdg-rd')+'" style="font-size:14px">'+arrow+'</span></td>' +
-    '</tr>';
-  }).filter(Boolean).join('');
-}
 
 
 // =============================================================================
@@ -2765,30 +2010,14 @@ function saveObjVend() {
 // Inicializar estructura editable desde el mapa base
 Object.entries(SUP_MAP_BASE).forEach(([k,v]) => { CFG.estructura[k] = {...v}; });
 buildSupMap();
-loadDB();
-setTimeout(updateDias, 200);
-
-// Si no hay datos guardados, cargamos los pre-calculados de marzo 2026
-if (!PERIODO_ACTIVO || !DB[PERIODO_ACTIVO]) {
-  if (typeof DATA_MARZO !== 'undefined') {
-    loadPreCalculado(DATA_MARZO);
-  }
+// Cargar datos embebidos directamente
+if (typeof DATA_MARZO !== 'undefined') {
+  loadPreCalculado(DATA_MARZO);
 }
 
-// Renderizar
-if (PERIODO_ACTIVO && DB[PERIODO_ACTIVO]) {
-  renderAll();
-} else {
-  // Mostrar estado vaco con instrucciones
-  document.getElementById('sec-ejecutivo').innerHTML = `
-    <div class="empty">
-      <div class="empty-icon"></div>
-      <div class="empty-title">Sin datos cargados</div>
-      <div class="empty-desc">Hac clic en <strong>Cargar datos</strong> para subir la sbana de ventas mensual y comenzar el anlisis.</div>
-    </div>`;
-}
+
+
+
 
 </script>
-</body>
-
 </html>

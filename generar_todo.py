@@ -361,6 +361,35 @@ for cid,provs in datos_act["otros"].items():
     if entry: otros_clean[cid]=entry
 print(f"  {len(GUIA_DATA)} clientes, {len(VEND_STATS)} vendedores")
 
+# RECHAZO_DATA - estructura por periodo para renderRechazo
+print("\nCalculando rechazo/invendibles...")
+RECHAZO_DATA = {}
+for key in sorted(ventas.keys()):
+    d = datos_meses[key]
+    anio_r, mes_r = d["anio"], d["mes"]
+    etiq_r = f"{MESES_ES[mes_r]} {anio_r}"
+    perf_rec = []
+    for v in sorted(SUP_MAP.keys()):
+        mesa = SUP_MAP[v]
+        vd = d["vend_acc"].get(v, {})
+        pv = round(vd.get("pv", 0))
+        pd_v = round(vd.get("pd", 0))
+        pc = round(vd.get("pc", 0))
+        if pv == 0 and pd_v == 0 and pc == 0: continue
+        perf_rec.append({
+            "cod": v, "nom": VNOM.get(v, f"V{v}"),
+            "mesa": mesa, "sup": SUP_NOM.get(mesa, ""),
+            # PepsiCo
+            "pv": pv, "pd": pd_v, "pc": pc,
+            "pdp": round(pd_v/pv*100, 2) if pv else 0,
+            "pcp": round(pc/pv*100, 2) if pv else 0,
+            # Total (mismo que pep por ahora)
+            "tv": pv, "td": pd_v, "tc": pc,
+            "tdp": round(pd_v/pv*100, 2) if pv else 0,
+            "tcp": round(pc/pv*100, 2) if pv else 0,
+        })
+    RECHAZO_DATA[etiq_r] = {"perf": perf_rec, "stats": {}}
+
 # SERIALIZAR
 print("\nSerializando...")
 fecha=datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -368,7 +397,8 @@ dm_js="const DATA_MARZO=\n"+json.dumps(DATA_MARZO,ensure_ascii=True,separators=(
 dmc_js="const DATA_MARZO_CREA=\n"+json.dumps(DATA_MARZO_CREA,ensure_ascii=True,separators=(",",":"))+  ";"
 dp_js="const DATA_PERIODOS="+json.dumps(DATA_PERIODOS,ensure_ascii=True,separators=(",",":"))+  ";"
 cv_js="const CARTERA_VEND_BASE="+json.dumps(CARTERA_VEND_BASE,ensure_ascii=True,separators=(",",":"))+  ";"
-datos_js="\n".join([dm_js,dmc_js,dp_js,cv_js])
+rec_js="const RECHAZO_DATA="+json.dumps(RECHAZO_DATA,ensure_ascii=True,separators=(",",":"))+";"
+datos_js="\n".join([dm_js,dmc_js,dp_js,cv_js,rec_js])
 guia_js="const GUIA_DATA="+json.dumps(GUIA_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 abr_js="const ABR_DATA="+json.dumps(ABR_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 stats_js="const VEND_STATS="+json.dumps(VEND_STATS,ensure_ascii=True,separators=(",",":"))+  ";"
