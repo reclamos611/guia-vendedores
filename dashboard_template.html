@@ -468,6 +468,7 @@ tr:hover td{background:var(--bg3)}
 
 
 
+
 // ===========================================================================
 // CONFIGURACIN FIJA
 // ===========================================================================
@@ -482,8 +483,7 @@ let CLOSEST_2 = ["Tostitos", "Cheetos"];
 // CARTERA POR VENDEDOR (del maestro clientes)
 const MESAS_CZ_BASE = {"400":2365,"300":2601,"500":2265,"600":2474};
 let MESAS_CZ = {...MESAS_CZ_BASE};
-if (typeof CARTERA_VEND_BASE === "undefined") { var CARTERA_VEND_BASE = {}; }
-let CARTERA_VEND = {...CARTERA_VEND_BASE};
+let CARTERA_VEND = (typeof CARTERA_VEND_BASE !== "undefined") ? {...CARTERA_VEND_BASE} : {};
 
 // CATEGORAS (Platinum/Gold/Silver/Bronze) por mesa
 const CAT_MESA_BASE = {"300": {"Bronze": 14847930, "Gold": 160603748, "Platinum": 67016771, "Silver": 51682155}, "400": {"Bronze": 15641043, "Gold": 264624375, "Platinum": 92324313, "Silver": 95828296}, "500": {"Bronze": 11729963, "Gold": 161304543, "Platinum": 82287967, "Silver": 47758274}};
@@ -2157,6 +2157,7 @@ function syncPeriodosSelects() {
     el.innerHTML = periodos.map(p => '<option value="'+p+'"'+(p===cur?' selected':'')+'>'+p+'</option>').join('');
   });
 }
+
 
 
 </script>
