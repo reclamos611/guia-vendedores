@@ -361,34 +361,50 @@ for cid,provs in datos_act["otros"].items():
     if entry: otros_clean[cid]=entry
 print(f"  {len(GUIA_DATA)} clientes, {len(VEND_STATS)} vendedores")
 
-# RECHAZO_DATA - estructura por periodo para renderRechazo
-print("\nCalculando rechazo/invendibles...")
+# RECHAZO_DATA - con desglose por proveedor
+print("\nCalculando rechazo/invendibles por proveedor...")
 RECHAZO_DATA = {}
 for key in sorted(ventas.keys()):
-    d = datos_meses[key]
-    anio_r, mes_r = d["anio"], d["mes"]
+    d = datos_meses[key]; anio_r,mes_r = d["anio"],d["mes"]
     etiq_r = f"{MESES_ES[mes_r]} {anio_r}"
+    # Leer sábana para calcular devol/cambio por proveedor
+    df_r = pd.read_excel(ventas[key], usecols=["Cliente","Cantidad","Importe","camion",
+        "proveedor","articulo","cod_ven","tipo_venta"])
+    df_r = df_r[df_r["camion"] < 700].copy()
+    df_r["_prov"] = df_r["proveedor"].apply(get_prov)
+    df_r["_v"] = df_r["cod_ven"].apply(si)
+    # Acumular por vendedor y proveedor
+    vend_prov = {}
+    for _, row in df_r.iterrows():
+        v = si(row["cod_ven"])
+        if v not in SUP_MAP: continue
+        prov = row["_prov"]; imp = sf(row["Importe"]); tipo = str(row.get("tipo_venta",""))
+        if v not in vend_prov: vend_prov[v] = {"pv":{},"pd":{},"pc":{}}
+        vp = vend_prov[v]
+        if tipo == "Venta":
+            vp["pv"][prov] = vp["pv"].get(prov,0) + imp
+        elif tipo == "Devolucion":
+            vp["pd"][prov] = vp["pd"].get(prov,0) + abs(imp)
+        elif tipo == "Cambio":
+            vp["pc"][prov] = vp["pc"].get(prov,0) + abs(imp)
     perf_rec = []
     for v in sorted(SUP_MAP.keys()):
-        mesa = SUP_MAP[v]
-        vd = d["vend_acc"].get(v, {})
-        pv = round(vd.get("pv", 0))
-        pd_v = round(vd.get("pd", 0))
-        pc = round(vd.get("pc", 0))
-        if pv == 0 and pd_v == 0 and pc == 0: continue
+        mesa = SUP_MAP[v]; vp = vend_prov.get(v,{})
+        pv = round(sum(vp.get("pv",{}).values()))
+        pd_tot = round(sum(vp.get("pd",{}).values()))
+        pc_tot = round(sum(vp.get("pc",{}).values()))
+        if pv == 0 and pd_tot == 0 and pc_tot == 0: continue
         perf_rec.append({
-            "cod": v, "nom": VNOM.get(v, f"V{v}"),
-            "mesa": mesa, "sup": SUP_NOM.get(mesa, ""),
-            # PepsiCo
-            "pv": pv, "pd": pd_v, "pc": pc,
-            "pdp": round(pd_v/pv*100, 2) if pv else 0,
-            "pcp": round(pc/pv*100, 2) if pv else 0,
-            # Total (mismo que pep por ahora)
-            "tv": pv, "td": pd_v, "tc": pc,
-            "tdp": round(pd_v/pv*100, 2) if pv else 0,
-            "tcp": round(pc/pv*100, 2) if pv else 0,
+            "cod":v,"nom":VNOM.get(v,f"V{v}"),"mesa":mesa,"sup":SUP_NOM.get(mesa,""),
+            "pv":pv,"pd":pd_tot,"pc":pc_tot,
+            "pdp":round(pd_tot/pv*100,2) if pv else 0,
+            "pcp":round(pc_tot/pv*100,2) if pv else 0,
+            "prov_devol":{p:round(v2) for p,v2 in vp.get("pd",{}).items()},
+            "prov_cambio":{p:round(v2) for p,v2 in vp.get("pc",{}).items()},
+            "prov_venta":{p:round(v2) for p,v2 in vp.get("pv",{}).items()},
         })
-    RECHAZO_DATA[etiq_r] = {"perf": perf_rec, "stats": {}}
+    RECHAZO_DATA[etiq_r] = {"perf":perf_rec,"stats":{}}
+    print(f"  {etiq_r}: {len(perf_rec)} vendedores")
 
 # SERIALIZAR
 print("\nSerializando...")

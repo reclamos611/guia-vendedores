@@ -201,11 +201,12 @@ tr:hover td{background:var(--bg3)}
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1L1 12h12L7 1z"/><line x1="7" y1="6" x2="7" y2="9"/><circle cx="7" cy="11" r=".5" fill="currentColor"/></svg>
       Alertas
     </div>
-    <div class="nav-sec">Gestión</div>
-    <div class="nav-item" onclick="openUpload()">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 1v8M4 4l3-3 3 3"/><path d="M2 10v2a1 1 0 001 1h8a1 1 0 001-1v-2"/></svg>
-      Cargar nuevo mes
+    <div class="nav-item" onclick="navTo('config',this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      Configuración
     </div>
+    <div class="nav-sec">Gestión</div>
+    
     </div>
   <div class="sb-footer">
     <div class="periodo-lbl">Período activo</div>
@@ -326,26 +327,26 @@ tr:hover td{background:var(--bg3)}
 <div id="sec-rechazo" class="sec">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
         <select id="rec-periodo" onchange="renderRechazo()">
-          <option value="Mar 2026">Marzo 2026</option>
-          <option value="Abr 2026" selected>Abril 2026 (25d)</option>
+          <option value="Abr 2026" selected>Abril 2026</option>
         </select>
         <select id="rec-mesa" onchange="renderRechazo()">
-          <option value="all">Todas las mesas PepsiCo</option>
+          <option value="all">Todas las mesas</option>
           <option value="300">Mesa 300</option>
           <option value="400">Mesa 400</option>
           <option value="500">Mesa 500</option>
+          <option value="600">Mesa 600</option>
         </select>
-        <select id="rec-vista" onchange="renderRechazo()">
-          <option value="pep">PepsiCo (sin creativa)</option>
-          <option value="real">Todos proveedores (sin creativa)</option>
-          <option value="tot">Todos proveedores (total)</option>
+        <select id="rec-prov" multiple size="4" onchange="renderRechazo()"
+          style="min-width:160px;background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);border-radius:6px;padding:4px;font-size:11px">
+          <option value="PepsiCo" selected>PepsiCo</option>
+          <option value="Molinos">Molinos</option>
+          <option value="Softys">Softys</option>
+          <option value="Georgalos">Georgalos</option>
+          <option value="Don Satur">Don Satur</option>
         </select>
+        <span style="font-size:10px;color:var(--tx3)">Ctrl+clic para seleccionar varios</span>
       </div>
-
-      <!-- KPIs globales -->
       <div class="g4" id="rec-kpis" style="margin-bottom:14px"></div>
-
-      <!-- Alertas -->
       <div class="g2" style="margin-bottom:14px">
         <div class="card">
           <div class="card-title">⚠️ Alertas devolución <small>vendedores sobre 1.5× la media</small></div>
@@ -356,8 +357,6 @@ tr:hover td{background:var(--bg3)}
           <div id="rec-alertas-cambio"></div>
         </div>
       </div>
-
-      <!-- Gráfico comparativo -->
       <div class="card" style="margin-bottom:14px">
         <div class="card-title">Devolución % por vendedor <small>línea = media del equipo</small></div>
         <div style="height:320px"><canvas id="ch-rec-devol"></canvas></div>
@@ -366,10 +365,8 @@ tr:hover td{background:var(--bg3)}
         <div class="card-title">Cambio/invendible % por vendedor <small>línea = media del equipo</small></div>
         <div style="height:320px"><canvas id="ch-rec-cambio"></canvas></div>
       </div>
-
-      <!-- Tabla detalle -->
       <div class="card">
-        <div class="card-title">Detalle por vendedor — Devolución y Cambio</div>
+        <div class="card-title">Detalle por vendedor</div>
         <div style="overflow-x:auto">
         <table style="min-width:750px">
           <thead><tr>
@@ -384,9 +381,55 @@ tr:hover td{background:var(--bg3)}
         </div>
       </div>
     </div>
+    
+    <div id="sec-config" class="sec">
+      <div class="card" style="max-width:480px">
+        <div class="card-title">⚙️ Configuración</div>
+        <div style="display:flex;flex-direction:column;gap:16px;padding:8px 0">
 
-    <!-- CONFIGURACIÓN -->
-<div id="sec-alertas" class="sec">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:13px;font-weight:600">Venta creativa</div>
+              <div style="font-size:11px;color:var(--tx3)">Incluir camiones ≥700 en el análisis</div>
+            </div>
+            <label style="position:relative;display:inline-block;width:44px;height:24px">
+              <input type="checkbox" id="cfg-creativa" onchange="toggleCreativa(this.checked)"
+                style="opacity:0;width:0;height:0">
+              <span id="cfg-creativa-slider" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;
+                background:var(--bg4);border-radius:24px;transition:.3s">
+                <span style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;
+                  background:white;border-radius:50%;transition:.3s;transform:translateX(0)" id="cfg-slider-knob"></span>
+              </span>
+            </label>
+          </div>
+
+          <div style="border-top:1px solid var(--bd1);padding-top:16px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">Días del período</div>
+            <div style="display:flex;gap:16px">
+              <div>
+                <label style="font-size:11px;color:var(--tx3);display:block;margin-bottom:4px">Días hábiles del mes</label>
+                <input type="number" id="cfg-dias-hab" value="25" min="1" max="31"
+                  onchange="updateTendencia()"
+                  style="width:80px;background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
+                    border-radius:6px;padding:6px 10px;font-size:13px">
+              </div>
+              <div>
+                <label style="font-size:11px;color:var(--tx3);display:block;margin-bottom:4px">Días trabajados hasta hoy</label>
+                <input type="number" id="cfg-dias-trab" value="17" min="1" max="31"
+                  onchange="updateTendencia()"
+                  style="width:80px;background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
+                    border-radius:6px;padding:6px 10px;font-size:13px">
+              </div>
+            </div>
+            <div id="cfg-tendencia-preview" style="margin-top:12px;padding:10px;background:var(--bg3);
+              border-radius:8px;font-size:12px;color:var(--tx2)">
+              Ingresá los días para ver la proyección de cierre
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><div id="sec-alertas" class="sec">
       <div class="g4" id="kpi-alertas"></div>
       <div class="g2">
         <div>
@@ -423,6 +466,8 @@ tr:hover td{background:var(--bg3)}
 
 
 
+
+
 // ===========================================================================
 // CONFIGURACIN FIJA
 // ===========================================================================
@@ -437,8 +482,7 @@ let CLOSEST_2 = ["Tostitos", "Cheetos"];
 // CARTERA POR VENDEDOR (del maestro clientes)
 const MESAS_CZ_BASE = {"400":2365,"300":2601,"500":2265,"600":2474};
 let MESAS_CZ = {...MESAS_CZ_BASE};
-// CARTERA_VEND_BASE se inyecta por el generador
-
+if (typeof CARTERA_VEND_BASE === "undefined") { var CARTERA_VEND_BASE = {}; }
 let CARTERA_VEND = {...CARTERA_VEND_BASE};
 
 // CATEGORAS (Platinum/Gold/Silver/Bronze) por mesa
@@ -753,7 +797,7 @@ function loadPreCalculado(jsonData) {
   });
   DB[normalized.periodo] = normalized;
   PERIODO_ACTIVO = normalized.periodo;
-  saveDB();
+  syncPeriodosSelects();
   renderAll();
 }
 
@@ -799,6 +843,7 @@ function navTo(id, el) {
 
 function renderSection(id) {
   if (id === 'rechazo') { renderRechazo(); return; }
+  if (id === 'config') { renderConfig(); return; }
 
   // Si hay proveedor no-PepsiCo activo, usar datos de PROV_DATA
   if (PROV_ACTIVO !== 'PepsiCo') {
@@ -1632,22 +1677,34 @@ function showNotif(msg, tipo='gr') {
 // RENDER: RECHAZO Y CAMBIO
 // ===========================================================================
 function renderRechazo() {
-  const periodo = document.getElementById('rec-periodo')?.value || 'Mar 2026';
+  const periodo = document.getElementById('rec-periodo')?.value || 'Abr 2026';
   const mesaF   = document.getElementById('rec-mesa')?.value || 'all';
-  const vista   = document.getElementById('rec-vista')?.value || 'pep';
+  const provSel = document.getElementById('rec-prov');
+  const provs   = provSel ? Array.from(provSel.selectedOptions).map(o=>o.value) : ['PepsiCo'];
   const data    = RECHAZO_DATA[periodo];
   if (!data) return;
 
-  const mesas_pep = [300,400,500];
-  let perf = data.perf.filter(p => mesas_pep.includes(p.mesa));
+  let perf = data.perf;
   if (mesaF !== 'all') perf = perf.filter(p => String(p.mesa) === mesaF);
+  // Filtrar por proveedores seleccionados
+  perf = perf.filter(p => {
+    const pd_prov = p.prov_devol || {};
+    const pc_prov = p.prov_cambio || {};
+    return provs.some(pr => (pd_prov[pr]||0)>0 || (pc_prov[pr]||0)>0 || (p.pv||0)>0);
+  });
 
-  // Seleccionar columnas segn vista
-  function getV(p) { return vista==='pep'?p.pv : vista==='real'?p.rv : p.tv; }
-  function getD(p) { return vista==='pep'?p.pd : vista==='real'?p.rd : p.td; }
-  function getC(p) { return vista==='pep'?p.pc : vista==='real'?p.rc : p.tc; }
-  function getDp(p){ return vista==='pep'?p.pdp: vista==='real'?p.rdp: p.tdp; }
-  function getCp(p){ return vista==='pep'?p.pcp: vista==='real'?p.rcp: p.tcp; }
+  // Sumar devolución y cambio de los proveedores seleccionados
+  function getV(p) { return p.pv||0; }
+  function getD(p) {
+    const pp = p.prov_devol||{};
+    return provs.reduce((a,pr)=>a+(pp[pr]||0),0)||p.pd||0;
+  }
+  function getC(p) {
+    const pp = p.prov_cambio||{};
+    return provs.reduce((a,pr)=>a+(pp[pr]||0),0)||p.pc||0;
+  }
+  function getDp(p){ const v=getV(p); return v?Math.round(getD(p)/v*10000)/100:0; }
+  function getCp(p){ const v=getV(p); return v?Math.round(getC(p)/v*10000)/100:0; }
 
   const st = data.stats;
   const totV = perf.reduce((a,p)=>a+getV(p),0);
@@ -2017,6 +2074,89 @@ if (typeof DATA_MARZO !== 'undefined') {
 
 
 
+
+
+
+// ============================================================
+// TOGGLE VENTA CREATIVA
+// ============================================================
+function toggleCreativa(on) {
+  const knob = document.getElementById('cfg-slider-knob');
+  const slider = document.getElementById('cfg-creativa-slider');
+  if (knob) knob.style.transform = on ? 'translateX(20px)' : 'translateX(0)';
+  if (slider) slider.style.background = on ? 'var(--gr)' : 'var(--bg4)';
+  if (on && typeof DATA_MARZO_CREA !== 'undefined') {
+    loadPreCalculado(DATA_MARZO_CREA);
+  } else if (!on && typeof DATA_MARZO !== 'undefined') {
+    loadPreCalculado(DATA_MARZO);
+  }
+}
+
+// ============================================================
+// TENDENCIA DE CIERRE
+// ============================================================
+function updateTendencia() {
+  const hab  = parseInt(document.getElementById('cfg-dias-hab')?.value || 25);
+  const trab = parseInt(document.getElementById('cfg-dias-trab')?.value || 17);
+  const d = getData();
+  const el = document.getElementById('cfg-tendencia-preview');
+  if (!d || !el || !trab) return;
+  const ton_act = d.kpis?.ton || 0;
+  const ton_tend = Math.round(ton_act / trab * hab * 10) / 10;
+  const imp_act = d.kpis?.imp || 0;
+  const imp_tend = Math.round(imp_act / trab * hab);
+  const ccc_act = d.kpis?.ccc || 0;
+  const ccc_tend = Math.round(ccc_act / trab * hab);
+  const pct = ton_act ? Math.round(ton_tend / (d.kpis?.ton_obj || ton_tend) * 100) : 0;
+  el.innerHTML =
+    '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">Proyección al cierre (' + hab + ' días hábiles)</div>' +
+    '<div style="display:flex;gap:16px;flex-wrap:wrap">' +
+    '<div><div style="font-size:10px;color:var(--tx3)">Toneladas</div><div style="font-size:16px;font-weight:700;color:var(--bl-l)">' + ton_tend + 't</div></div>' +
+    '<div><div style="font-size:10px;color:var(--tx3)">Importe</div><div style="font-size:16px;font-weight:700;color:var(--gr-l)">' + fmtM(imp_tend) + '</div></div>' +
+    '<div><div style="font-size:10px;color:var(--tx3)">CCC</div><div style="font-size:16px;font-weight:700;color:var(--am-l)">' + fmtN(ccc_tend) + '</div></div>' +
+    '</div>';
+  // Actualizar ejecutivo si está activo
+  const execEl = document.getElementById('kpi-tendencia');
+  if (execEl) {
+    execEl.innerHTML =
+      '<div class="kpi bl"><div class="kpi-lbl">Tend. cierre toneladas</div>' +
+      '<div class="kpi-val">' + ton_tend + 't</div>' +
+      '<div class="kpi-sub muted">' + trab + '/' + hab + ' días</div></div>' +
+      '<div class="kpi gr"><div class="kpi-lbl">Tend. cierre importe</div>' +
+      '<div class="kpi-val" style="font-size:20px">' + fmtM(imp_tend) + '</div>' +
+      '<div class="kpi-sub muted">proyección</div></div>' +
+      '<div class="kpi am"><div class="kpi-lbl">Tend. cierre CCC</div>' +
+      '<div class="kpi-val">' + fmtN(ccc_tend) + '</div>' +
+      '<div class="kpi-sub muted">clientes</div></div>';
+  }
+}
+
+// Renderizar configuración
+function renderConfig() {
+  // Sincronizar días desde DATA_MARZO si está disponible
+  if (typeof DATA_MARZO !== 'undefined') {
+    const hab = DATA_MARZO.dias_hab || 25;
+    const trab = DATA_MARZO.dias_trab || 17;
+    const habEl = document.getElementById('cfg-dias-hab');
+    const trabEl = document.getElementById('cfg-dias-trab');
+    if (habEl && !habEl._userEdited) habEl.value = hab;
+    if (trabEl && !trabEl._userEdited) trabEl.value = trab;
+    habEl && (habEl.oninput = () => { habEl._userEdited = true; updateTendencia(); });
+    trabEl && (trabEl.oninput = () => { trabEl._userEdited = true; updateTendencia(); });
+  }
+  setTimeout(updateTendencia, 100);
+}
+
+// Sincronizar selects de período con los datos disponibles
+function syncPeriodosSelects() {
+  const periodos = typeof DATA_PERIODOS !== 'undefined' ? Object.keys(DATA_PERIODOS) : [];
+  ['rec-periodo'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const cur = el.value;
+    el.innerHTML = periodos.map(p => '<option value="'+p+'"'+(p===cur?' selected':'')+'>'+p+'</option>').join('');
+  });
+}
 
 
 </script>
