@@ -69,7 +69,8 @@ MESES_ES = {1:"Ene",2:"Feb",3:"Mar",4:"Abr",5:"May",6:"Jun",7:"Jul",8:"Ago",9:"S
 MESES_FULL = {"enero":1,"febrero":2,"marzo":3,"abril":4,"mayo":5,"junio":6,
     "julio":7,"agosto":8,"septiembre":9,"octubre":10,"noviembre":11,"diciembre":12}
 DIAS_HAB_MES = {1:21,2:19,3:21,4:25,5:22,6:20,7:23,8:22,9:22,10:23,11:21,12:20}
-OTROS_PROV = ["Don Satur","Georgalos","Genomma","Timbo","Buhl","Tres H","Dulcor","Liebig","Llenes","Croni"]
+# Excluir solo estos de la sección "otros proveedores" (tienen sección propia)
+EXCLUIR_PROV_GUIA = ["PepsiCo"]
 PROV_MAP = {"Pepsico de Argentina SRL":"PepsiCo","MOLINOS RIO DE LA PLATA SA":"Molinos",
     "SOFTYS ARGENTINA SA":"Softys","GEORGALOS HNOS S A I C A":"Georgalos",
     "DON SATUR SRL":"Don Satur","INDUSTRIAS QUIMICAS Y MINERAS TIMBO SA":"Timbo",
@@ -226,7 +227,7 @@ def procesar(path, excluir_creativa=True):
         v=si(row["_v"])
         if v not in SUP_MAP: continue
         prov=row["_prov"]
-        if prov not in OTROS_PROV: continue
+        if prov in EXCLUIR_PROV_GUIA: continue
         cid=str(si(row["_cid"])); qty=sf(row["Cantidad"]); imp=sf(row["Importe"])
         tipo=str(row.get("tipo_venta",""))
         if tipo=="Devolucion": qty=-abs(qty); imp=-abs(imp)
@@ -351,14 +352,26 @@ for v in SUP_MAP:
         "ccc_a":ccc_a,"pcc_a":round(ccc_a/cart*100,1) if cart else 0,"cob9":cob9,
         "cob_p":0,"cob_abr":cob_abr,"imp_m":round(d_ant.get("pv",0)),
         "obj_ccc":OBJ_CCC_MESES.get(mes_act,{}).get(v,{}).get("obj_ccc",0)}
+# Calcular lista global de proveedores activos (todos los que vendieron algo)
+todos_prov_set = set()
+for cid_provs in datos_act["otros"].values():
+    todos_prov_set.update(cid_provs.keys())
+if datos_ant_d != datos_act:
+    for cid_provs in datos_ant_d["otros"].values():
+        todos_prov_set.update(cid_provs.keys())
+todos_prov_activos = sorted(todos_prov_set)
+print(f"  Proveedores activos: {todos_prov_activos}")
+
+# Construir otros_clean - para cada cliente mostrar TODOS los proveedores activos
 otros_clean={}
-for cid,provs in datos_act["otros"].items():
-    ant=datos_ant_d["otros"].get(cid,{}) if datos_ant_d!=datos_act else {}
+for cid in set(list(datos_act["otros"].keys()) + list(datos_ant_d["otros"].keys() if datos_ant_d!=datos_act else [])):
+    provs_act = datos_act["otros"].get(str(cid), datos_act["otros"].get(cid, {}))
+    provs_ant = datos_ant_d["otros"].get(str(cid), datos_ant_d["otros"].get(cid, {})) if datos_ant_d!=datos_act else {}
     entry={}
-    for p in OTROS_PROV:
-        a=provs.get(p,[0,0]); b=ant.get(p,[0,0])
-        if any([a[0],a[1],b[0],b[1]]): entry[p]=[round(b[0]),round(b[1]),round(a[0]),round(a[1])]
-    if entry: otros_clean[cid]=entry
+    for p in todos_prov_activos:
+        a=provs_act.get(p,[0,0]); b=provs_ant.get(p,[0,0])
+        entry[p]=[round(b[0]),round(b[1]),round(a[0]),round(a[1])]
+    otros_clean[str(cid)]=entry
 print(f"  {len(GUIA_DATA)} clientes, {len(VEND_STATS)} vendedores")
 
 # RECHAZO_DATA - con desglose por proveedor
@@ -418,8 +431,8 @@ datos_js="\n".join([dm_js,dmc_js,dp_js,cv_js,rec_js])
 guia_js="const GUIA_DATA="+json.dumps(GUIA_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 abr_js="const ABR_DATA="+json.dumps(ABR_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 stats_js="const VEND_STATS="+json.dumps(VEND_STATS,ensure_ascii=True,separators=(",",":"))+  ";"
-otros_js=("const OTROS_PROV_DET="+json.dumps(otros_clean,ensure_ascii=True,separators=(",",":"))+  ";\n"
-    "const TODOS_PROV_ACTIVOS="+json.dumps(OTROS_PROV,ensure_ascii=True,separators=(",",":"))+  ";")
+otros_js=("const OTROS_PROV_DET="+json.dumps(otros_clean,ensure_ascii=True,separators=(",",":"))+";\n"
+    +"const TODOS_PROV_ACTIVOS="+json.dumps(todos_prov_activos,ensure_ascii=True,separators=(",",":"))+  ";")
 
 # GUIA HTML
 guia_tmpl=os.path.join(BASE_DIR,"guia_template.html")
