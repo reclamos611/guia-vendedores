@@ -362,16 +362,19 @@ if datos_ant_d != datos_act:
 todos_prov_activos = sorted(todos_prov_set)
 print(f"  Proveedores activos: {todos_prov_activos}")
 
-# Construir otros_clean - para cada cliente mostrar TODOS los proveedores activos
+# Construir otros_clean - para TODOS los clientes de la cartera, mostrar TODOS los proveedores
 otros_clean={}
-for cid in set(list(datos_act["otros"].keys()) + list(datos_ant_d["otros"].keys() if datos_ant_d!=datos_act else [])):
-    provs_act = datos_act["otros"].get(str(cid), datos_act["otros"].get(cid, {}))
-    provs_ant = datos_ant_d["otros"].get(str(cid), datos_ant_d["otros"].get(cid, {})) if datos_ant_d!=datos_act else {}
+for cid in mc_dict:
+    mc = mc_dict[cid]
+    if mc.get("m",0) == 0 or mc.get("m",0) == 600: continue
+    cid_s = str(cid)
+    provs_act = datos_act["otros"].get(cid_s, {})
+    provs_ant = datos_ant_d["otros"].get(cid_s, {}) if datos_ant_d!=datos_act else {}
     entry={}
     for p in todos_prov_activos:
         a=provs_act.get(p,[0,0]); b=provs_ant.get(p,[0,0])
         entry[p]=[round(b[0]),round(b[1]),round(a[0]),round(a[1])]
-    otros_clean[str(cid)]=entry
+    otros_clean[cid_s]=entry
 print(f"  {len(GUIA_DATA)} clientes, {len(VEND_STATS)} vendedores")
 
 # RECHAZO_DATA - con desglose por proveedor
