@@ -428,8 +428,8 @@ fecha=datetime.now().strftime("%d/%m/%Y %H:%M")
 dm_js="const DATA_MARZO=\n"+json.dumps(DATA_MARZO,ensure_ascii=True,separators=(",",":"))+  ";"
 dmc_js="const DATA_MARZO_CREA=\n"+json.dumps(DATA_MARZO_CREA,ensure_ascii=True,separators=(",",":"))+  ";"
 dp_js="const DATA_PERIODOS="+json.dumps(DATA_PERIODOS,ensure_ascii=True,separators=(",",":"))+  ";"
-cv_js="const CARTERA_VEND_BASE="+json.dumps(CARTERA_VEND_BASE,ensure_ascii=True,separators=(",",":"))+  ";"
-rec_js="const RECHAZO_DATA="+json.dumps(RECHAZO_DATA,ensure_ascii=True,separators=(",",":"))+";"
+cv_js="var CARTERA_VEND_BASE="+json.dumps(CARTERA_VEND_BASE,ensure_ascii=True,separators=(",",":"))+  ";"
+rec_js="var RECHAZO_DATA="+json.dumps(RECHAZO_DATA,ensure_ascii=True,separators=(",",":"))+";"
 datos_js="\n".join([dm_js,dmc_js,dp_js,cv_js,rec_js])
 guia_js="const GUIA_DATA="+json.dumps(GUIA_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 abr_js="const ABR_DATA="+json.dumps(ABR_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
