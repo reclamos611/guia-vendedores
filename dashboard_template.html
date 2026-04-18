@@ -221,19 +221,8 @@ tr:hover td{background:var(--bg3)}
     <div class="topbar-title" id="page-title">Resumen ejecutivo</div>
     <div class="topbar-right">
       <div class="filters" id="topbar-filters"></div>
-      <select id="prov-selector" onchange="setProveedor(this.value)"
-        style="background:var(--bg3);border:1px solid var(--brd2);color:var(--am-l);padding:6px 10px;border-radius:7px;font-size:11px;font-family:Sora,sans-serif;cursor:pointer;outline:none;font-weight:600">
-        <option value="PepsiCo">PepsiCo</option>
-        <option value="Molinos">Molinos</option>
-        <option value="Softys">Softys</option>
-        <option value="Georgalos">Georgalos</option>
-        <option value="Don Satur">Don Satur</option>
-        <option value="Genomma">Genomma</option>
-        <option value="Timbo">Timbo</option>
-        <option value="Buhl">Buhl</option>
-        <option value="Todos">Todos</option>
-      </select>
-      <button class="btn-upload" onclick="openUpload()">+ Cargar datos</button>
+      
+      
     </div>
   </div>
 
@@ -284,6 +273,7 @@ tr:hover td{background:var(--bg3)}
         <button class="tab on" onclick="setMesaTab(300,this)">Mesa 300 — Natalia Perez</button>
         <button class="tab" onclick="setMesaTab(400,this)">Mesa 400 — Claudio Alvarado</button>
         <button class="tab" onclick="setMesaTab(500,this)">Mesa 500 — Mariano Triulci</button>
+        <button class="tab" onclick="setMesaTab(600,this)">Mesa 600 — Natalia Perez</button>
       </div>
       <div id="mesa-content"></div>
     </div>
@@ -336,13 +326,9 @@ tr:hover td{background:var(--bg3)}
           <option value="500">Mesa 500</option>
           <option value="600">Mesa 600</option>
         </select>
-        <select id="rec-prov" multiple size="4" onchange="renderRechazo()"
-          style="min-width:160px;background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);border-radius:6px;padding:4px;font-size:11px">
+        <select id="rec-prov" multiple size="8" onchange="renderRechazo()"
+          style="min-width:180px;background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);border-radius:6px;padding:4px;font-size:11px">
           <option value="PepsiCo" selected>PepsiCo</option>
-          <option value="Molinos">Molinos</option>
-          <option value="Softys">Softys</option>
-          <option value="Georgalos">Georgalos</option>
-          <option value="Don Satur">Don Satur</option>
         </select>
         <span style="font-size:10px;color:var(--tx3)">Ctrl+clic para seleccionar varios</span>
       </div>
@@ -462,6 +448,15 @@ tr:hover td{background:var(--bg3)}
 </script>
 <script>
 
+function openUpload(){} // eliminado
+
+
+if (typeof RECHAZO_DATA === 'undefined') { var RECHAZO_DATA = {}; }
+if (typeof DATA_MARZO_CREA === 'undefined') { var DATA_MARZO_CREA = null; }
+
+
+
+
 
 
 
@@ -520,7 +515,7 @@ const MARCAS_KW = {
 const MCOLORS = {Lays:'#4d8ef0',Doritos:'#f0a500',Cheetos:'#f04d4d','3D':'#a07cf0',
   Pep:'#2ecc8a',Pehuamar:'#f07c4d',Twistos:'#4dcef0',Tostitos:'#888780',Quaker:'#c0903a'};
 const MESA_COLORS = {300:'#4d8ef0',400:'#2ecc8a',500:'#f0a500'};
-const MESA_SUPS = {300:'NATALIA PEREZ',400:'CLAUDIO ALVARADO',500:'MARIANO TRIULCI'};
+const MESA_SUPS = {300:'NATALIA PEREZ',400:'CLAUDIO ALVARADO',500:'MARIANO TRIULCI',600:'NATALIA PEREZ'};
 const DIA_MAP = {1:'Lunes',2:'Martes',3:'Miercoles',4:'Jueves',5:'Viernes',6:'Sabado',7:'Domingo'};
 
 // ===========================================================================
@@ -845,20 +840,6 @@ function renderSection(id) {
   if (id === 'rechazo') { renderRechazo(); return; }
   if (id === 'config') { renderConfig(); return; }
 
-  // Si hay proveedor no-PepsiCo activo, usar datos de PROV_DATA
-  if (PROV_ACTIVO !== 'PepsiCo') {
-    var pd = getProvData(PERIODO_ACTIVO || 'Mar 2026');
-    if (pd) {
-      if (id === 'ejecutivo') renderEjecutivoProv(pd, PERIODO_ACTIVO || 'Mar 2026');
-      else if (id === 'vendedores') renderVendedoresProv(pd);
-      else if (id === 'mesas' || id === 'cobertura' || id === 'alertas') {
-        var sec = document.getElementById('sec-'+id);
-        if (sec) sec.innerHTML = '<div class="empty"><div class="empty-icon">?</div><div class="empty-title">Vista no disponible para ' + PROV_ACTIVO + '</div><div class="empty-desc">Esta seccion muestra datos de PepsiCo.<br>Selecciona PepsiCo en el filtro de proveedor.</div></div>';
-      }
-      return;
-    }
-  }
-
   const d = getData();
   if (!d) return;
   if (id === 'ejecutivo') renderEjecutivo(d);
@@ -884,7 +865,8 @@ function renderAll() {
 // RENDER: EJECUTIVO
 // ===========================================================================
 function renderEjecutivo(d) {
-  const k = d.kpis;
+  if (!d || !d.mesas) return;
+  const k = d.kpis || {};
   document.getElementById('kpi-ejecutivo').innerHTML = `
     <div class="kpi bl"><div class="kpi-lbl">Toneladas PepsiCo</div><div class="kpi-val">${fmtT(k.ton)}</div><div class="kpi-sub muted">volumen neto</div></div>
     <div class="kpi bl"><div class="kpi-lbl">Importe PepsiCo</div><div class="kpi-val" style="font-size:20px">${fmtM(k.imp)}</div><div class="kpi-sub muted">facturacin</div></div>
@@ -1045,9 +1027,16 @@ function setMesaTab(m, el) {
 
 function renderMesas(d) {
   const m = MESA_TAB;
-  const md = d.mesas[m] || {};
   const sup = MESA_SUPS[m] || '-';
-  const col = MESA_COLORS[m];
+  const col = MESA_COLORS[m] || '#888';
+
+  // Mesa 600 usa datos de RECHAZO_DATA por proveedor (venta en $)
+  if (m === 600) {
+    renderMesa600();
+    return;
+  }
+
+  const md = d.mesas[m] || {};
 
   let html = `
     <div class="g4" style="margin-bottom:14px">
@@ -1326,8 +1315,6 @@ function renderAlertas(d) {
 
 function setPeriodo(p) {
   PERIODO_ACTIVO = p;
-  saveDB();
-  renderHistoria();
   renderAll();
 }
 
@@ -1475,7 +1462,7 @@ function processUpload() {
       // Guardar
       DB[periodo] = processed;
       PERIODO_ACTIVO = periodo;
-      saveDB();
+      // saveDB removed
 
       document.getElementById('prog-fill').style.width='100%';
 
@@ -1694,14 +1681,21 @@ function renderRechazo() {
   });
 
   // Sumar devolución y cambio de los proveedores seleccionados
-  function getV(p) { return p.pv||0; }
+  function getV(p) {
+    if (provs.includes('PepsiCo') || provs.length === 0) return p.pv||0;
+    // Para proveedores específicos, usar prov_venta
+    const pv = p.prov_venta||{};
+    return provs.reduce((a,pr)=>a+(pv[pr]||0),0)||p.pv||0;
+  }
   function getD(p) {
     const pp = p.prov_devol||{};
-    return provs.reduce((a,pr)=>a+(pp[pr]||0),0)||p.pd||0;
+    const tot = provs.reduce((a,pr)=>a+(pp[pr]||0),0);
+    return tot > 0 ? tot : (provs.includes('PepsiCo') || provs.length === 0 ? p.pd||0 : 0);
   }
   function getC(p) {
     const pp = p.prov_cambio||{};
-    return provs.reduce((a,pr)=>a+(pp[pr]||0),0)||p.pc||0;
+    const tot = provs.reduce((a,pr)=>a+(pp[pr]||0),0);
+    return tot > 0 ? tot : (provs.includes('PepsiCo') || provs.length === 0 ? p.pc||0 : 0);
   }
   function getDp(p){ const v=getV(p); return v?Math.round(getD(p)/v*10000)/100:0; }
   function getCp(p){ const v=getV(p); return v?Math.round(getC(p)/v*10000)/100:0; }
@@ -2061,7 +2055,7 @@ function saveObjVend() {
   });
 
   showNotif('Objetivos actualizados - recalculando...', 'gr');
-  setTimeout(function(){ renderObjetivos(); }, 200);
+  // renderObjetivos removed
 }
 
 // Inicializar estructura editable desde el mapa base
@@ -2147,7 +2141,7 @@ function renderConfig() {
   setTimeout(updateTendencia, 100);
 }
 
-// Sincronizar selects de período con los datos disponibles
+// Sincronizar selects de período y proveedores con los datos disponibles
 function syncPeriodosSelects() {
   const periodos = typeof DATA_PERIODOS !== 'undefined' ? Object.keys(DATA_PERIODOS) : [];
   ['rec-periodo'].forEach(id => {
@@ -2156,7 +2150,99 @@ function syncPeriodosSelects() {
     const cur = el.value;
     el.innerHTML = periodos.map(p => '<option value="'+p+'"'+(p===cur?' selected':'')+'>'+p+'</option>').join('');
   });
+
+  // Poblar select de proveedores con todos los activos
+  const provEl = document.getElementById('rec-prov');
+  if (provEl && typeof RECHAZO_DATA !== 'undefined') {
+    const periodo = Object.keys(RECHAZO_DATA)[0] || '';
+    const rec = RECHAZO_DATA[periodo] || {};
+    const provSet = new Set(['PepsiCo']);
+    (rec.perf || []).forEach(p => {
+      Object.keys(p.prov_devol || {}).forEach(pr => provSet.add(pr));
+      Object.keys(p.prov_cambio || {}).forEach(pr => provSet.add(pr));
+      Object.keys(p.prov_venta || {}).forEach(pr => provSet.add(pr));
+    });
+    const provList = ['PepsiCo', ...Array.from(provSet).filter(p => p !== 'PepsiCo').sort()];
+    provEl.innerHTML = provList.map(p =>
+      '<option value="'+p+'"'+(p==='PepsiCo'?' selected':'')+'>'+p+'</option>'
+    ).join('');
+    provEl.size = Math.min(provList.length, 12);
+    console.log('Proveedores en filtro:', provList.length, provList);
+  }
 }
+
+
+
+
+// ============================================================
+// RENDER: MESA 600 (otros proveedores - solo importe $)
+// ============================================================
+function renderMesa600() {
+  const periodo = PERIODO_ACTIVO || 'Abr 2026';
+  const rec = (typeof RECHAZO_DATA !== 'undefined' && RECHAZO_DATA[periodo]) || null;
+  const el = document.getElementById('mesa-content');
+  if (!el) return;
+
+  if (!rec) {
+    el.innerHTML = '<div class="card"><div class="card-title">Mesa 600 - sin datos</div></div>';
+    return;
+  }
+
+  // Vendedores de mesa 600
+  const vends600 = rec.perf.filter(p => p.mesa === 600);
+  if (!vends600.length) {
+    el.innerHTML = '<div class="card"><div class="card-title">Mesa 600 - sin datos de vendedores</div></div>';
+    return;
+  }
+
+  // Proveedores disponibles (de prov_venta de cualquier vendedor 600)
+  const provSet = new Set();
+  vends600.forEach(p => Object.keys(p.prov_venta || {}).forEach(pr => provSet.add(pr)));
+  const provs = Array.from(provSet).sort();
+
+  // Tabla por vendedor y proveedor
+  let html600 = '<div class="card">';
+  html600 += '<div class="card-title">Mesa 600 — Natalia Perez <small>ventas por proveedor</small></div>';
+  html600 += '<div style="overflow-x:auto"><table style="min-width:600px">';
+  html600 += '<thead><tr><th>Vendedor</th>' + provs.map(p => '<th class="num">' + p + '</th>').join('') + '<th class="num">Total</th></tr></thead><tbody>';
+
+  let totales = {};
+  provs.forEach(p => totales[p] = 0);
+  let gran_total = 0;
+
+  vends600.forEach(v => {
+    const pv = v.prov_venta || {};
+    const tot = provs.reduce((a, p) => a + (pv[p] || 0), 0);
+    gran_total += tot;
+    html600 += '<tr><td style="font-weight:600">V' + v.cod + ' ' + v.nom + '</td>';
+    provs.forEach(p => {
+      const val = pv[p] || 0;
+      totales[p] += val;
+      html600 += '<td class="num" style="color:' + (val > 0 ? 'var(--gr-l)' : 'var(--tx3)') + '">' + (val > 0 ? fmtM(val) : '-') + '</td>';
+    });
+    html600 += '<td class="num" style="font-weight:700">' + fmtM(tot) + '</td></tr>';
+  });
+
+  // Fila totales
+  html600 += '<tr style="border-top:2px solid var(--bd1);font-weight:700"><td>TOTAL</td>';
+  provs.forEach(p => { html600 += '<td class="num">' + fmtM(totales[p]) + '</td>'; });
+  html600 += '<td class="num">' + fmtM(gran_total) + '</td></tr>';
+  html600 += '</tbody></table></div></div>';
+
+  // Devolución y cambio Mesa 600
+  const devTotal = vends600.reduce((a, v) => a + (v.pd || 0), 0);
+  const camTotal = vends600.reduce((a, v) => a + (v.pc || 0), 0);
+  if (devTotal > 0 || camTotal > 0) {
+    html600 += '<div class="g2" style="margin-top:14px">';
+    html600 += '<div class="kpi rd"><div class="kpi-lbl">Devolución total</div><div class="kpi-val" style="font-size:20px">' + fmtM(devTotal) + '</div></div>';
+    html600 += '<div class="kpi am"><div class="kpi-lbl">Cambio/invendible</div><div class="kpi-val" style="font-size:20px">' + fmtM(camTotal) + '</div></div>';
+    html600 += '</div>';
+  }
+
+  el.innerHTML = html600;
+}
+
+
 
 
 
