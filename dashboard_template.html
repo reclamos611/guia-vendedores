@@ -449,6 +449,7 @@ tr:hover td{background:var(--bg3)}
 <script>
 
 
+
 function openUpload(){} // eliminado
 
 
@@ -766,9 +767,16 @@ function procesarDatos(rows, maestroClientes, clienteZona) {
 // ===========================================================================
 function loadPreCalculado(jsonData) {
   // Normalizar estructura del JSON pre-calculado al formato interno
+  const kpis_raw = jsonData.kpis_global || jsonData.kpis || {};
   const normalized = {
     periodo: jsonData.periodo,
-    kpis: jsonData.kpis_global || jsonData.kpis || {},
+    kpis: {
+      ...kpis_raw,
+      ton: kpis_raw.ton || kpis_raw.toneladas || 0,
+      imp: kpis_raw.imp || kpis_raw.importe || 0,
+      mix: kpis_raw.mix || kpis_raw.mix_imp || 0,
+      uds: kpis_raw.uds || kpis_raw.unidades || 0,
+    },
     cobertura: jsonData.cobertura_global || jsonData.cobertura || {},
     mesas: {},
     vendedores: jsonData.vendedores || [],
@@ -837,7 +845,7 @@ function navTo(id, el) {
 }
 
 function renderSection(id) {
-  if (id === 'rechazo') { renderRechazo(); return; }
+  if (id === 'rechazo') { setTimeout(renderRechazo, 50); return; }
   if (id === 'config') { renderConfig(); return; }
 
   const d = getData();
@@ -2241,6 +2249,7 @@ function renderMesa600() {
 
   el.innerHTML = html600;
 }
+
 
 
 
