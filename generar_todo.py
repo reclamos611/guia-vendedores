@@ -25,10 +25,20 @@ def clean(s, n=30):
     try: s = s.encode("latin1").decode("utf-8")
     except: pass
     return re.sub(r"[^\x20-\x7E]", "", s)[:n]
+ART_PESO = {}  # se llena al leer maestro_articulos
 def exkg(art):
-    m = re.search(r"(\d+)\s*g(?:r|rs)?(?:\b|x)", str(art), re.I)
-    if not m: m = re.search(r"(\d+)g", str(art).lower())
-    return int(m.group(1)) / 1000 if m else 0
+    """Extrae peso en kg del artículo usando maestro si está disponible"""
+    art = str(art).strip()
+    if ART_PESO and art in ART_PESO:
+        return ART_PESO[art]
+    # Fallback: extraer del nombre
+    m = re.search(r"(\d+)\s*Gramos", art)
+    if m: return int(m.group(1))/1000
+    m = re.search(r"(\d+)\s*g(?:r|rs)?(?:\b|x)", art, re.I)
+    if m: return int(m.group(1))/1000
+    m = re.search(r"(\d+)g", art.lower())
+    if m: return int(m.group(1))/1000
+    return 0
 def find(name, kw=None):
     name_n = name.lower().replace("_", " ")
     for f in os.listdir(DATA_DIR):
@@ -119,6 +129,27 @@ for _, row in df_mc.iterrows():
         "l":clean(row.get("localidad",""),20),"v":vend,"m":SUP_MAP.get(vend,0),"ds":dias_map.get(cid,[])[:3]}
 print(f"  {len(mc_dict)} clientes activos")
 
+# MAESTRO DE ARTÍCULOS - peso por artículo
+print("Leyendo maestro de artículos...")
+art_path = find("maestro_de_articulos.xlsx", "articulos") or find("maestro_articulos.xlsx", "articulos")
+if not art_path:
+    # buscar por extension .xls también
+    for f in os.listdir(DATA_DIR):
+        if 'articulo' in f.lower() and (f.endswith('.xlsx') or f.endswith('.xls')):
+            art_path = os.path.join(DATA_DIR, f)
+            break
+ART_PESO = {}  # {descripcion: peso_kg}
+if art_path:
+    df_art = pd.read_excel(art_path)
+    for _, row in df_art.iterrows():
+        desc = str(row.get('descripcion','')).strip()
+        peso = float(row['peso']) if pd.notna(row.get('peso')) and float(row.get('peso',0) or 0) > 0 else 0
+        if desc and peso > 0:
+            ART_PESO[desc] = peso
+    print(f"  {len(ART_PESO)} artículos con peso")
+else:
+    print("  AVISO: maestro de artículos no encontrado - usando extracción por nombre")
+
 # OBJETIVOS
 print("Leyendo objetivos...")
 OBJ_KG_MESES = {}; OBJ_CCC_MESES = {}
@@ -180,6 +211,9 @@ def procesar(path, excluir_creativa=True):
     df = pd.read_excel(path, usecols=["Cliente","Fecha","Cantidad","Importe","camion",
         "proveedor","articulo","cod_ven","tipo_venta","Razon_Social"])
     df["Fecha"] = pd.to_datetime(df["Fecha"], errors="coerce")
+    # Filtrar solo hasta hoy - excluir fechas futuras (pedidos planificados)
+    hoy = pd.Timestamp(datetime.now().date())
+    df = df[df["Fecha"] <= hoy].copy()
     df["_v"] = df["cod_ven"].apply(si); df["_cid"] = df["Cliente"].apply(si)
     df["_art"] = df["articulo"].str.lower().fillna("")
     df["_pep"] = df["proveedor"].str.contains("Pepsico", case=False, na=False)
