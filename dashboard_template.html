@@ -335,20 +335,20 @@ tr:hover td{background:var(--bg3)}
       <div class="g4" id="rec-kpis" style="margin-bottom:14px"></div>
       <div class="g2" style="margin-bottom:14px">
         <div class="card">
-          <div class="card-title">⚠️ Alertas devolución <small>vendedores sobre 1.5× la media</small></div>
+          <div class="card-title">⚠️ Alertas rechazo <small>vendedores sobre 1.5× la media</small></div>
           <div id="rec-alertas-devol"></div>
         </div>
         <div class="card">
-          <div class="card-title">⚠️ Alertas cambio/invendible <small>vendedores sobre 1.5× la media</small></div>
+          <div class="card-title">⚠️ Alertas invendible <small>vendedores sobre 1.5× la media</small></div>
           <div id="rec-alertas-cambio"></div>
         </div>
       </div>
       <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Devolución % por vendedor <small>línea = media del equipo</small></div>
+        <div class="card-title">Rechazo % por vendedor <small>línea = media del equipo</small></div>
         <div style="height:320px"><canvas id="ch-rec-devol"></canvas></div>
       </div>
       <div class="card" style="margin-bottom:14px">
-        <div class="card-title">Cambio/invendible % por vendedor <small>línea = media del equipo</small></div>
+        <div class="card-title">Invendible % por vendedor <small>línea = media del equipo</small></div>
         <div style="height:320px"><canvas id="ch-rec-cambio"></canvas></div>
       </div>
       <div class="card">
@@ -358,8 +358,8 @@ tr:hover td{background:var(--bg3)}
           <thead><tr>
             <th>Vendedor</th><th>Mesa</th>
             <th class="num">Venta</th>
-            <th class="num">Devolución $</th><th class="num">Devol %</th>
-            <th class="num">Cambio $</th><th class="num">Cambio %</th>
+            <th class="num">Rechazo $</th><th class="num">Rechazo %</th>
+            <th class="num">Invendible $</th><th class="num">Invendible %</th>
             <th class="num">Neto</th><th>Estado</th>
           </tr></thead>
           <tbody id="rec-tbody"></tbody>
@@ -447,6 +447,8 @@ tr:hover td{background:var(--bg3)}
 // __CARTERA_DATA__
 </script>
 <script>
+
+
 
 
 
@@ -1672,145 +1674,141 @@ function showNotif(msg, tipo='gr') {
 // RENDER: RECHAZO Y CAMBIO
 // ===========================================================================
 function renderRechazo() {
-  const periodo = document.getElementById('rec-periodo')?.value || 'Abr 2026';
-  const mesaF   = document.getElementById('rec-mesa')?.value || 'all';
-  const provSel = document.getElementById('rec-prov');
-  const provs   = provSel ? Array.from(provSel.selectedOptions).map(o=>o.value) : ['PepsiCo'];
-  const data    = RECHAZO_DATA[periodo];
-  if (!data) return;
-
-  let perf = data.perf;
-  if (mesaF !== 'all') perf = perf.filter(p => String(p.mesa) === mesaF);
-  // Filtrar por proveedores seleccionados
-  perf = perf.filter(p => {
-    const pd_prov = p.prov_devol || {};
-    const pc_prov = p.prov_cambio || {};
-    return provs.some(pr => (pd_prov[pr]||0)>0 || (pc_prov[pr]||0)>0 || (p.pv||0)>0);
-  });
-
-  // Sumar devolución y cambio de los proveedores seleccionados
-  function getV(p) {
-    if (provs.includes('PepsiCo') || provs.length === 0) return p.pv||0;
-    // Para proveedores específicos, usar prov_venta
-    const pv = p.prov_venta||{};
-    return provs.reduce((a,pr)=>a+(pv[pr]||0),0)||p.pv||0;
+  // Auto-poblar select de proveedores desde RECHAZO_DATA
+  const provEl = document.getElementById('rec-prov');
+  if (provEl && typeof RECHAZO_DATA !== 'undefined') {
+    const periodo0 = Object.keys(RECHAZO_DATA)[0] || '';
+    const rec0 = RECHAZO_DATA[periodo0] || {};
+    const provSet = new Set();
+    (rec0.perf || []).forEach(p => {
+      Object.keys(p.prov_devol||{}).forEach(pr => provSet.add(pr));
+      Object.keys(p.prov_cambio||{}).forEach(pr => provSet.add(pr));
+      Object.keys(p.prov_venta||{}).forEach(pr => provSet.add(pr));
+    });
+    const provList = ['Todos', ...Array.from(provSet).sort()];
+    if (provEl.options.length !== provList.length) {
+      provEl.innerHTML = provList.map(p =>
+        '<option value="'+p+'"'+(p==='Todos'?' selected':'')+'>'+p+'</option>'
+      ).join('');
+      provEl.size = Math.min(provList.length, 12);
+    }
   }
+
+  const periodo = document.getElementById('rec-periodo')?.value
+    || Object.keys(RECHAZO_DATA||{})[0] || '';
+  const mesaF = document.getElementById('rec-mesa')?.value || 'all';
+  const provSel = document.getElementById('rec-prov');
+  const provFilt = provSel ? Array.from(provSel.selectedOptions).map(o=>o.value) : ['Todos'];
+  const todosProv = provFilt.includes('Todos') || provFilt.length === 0;
+
+  const data = (typeof RECHAZO_DATA !== 'undefined') ? RECHAZO_DATA[periodo] : null;
+  if (!data) {
+    document.getElementById('rec-kpis').innerHTML = '<div style="color:var(--tx3);padding:20px">Sin datos de rechazo para este período</div>';
+    return;
+  }
+
+  let perf = data.perf || [];
+  if (mesaF !== 'all') perf = perf.filter(p => String(p.mesa) === mesaF);
+
+  // Calcular devol y cambio según filtro de proveedor
   function getD(p) {
-    const pp = p.prov_devol||{};
-    const tot = provs.reduce((a,pr)=>a+(pp[pr]||0),0);
-    return tot > 0 ? tot : (provs.includes('PepsiCo') || provs.length === 0 ? p.pd||0 : 0);
+    if (todosProv) return p.pd || 0;
+    const pp = p.prov_devol || {};
+    return provFilt.reduce((a,pr) => a + (pp[pr]||0), 0);
   }
   function getC(p) {
-    const pp = p.prov_cambio||{};
-    const tot = provs.reduce((a,pr)=>a+(pp[pr]||0),0);
-    return tot > 0 ? tot : (provs.includes('PepsiCo') || provs.length === 0 ? p.pc||0 : 0);
+    if (todosProv) return p.pc || 0;
+    const pp = p.prov_cambio || {};
+    return provFilt.reduce((a,pr) => a + (pp[pr]||0), 0);
   }
-  function getDp(p){ const v=getV(p); return v?Math.round(getD(p)/v*10000)/100:0; }
-  function getCp(p){ const v=getV(p); return v?Math.round(getC(p)/v*10000)/100:0; }
+  function getV(p) {
+    if (todosProv) return p.pv || 0;
+    const pp = p.prov_venta || {};
+    return provFilt.reduce((a,pr) => a + (pp[pr]||0), 0);
+  }
 
-  const st = data.stats;
-  const totV = perf.reduce((a,p)=>a+getV(p),0);
-  const totD = perf.reduce((a,p)=>a+getD(p),0);
-  const totC = perf.reduce((a,p)=>a+getC(p),0);
-  const dpcts = perf.filter(p=>getV(p)>0).map(p=>getDp(p));
-  const cpcts = perf.filter(p=>getV(p)>0).map(p=>getCp(p));
-  const mediaD = dpcts.length ? Math.round(dpcts.reduce((a,b)=>a+b,0)/dpcts.length*100)/100 : 0;
-  const mediaC = cpcts.length ? Math.round(cpcts.reduce((a,b)=>a+b,0)/cpcts.length*100)/100 : 0;
-  const totDpct = totV ? Math.round(totD/totV*10000)/100 : 0;
-  const totCpct = totV ? Math.round(totC/totV*10000)/100 : 0;
+  const totV = perf.reduce((a,p) => a+getV(p), 0);
+  const totD = perf.reduce((a,p) => a+getD(p), 0);
+  const totC = perf.reduce((a,p) => a+getC(p), 0);
+  const pctD = totV ? Math.round(totD/totV*10000)/100 : 0;
+  const pctC = totV ? Math.round(totC/totV*10000)/100 : 0;
 
   // KPIs
-  document.getElementById('rec-kpis').innerHTML = [
-    ['Venta ' + (vista==='pep'?'PepsiCo':'total'), fmtM(totV), 'muted', 'bl'],
-    ['Devolucin total', fmtM(totD) + ' (' + totDpct + '%)', totDpct>3?'crit':totDpct>2?'warn':'ok', totDpct>3?'rd':totDpct>2?'am':'gr'],
-    ['Cambio/invendible', fmtM(totC) + ' (' + totCpct + '%)', totCpct>1.5?'warn':'ok', totCpct>1.5?'am':'gr'],
-    ['Media devol/vendedor', mediaD + '%', '', 'bl'],
-  ].map(([lbl,val,cls,color]) =>
-    '<div class="kpi '+color+'"><div class="kpi-lbl">'+lbl+'</div>' +
-    '<div class="kpi-val" style="font-size:18px">'+val+'</div>' +
-    (cls?'<div class="kpi-sub '+cls+'">vs meta &lt;2%</div>':'') + '</div>'
-  ).join('');
+  document.getElementById('rec-kpis').innerHTML =
+    '<div class="kpi bl"><div class="kpi-lbl">Venta total</div><div class="kpi-val" style="font-size:20px">'+fmtM(totV)+'</div></div>' +
+    '<div class="kpi rd"><div class="kpi-lbl">Rechazo (Devolucion)</div><div class="kpi-val" style="font-size:20px">'+fmtM(totD)+'</div><div class="kpi-sub crit">'+pctD+'% sobre venta</div></div>' +
+    '<div class="kpi am"><div class="kpi-lbl">Invendible (Cambio)</div><div class="kpi-val" style="font-size:20px">'+fmtM(totC)+'</div><div class="kpi-sub warn">'+pctC+'% sobre venta</div></div>' +
+    '<div class="kpi pu"><div class="kpi-lbl">Total rechazos</div><div class="kpi-val" style="font-size:20px">'+fmtM(totD+totC)+'</div><div class="kpi-sub muted">'+Math.round((totD+totC)/totV*10000)/100+'%</div></div>';
 
   // Alertas
-  const alD = perf.filter(p=>getDp(p)>mediaD*1.5 && getV(p)>0).sort((a,b)=>getDp(b)-getDp(a));
-  const alC = perf.filter(p=>getCp(p)>mediaC*1.5 && getV(p)>0).sort((a,b)=>getCp(b)-getCp(a));
+  const mediaD = perf.filter(p=>getV(p)>0).reduce((a,p)=>a+(getV(p)?getD(p)/getV(p):0),0) / (perf.filter(p=>getV(p)>0).length||1) * 100;
+  const mediaC = perf.filter(p=>getV(p)>0).reduce((a,p)=>a+(getV(p)?getC(p)/getV(p):0),0) / (perf.filter(p=>getV(p)>0).length||1) * 100;
 
-  const mkAlert = (p, fn_pct, fn_monto, tipo) =>
-    '<div class="alert al-rd" style="margin-bottom:6px">' +
-    '<div class="al-title">V'+p.cod+' '+p.nom+' - '+fn_pct(p).toFixed(2)+'%</div>' +
-    '<div class="al-desc">'+fmtM(fn_monto(p))+' en '+tipo+'  media '+mediaD.toFixed(2)+'%</div></div>';
+  const alD = perf.filter(p=>getV(p)>0 && getD(p)/getV(p)*100 > mediaD*1.5).sort((a,b)=>getD(b)/getV(b)-getD(a)/getV(a));
+  const alC = perf.filter(p=>getV(p)>0 && getC(p)/getV(p)*100 > mediaC*1.5).sort((a,b)=>getC(b)/getV(b)-getC(a)/getV(a));
 
   document.getElementById('rec-alertas-devol').innerHTML = alD.length
-    ? alD.map(p=>mkAlert(p,getDp,getD,'devolucin')).join('')
-    : '<div style="color:var(--gr-l);font-size:12px;padding:10px"> Sin alertas - todos bajo la media</div>';
+    ? alD.map(p=>'<div class="alert al-rd"><div class="al-title">V'+p.cod+' '+p.nom+' — '+(getD(p)/getV(p)*100).toFixed(2)+'%</div><div class="al-desc">'+fmtM(getD(p))+' en devolución · media '+mediaD.toFixed(2)+'%</div></div>').join('')
+    : '<div style="color:var(--gr-l);font-size:12px;padding:10px">✓ Sin alertas</div>';
 
   document.getElementById('rec-alertas-cambio').innerHTML = alC.length
-    ? alC.map(p=>'<div class="alert al-am" style="margin-bottom:6px"><div class="al-title">V'+p.cod+' '+p.nom+' - '+getCp(p).toFixed(2)+'%</div><div class="al-desc">'+fmtM(getC(p))+' en cambio/invendible  media '+mediaC.toFixed(2)+'%</div></div>').join('')
-    : '<div style="color:var(--gr-l);font-size:12px;padding:10px"> Sin alertas - todos bajo la media</div>';
+    ? alC.map(p=>'<div class="alert al-am"><div class="al-title">V'+p.cod+' '+p.nom+' — '+(getC(p)/getV(p)*100).toFixed(2)+'%</div><div class="al-desc">'+fmtM(getC(p))+' en invendible · media '+mediaC.toFixed(2)+'%</div></div>').join('')
+    : '<div style="color:var(--gr-l);font-size:12px;padding:10px">✓ Sin alertas</div>';
 
-  // Grficos
-  const sortedD = [...perf].filter(p=>getV(p)>0).sort((a,b)=>getDp(b)-getDp(a));
-  const labelsD = sortedD.map(p=>'V'+p.cod);
-  const colorsD = sortedD.map(p=>getDp(p)>mediaD*1.5?'#f04d4d':getDp(p)>mediaD?'#f0a500':'#2ecc8a');
-
+  // Gráficos
+  const sorted = [...perf].filter(p=>getV(p)>0).sort((a,b)=>(getD(b)/getV(b))-(getD(a)/getV(a)));
   destroyChart('rec-devol');
   charts['rec-devol'] = new Chart(document.getElementById('ch-rec-devol'), {
     type:'bar',
-    data:{ labels:labelsD, datasets:[
-      { label:'Devol %', data:sortedD.map(p=>getDp(p)), backgroundColor:colorsD, borderRadius:3 },
-      { label:'Media '+mediaD+'%', data:sortedD.map(()=>mediaD), type:'line',
-        borderColor:'rgba(255,255,255,.5)', borderWidth:2, borderDash:[4,4], pointRadius:0 }
+    data:{ labels:sorted.map(p=>'V'+p.cod), datasets:[
+      { label:'Rechazo %', data:sorted.map(p=>+(getD(p)/getV(p)*100).toFixed(2)),
+        backgroundColor:sorted.map(p=>getD(p)/getV(p)*100>mediaD*1.5?'#f04d4d':getD(p)/getV(p)*100>mediaD?'#f0a500':'#2ecc8a'), borderRadius:3 },
+      { label:'Media '+mediaD.toFixed(2)+'%', data:sorted.map(()=>+mediaD.toFixed(2)),
+        type:'line', borderColor:'rgba(255,255,255,.5)', borderWidth:2, borderDash:[4,4], pointRadius:0 }
     ]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ticks:{color:'#8b93a8',callback:v=>v+'%'},grid:{color:'#2a2f3e'}},
-               x:{ticks:{color:'#8b93a8',font:{size:10}},grid:{display:false}} } }
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#8b93a8',font:{size:10},boxWidth:10}}},
+      scales:{y:{ticks:{color:'#8b93a8',callback:v=>v+'%'},grid:{color:'#2a2f3e'}},
+              x:{ticks:{color:'#8b93a8',font:{size:10}},grid:{display:false}}}}
   });
 
+  const sortedC = [...perf].filter(p=>getV(p)>0).sort((a,b)=>(getC(b)/getV(b))-(getC(a)/getV(a)));
   destroyChart('rec-cambio');
-  const sortedC = [...perf].filter(p=>getV(p)>0).sort((a,b)=>getCp(b)-getCp(a));
-  const labelsC = sortedC.map(p=>'V'+p.cod);
-  const colorsC = sortedC.map(p=>getCp(p)>mediaC*1.5?'#f0a500':getCp(p)>mediaC?'#f0c84d':'#2ecc8a');
   charts['rec-cambio'] = new Chart(document.getElementById('ch-rec-cambio'), {
     type:'bar',
-    data:{ labels:labelsC, datasets:[
-      { label:'Cambio %', data:sortedC.map(p=>getCp(p)), backgroundColor:colorsC, borderRadius:3 },
-      { label:'Media '+mediaC+'%', data:sortedC.map(()=>mediaC), type:'line',
-        borderColor:'rgba(255,200,100,.6)', borderWidth:2, borderDash:[4,4], pointRadius:0 }
+    data:{ labels:sortedC.map(p=>'V'+p.cod), datasets:[
+      { label:'Invendible %', data:sortedC.map(p=>+(getC(p)/getV(p)*100).toFixed(2)),
+        backgroundColor:sortedC.map(p=>getC(p)/getV(p)*100>mediaC*1.5?'#f0a500':'#2ecc8a'), borderRadius:3 },
+      { label:'Media '+mediaC.toFixed(2)+'%', data:sortedC.map(()=>+mediaC.toFixed(2)),
+        type:'line', borderColor:'rgba(255,200,100,.6)', borderWidth:2, borderDash:[4,4], pointRadius:0 }
     ]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ labels:{color:'#8b93a8',font:{size:10},boxWidth:10} } },
-      scales:{ y:{ticks:{color:'#8b93a8',callback:v=>v+'%'},grid:{color:'#2a2f3e'}},
-               x:{ticks:{color:'#8b93a8',font:{size:10}},grid:{display:false}} } }
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#8b93a8',font:{size:10},boxWidth:10}}},
+      scales:{y:{ticks:{color:'#8b93a8',callback:v=>v+'%'},grid:{color:'#2a2f3e'}},
+              x:{ticks:{color:'#8b93a8',font:{size:10}},grid:{display:false}}}}
   });
 
   // Tabla
-  const sorted = [...perf].sort((a,b)=>getDp(b)-getDp(a));
-  const mcolor = {300:MESA_COLORS[300],400:MESA_COLORS[400],500:MESA_COLORS[500]};
-  document.getElementById('rec-tbody').innerHTML = sorted.map(p => {
-    const v=getV(p),d=getD(p),c=getC(p),dp=getDp(p),cp=getCp(p);
-    const dc=dp>mediaD*1.5?'var(--rd)':dp>mediaD?'var(--am)':'var(--gr)';
-    const cc=cp>mediaC*1.5?'var(--am)':cp>mediaC?'var(--am-l)':'var(--gr)';
-    const flag = dp>mediaD*1.5||cp>mediaC*1.5 ? ' ' : '';
-    return '<tr>' +
-      '<td style="font-weight:600">'+flag+'V'+p.cod+' '+p.nom+'</td>' +
-      '<td><span class="bdg" style="background:'+(mcolor[p.mesa]||'#888')+'22;color:'+(mcolor[p.mesa]||'#888')+'">'+p.mesa+'</span></td>' +
-      '<td class="num">'+fmtM(v)+'</td>' +
-      '<td class="num" style="color:'+dc+'">'+fmtM(d)+'</td>' +
-      '<td class="num"><span style="color:'+dc+';font-weight:700">'+dp.toFixed(2)+'%</span></td>' +
-      '<td class="num" style="color:'+cc+'">'+fmtM(c)+'</td>' +
-      '<td class="num"><span style="color:'+cc+';font-weight:700">'+cp.toFixed(2)+'%</span></td>' +
-      '<td class="num">'+fmtM(v-d-c)+'</td>' +
-      '<td><span class="bdg '+(dp>mediaD*1.5||cp>mediaC*1.5?'bdg-rd':dp>mediaD||cp>mediaC?'bdg-am':'bdg-gr')+'">'+(dp>mediaD*1.5||cp>mediaC*1.5?'alerta':dp>mediaD||cp>mediaC?'seguimiento':'OK')+'</span></td>' +
+  const sortedT = [...perf].sort((a,b)=>getD(b)-getD(a));
+  const mdCol = (v,pv) => v/pv*100>mediaD*1.5?'var(--rd)':v/pv*100>mediaD?'var(--am)':'var(--gr)';
+  const mcCol = (v,pv) => v/pv*100>mediaC*1.5?'var(--am)':v/pv*100>mediaC?'var(--am-l)':'var(--gr)';
+  document.getElementById('rec-tbody').innerHTML = sortedT.map(p => {
+    const v=getV(p),d=getD(p),c=getC(p);
+    const dp=v?+(d/v*100).toFixed(2):0, cp=v?+(c/v*100).toFixed(2):0;
+    return '<tr>'+
+      '<td style="font-weight:600">V'+p.cod+' '+p.nom+'</td>'+
+      '<td><span class="bdg" style="background:'+((MESA_COLORS[p.mesa]||'#888')+'22')+';color:'+(MESA_COLORS[p.mesa]||'#888')+'">'+p.mesa+'</span></td>'+
+      '<td class="num">'+fmtM(v)+'</td>'+
+      '<td class="num" style="color:'+mdCol(d,v||1)+'">'+fmtM(d)+'</td>'+
+      '<td class="num"><span style="color:'+mdCol(d,v||1)+';font-weight:700">'+dp+'%</span></td>'+
+      '<td class="num" style="color:'+mcCol(c,v||1)+'">'+fmtM(c)+'</td>'+
+      '<td class="num"><span style="color:'+mcCol(c,v||1)+';font-weight:700">'+cp+'%</span></td>'+
+      '<td class="num">'+fmtM(v-d-c)+'</td>'+
+      '<td><span class="bdg '+(dp>mediaD*1.5||cp>mediaC*1.5?'bdg-rd':dp>mediaD||cp>mediaC?'bdg-am':'bdg-gr')+'">'+(dp>mediaD*1.5||cp>mediaC*1.5?'alerta':dp>mediaD||cp>mediaC?'seguim':'OK')+'</span></td>'+
     '</tr>';
   }).join('');
 }
 
-
-// ===========================================================================
-// CONFIGURACIN: DAS HBILES
-// ===========================================================================
-let CFG_DIAS = { total: 26, actual: 5 };
 
 function updateDias() {
   const t = parseInt(document.getElementById('cfg-dias-total')?.value || 26);
@@ -2243,12 +2241,14 @@ function renderMesa600() {
   if (devTotal > 0 || camTotal > 0) {
     html600 += '<div class="g2" style="margin-top:14px">';
     html600 += '<div class="kpi rd"><div class="kpi-lbl">Devolución total</div><div class="kpi-val" style="font-size:20px">' + fmtM(devTotal) + '</div></div>';
-    html600 += '<div class="kpi am"><div class="kpi-lbl">Cambio/invendible</div><div class="kpi-val" style="font-size:20px">' + fmtM(camTotal) + '</div></div>';
+    html600 += '<div class="kpi am"><div class="kpi-lbl">Invendible (Cambio)</div><div class="kpi-val" style="font-size:20px">' + fmtM(camTotal) + '</div></div>';
     html600 += '</div>';
   }
 
   el.innerHTML = html600;
 }
+
+
 
 
 

@@ -221,9 +221,14 @@ def procesar(path, excluir_creativa=True):
     df_pep = df[df["_pep"] & (df["camion"]<700 if excluir_creativa else True)].copy()
     df_real= df[df["camion"]<700 if excluir_creativa else pd.Series([True]*len(df))].copy()
     dias_trab = df_pep["Fecha"].dt.date.nunique() if len(df_pep) else 1
-    neto_u = df_pep.groupby("_cid")["Cantidad"].sum()
+    # CCC = cliente con neto de unidades >= 3 (venta - devolucion - cambio)
+    df_vta = df_pep[df_pep["tipo_venta"]=="Venta"]
+    df_dev = df_pep[df_pep["tipo_venta"].isin(["Devolucion","Cambio"])]
+    uds_vta = df_vta.groupby("_cid")["Cantidad"].sum()
+    uds_dev = df_dev.groupby("_cid")["Cantidad"].sum().abs()
+    neto_u = uds_vta.subtract(uds_dev, fill_value=0)
     neto_i = df_pep.groupby("_cid")["Importe"].sum()
-    ccc_set = set(neto_u[(neto_u>0)&(neto_i>0)].index)
+    ccc_set = set(neto_u[neto_u >= 3].index)
     vend_acc = {}
     for _, row in df_pep.iterrows():
         v = si(row["cod_ven"])
@@ -411,47 +416,50 @@ for cid in mc_dict:
     otros_clean[cid_s]=entry
 print(f"  {len(GUIA_DATA)} clientes, {len(VEND_STATS)} vendedores")
 
-# RECHAZO_DATA - con desglose por proveedor
+# RECHAZO_DATA - Rechazo (Devolucion) e Invendible (Cambio negativo) por vendedor/proveedor
 print("\nCalculando rechazo/invendibles por proveedor...")
 RECHAZO_DATA = {}
 for key in sorted(ventas.keys()):
     d = datos_meses[key]; anio_r,mes_r = d["anio"],d["mes"]
     etiq_r = f"{MESES_ES[mes_r]} {anio_r}"
-    # Leer sábana para calcular devol/cambio por proveedor
-    df_r = pd.read_excel(ventas[key], usecols=["Cliente","Cantidad","Importe","camion",
-        "proveedor","articulo","cod_ven","tipo_venta"])
-    df_r = df_r[df_r["camion"] < 700].copy()
+    df_r = pd.read_excel(ventas[key], usecols=["Cantidad","Importe","camion",
+        "proveedor","cod_ven","tipo_venta"])
+    df_r["Fecha"] = pd.to_datetime(df_r.get("Fecha",""), errors="coerce") if "Fecha" in df_r.columns else pd.NaT
     df_r["_prov"] = df_r["proveedor"].apply(get_prov)
-    df_r["_v"] = df_r["cod_ven"].apply(si)
     # Acumular por vendedor y proveedor
+    # pv = venta $, pd = rechazo $ (Devolucion), pc = invendible $ (Cambio con Importe<0)
     vend_prov = {}
     for _, row in df_r.iterrows():
         v = si(row["cod_ven"])
         if v not in SUP_MAP: continue
-        prov = row["_prov"]; imp = sf(row["Importe"]); tipo = str(row.get("tipo_venta",""))
+        prov = row["_prov"]
+        imp = sf(row["Importe"])
+        tipo = str(row.get("tipo_venta",""))
         if v not in vend_prov: vend_prov[v] = {"pv":{},"pd":{},"pc":{}}
         vp = vend_prov[v]
-        if tipo == "Venta":
+        if tipo == "Venta" and imp > 0:
             vp["pv"][prov] = vp["pv"].get(prov,0) + imp
-        elif tipo == "Devolucion":
+        elif tipo == "Devolucion" and imp < 0:
+            # Rechazo: sumar el valor absoluto
             vp["pd"][prov] = vp["pd"].get(prov,0) + abs(imp)
-        elif tipo == "Cambio":
+        elif tipo == "Cambio" and imp < 0:
+            # Invendible: sumar el valor absoluto
             vp["pc"][prov] = vp["pc"].get(prov,0) + abs(imp)
     perf_rec = []
     for v in sorted(SUP_MAP.keys()):
         mesa = SUP_MAP[v]; vp = vend_prov.get(v,{})
-        pv = round(sum(vp.get("pv",{}).values()))
+        pv     = round(sum(vp.get("pv",{}).values()))
         pd_tot = round(sum(vp.get("pd",{}).values()))
         pc_tot = round(sum(vp.get("pc",{}).values()))
         if pv == 0 and pd_tot == 0 and pc_tot == 0: continue
         perf_rec.append({
-            "cod":v,"nom":VNOM.get(v,f"V{v}"),"mesa":mesa,"sup":SUP_NOM.get(mesa,""),
-            "pv":pv,"pd":pd_tot,"pc":pc_tot,
+            "cod":v, "nom":VNOM.get(v,f"V{v}"), "mesa":mesa, "sup":SUP_NOM.get(mesa,""),
+            "pv":pv, "pd":pd_tot, "pc":pc_tot,
             "pdp":round(pd_tot/pv*100,2) if pv else 0,
             "pcp":round(pc_tot/pv*100,2) if pv else 0,
-            "prov_devol":{p:round(v2) for p,v2 in vp.get("pd",{}).items()},
+            "prov_venta": {p:round(v2) for p,v2 in vp.get("pv",{}).items()},
+            "prov_devol": {p:round(v2) for p,v2 in vp.get("pd",{}).items()},
             "prov_cambio":{p:round(v2) for p,v2 in vp.get("pc",{}).items()},
-            "prov_venta":{p:round(v2) for p,v2 in vp.get("pv",{}).items()},
         })
     RECHAZO_DATA[etiq_r] = {"perf":perf_rec,"stats":{}}
     print(f"  {etiq_r}: {len(perf_rec)} vendedores")
