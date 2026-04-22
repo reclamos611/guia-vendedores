@@ -289,8 +289,10 @@ def procesar(path, excluir_creativa=True):
         if cid not in otros: otros[cid]={}
         if prov not in otros[cid]: otros[cid][prov]=[0,0]
         otros[cid][prov][0]+=qty; otros[cid][prov][1]+=imp
+        # Importe total todos los proveedores (camion<700, solo ventas)
+    imp_total_todos = df[(df["camion"]<700) & (df["tipo_venta"]=="Venta")]["Importe"].sum()
     return {"vend_acc":vend_acc,"cli_mk":cli_mk,"mk_cob_vend":mk_cob_vend,
-            "ccc_set":ccc_set,"otros":otros,"dias_trab":dias_trab}
+            "ccc_set":ccc_set,"otros":otros,"dias_trab":dias_trab,"imp_total_todos":imp_total_todos}
 
 def construir(datos, mes_num, anio, etiq):
     vend_acc=datos["vend_acc"]; mk_cob_vend=datos["mk_cob_vend"]
