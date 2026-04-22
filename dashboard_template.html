@@ -560,6 +560,7 @@ tr:hover td{background:var(--bg3)}
 
 
 
+
 function openUpload(){} // eliminado
 
 
@@ -2268,11 +2269,20 @@ function renderConfig() {
 // Sincronizar selects de período y proveedores con los datos disponibles
 function syncPeriodosSelects() {
   const periodos = typeof DATA_PERIODOS !== 'undefined' ? Object.keys(DATA_PERIODOS) : [];
+  // Ordenar periodos: más reciente primero
+  const periodos_ord = periodos.slice().sort(function(a,b){
+    var meses = {Ene:1,Feb:2,Mar:3,Abr:4,May:5,Jun:6,Jul:7,Ago:8,Sep:9,Oct:10,Nov:11,Dic:12};
+    var pa=a.split(' '), pb=b.split(' ');
+    var ya=parseInt(pa[1]||0), yb=parseInt(pb[1]||0);
+    var ma=meses[pa[0]]||0, mb=meses[pb[0]]||0;
+    return (yb*100+mb)-(ya*100+ma);
+  });
   ['rec-periodo'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    const cur = el.value;
-    el.innerHTML = periodos.map(p => '<option value="'+p+'"'+(p===cur?' selected':'')+'>'+p+'</option>').join('');
+    // Seleccionar el más reciente por defecto
+    const mejor = periodos_ord[0] || '';
+    el.innerHTML = periodos_ord.map(p => '<option value="'+p+'"'+(p===mejor?' selected':'')+'>'+p+'</option>').join('');
   });
 
   // Poblar select de proveedores con todos los activos
@@ -2499,6 +2509,7 @@ function exportarGerencial() {
   a.click();
   URL.revokeObjectURL(url);
 }
+
 
 
 
