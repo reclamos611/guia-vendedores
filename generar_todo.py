@@ -554,6 +554,10 @@ if os.path.exists(guia_tmpl):
     html=html.replace("// __GUIA_DATA__",guia_js).replace("// __ABR_DATA__",abr_js)
     html=html.replace("// __OTROS_PROV__",otros_js).replace("// __VEND_STATS__",stats_js)
     html=html.replace("__FECHA_GENERACION__",fecha)
+    # Timestamp único para invalidar cache del browser
+    import hashlib
+    ts = str(int(__import__("time").time()))
+    html = html.replace("</title>", f"</title><!-- v{ts} -->")
     with open(os.path.join(BASE_DIR,"guia_visita_611.html"),"w",encoding="utf-8") as f: f.write(html)
     print(f"Guia: {os.path.getsize(os.path.join(BASE_DIR,'guia_visita_611.html'))//1024}KB")
 
@@ -574,6 +578,13 @@ if os.path.exists(dash_tmpl):
     if first_marker>=0:
         html=html[:first_marker]+"<script>\n"+datos_js+"\n</script>\n"+html[last_marker_end:]
     html=html.replace("__FECHA_GENERACION__",fecha)
+    # Agregar meta no-cache para evitar que el browser use versión vieja
+    no_cache_meta = (
+        '<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n'
+        '<meta http-equiv="Pragma" content="no-cache">\n'
+        '<meta http-equiv="Expires" content="0">\n'
+    )
+    html = html.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + no_cache_meta, 1)
     with open(dash_out,"w",encoding="utf-8") as f: f.write(html)
     print(f"Dashboard: {os.path.getsize(dash_out)//1024}KB")
 
