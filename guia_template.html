@@ -598,6 +598,197 @@ function fmtM(v){
   if(v>=1e3)return '$'+(v/1e3).toFixed(0)+'k';
   return '$'+v;
 }
+
+// ── FILTRO POR DÍA DE VISITA ─────────────────────────────
+var DIA_ACTIVO = null;
+var DIAS_ORD = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var DIA_LABELS = {Lunes:'Lun',Martes:'Mar',Miercoles:'Mie',Jueves:'Jue',Viernes:'Vie',Sabado:'Sab'};
+
+function initDias(vendCod) {
+  var diasVend = {};
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var d=e[1]; if(d.v!==vendCod) return;
+    (d.ds||[]).forEach(function(ds){
+      var nom=Array.isArray(ds)?ds[0]:String(ds);
+      diasVend[nom]=(diasVend[nom]||0)+1;
+    });
+  });
+  var hoy=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][new Date().getDay()];
+  var btns=document.getElementById('dias-btns');
+  if(!btns) return;
+  btns.innerHTML='';
+  DIAS_ORD.forEach(function(dia){
+    if(!diasVend[dia]) return;
+    var btn=document.createElement('button');
+    btn.textContent=(DIA_LABELS[dia]||dia)+' ('+diasVend[dia]+')';
+    btn.style.cssText='padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--brd2);background:'+(dia===hoy?'var(--bl-d)':'var(--bg3)')+';color:'+(dia===hoy?'var(--bl-l)':'var(--tx2)');
+    btn.onclick=(function(d){return function(){filtrarDia(d,vendCod);};})(dia);
+    btns.appendChild(btn);
+  });
+  if(diasVend[hoy]) filtrarDia(hoy,vendCod);
+  else if(DIAS_ORD.filter(function(d){return diasVend[d];}).length) {
+    filtrarDia(DIAS_ORD.filter(function(d){return diasVend[d];})[0], vendCod);
+  }
+}
+
+function filtrarDia(dia, vendCod) {
+  DIA_ACTIVO = dia;
+  var btns = document.getElementById('dias-btns');
+  if(btns) Array.from(btns.children).forEach(function(b){
+    var lbl = DIA_LABELS[dia]||dia;
+    var on = b.textContent.startsWith(lbl);
+    b.style.background = on?'var(--bl-d)':'var(--bg3)';
+    b.style.color = on?'var(--bl-l)':'var(--tx2)';
+    b.style.borderColor = on?'var(--bl)':'var(--brd2)';
+  });
+  var inp = document.getElementById('dash-buscar');
+  if(inp) inp.value = '';
+  var resEl = document.getElementById('dash-buscar-res');
+  if(resEl) resEl.style.display='none';
+  var diasEl = document.getElementById('clientes-dia-list');
+  if(diasEl) diasEl.style.display='block';
+
+  var lista = [];
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var cid=e[0], d=e[1];
+    if(d.v!==vendCod) return;
+    var ok=(d.ds||[]).some(function(ds){return (Array.isArray(ds)?ds[0]:String(ds))===dia;});
+    if(ok) lista.push({cid:cid, nom:d.n, dir:d.d||''});
+  });
+  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
+
+  if(!diasEl) return;
+  diasEl.innerHTML = lista.length
+    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' clientes</div>'+
+      lista.map(function(c){
+        return '<div onclick="verFicha("+c.cid+")" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
+          '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
+          '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+(c.dir?' · '+c.dir:'')+'</div></div>'+
+          '<div style="color:var(--tx3);font-size:18px">&#8250;</div></div>';
+      }).join('')
+    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin clientes para '+dia+'</div>';
+}
+
+function buscarEnDash(q) {
+  var resEl = document.getElementById('dash-buscar-res');
+  var diasEl = document.getElementById('clientes-dia-list');
+  var diasBtns = document.getElementById('dias-btns');
+  if(!q || q.length < 2) {
+    if(resEl) resEl.style.display='none';
+    if(diasEl) diasEl.style.display='block';
+    if(diasBtns) diasBtns.style.display='flex';
+    return;
+  }
+  if(diasEl) diasEl.style.display='none';
+  if(diasBtns) diasBtns.style.display='none';
+  if(resEl) resEl.style.display='block';
+  var ql = q.toLowerCase();
+  var lista = [];
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var cid=e[0], d=e[1];
+    if(d.v!==VENDEDOR) return;
+    if(cid.includes(ql)||d.n.toLowerCase().includes(ql)||(d.d||'').toLowerCase().includes(ql))
+      lista.push({cid:cid, nom:d.n, dir:d.d||''});
+  });
+  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
+  if(resEl) resEl.innerHTML = lista.length
+    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' resultados</div>'+
+      lista.map(function(c){
+        return '<div onclick="verFicha("+c.cid+")" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
+          '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
+          '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+(c.dir?' · '+c.dir:'')+'</div></div>'+
+          '<div style="color:var(--tx3);font-size:18px">&#8250;</div></div>';
+      }).join('')
+    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin resultados para "'+q+'"</div>';
+}
+
+var DIA_ACTIVO=null;
+var DIAS_ORD=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var DIA_LABELS={Lunes:'Lun',Martes:'Mar',Miercoles:'Mie',Jueves:'Jue',Viernes:'Vie',Sabado:'Sab'};
+
+function mkCardCliente(c){
+  return '<div onclick="verFicha('+JSON.stringify(c.cid)+')" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
+    '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
+    '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+(c.dir?' &middot; '+c.dir:'')+'</div></div>'+
+    '<div style="color:var(--tx3);font-size:18px">&#8250;</div></div>';
+}
+
+function initDias(vendCod){
+  var diasVend={};
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var d=e[1]; if(d.v!==vendCod) return;
+    (d.ds||[]).forEach(function(ds){var n=Array.isArray(ds)?ds[0]:String(ds); diasVend[n]=(diasVend[n]||0)+1;});
+  });
+  var hoy=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][new Date().getDay()];
+  var btns=document.getElementById('dias-btns');
+  if(!btns) return;
+  btns.innerHTML='';
+  DIAS_ORD.forEach(function(dia){
+    if(!diasVend[dia]) return;
+    var btn=document.createElement('button');
+    btn.textContent=(DIA_LABELS[dia]||dia)+' ('+diasVend[dia]+')';
+    btn.style.cssText='padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--brd2);background:'+(dia===hoy?'var(--bl-d)':'var(--bg3)')+';color:'+(dia===hoy?'var(--bl-l)':'var(--tx2)');
+    btn.onclick=(function(d){return function(){filtrarDia(d,vendCod);};})(dia);
+    btns.appendChild(btn);
+  });
+  var disponibles=DIAS_ORD.filter(function(d){return diasVend[d];});
+  if(diasVend[hoy]) filtrarDia(hoy,vendCod);
+  else if(disponibles.length) filtrarDia(disponibles[0],vendCod);
+}
+
+function filtrarDia(dia,vendCod){
+  DIA_ACTIVO=dia;
+  var btns=document.getElementById('dias-btns');
+  if(btns) Array.from(btns.children).forEach(function(b){
+    var on=b.textContent.startsWith(DIA_LABELS[dia]||dia);
+    b.style.background=on?'var(--bl-d)':'var(--bg3)';
+    b.style.color=on?'var(--bl-l)':'var(--tx2)';
+    b.style.borderColor=on?'var(--bl)':'var(--brd2)';
+  });
+  var inp=document.getElementById('dash-buscar');
+  if(inp) inp.value='';
+  var resEl=document.getElementById('dash-buscar-res');
+  if(resEl) resEl.style.display='none';
+  var diasEl=document.getElementById('clientes-dia-list');
+  if(diasEl) diasEl.style.display='block';
+  var lista=[];
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var cid=e[0],d=e[1]; if(d.v!==vendCod) return;
+    if((d.ds||[]).some(function(ds){return (Array.isArray(ds)?ds[0]:String(ds))===dia;}))
+      lista.push({cid:cid,nom:d.n,dir:d.d||''});
+  });
+  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
+  if(!diasEl) return;
+  diasEl.innerHTML=lista.length
+    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' clientes &middot; '+dia+'</div>'+lista.map(mkCardCliente).join('')
+    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin clientes para '+dia+'</div>';
+}
+
+function buscarEnDash(q){
+  var resEl=document.getElementById('dash-buscar-res');
+  var diasEl=document.getElementById('clientes-dia-list');
+  var diasBtns=document.getElementById('dias-btns');
+  if(!q||q.length<2){
+    if(resEl) resEl.style.display='none';
+    if(diasEl) diasEl.style.display='block';
+    if(diasBtns) diasBtns.style.display='flex';
+    return;
+  }
+  if(diasEl) diasEl.style.display='none';
+  if(diasBtns) diasBtns.style.display='none';
+  if(resEl) resEl.style.display='block';
+  var ql=q.toLowerCase();
+  var lista=[];
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var cid=e[0],d=e[1]; if(d.v!==VENDEDOR) return;
+    if(cid.includes(ql)||d.n.toLowerCase().includes(ql)||(d.d||'').toLowerCase().includes(ql))
+      lista.push({cid:cid,nom:d.n,dir:d.d||''});
+  });
+  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
+  if(resEl) resEl.innerHTML=lista.length
+    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' resultados</div>'+lista.map(mkCardCliente).join('')
+    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin resultados</div>';
+}
 </script>
 
 <script>
