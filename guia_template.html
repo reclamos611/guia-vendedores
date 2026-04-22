@@ -247,6 +247,18 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
     <div class="sec-lbl">Cobertura mes actual vs objetivo</div>
     <div id="dash-cob"></div>
   </div>
+  <div style="margin:14px 0 8px;font-size:12px;font-weight:700;color:var(--tx2)">
+    Mis clientes
+  </div>
+  <input type="search" id="dash-buscar" placeholder="Buscar por nombre o código..."
+    oninput="buscarEnDash(this.value)"
+    style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:10px;
+      border:1px solid var(--brd2);background:var(--bg2);color:var(--tx1);
+      font-size:14px;margin-bottom:10px;outline:none">
+  <div id="dash-buscar-res" style="display:none;margin-bottom:10px"></div>
+  <div style="font-size:11px;font-weight:700;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Por día de visita</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="dias-btns"></div>
+  <div id="clientes-dia-list" style="margin-bottom:14px"></div>
   <button class="btn-pri" onclick="irBusq()">Buscar cliente</button>
   <button class="btn-sec" onclick="doLogout()">Cerrar sesion</button>
 </div>
@@ -363,6 +375,7 @@ function doLogin(){
   VENDEDOR=v;
   document.getElementById('tb-vend').textContent=VNOM[v]||'V'+v;
   renderDash();
+  initDias(v);
   mostrar('pg-dash');
 }
 function doLogout(){
@@ -601,6 +614,103 @@ function fmtM(v){
 </script>
 <script>
 const VEND_RESUMEN={"31":{"nom":"VILLALBA MAX.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":274,"a_ccc":107,"a_pcc":39.1,"a_imp":14768273,"a_kr":405,"a_ot":2421,"a_apr":16.7,"a_pp":20.1,"m_ccc":223,"m_pcc":81.4,"m_imp":88777327,"m_kr":2445,"m_ot":2421,"m_apr":101.0},"32":{"nom":"OLIVARES EDGAR","mesa":400,"sup":"CLAUDIO ALVARADO","cart":286,"a_ccc":65,"a_pcc":22.7,"a_imp":7845825,"a_kr":250,"a_ot":1547,"a_apr":16.2,"a_pp":19.4,"m_ccc":218,"m_pcc":76.2,"m_imp":50007578,"m_kr":1426,"m_ot":1547,"m_apr":92.2},"33":{"nom":"ORDO\u00d1EZ ISMAEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":247,"a_ccc":70,"a_pcc":28.3,"a_imp":10854279,"a_kr":364,"a_ot":1787,"a_apr":20.4,"a_pp":24.4,"m_ccc":168,"m_pcc":68.0,"m_imp":74877786,"m_kr":1783,"m_ot":1787,"m_apr":99.8},"34":{"nom":"BALDO JULIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":263,"a_ccc":61,"a_pcc":23.2,"a_imp":4956235,"a_kr":132,"a_ot":1628,"a_apr":8.1,"a_pp":9.7,"m_ccc":192,"m_pcc":73.0,"m_imp":49863989,"m_kr":1402,"m_ot":1628,"m_apr":86.1},"35":{"nom":"BAZAN LUCIANO","mesa":400,"sup":"CLAUDIO ALVARADO","cart":275,"a_ccc":91,"a_pcc":33.1,"a_imp":9929741,"a_kr":310,"a_ot":1548,"a_apr":20.0,"a_pp":24.0,"m_ccc":235,"m_pcc":85.5,"m_imp":54674851,"m_kr":1660,"m_ot":1548,"m_apr":107.2},"36":{"nom":"NEIRA NAHUEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":254,"a_ccc":82,"a_pcc":32.3,"a_imp":8908806,"a_kr":259,"a_ot":2739,"a_apr":9.5,"a_pp":11.3,"m_ccc":196,"m_pcc":77.2,"m_imp":61433839,"m_kr":2129,"m_ot":2739,"m_apr":77.7},"37":{"nom":"SCORRANI IGN.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":272,"a_ccc":82,"a_pcc":30.1,"a_imp":9466999,"a_kr":305,"a_ot":1628,"a_apr":18.7,"a_pp":22.5,"m_ccc":194,"m_pcc":71.3,"m_imp":50063985,"m_kr":1546,"m_ot":1628,"m_apr":95.0},"38":{"nom":"MARTINEZ MAU.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":304,"a_ccc":109,"a_pcc":35.9,"a_imp":9975612,"a_kr":292,"a_ot":2461,"a_apr":11.9,"a_pp":14.2,"m_ccc":219,"m_pcc":72.0,"m_imp":58292329,"m_kr":1926,"m_ot":2461,"m_apr":78.3},"39":{"nom":"MERLO SEBASTIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":299,"a_ccc":94,"a_pcc":31.4,"a_imp":8007588,"a_kr":269,"a_ot":2243,"a_apr":12.0,"a_pp":14.4,"m_ccc":229,"m_pcc":76.6,"m_imp":57954152,"m_kr":1939,"m_ot":2243,"m_apr":86.4},"41":{"nom":"CISTERNA DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":305,"a_ccc":68,"a_pcc":22.3,"a_imp":5001349,"a_kr":145,"a_ot":1166,"a_apr":12.4,"a_pp":14.9,"m_ccc":209,"m_pcc":68.5,"m_imp":35127177,"m_kr":1015,"m_ot":1166,"m_apr":87.0},"42":{"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULCI","cart":282,"a_ccc":73,"a_pcc":25.9,"a_imp":6649488,"a_kr":188,"a_ot":1375,"a_apr":13.7,"a_pp":16.4,"m_ccc":180,"m_pcc":63.8,"m_imp":44958496,"m_kr":1423,"m_ot":1375,"m_apr":103.5},"43":{"nom":"RUEDA CUJAR","mesa":500,"sup":"MARIANO TRIULCI","cart":280,"a_ccc":73,"a_pcc":26.1,"a_imp":5954060,"a_kr":159,"a_ot":1328,"a_apr":12.0,"a_pp":14.4,"m_ccc":228,"m_pcc":81.4,"m_imp":37964662,"m_kr":1119,"m_ot":1328,"m_apr":84.3},"44":{"nom":"BERNAHOLA AGU.","mesa":500,"sup":"MARIANO TRIULCI","cart":315,"a_ccc":71,"a_pcc":22.5,"a_imp":6402422,"a_kr":209,"a_ot":1222,"a_apr":17.1,"a_pp":20.5,"m_ccc":172,"m_pcc":54.6,"m_imp":39147641,"m_kr":1191,"m_ot":1222,"m_apr":97.5},"45":{"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","cart":337,"a_ccc":76,"a_pcc":22.6,"a_imp":7394685,"a_kr":206,"a_ot":1153,"a_apr":17.9,"a_pp":21.4,"m_ccc":209,"m_pcc":62.0,"m_imp":43957151,"m_kr":1321,"m_ot":1153,"m_apr":114.6},"46":{"nom":"OCHOA ROXANA","mesa":500,"sup":"MARIANO TRIULCI","cart":256,"a_ccc":77,"a_pcc":30.1,"a_imp":5691485,"a_kr":163,"a_ot":1200,"a_apr":13.6,"a_pp":16.3,"m_ccc":186,"m_pcc":72.7,"m_imp":40247032,"m_kr":1243,"m_ot":1200,"m_apr":103.6},"47":{"nom":"CACERES YANINA","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":61,"a_pcc":20.5,"a_imp":4882574,"a_kr":145,"a_ot":1199,"a_apr":12.1,"a_pp":14.5,"m_ccc":190,"m_pcc":64.0,"m_imp":36458445,"m_kr":1039,"m_ot":1199,"m_apr":86.7},"48":{"nom":"SALDE MARCELA","mesa":500,"sup":"MARIANO TRIULCI","cart":313,"a_ccc":80,"a_pcc":25.6,"a_imp":6452350,"a_kr":175,"a_ot":2632,"a_apr":6.6,"a_pp":8.0,"m_ccc":184,"m_pcc":58.8,"m_imp":79430337,"m_kr":2503,"m_ot":2632,"m_apr":95.1},"49":{"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","cart":317,"a_ccc":57,"a_pcc":18.0,"a_imp":4486694,"a_kr":129,"a_ot":1166,"a_apr":11.1,"a_pp":13.3,"m_ccc":186,"m_pcc":58.7,"m_imp":31526583,"m_kr":914,"m_ot":1166,"m_apr":78.4},"51":{"nom":"GONZALEZ CAND.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":245,"a_ccc":109,"a_pcc":44.5,"a_imp":11693917,"a_kr":277,"a_ot":1846,"a_apr":15.0,"a_pp":18.0,"m_ccc":189,"m_pcc":77.1,"m_imp":58822255,"m_kr":1541,"m_ot":1846,"m_apr":83.5},"52":{"nom":"MARTINEZ DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":332,"a_ccc":82,"a_pcc":24.7,"a_imp":7372625,"a_kr":202,"a_ot":1438,"a_apr":14.0,"a_pp":16.9,"m_ccc":235,"m_pcc":70.8,"m_imp":44973200,"m_kr":1331,"m_ot":1438,"m_apr":92.6},"53":{"nom":"CARRIZO EZE.","mesa":300,"sup":"NATALIA PEREZ","cart":303,"a_ccc":84,"a_pcc":27.7,"a_imp":6887270,"a_kr":170,"a_ot":1451,"a_apr":11.7,"a_pp":14.1,"m_ccc":225,"m_pcc":74.3,"m_imp":42747885,"m_kr":1143,"m_ot":1451,"m_apr":78.8},"54":{"nom":"MORENO JOHAN","mesa":500,"sup":"MARIANO TRIULCI","cart":360,"a_ccc":70,"a_pcc":19.4,"a_imp":5379696,"a_kr":162,"a_ot":1351,"a_apr":12.0,"a_pp":14.4,"m_ccc":213,"m_pcc":59.2,"m_imp":40725802,"m_kr":1249,"m_ot":1351,"m_apr":92.5},"55":{"nom":"PULIDO EFRAIM","mesa":300,"sup":"NATALIA PEREZ","cart":315,"a_ccc":70,"a_pcc":22.2,"a_imp":6652244,"a_kr":202,"a_ot":1177,"a_apr":17.2,"a_pp":20.6,"m_ccc":175,"m_pcc":55.6,"m_imp":41730782,"m_kr":1293,"m_ot":1177,"m_apr":109.9},"56":{"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","cart":292,"a_ccc":51,"a_pcc":17.5,"a_imp":4896551,"a_kr":154,"a_ot":2096,"a_apr":7.3,"a_pp":8.8,"m_ccc":192,"m_pcc":65.8,"m_imp":51734056,"m_kr":1772,"m_ot":2096,"m_apr":84.5},"57":{"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","cart":274,"a_ccc":68,"a_pcc":24.8,"a_imp":6204887,"a_kr":177,"a_ot":1153,"a_apr":15.4,"a_pp":18.4,"m_ccc":197,"m_pcc":71.9,"m_imp":36446145,"m_kr":1052,"m_ot":1153,"m_apr":91.2},"58":{"nom":"GONZALEZ MARC.","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":76,"a_pcc":25.6,"a_imp":8588524,"a_kr":258,"a_ot":1446,"a_apr":17.8,"a_pp":21.4,"m_ccc":216,"m_pcc":72.7,"m_imp":50471152,"m_kr":1467,"m_ot":1446,"m_apr":101.5},"59":{"nom":"AVENDA\u00d1O SERGIO","mesa":300,"sup":"NATALIA PEREZ","cart":298,"a_ccc":48,"a_pcc":16.1,"a_imp":5960907,"a_kr":178,"a_ot":1600,"a_apr":11.1,"a_pp":13.4,"m_ccc":176,"m_pcc":59.1,"m_imp":36662513,"m_kr":1178,"m_ot":1600,"m_apr":73.6},"61":{"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","cart":558,"a_ccc":86,"a_pcc":15.4,"a_imp":6502017,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":252,"m_pcc":45.2,"m_imp":44237676,"m_kr":1,"m_ot":0,"m_apr":null},"62":{"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","cart":525,"a_ccc":26,"a_pcc":5.0,"a_imp":1433027,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":190,"m_pcc":36.2,"m_imp":23370801,"m_kr":0,"m_ot":0,"m_apr":null},"63":{"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","cart":527,"a_ccc":89,"a_pcc":16.9,"a_imp":8097355,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":241,"m_pcc":45.7,"m_imp":38010349,"m_kr":0,"m_ot":0,"m_apr":null},"64":{"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","cart":370,"a_ccc":77,"a_pcc":20.8,"a_imp":15361904,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":182,"m_pcc":49.2,"m_imp":62716339,"m_kr":0,"m_ot":0,"m_apr":null},"65":{"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","cart":593,"a_ccc":79,"a_pcc":13.3,"a_imp":15357055,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":278,"m_pcc":46.9,"m_imp":70286390,"m_kr":3,"m_ot":0,"m_apr":null}};
+
+// ── FILTRO POR DÍA DE VISITA ─────────────────────────────
+var DIA_ACTIVO = null;
+var DIAS_ORD = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var DIA_LABELS = {Lunes:'Lun',Martes:'Mar',Miercoles:'Mié',Jueves:'Jue',Viernes:'Vie',Sabado:'Sáb'};
+
+function initDias(vendCod) {
+  var diasVend = {};
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var d=e[1]; if(d.v!==vendCod) return;
+    (d.ds||[]).forEach(function(ds){ diasVend[ds[0]]=(diasVend[ds[0]]||0)+1; });
+  });
+  var hoy=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][new Date().getDay()];
+  var btns=document.getElementById('dias-btns');
+  if(!btns) return;
+  btns.innerHTML='';
+  DIAS_ORD.forEach(function(dia){
+    if(!diasVend[dia]) return;
+    var btn=document.createElement('button');
+    btn.textContent=DIA_LABELS[dia]+' ('+diasVend[dia]+')';
+    btn.style.cssText='padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--brd2);'+(dia===hoy?'background:var(--bl-d);color:var(--bl-l);border-color:var(--bl)':'background:var(--bg3);color:var(--tx2)');
+    btn.onclick=function(){ filtrarDia(dia,vendCod); };
+    btns.appendChild(btn);
+  });
+  if(diasVend[hoy]) filtrarDia(hoy,vendCod);
+}
+
+function filtrarDia(dia,vendCod) {
+  DIA_ACTIVO=dia;
+  var btns=document.getElementById('dias-btns');
+  if(btns) Array.from(btns.children).forEach(function(b){
+    var on=b.textContent.startsWith(DIA_LABELS[dia]);
+    b.style.background=on?'var(--bl-d)':'var(--bg3)';
+    b.style.color=on?'var(--bl-l)':'var(--tx2)';
+    b.style.borderColor=on?'var(--bl)':'var(--brd2)';
+  });
+  var lista=[];
+  Object.entries(GUIA_DATA).forEach(function(e){
+    var cid=e[0],d=e[1]; if(d.v!==vendCod) return;
+    if((d.ds||[]).some(function(ds){return ds[0]===dia;})) lista.push({cid:cid,nom:d.n,dir:d.d||''});
+  });
+  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
+  var el=document.getElementById('clientes-dia-list');
+  if(!el) return;
+  el.innerHTML=(lista.length?
+    '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' clientes · '+dia+'</div>'+
+    lista.map(function(c){
+      return '<div onclick="verFicha(''+c.cid+'')" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
+        '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
+        '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+'  '+c.dir+'</div></div>'+
+        '<div style="color:var(--tx3);font-size:18px">›</div></div>';
+    }).join(''):
+    '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin clientes para '+dia+'</div>');
+}
+
+
+function buscarEnDash(q) {
+  var resEl = document.getElementById('dash-buscar-res');
+  var diasEl = document.getElementById('clientes-dia-list');
+  var diasBtns = document.getElementById('dias-btns');
+  if (!q || q.length < 2) {
+    resEl.style.display = 'none';
+    if (diasEl) diasEl.style.display = 'block';
+    if (diasBtns) diasBtns.style.display = 'flex';
+    return;
+  }
+  if (diasEl) diasEl.style.display = 'none';
+  if (diasBtns) diasBtns.style.display = 'none';
+  resEl.style.display = 'block';
+
+  var ql = q.toLowerCase();
+  var vendCod = VENDEDOR;
+  var lista = [];
+  Object.entries(GUIA_DATA).forEach(function(e) {
+    var cid=e[0], d=e[1];
+    if (d.v !== vendCod) return;
+    if (cid.includes(ql) || d.n.toLowerCase().includes(ql) || (d.d||'').toLowerCase().includes(ql)) {
+      lista.push({cid:cid, nom:d.n, dir:d.d||''});
+    }
+  });
+  lista.sort(function(a,b){ return a.nom.localeCompare(b.nom); });
+
+  if (!lista.length) {
+    resEl.innerHTML = '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin resultados para "'+q+'"</div>';
+    return;
+  }
+  resEl.innerHTML = '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' resultados</div>' +
+    lista.map(function(c) {
+      return '<div onclick="verFicha(''+c.cid+'')" style="background:var(--bg2);border:1px solid var(--brd);'+
+        'border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;'+
+        'display:flex;justify-content:space-between;align-items:center">'+
+        '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
+        '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+'  '+c.dir+'</div></div>'+
+        '<div style="color:var(--tx3);font-size:18px">›</div></div>';
+    }).join('');
+}
+
 </script>
 </body>
 </html>
