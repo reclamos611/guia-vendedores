@@ -297,6 +297,7 @@ def procesar(path, excluir_creativa=True):
 def construir(datos, mes_num, anio, etiq):
     vend_acc=datos["vend_acc"]; mk_cob_vend=datos["mk_cob_vend"]
     dias_trab=datos["dias_trab"]; dias_hab=DIAS_HAB_MES.get(mes_num,22)
+    imp_total_todos=datos.get("imp_total_todos",0)
     obj_kg=OBJ_KG_MESES.get(mes_num,{}); obj_ccc=OBJ_CCC_MESES.get(mes_num,{})
     perf=[]
     for v in sorted(SUP_MAP.keys()):
