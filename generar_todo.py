@@ -354,7 +354,7 @@ def construir(datos, mes_num, anio, etiq):
         "kpis_global":{"cartera":tot_cart,"ccc":tot_ccc,"ccc_pep":tot_ccc,
         "cobertura_cartera":round(tot_ccc/tot_cart*100,1) if tot_cart else 0,
         "toneladas":round(tot_kr/1000,2),"importe":tot_pv,"unidades":0,
-        "ticket":round(tot_pv/tot_ccc) if tot_ccc else 0,"mix_imp":0},
+        "ticket":round(tot_pv/tot_ccc) if tot_ccc else 0,"mix_imp":round(tot_pv/imp_total_todos*100,1) if imp_total_todos else 0,"mix":round(tot_pv/imp_total_todos*100,1) if imp_total_todos else 0},
         "cobertura_marcas":{mk:{"clientes":cob_g[mk],"pct":round(cob_g[mk]/tot_cart*100,1) if tot_cart else 0,
             "objetivo":TARGETS.get(mk,0)} for mk in MARCAS},
         "por_mesa":por_mesa,"mesas_resumen":mesas_resumen,"dias_hab":dias_hab,"dias_trab":dias_trab}
