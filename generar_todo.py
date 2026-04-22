@@ -495,9 +495,10 @@ df_crea_src = pd.read_excel(ventas[key_act], usecols=["Cliente","Fecha","Cantida
     "proveedor","articulo","cod_ven","tipo_venta"])
 df_crea_src["Fecha"] = pd.to_datetime(df_crea_src["Fecha"], errors="coerce")
 hoy_crea = pd.Timestamp(datetime.now().date())
+# Para CREA_DATA: incluir TODA la venta (real + creativa) para no repetir
+# Si ya se hizo creativa de una marca, el neto ya >= 3 y no aparece en la lista
 df_crea_src = df_crea_src[(df_crea_src["Fecha"]<=hoy_crea) &
-    df_crea_src["proveedor"].str.contains("Pepsico",case=False,na=False) &
-    (df_crea_src["camion"]<700)].copy()
+    df_crea_src["proveedor"].str.contains("Pepsico",case=False,na=False)].copy()
 
 def get_marca_crea(art):
     a = str(art).lower()
@@ -553,6 +554,25 @@ if os.path.exists(guia_tmpl):
     with open(guia_tmpl,"r",encoding="utf-8") as f: html=f.read()
     html=html.replace("// __GUIA_DATA__",guia_js).replace("// __ABR_DATA__",abr_js)
     html=html.replace("// __OTROS_PROV__",otros_js).replace("// __VEND_STATS__",stats_js)
+    # Actualizar SUP_MAP_BASE y MESA_SUPS desde estructura_comercial
+    sup_map_js = "const SUP_MAP_BASE = {\n"
+    for v, mesa in sorted(SUP_MAP.items()):
+        sup = SUP_NOM.get(mesa,"")
+        sup_map_js += f"  {v}:{{sup:'{sup}',mesa:{mesa}}},"
+        if v % 10 == 9 or v == sorted(SUP_MAP.keys())[-1]:
+            sup_map_js += "\n"
+    sup_map_js += "};"
+    mesa_sups_js = "const MESA_SUPS = {" + ",".join(
+        f"{m}:'{SUP_NOM.get(m,'')}'" for m in sorted(set(SUP_MAP.values()))) + "};"
+    tab_300 = next((f"Mesa 300 — {n.title()}" for m,n in SUP_NOM.items() if m==300), "Mesa 300")
+    tab_400 = next((f"Mesa 400 — {n.title()}" for m,n in SUP_NOM.items() if m==400), "Mesa 400")
+    tab_500 = next((f"Mesa 500 — {n.title()}" for m,n in SUP_NOM.items() if m==500), "Mesa 500")
+    import re as _re2
+    html = _re2.sub(r"const SUP_MAP_BASE = \{[^}]+(?:\{[^}]*\}[^}]*)*\};", sup_map_js, html)
+    html = _re2.sub(r"const MESA_SUPS = \{[^}]+\};", mesa_sups_js, html)
+    html = html.replace("Mesa 300 — Natalia Perez", tab_300)
+    html = html.replace("Mesa 400 — Claudio Alvarado", tab_400)
+    html = html.replace("Mesa 500 — Sebastian Sanchez", tab_500)
     html=html.replace("__FECHA_GENERACION__",fecha)
     # Timestamp único para invalidar cache del browser
     import hashlib

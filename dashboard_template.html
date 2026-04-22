@@ -206,8 +206,8 @@ tr:hover td{background:var(--bg3)}
       Configuración
     </div>
     <div class="nav-item" onclick="navTo('gerencial',this)" id="nav-gerencial"
-         style="opacity:0.15;font-size:9px;color:var(--tx3)" 
-         onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='0.15'">
+         style="opacity:0.2;font-size:10px" 
+         onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.2'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
       Gerencial
     </div>
@@ -278,7 +278,7 @@ tr:hover td{background:var(--bg3)}
       <div class="tabs" id="mesa-tabs">
         <button class="tab on" onclick="setMesaTab(300,this)">Mesa 300 — Natalia Perez</button>
         <button class="tab" onclick="setMesaTab(400,this)">Mesa 400 — Claudio Alvarado</button>
-        <button class="tab" onclick="setMesaTab(500,this)">Mesa 500 — Mariano Triulci</button>
+        <button class="tab" onclick="setMesaTab(500,this)">Mesa 500 — Sebastian Sanchez</button>
         <button class="tab" onclick="setMesaTab(600,this)">Mesa 600 — Natalia Perez</button>
       </div>
       <div id="mesa-content"></div>
@@ -474,7 +474,7 @@ tr:hover td{background:var(--bg3)}
           <option value="all">Todas las mesas</option>
           <option value="300">Mesa 300 — Natalia</option>
           <option value="400">Mesa 400 — Claudio</option>
-          <option value="500">Mesa 500 — Mariano</option>
+          <option value="500">Mesa 500 — Sebastian</option>
         </select>
       </div>
       <div>
@@ -536,6 +536,7 @@ tr:hover td{background:var(--bg3)}
 
 
 
+
 function openUpload(){} // eliminado
 
 
@@ -571,7 +572,7 @@ let CARTERA_VEND = (typeof CARTERA_VEND_BASE !== "undefined") ? {...CARTERA_VEND
 const CAT_MESA_BASE = {"300": {"Bronze": 14847930, "Gold": 160603748, "Platinum": 67016771, "Silver": 51682155}, "400": {"Bronze": 15641043, "Gold": 264624375, "Platinum": 92324313, "Silver": 95828296}, "500": {"Bronze": 11729963, "Gold": 161304543, "Platinum": 82287967, "Silver": 47758274}};
 
 // VENDEDORES PRE-CALCULADOS CON CARTERA
-const VEND_MARZO = [{"cod": 48, "imp": 69458820, "ton": 2.569, "uds": 39525, "cli": 182, "cartera": 308, "pct_ccc": 59.1, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 381642}, {"cod": 31, "imp": 68874783, "ton": 2.508, "uds": 36771, "cli": 218, "cartera": 238, "pct_ccc": 91.6, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 315939}, {"cod": 36, "imp": 52960371, "ton": 2.202, "uds": 26028, "cli": 195, "cartera": 228, "pct_ccc": 85.5, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 271592}, {"cod": 39, "imp": 50643669, "ton": 1.986, "uds": 22606, "cli": 228, "cartera": 261, "pct_ccc": 87.4, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 222121}, {"cod": 38, "imp": 46681715, "ton": 1.977, "uds": 23126, "cli": 210, "cartera": 287, "pct_ccc": 73.2, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 222294}, {"cod": 33, "imp": 45797616, "ton": 1.89, "uds": 22158, "cli": 161, "cartera": 239, "pct_ccc": 67.4, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 284457}, {"cod": 51, "imp": 44993565, "ton": 1.572, "uds": 21781, "cli": 188, "cartera": 195, "pct_ccc": 96.4, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 239327}, {"cod": 37, "imp": 42890204, "ton": 1.569, "uds": 20539, "cli": 194, "cartera": 208, "pct_ccc": 93.3, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 221084}, {"cod": 56, "imp": 42323592, "ton": 1.887, "uds": 22808, "cli": 188, "cartera": 267, "pct_ccc": 70.4, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 225125}, {"cod": 35, "imp": 41819167, "ton": 1.766, "uds": 20498, "cli": 226, "cartera": 261, "pct_ccc": 86.6, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 185041}, {"cod": 58, "imp": 41385523, "ton": 1.554, "uds": 21413, "cli": 214, "cartera": 259, "pct_ccc": 82.6, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 193390}, {"cod": 32, "imp": 38951861, "ton": 1.468, "uds": 18529, "cli": 207, "cartera": 223, "pct_ccc": 92.8, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 188173}, {"cod": 42, "imp": 37695131, "ton": 1.485, "uds": 21307, "cli": 177, "cartera": 277, "pct_ccc": 63.9, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 212967}, {"cod": 34, "imp": 37551626, "ton": 1.453, "uds": 17902, "cli": 174, "cartera": 224, "pct_ccc": 77.7, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 215814}, {"cod": 52, "imp": 36419467, "ton": 1.396, "uds": 17756, "cli": 229, "cartera": 313, "pct_ccc": 73.2, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 159037}, {"cod": 55, "imp": 35383403, "ton": 1.35, "uds": 17489, "cli": 170, "cartera": 282, "pct_ccc": 60.3, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 208138}, {"cod": 45, "imp": 35181045, "ton": 1.384, "uds": 17975, "cli": 203, "cartera": 328, "pct_ccc": 61.9, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 173306}, {"cod": 54, "imp": 33912779, "ton": 1.313, "uds": 17409, "cli": 213, "cartera": 305, "pct_ccc": 69.8, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 159215}, {"cod": 53, "imp": 32329094, "ton": 1.184, "uds": 16285, "cli": 217, "cartera": 292, "pct_ccc": 74.3, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 148982}, {"cod": 46, "imp": 32152288, "ton": 1.308, "uds": 16311, "cli": 184, "cartera": 251, "pct_ccc": 73.3, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 174741}, {"cod": 44, "imp": 32090116, "ton": 1.253, "uds": 16109, "cli": 168, "cartera": 311, "pct_ccc": 54.0, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 191013}, {"cod": 59, "imp": 30476235, "ton": 1.256, "uds": 14234, "cli": 172, "cartera": 269, "pct_ccc": 63.9, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 177187}, {"cod": 43, "imp": 29829201, "ton": 1.183, "uds": 14771, "cli": 227, "cartera": 274, "pct_ccc": 82.8, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 131406}, {"cod": 57, "imp": 29148239, "ton": 1.11, "uds": 14079, "cli": 196, "cartera": 240, "pct_ccc": 81.7, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 148716}, {"cod": 41, "imp": 28732668, "ton": 1.045, "uds": 14404, "cli": 212, "cartera": 300, "pct_ccc": 70.7, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 135531}, {"cod": 47, "imp": 27688745, "ton": 1.111, "uds": 14884, "cli": 192, "cartera": 279, "pct_ccc": 68.8, "mesa": 500, "sup": "MARIANO TRIULCI", "ticket": 144212}, {"cod": 49, "imp": 25309881, "ton": 0.96, "uds": 13151, "cli": 182, "cartera": 308, "pct_ccc": 59.1, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 139065}];
+const VEND_MARZO = [{"cod": 48, "imp": 69458820, "ton": 2.569, "uds": 39525, "cli": 182, "cartera": 308, "pct_ccc": 59.1, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 381642}, {"cod": 31, "imp": 68874783, "ton": 2.508, "uds": 36771, "cli": 218, "cartera": 238, "pct_ccc": 91.6, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 315939}, {"cod": 36, "imp": 52960371, "ton": 2.202, "uds": 26028, "cli": 195, "cartera": 228, "pct_ccc": 85.5, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 271592}, {"cod": 39, "imp": 50643669, "ton": 1.986, "uds": 22606, "cli": 228, "cartera": 261, "pct_ccc": 87.4, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 222121}, {"cod": 38, "imp": 46681715, "ton": 1.977, "uds": 23126, "cli": 210, "cartera": 287, "pct_ccc": 73.2, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 222294}, {"cod": 33, "imp": 45797616, "ton": 1.89, "uds": 22158, "cli": 161, "cartera": 239, "pct_ccc": 67.4, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 284457}, {"cod": 51, "imp": 44993565, "ton": 1.572, "uds": 21781, "cli": 188, "cartera": 195, "pct_ccc": 96.4, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 239327}, {"cod": 37, "imp": 42890204, "ton": 1.569, "uds": 20539, "cli": 194, "cartera": 208, "pct_ccc": 93.3, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 221084}, {"cod": 56, "imp": 42323592, "ton": 1.887, "uds": 22808, "cli": 188, "cartera": 267, "pct_ccc": 70.4, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 225125}, {"cod": 35, "imp": 41819167, "ton": 1.766, "uds": 20498, "cli": 226, "cartera": 261, "pct_ccc": 86.6, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 185041}, {"cod": 58, "imp": 41385523, "ton": 1.554, "uds": 21413, "cli": 214, "cartera": 259, "pct_ccc": 82.6, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 193390}, {"cod": 32, "imp": 38951861, "ton": 1.468, "uds": 18529, "cli": 207, "cartera": 223, "pct_ccc": 92.8, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 188173}, {"cod": 42, "imp": 37695131, "ton": 1.485, "uds": 21307, "cli": 177, "cartera": 277, "pct_ccc": 63.9, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 212967}, {"cod": 34, "imp": 37551626, "ton": 1.453, "uds": 17902, "cli": 174, "cartera": 224, "pct_ccc": 77.7, "mesa": 400, "sup": "CLAUDIO ALVARADO", "ticket": 215814}, {"cod": 52, "imp": 36419467, "ton": 1.396, "uds": 17756, "cli": 229, "cartera": 313, "pct_ccc": 73.2, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 159037}, {"cod": 55, "imp": 35383403, "ton": 1.35, "uds": 17489, "cli": 170, "cartera": 282, "pct_ccc": 60.3, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 208138}, {"cod": 45, "imp": 35181045, "ton": 1.384, "uds": 17975, "cli": 203, "cartera": 328, "pct_ccc": 61.9, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 173306}, {"cod": 54, "imp": 33912779, "ton": 1.313, "uds": 17409, "cli": 213, "cartera": 305, "pct_ccc": 69.8, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 159215}, {"cod": 53, "imp": 32329094, "ton": 1.184, "uds": 16285, "cli": 217, "cartera": 292, "pct_ccc": 74.3, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 148982}, {"cod": 46, "imp": 32152288, "ton": 1.308, "uds": 16311, "cli": 184, "cartera": 251, "pct_ccc": 73.3, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 174741}, {"cod": 44, "imp": 32090116, "ton": 1.253, "uds": 16109, "cli": 168, "cartera": 311, "pct_ccc": 54.0, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 191013}, {"cod": 59, "imp": 30476235, "ton": 1.256, "uds": 14234, "cli": 172, "cartera": 269, "pct_ccc": 63.9, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 177187}, {"cod": 43, "imp": 29829201, "ton": 1.183, "uds": 14771, "cli": 227, "cartera": 274, "pct_ccc": 82.8, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 131406}, {"cod": 57, "imp": 29148239, "ton": 1.11, "uds": 14079, "cli": 196, "cartera": 240, "pct_ccc": 81.7, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 148716}, {"cod": 41, "imp": 28732668, "ton": 1.045, "uds": 14404, "cli": 212, "cartera": 300, "pct_ccc": 70.7, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 135531}, {"cod": 47, "imp": 27688745, "ton": 1.111, "uds": 14884, "cli": 192, "cartera": 279, "pct_ccc": 68.8, "mesa": 500, "sup": "SEBASTIAN SANCHEZ", "ticket": 144212}, {"cod": 49, "imp": 25309881, "ton": 0.96, "uds": 13151, "cli": 182, "cartera": 308, "pct_ccc": 59.1, "mesa": 300, "sup": "NATALIA PEREZ", "ticket": 139065}];
 
 const SUP_MAP_BASE = {
   31:{sup:'CLAUDIO ALVARADO',mesa:400},32:{sup:'CLAUDIO ALVARADO',mesa:400},
@@ -584,10 +585,10 @@ const SUP_MAP_BASE = {
   53:{sup:'NATALIA PEREZ',mesa:300},55:{sup:'NATALIA PEREZ',mesa:300},
   56:{sup:'NATALIA PEREZ',mesa:300},57:{sup:'NATALIA PEREZ',mesa:300},
   59:{sup:'NATALIA PEREZ',mesa:300},
-  42:{sup:'MARIANO TRIULCI',mesa:500},43:{sup:'MARIANO TRIULCI',mesa:500},
-  44:{sup:'MARIANO TRIULCI',mesa:500},46:{sup:'MARIANO TRIULCI',mesa:500},
-  47:{sup:'MARIANO TRIULCI',mesa:500},48:{sup:'MARIANO TRIULCI',mesa:500},
-  54:{sup:'MARIANO TRIULCI',mesa:500},58:{sup:'MARIANO TRIULCI',mesa:500},
+  42:{sup:'SEBASTIAN SANCHEZ',mesa:500},43:{sup:'SEBASTIAN SANCHEZ',mesa:500},
+  44:{sup:'SEBASTIAN SANCHEZ',mesa:500},46:{sup:'SEBASTIAN SANCHEZ',mesa:500},
+  47:{sup:'SEBASTIAN SANCHEZ',mesa:500},48:{sup:'SEBASTIAN SANCHEZ',mesa:500},
+  54:{sup:'SEBASTIAN SANCHEZ',mesa:500},58:{sup:'SEBASTIAN SANCHEZ',mesa:500},
   61:{sup:'NATALIA PEREZ',mesa:600},62:{sup:'NATALIA PEREZ',mesa:600},
   63:{sup:'NATALIA PEREZ',mesa:600},64:{sup:'NATALIA PEREZ',mesa:600},
   65:{sup:'NATALIA PEREZ',mesa:600},
@@ -602,7 +603,7 @@ const MARCAS_KW = {
 const MCOLORS = {Lays:'#4d8ef0',Doritos:'#f0a500',Cheetos:'#f04d4d','3D':'#a07cf0',
   Pep:'#2ecc8a',Pehuamar:'#f07c4d',Twistos:'#4dcef0',Tostitos:'#888780',Quaker:'#c0903a'};
 const MESA_COLORS = {300:'#4d8ef0',400:'#2ecc8a',500:'#f0a500'};
-const MESA_SUPS = {300:'NATALIA PEREZ',400:'CLAUDIO ALVARADO',500:'MARIANO TRIULCI',600:'NATALIA PEREZ'};
+const MESA_SUPS = {300:'NATALIA PEREZ',400:'CLAUDIO ALVARADO',500:'SEBASTIAN SANCHEZ',600:'NATALIA PEREZ'};
 const DIA_MAP = {1:'Lunes',2:'Martes',3:'Miercoles',4:'Jueves',5:'Viernes',6:'Sabado',7:'Domingo'};
 
 // ===========================================================================
@@ -911,6 +912,7 @@ function getData() { return PERIODO_ACTIVO ? DB[PERIODO_ACTIVO] : null; }
 // NAVEGACIN
 // ===========================================================================
 const SEC_TITLES = {
+  gerencial:'Análisis Gerencial',
   config:'Configuracin',
   objetivos:'Objetivos por vendedor',
   rechazo:'Devolucin y cambio por vendedor',
@@ -933,7 +935,7 @@ function navTo(id, el) {
 function renderSection(id) {
   if (id === 'rechazo') { setTimeout(renderRechazo, 50); return; }
   if (id === 'config') { renderConfig(); return; }
-  if (id === 'gerencial') { if(!GER_AUTH){document.getElementById('ger-pwd')?.focus();} else renderGerencial(); return; }
+  if (id === 'gerencial') { if(!GER_AUTH){ setTimeout(()=>document.getElementById('ger-pwd')?.focus(),100); } else { renderGerencial(); } return; }
 
   const d = getData();
   if (!d) return;
@@ -2419,6 +2421,7 @@ function renderGerencial() {
     '</tr>';
   }).join('');
 }
+
 
 </script>
 </html>
