@@ -205,6 +205,12 @@ tr:hover td{background:var(--bg3)}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
       Configuración
     </div>
+    <div class="nav-item" onclick="navTo('gerencial',this)" id="nav-gerencial"
+         style="opacity:0.15;font-size:9px;color:var(--tx3)" 
+         onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='0.15'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Gerencial
+    </div>
     <div class="nav-sec">Gestión</div>
     
     </div>
@@ -437,6 +443,83 @@ tr:hover td{background:var(--bg3)}
     </div>
 
     <!-- HISTORIAL -->
+<div id="sec-gerencial" class="sec">
+  <!-- Modal de contraseña -->
+  <div id="ger-lock" style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+    height:60vh;gap:16px">
+    <div style="font-size:32px">🔒</div>
+    <div style="font-size:14px;color:var(--tx2);font-weight:600">Sección restringida</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="password" id="ger-pwd" placeholder="Contraseña"
+        onkeydown="if(event.key==='Enter')checkGerPass()"
+        style="background:var(--bg3);border:1px solid var(--bd1);color:var(--tx1);
+          border-radius:8px;padding:8px 14px;font-size:14px;outline:none;width:160px">
+      <button onclick="checkGerPass()"
+        style="background:var(--bl);color:white;border:none;border-radius:8px;
+          padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600">
+        Entrar
+      </button>
+    </div>
+    <div id="ger-err" style="color:var(--rd-l);font-size:12px;display:none">Contraseña incorrecta</div>
+  </div>
+
+  <!-- Contenido (oculto hasta autenticar) -->
+  <div id="ger-content" style="display:none">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:4px">Filtrar por mesa</div>
+        <select id="ger-mesa" onchange="renderGerencial()"
+          style="background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
+            border-radius:6px;padding:6px 10px;font-size:12px">
+          <option value="all">Todas las mesas</option>
+          <option value="300">Mesa 300 — Natalia</option>
+          <option value="400">Mesa 400 — Claudio</option>
+          <option value="500">Mesa 500 — Mariano</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:4px">Filtrar por marca</div>
+        <select id="ger-marca" onchange="renderGerencial()"
+          style="background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
+            border-radius:6px;padding:6px 10px;font-size:12px">
+          <option value="all">Todas las marcas</option>
+          <option value="Lays">Lays</option>
+          <option value="Doritos">Doritos</option>
+          <option value="Cheetos">Cheetos</option>
+          <option value="3D">3D</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:4px">Filtrar por vendedor</div>
+        <select id="ger-vend" onchange="renderGerencial()"
+          style="background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
+            border-radius:6px;padding:6px 10px;font-size:12px">
+          <option value="all">Todos los vendedores</option>
+        </select>
+      </div>
+      <div style="margin-left:auto">
+        <div id="ger-resumen" style="font-size:12px;color:var(--tx3)"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table style="min-width:700px">
+          <thead><tr>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>Mesa</th>
+            <th>Marca</th>
+            <th>Artículo sugerido</th>
+            <th>Cód. artículo</th>
+            <th class="num">Uds actuales</th>
+            <th class="num">Cantidad creativa</th>
+          </tr></thead>
+          <tbody id="ger-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 // __PERF_DATA__
 </script>
@@ -447,6 +530,7 @@ tr:hover td{background:var(--bg3)}
 // __CARTERA_DATA__
 </script>
 <script>
+
 
 
 
@@ -849,6 +933,7 @@ function navTo(id, el) {
 function renderSection(id) {
   if (id === 'rechazo') { setTimeout(renderRechazo, 50); return; }
   if (id === 'config') { renderConfig(); return; }
+  if (id === 'gerencial') { if(!GER_AUTH){document.getElementById('ger-pwd')?.focus();} else renderGerencial(); return; }
 
   const d = getData();
   if (!d) return;
@@ -2255,6 +2340,85 @@ function renderMesa600() {
 
 
 
+
+
+// ============================================================
+// SECCIÓN GERENCIAL
+// ============================================================
+var GER_AUTH = false;
+
+function checkGerPass() {
+  const pwd = document.getElementById('ger-pwd')?.value || '';
+  if (pwd === '611611') {
+    GER_AUTH = true;
+    document.getElementById('ger-lock').style.display = 'none';
+    document.getElementById('ger-content').style.display = 'block';
+    document.getElementById('nav-gerencial').style.opacity = '1';
+    renderGerencial();
+  } else {
+    document.getElementById('ger-err').style.display = 'block';
+    document.getElementById('ger-pwd').value = '';
+  }
+}
+
+function renderGerencial() {
+  if (!GER_AUTH) return;
+  if (typeof CREA_DATA === 'undefined' || !CREA_DATA.length) {
+    document.getElementById('ger-tbody').innerHTML =
+      '<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">Sin datos de venta creativa</td></tr>';
+    return;
+  }
+
+  const mesaF = document.getElementById('ger-mesa')?.value || 'all';
+  const marcaF = document.getElementById('ger-marca')?.value || 'all';
+  const vendF = document.getElementById('ger-vend')?.value || 'all';
+
+  // Poblar select de vendedores
+  const vendEl = document.getElementById('ger-vend');
+  if (vendEl && vendEl.options.length <= 1) {
+    const vends = [...new Set(CREA_DATA.map(r => r.vendedor))].sort((a,b)=>a-b);
+    vends.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v; opt.textContent = 'V' + v;
+      vendEl.appendChild(opt);
+    });
+  }
+
+  let data = CREA_DATA;
+  if (mesaF !== 'all') data = data.filter(r => String(r.mesa) === mesaF);
+  if (marcaF !== 'all') data = data.filter(r => r.marca === marcaF);
+  if (vendF !== 'all') data = data.filter(r => String(r.vendedor) === vendF);
+
+  // Resumen
+  const clis = new Set(data.map(r => r.cliente)).size;
+  const uds = data.reduce((a,r) => a + r.cantidad_crea, 0);
+  document.getElementById('ger-resumen').textContent =
+    clis + ' clientes · ' + uds + ' unidades a crear';
+
+  const MARCA_COLOR = {Lays:'#4d8ef0',Doritos:'#f0a500',Cheetos:'#f04d4d','3D':'#2ecc8a'};
+
+  document.getElementById('ger-tbody').innerHTML = data.map(r => {
+    const col = MARCA_COLOR[r.marca] || '#888';
+    const barW = Math.round((r.neto_actual / 3) * 100);
+    return '<tr>' +
+      '<td style="font-weight:600">#' + r.cliente + '</td>' +
+      '<td>V' + r.vendedor + '</td>' +
+      '<td><span class="bdg" style="background:' + (MESA_COLORS[r.mesa]||'#888') + '22;color:' + (MESA_COLORS[r.mesa]||'#888') + '">' + r.mesa + '</span></td>' +
+      '<td><span style="color:' + col + ';font-weight:700">' + r.marca + '</span></td>' +
+      '<td style="font-size:11px;color:var(--tx2)">' + r.articulo + '</td>' +
+      '<td style="font-size:11px;color:var(--tx3)">' + r.codigo_art + '</td>' +
+      '<td class="num">' +
+        '<div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">' +
+          '<div style="width:40px;height:4px;background:var(--bg4);border-radius:2px">' +
+            '<div style="height:100%;width:' + Math.min(barW,100) + '%;background:' + col + ';border-radius:2px"></div>' +
+          '</div>' +
+          r.neto_actual + 'u' +
+        '</div>' +
+      '</td>' +
+      '<td class="num"><span style="color:var(--am-l);font-weight:700">+' + r.cantidad_crea + '</span></td>' +
+    '</tr>';
+  }).join('');
+}
 
 </script>
 </html>

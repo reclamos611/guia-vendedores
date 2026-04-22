@@ -150,6 +150,22 @@ if art_path:
 else:
     print("  AVISO: maestro de artículos no encontrado - usando extracción por nombre")
 
+# OBJETIVOS POR MARCA (cobertura targets)
+OBJ_MARCA = {}
+obj_marca_path = os.path.join(DATA_DIR, "objetivos_por_marca_pepsico.xlsx")
+if os.path.exists(obj_marca_path):
+    df_om = pd.read_excel(obj_marca_path)
+    for _, row in df_om.iterrows():
+        marca = str(row.get("Marca","")).strip()
+        if not marca: continue
+        OBJ_MARCA[marca] = {}
+        for col in df_om.columns:
+            if "Obj" in str(col) and pd.notna(row[col]):
+                OBJ_MARCA[marca][str(col)] = float(row[col])
+    print(f"  Objetivos por marca cargados: {list(OBJ_MARCA.keys())}")
+else:
+    print("  AVISO: objetivos_por_marca_pepsico.xlsx no encontrado")
+
 # OBJETIVOS
 print("Leyendo objetivos...")
 OBJ_KG_MESES = {}; OBJ_CCC_MESES = {}
@@ -464,6 +480,56 @@ for key in sorted(ventas.keys()):
     RECHAZO_DATA[etiq_r] = {"perf":perf_rec,"stats":{}}
     print(f"  {etiq_r}: {len(perf_rec)} vendedores")
 
+# CREA_DATA - clientes que necesitan venta creativa en Lays/Doritos/Cheetos/3D
+print("\nCalculando venta creativa necesaria...")
+MARCAS_CREA_KW = {"Lays":"lays","Doritos":"doritos","Cheetos":"cheetos","3D":"3d"}
+ART_SUGERIDO_CREA = {
+    "Lays":    {"art":"Lays Clasicas 40gx68x1",      "codigo":"300059432","precio":929.75},
+    "Doritos": {"art":"Doritos Queso 40gx70x1",       "codigo":"300059545","precio":929.75},
+    "Cheetos": {"art":"Cheetos Queso 43gx70x1",       "codigo":"300059433","precio":929.75},
+    "3D":      {"art":"3d Queso 43gx75x1","codigo":"300058395","precio":929.75},
+}
+# Usar datos del mes activo (sin creativa)
+key_act = sorted(ventas.keys())[-1]
+df_crea_src = pd.read_excel(ventas[key_act], usecols=["Cliente","Fecha","Cantidad","camion",
+    "proveedor","articulo","cod_ven","tipo_venta"])
+df_crea_src["Fecha"] = pd.to_datetime(df_crea_src["Fecha"], errors="coerce")
+hoy_crea = pd.Timestamp(datetime.now().date())
+df_crea_src = df_crea_src[(df_crea_src["Fecha"]<=hoy_crea) &
+    df_crea_src["proveedor"].str.contains("Pepsico",case=False,na=False) &
+    (df_crea_src["camion"]<700)].copy()
+
+def get_marca_crea(art):
+    a = str(art).lower()
+    for mk,kw in MARCAS_CREA_KW.items():
+        if kw in a: return mk
+    return None
+
+df_crea_src["_marca"] = df_crea_src["articulo"].apply(get_marca_crea)
+df_crea_src["_sign"] = df_crea_src["tipo_venta"].apply(
+    lambda t: 1 if t=="Venta" else -1 if t in ["Devolucion","Cambio"] else 0)
+df_crea_src["_neto"] = df_crea_src["Cantidad"]*df_crea_src["_sign"]
+
+# Vendedor principal por cliente
+vend_cli_crea = df_crea_src[df_crea_src["cod_ven"].apply(si).isin(SUP_MAP)].groupby(
+    "Cliente")["cod_ven"].agg(lambda x: si(x.mode()[0]))
+
+CREA_DATA = []
+for marca in MARCAS_CREA_KW:
+    dm = df_crea_src[df_crea_src["_marca"]==marca]
+    neto_cli = dm.groupby("Cliente")["_neto"].sum()
+    for cid, neto in neto_cli[neto_cli<3].items():
+        neto = max(0.0, float(neto))
+        qty = 3 - int(neto)
+        vend = int(vend_cli_crea.get(cid, 0))
+        if vend not in SUP_MAP or SUP_MAP[vend]==600: continue
+        art = ART_SUGERIDO_CREA[marca]
+        CREA_DATA.append({"cliente":int(si(cid)),"vendedor":vend,"mesa":SUP_MAP[vend],
+            "marca":marca,"articulo":art["art"],"codigo_art":art["codigo"],
+            "precio":art["precio"],"neto_actual":round(neto,0),"cantidad_crea":qty})
+
+print(f"  {len(CREA_DATA)} registros de venta creativa ({len(set(r['cliente'] for r in CREA_DATA))} clientes)")
+
 # SERIALIZAR
 print("\nSerializando...")
 fecha=datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -472,7 +538,9 @@ dmc_js="const DATA_MARZO_CREA=\n"+json.dumps(DATA_MARZO_CREA,ensure_ascii=True,s
 dp_js="const DATA_PERIODOS="+json.dumps(DATA_PERIODOS,ensure_ascii=True,separators=(",",":"))+  ";"
 cv_js="var CARTERA_VEND_BASE="+json.dumps(CARTERA_VEND_BASE,ensure_ascii=True,separators=(",",":"))+  ";"
 rec_js="var RECHAZO_DATA="+json.dumps(RECHAZO_DATA,ensure_ascii=True,separators=(",",":"))+";"
-datos_js="\n".join([dm_js,dmc_js,dp_js,cv_js,rec_js])
+crea_js="const CREA_DATA="+json.dumps(CREA_DATA,ensure_ascii=True,separators=(",",":"))+";"
+obj_marca_js="const OBJ_MARCA_DATA="+json.dumps(OBJ_MARCA,ensure_ascii=True,separators=(",",":"))+";"
+datos_js="\n".join([dm_js,dmc_js,dp_js,cv_js,rec_js,crea_js,obj_marca_js])
 guia_js="const GUIA_DATA="+json.dumps(GUIA_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 abr_js="const ABR_DATA="+json.dumps(ABR_DATA,ensure_ascii=True,separators=(",",":"))+  ";"
 stats_js="const VEND_STATS="+json.dumps(VEND_STATS,ensure_ascii=True,separators=(",",":"))+  ";"
