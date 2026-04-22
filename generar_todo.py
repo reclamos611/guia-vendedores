@@ -525,9 +525,11 @@ for marca in MARCAS_CREA_KW:
         vend = int(vend_cli_crea.get(cid, 0))
         if vend not in SUP_MAP or SUP_MAP[vend]==600: continue
         art = ART_SUGERIDO_CREA[marca]
+        dias_visita = dias_map.get(int(si(cid)), [])
         CREA_DATA.append({"cliente":int(si(cid)),"vendedor":vend,"mesa":SUP_MAP[vend],
             "marca":marca,"articulo":art["art"],"codigo_art":art["codigo"],
-            "precio":art["precio"],"neto_actual":round(neto,0),"cantidad_crea":qty})
+            "precio":art["precio"],"neto_actual":round(neto,0),"cantidad_crea":qty,
+            "dias":dias_visita})
 
 print(f"  {len(CREA_DATA)} registros de venta creativa ({len(set(r['cliente'] for r in CREA_DATA))} clientes)")
 

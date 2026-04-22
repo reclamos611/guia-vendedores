@@ -490,6 +490,20 @@ tr:hover td{background:var(--bg3)}
         </select>
       </div>
       <div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:4px">Filtrar por día</div>
+        <select id="ger-dia" onchange="renderGerencial()"
+          style="background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
+            border-radius:6px;padding:6px 10px;font-size:12px">
+          <option value="all">Todos los días</option>
+          <option value="Lunes">Lunes</option>
+          <option value="Martes">Martes</option>
+          <option value="Miercoles">Miércoles</option>
+          <option value="Jueves">Jueves</option>
+          <option value="Viernes">Viernes</option>
+          <option value="Sabado">Sábado</option>
+        </select>
+      </div>
+      <div>
         <div style="font-size:11px;color:var(--tx3);margin-bottom:4px">Filtrar por vendedor</div>
         <select id="ger-vend" onchange="renderGerencial()"
           style="background:var(--bg3);color:var(--tx1);border:1px solid var(--bd1);
@@ -497,8 +511,13 @@ tr:hover td{background:var(--bg3)}
           <option value="all">Todos los vendedores</option>
         </select>
       </div>
-      <div style="margin-left:auto">
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
         <div id="ger-resumen" style="font-size:12px;color:var(--tx3)"></div>
+        <button onclick="exportarGerencial()"
+          style="background:var(--gr-d);color:var(--gr-l);border:none;border-radius:6px;
+            padding:6px 12px;font-size:11px;cursor:pointer;font-weight:600">
+          ↓ Exportar Excel
+        </button>
       </div>
     </div>
     <div class="card">
@@ -508,6 +527,7 @@ tr:hover td{background:var(--bg3)}
             <th>Cliente</th>
             <th>Vendedor</th>
             <th>Mesa</th>
+            <th>Día visita</th>
             <th>Marca</th>
             <th>Artículo sugerido</th>
             <th>Cód. artículo</th>
@@ -530,6 +550,7 @@ tr:hover td{background:var(--bg3)}
 // __CARTERA_DATA__
 </script>
 <script>
+
 
 
 
@@ -2373,7 +2394,8 @@ function renderGerencial() {
 
   const mesaF = document.getElementById('ger-mesa')?.value || 'all';
   const marcaF = document.getElementById('ger-marca')?.value || 'all';
-  const vendF = document.getElementById('ger-vend')?.value || 'all';
+  const vendF  = document.getElementById('ger-vend')?.value || 'all';
+  const diaF   = document.getElementById('ger-dia')?.value || 'all';
 
   // Poblar select de vendedores
   const vendEl = document.getElementById('ger-vend');
@@ -2387,9 +2409,10 @@ function renderGerencial() {
   }
 
   let data = CREA_DATA;
-  if (mesaF !== 'all') data = data.filter(r => String(r.mesa) === mesaF);
+  if (mesaF  !== 'all') data = data.filter(r => String(r.mesa) === mesaF);
   if (marcaF !== 'all') data = data.filter(r => r.marca === marcaF);
-  if (vendF !== 'all') data = data.filter(r => String(r.vendedor) === vendF);
+  if (vendF  !== 'all') data = data.filter(r => String(r.vendedor) === vendF);
+  if (diaF   !== 'all') data = data.filter(r => (r.dias||[]).includes(diaF));
 
   // Resumen
   const clis = new Set(data.map(r => r.cliente)).size;
@@ -2406,6 +2429,7 @@ function renderGerencial() {
       '<td style="font-weight:600">#' + r.cliente + '</td>' +
       '<td>V' + r.vendedor + '</td>' +
       '<td><span class="bdg" style="background:' + (MESA_COLORS[r.mesa]||'#888') + '22;color:' + (MESA_COLORS[r.mesa]||'#888') + '">' + r.mesa + '</span></td>' +
+      '<td style="font-size:11px;color:var(--tx2)">' + (r.dias||[]).join(' / ') + '</td>' +
       '<td><span style="color:' + col + ';font-weight:700">' + r.marca + '</span></td>' +
       '<td style="font-size:11px;color:var(--tx2)">' + r.articulo + '</td>' +
       '<td style="font-size:11px;color:var(--tx3)">' + r.codigo_art + '</td>' +
@@ -2422,6 +2446,49 @@ function renderGerencial() {
   }).join('');
 }
 
+
+
+// ============================================================
+// EXPORTAR GERENCIAL A EXCEL (CSV descargable)
+// ============================================================
+function exportarGerencial() {
+  if (!GER_AUTH || typeof CREA_DATA === 'undefined') return;
+
+  const mesaF  = document.getElementById('ger-mesa')?.value || 'all';
+  const marcaF = document.getElementById('ger-marca')?.value || 'all';
+  const vendF  = document.getElementById('ger-vend')?.value || 'all';
+  const diaF   = document.getElementById('ger-dia')?.value || 'all';
+
+  let data = CREA_DATA;
+  if (mesaF  !== 'all') data = data.filter(r => String(r.mesa) === mesaF);
+  if (marcaF !== 'all') data = data.filter(r => r.marca === marcaF);
+  if (vendF  !== 'all') data = data.filter(r => String(r.vendedor) === vendF);
+  if (diaF   !== 'all') data = data.filter(r => (r.dias||[]).includes(diaF));
+
+  const headers = ['Cliente','Vendedor','Mesa','Dia Visita','Marca',
+                   'Articulo','Codigo Articulo','Uds Actuales','Cantidad Creativa'];
+  const rows = data.map(r => [
+    r.cliente, 'V'+r.vendedor, r.mesa,
+    (r.dias||[]).join(' / '),
+    r.marca, r.articulo, r.codigo_art,
+    r.neto_actual, r.cantidad_crea
+  ]);
+
+  // Generar CSV con BOM para que Excel lo abra bien
+  const bom = '\uFEFF';
+  const csv = bom + [headers, ...rows]
+    .map(row => row.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(','))
+    .join('\n');
+
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const fecha = new Date().toISOString().slice(0,10);
+  a.download = 'venta_creativa_' + fecha + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 </script>
 </html>
