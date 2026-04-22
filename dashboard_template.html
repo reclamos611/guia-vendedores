@@ -558,6 +558,7 @@ tr:hover td{background:var(--bg3)}
 
 
 
+
 function openUpload(){} // eliminado
 
 
@@ -2412,7 +2413,7 @@ function renderGerencial() {
   if (mesaF  !== 'all') data = data.filter(r => String(r.mesa) === mesaF);
   if (marcaF !== 'all') data = data.filter(r => r.marca === marcaF);
   if (vendF  !== 'all') data = data.filter(r => String(r.vendedor) === vendF);
-  if (diaF   !== 'all') data = data.filter(r => (r.dias||[]).includes(diaF));
+  if (diaF   !== 'all') data = data.filter(r => (r.dias||[]).some(function(d){ return (Array.isArray(d)?d[0]:String(d))===diaF; }));
 
   // Resumen
   const clis = new Set(data.map(r => r.cliente)).size;
@@ -2429,7 +2430,7 @@ function renderGerencial() {
       '<td style="font-weight:600">#' + r.cliente + '</td>' +
       '<td>V' + r.vendedor + '</td>' +
       '<td><span class="bdg" style="background:' + (MESA_COLORS[r.mesa]||'#888') + '22;color:' + (MESA_COLORS[r.mesa]||'#888') + '">' + r.mesa + '</span></td>' +
-      '<td style="font-size:11px;color:var(--tx2)">' + (r.dias||[]).join(' / ') + '</td>' +
+      '<td style="font-size:11px;color:var(--tx2)">' + (r.dias||[]).map(function(d){return Array.isArray(d)?d[0]:d;}).join(' / ') + '</td>' +
       '<td><span style="color:' + col + ';font-weight:700">' + r.marca + '</span></td>' +
       '<td style="font-size:11px;color:var(--tx2)">' + r.articulo + '</td>' +
       '<td style="font-size:11px;color:var(--tx3)">' + r.codigo_art + '</td>' +
@@ -2469,7 +2470,7 @@ function exportarGerencial() {
                    'Articulo','Codigo Articulo','Uds Actuales','Cantidad Creativa'];
   const rows = data.map(r => [
     r.cliente, 'V'+r.vendedor, r.mesa,
-    (r.dias||[]).join(' / '),
+    (r.dias||[]).map(function(d){return Array.isArray(d)?d[0]:d;}).join(' / '),
     r.marca, r.articulo, r.codigo_art,
     r.neto_actual, r.cantidad_crea
   ]);
@@ -2489,6 +2490,7 @@ function exportarGerencial() {
   a.click();
   URL.revokeObjectURL(url);
 }
+
 
 </script>
 </html>

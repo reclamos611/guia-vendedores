@@ -66,7 +66,7 @@ print(f"  {len(VNOM)} vendedores | Mesas: {sorted(set(SUP_MAP.values()))}")
 
 MARCAS = ["Lays","Doritos","Cheetos","3D","Pep","Pehuamar","Twistos","Tostitos","Quaker"]
 MARCAS_KW = {"Lays":["lays"],"Doritos":["doritos"],"Cheetos":["cheetos"],"3D":["3d"],
-    "Pep":["pep comun","pep rueditas","pep "],"Pehuamar":["pehuamar"],
+    "Pep":["pep comun","pep rueditas","pep "],"Pehuamar":["pehuamar","pehua ","pehua p"],
     "Twistos":["twistos"],"Tostitos":["tostitos"],"Quaker":["quaker","avena"]}
 TARGETS = {"Lays":94.9,"Doritos":98.0,"Cheetos":83.9,"3D":85.7,
     "Pep":62.3,"Pehuamar":20.7,"Twistos":79.4,"Tostitos":28.4,"Quaker":4.6}
@@ -525,7 +525,9 @@ for marca in MARCAS_CREA_KW:
         vend = int(vend_cli_crea.get(cid, 0))
         if vend not in SUP_MAP or SUP_MAP[vend]==600: continue
         art = ART_SUGERIDO_CREA[marca]
-        dias_visita = dias_map.get(int(si(cid)), [])
+        # Extraer solo nombres de día (sin número de vendedor)
+        dias_visita = [d[0] if isinstance(d, list) else str(d) 
+                       for d in dias_map.get(int(si(cid)), [])]
         CREA_DATA.append({"cliente":int(si(cid)),"vendedor":vend,"mesa":SUP_MAP[vend],
             "marca":marca,"articulo":art["art"],"codigo_art":art["codigo"],
             "precio":art["precio"],"neto_actual":round(neto,0),"cantidad_crea":qty,
