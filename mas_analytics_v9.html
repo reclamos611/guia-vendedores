@@ -566,6 +566,7 @@ const OBJ_MARCA_DATA={"Cheetos":{"Jan-26 Obj":78.86,"Feb-26 Obj":82.14,"Mar-26 O
 
 
 
+
 function openUpload(){} // eliminado
 
 
@@ -1052,7 +1053,15 @@ function renderEjecutivo(d) {
 
   // Calcular las 2 ms cercanas al objetivo (excl. Lays y Doritos)
   const obligatorias = ['Lays','Doritos'];
-  const candidatas = MARCAS.filter(mk => !obligatorias.includes(mk));
+  // Solo marcas con objetivo real cargado (excluir si OBJ_MARCA_DATA dice que no hay obj)
+  const tieneObj = function(mk) {
+    if (typeof OBJ_MARCA_DATA !== 'undefined' && OBJ_MARCA_DATA[mk]) {
+      var vals = Object.values(OBJ_MARCA_DATA[mk]);
+      return vals.length > 0 && vals.some(v => v > 0);
+    }
+    return TARGETS_COB[mk] ? true : false;
+  };
+  const candidatas = MARCAS.filter(mk => !obligatorias.includes(mk) && tieneObj(mk));
   const conBrechas = candidatas.map(mk => {
     const real = d.cobertura[mk] ? d.cobertura[mk].pct : 0;
     const obj = TARGETS_COB[mk] ? TARGETS_COB[mk].obj_mar : 70;
@@ -2497,6 +2506,7 @@ function exportarGerencial() {
   a.click();
   URL.revokeObjectURL(url);
 }
+
 
 
 </script>
