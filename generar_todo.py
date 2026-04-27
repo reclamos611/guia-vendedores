@@ -510,10 +510,10 @@ def get_marca_crea(art):
     return None
 
 df_crea_src["_marca"] = df_crea_src["articulo"].apply(get_marca_crea)
-# Neto real: ventas - devoluciones - cambios
-df_crea_src["_sign"] = df_crea_src["tipo_venta"].apply(
-    lambda t: 1 if t=="Venta" else -1 if t in ["Devolucion","Cambio"] else 0)
-df_crea_src["_neto"] = df_crea_src["Cantidad"].abs() * df_crea_src["_sign"]
+# Neto real: sumar Cantidad directamente (ya viene con signo correcto)
+# Positivo = venta/reemplazo, Negativo = devolucion/cambio
+df_crea_src = df_crea_src[df_crea_src["tipo_venta"].isin(["Venta","Devolucion","Cambio"])].copy()
+df_crea_src["_neto"] = pd.to_numeric(df_crea_src["Cantidad"], errors="coerce").fillna(0)
 
 # Vendedor principal por cliente
 vend_cli_crea = df_crea_src[df_crea_src["cod_ven"].apply(si).isin(SUP_MAP)].groupby(
@@ -524,8 +524,9 @@ for marca in MARCAS_CREA_KW:
     dm = df_crea_src[df_crea_src["_marca"]==marca]
     neto_cli = dm.groupby("Cliente")["_neto"].sum()
     for cid, neto in neto_cli[neto_cli<3].items():
-        # qty = 3 - neto (si neto es -2, necesita 5; si es 1, necesita 2)
         neto_real = float(neto)
+        # Si neto >= 3 ya tiene cobertura, no debería estar acá
+        if neto_real >= 3: continue
         qty = max(1, round(3 - neto_real))
         vend = int(vend_cli_crea.get(cid, 0))
         if vend not in SUP_MAP or SUP_MAP[vend]==600: continue
