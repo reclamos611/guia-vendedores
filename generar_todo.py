@@ -510,9 +510,10 @@ def get_marca_crea(art):
     return None
 
 df_crea_src["_marca"] = df_crea_src["articulo"].apply(get_marca_crea)
+# Neto real: ventas - devoluciones - cambios
 df_crea_src["_sign"] = df_crea_src["tipo_venta"].apply(
     lambda t: 1 if t=="Venta" else -1 if t in ["Devolucion","Cambio"] else 0)
-df_crea_src["_neto"] = df_crea_src["Cantidad"]*df_crea_src["_sign"]
+df_crea_src["_neto"] = df_crea_src["Cantidad"].abs() * df_crea_src["_sign"]
 
 # Vendedor principal por cliente
 vend_cli_crea = df_crea_src[df_crea_src["cod_ven"].apply(si).isin(SUP_MAP)].groupby(
@@ -523,8 +524,9 @@ for marca in MARCAS_CREA_KW:
     dm = df_crea_src[df_crea_src["_marca"]==marca]
     neto_cli = dm.groupby("Cliente")["_neto"].sum()
     for cid, neto in neto_cli[neto_cli<3].items():
-        neto = max(0.0, float(neto))
-        qty = 3 - int(neto)
+        # qty = 3 - neto (si neto es -2, necesita 5; si es 1, necesita 2)
+        neto_real = float(neto)
+        qty = max(1, round(3 - neto_real))
         vend = int(vend_cli_crea.get(cid, 0))
         if vend not in SUP_MAP or SUP_MAP[vend]==600: continue
         art = ART_SUGERIDO_CREA[marca]
