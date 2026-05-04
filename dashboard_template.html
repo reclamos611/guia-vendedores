@@ -528,16 +528,16 @@ tr:hover td{background:var(--bg3)}
       <div style="overflow-x:auto">
         <table style="min-width:700px">
           <thead><tr>
-            <th>Cliente</th>
-            <th>Vendedor</th>
-            <th>Mesa</th>
+            <th onclick="sortGerencial('cliente')" style="cursor:pointer;user-select:none">Cliente ↕</th>
+            <th onclick="sortGerencial('vendedor')" style="cursor:pointer;user-select:none">Vendedor ↕</th>
+            <th onclick="sortGerencial('mesa')" style="cursor:pointer;user-select:none">Mesa ↕</th>
             <th>Día visita</th>
-            <th>Marca</th>
-            <th>Estado</th>
-            <th>Mes anterior</th>
-            <th>CCC Pep</th>
-            <th class="num">Uds actuales</th>
-            <th class="num">Cantidad creativa</th>
+            <th onclick="sortGerencial('marca')" style="cursor:pointer;user-select:none">Marca ↕</th>
+            <th onclick="sortGerencial('estado')" style="cursor:pointer;user-select:none">Estado ↕</th>
+            <th onclick="sortGerencial('neto_ant')" style="cursor:pointer;user-select:none">Mes anterior ↕</th>
+            <th onclick="sortGerencial('es_ccc')" style="cursor:pointer;user-select:none">CCC Pep ↕</th>
+            <th class="num" onclick="sortGerencial('neto_actual')" style="cursor:pointer;user-select:none">Uds actuales ↕</th>
+            <th class="num" onclick="sortGerencial('cantidad_crea')" style="cursor:pointer;user-select:none">Cantidad creativa ↕</th>
           </tr></thead>
           <tbody id="ger-tbody"></tbody>
         </table>
@@ -555,6 +555,8 @@ tr:hover td{background:var(--bg3)}
 // __CARTERA_DATA__
 </script>
 <script>
+
+
 
 
 
@@ -2398,24 +2400,63 @@ function renderMesa600() {
   html600 += '<td class="num">' + fmtM(gran_total) + '</td></tr>';
   html600 += '</tbody></table></div></div>';
 
-  // Devolución y cambio Mesa 600 - desglose por proveedor
-  const devProv = {}, camProv = {};
+  // Devolución, cambio y % sobre venta por proveedor - Mesa 600
+  const devProv = {}, camProv = {}, ventaProv = {};
   vends600.forEach(v => {
-    Object.entries(v.prov_devol||{}).forEach(([p,val]) => { devProv[p] = (devProv[p]||0)+val; });
-    Object.entries(v.prov_cambio||{}).forEach(([p,val]) => { camProv[p] = (camProv[p]||0)+val; });
+    Object.entries(v.prov_devol||{}).forEach(([p,val]) => { devProv[p]=(devProv[p]||0)+val; });
+    Object.entries(v.prov_cambio||{}).forEach(([p,val]) => { camProv[p]=(camProv[p]||0)+val; });
+    Object.entries(v.prov_venta||{}).forEach(([p,val]) => { ventaProv[p]=(ventaProv[p]||0)+val; });
   });
-  const devTotal = Object.values(devProv).reduce((a,b)=>a+b, 0);
-  const camTotal = Object.values(camProv).reduce((a,b)=>a+b, 0);
+  const devTotal = Object.values(devProv).reduce((a,b)=>a+b,0);
+  const camTotal = Object.values(camProv).reduce((a,b)=>a+b,0);
+
+  // KPIs globales
   html600 += '<div class="g2" style="margin-top:14px">';
   html600 += '<div class="kpi rd"><div class="kpi-lbl">Devolución total</div><div class="kpi-val" style="font-size:20px">' + fmtM(devTotal) + '</div>';
   if (Object.keys(devProv).length) html600 += '<div style="font-size:10px;color:var(--tx3);margin-top:4px">' +
-    Object.entries(devProv).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([p,v])=>p+' '+fmtM(v)).join(' · ') + '</div>';
+    Object.entries(devProv).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([p,v])=>{
+      const pct = ventaProv[p] ? (v/ventaProv[p]*100).toFixed(1)+'%' : '';
+      return p+' '+fmtM(v)+(pct?' ('+pct+')':'');
+    }).join(' · ') + '</div>';
   html600 += '</div>';
   html600 += '<div class="kpi am"><div class="kpi-lbl">Invendible (Cambio)</div><div class="kpi-val" style="font-size:20px">' + fmtM(camTotal) + '</div>';
   if (Object.keys(camProv).length) html600 += '<div style="font-size:10px;color:var(--tx3);margin-top:4px">' +
-    Object.entries(camProv).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([p,v])=>p+' '+fmtM(v)).join(' · ') + '</div>';
+    Object.entries(camProv).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([p,v])=>{
+      const pct = ventaProv[p] ? (v/ventaProv[p]*100).toFixed(1)+'%' : '';
+      return p+' '+fmtM(v)+(pct?' ('+pct+')':'');
+    }).join(' · ') + '</div>';
   html600 += '</div>';
   html600 += '</div>';
+
+  // Tabla de % cambio por proveedor
+  const todosProvs = new Set([...Object.keys(devProv),...Object.keys(camProv)]);
+  if (todosProvs.size > 0) {
+    html600 += '<div class="card" style="margin-top:14px">';
+    html600 += '<div class="card-title">Cambio e invendible % sobre venta — por proveedor</div>';
+    html600 += '<div style="overflow-x:auto"><table style="min-width:500px">';
+    html600 += '<thead><tr><th>Proveedor</th><th class="num">Venta</th><th class="num">Devolución</th><th class="num">% Devol</th><th class="num">Cambio</th><th class="num">% Cambio</th><th class="num">Total rechazos</th><th class="num">% Total</th></tr></thead><tbody>';
+    Array.from(todosProvs).sort().forEach(p => {
+      const vta = ventaProv[p] || 0;
+      const dev = devProv[p] || 0;
+      const cam = camProv[p] || 0;
+      const tot = dev + cam;
+      const pctDev = vta ? (dev/vta*100).toFixed(2) : '—';
+      const pctCam = vta ? (cam/vta*100).toFixed(2) : '—';
+      const pctTot = vta ? (tot/vta*100).toFixed(2) : '—';
+      const colTot = vta && tot/vta*100 >= 0.8 ? 'var(--rd-l)' : vta && tot/vta*100 >= 0.6 ? 'var(--am-l)' : 'var(--tx1)';
+      html600 += '<tr>'+
+        '<td style="font-weight:600">'+p+'</td>'+
+        '<td class="num">'+fmtM(vta)+'</td>'+
+        '<td class="num">'+fmtM(dev)+'</td>'+
+        '<td class="num">'+pctDev+(pctDev!=='—'?'%':'')+'</td>'+
+        '<td class="num">'+fmtM(cam)+'</td>'+
+        '<td class="num">'+pctCam+(pctCam!=='—'?'%':'')+'</td>'+
+        '<td class="num">'+fmtM(tot)+'</td>'+
+        '<td class="num" style="color:'+colTot+';font-weight:700">'+pctTot+(pctTot!=='—'?'%':'')+'</td>'+
+      '</tr>';
+    });
+    html600 += '</tbody></table></div></div>';
+  }
 
   el.innerHTML = html600;
 }
@@ -2433,6 +2474,7 @@ function renderMesa600() {
 // SECCIÓN GERENCIAL
 // ============================================================
 var GER_AUTH = false;
+var GER_SORT = {col: 'cliente', dir: 1};
 
 function checkGerPass() {
   const pwd = document.getElementById('ger-pwd')?.value || '';
@@ -2545,6 +2587,15 @@ function renderGerencial() {
   };
   const MARCA_COL2 = {Lays:'var(--bl)',Doritos:'#f0a500',Cheetos:'#f04d4d','3D':'var(--gr)'};
 
+  // Ordenar según columna seleccionada
+  const sortKey = GER_SORT.col;
+  data = data.slice().sort(function(a,b){
+    var va = a[sortKey], vb = b[sortKey];
+    if (typeof va === 'boolean') { va = va ? 1 : 0; vb = vb ? 1 : 0; }
+    if (typeof va === 'string') return GER_SORT.dir * va.localeCompare(vb);
+    return GER_SORT.dir * ((va||0) - (vb||0));
+  });
+
   document.getElementById('ger-tbody').innerHTML = data.length ? data.map(r => {
     const col = MARCA_COL2[r.marca]||'#888';
     const barW = Math.max(0, Math.min(100, Math.round((r.neto_actual/3)*100)));
@@ -2577,6 +2628,18 @@ function renderGerencial() {
 
 
 
+
+
+
+function sortGerencial(col) {
+  if (GER_SORT.col === col) {
+    GER_SORT.dir *= -1;
+  } else {
+    GER_SORT.col = col;
+    GER_SORT.dir = 1;
+  }
+  renderGerencial();
+}
 
 
 </script>
