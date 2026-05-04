@@ -566,6 +566,7 @@ tr:hover td{background:var(--bg3)}
 
 
 
+
 function openUpload(){} // eliminado
 
 
@@ -2368,15 +2369,24 @@ function renderMesa600() {
   html600 += '<td class="num">' + fmtM(gran_total) + '</td></tr>';
   html600 += '</tbody></table></div></div>';
 
-  // Devolución y cambio Mesa 600
-  const devTotal = vends600.reduce((a, v) => a + (v.pd || 0), 0);
-  const camTotal = vends600.reduce((a, v) => a + (v.pc || 0), 0);
-  if (devTotal > 0 || camTotal > 0) {
-    html600 += '<div class="g2" style="margin-top:14px">';
-    html600 += '<div class="kpi rd"><div class="kpi-lbl">Devolución total</div><div class="kpi-val" style="font-size:20px">' + fmtM(devTotal) + '</div></div>';
-    html600 += '<div class="kpi am"><div class="kpi-lbl">Invendible (Cambio)</div><div class="kpi-val" style="font-size:20px">' + fmtM(camTotal) + '</div></div>';
-    html600 += '</div>';
-  }
+  // Devolución y cambio Mesa 600 - desglose por proveedor
+  const devProv = {}, camProv = {};
+  vends600.forEach(v => {
+    Object.entries(v.prov_devol||{}).forEach(([p,val]) => { devProv[p] = (devProv[p]||0)+val; });
+    Object.entries(v.prov_cambio||{}).forEach(([p,val]) => { camProv[p] = (camProv[p]||0)+val; });
+  });
+  const devTotal = Object.values(devProv).reduce((a,b)=>a+b, 0);
+  const camTotal = Object.values(camProv).reduce((a,b)=>a+b, 0);
+  html600 += '<div class="g2" style="margin-top:14px">';
+  html600 += '<div class="kpi rd"><div class="kpi-lbl">Devolución total</div><div class="kpi-val" style="font-size:20px">' + fmtM(devTotal) + '</div>';
+  if (Object.keys(devProv).length) html600 += '<div style="font-size:10px;color:var(--tx3);margin-top:4px">' +
+    Object.entries(devProv).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([p,v])=>p+' '+fmtM(v)).join(' · ') + '</div>';
+  html600 += '</div>';
+  html600 += '<div class="kpi am"><div class="kpi-lbl">Invendible (Cambio)</div><div class="kpi-val" style="font-size:20px">' + fmtM(camTotal) + '</div>';
+  if (Object.keys(camProv).length) html600 += '<div style="font-size:10px;color:var(--tx3);margin-top:4px">' +
+    Object.entries(camProv).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([p,v])=>p+' '+fmtM(v)).join(' · ') + '</div>';
+  html600 += '</div>';
+  html600 += '</div>';
 
   el.innerHTML = html600;
 }
@@ -2530,6 +2540,7 @@ function renderGerencial() {
   }).join('') :
   '<tr><td colspan="9" style="text-align:center;color:var(--tx3);padding:20px">Sin clientes con los filtros aplicados</td></tr>';
 }
+
 
 
 
