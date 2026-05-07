@@ -20,11 +20,9 @@
 html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   font-family:Sora,sans-serif;font-size:14px}
 
-/* PAGINAS - sistema simple */
 .page{display:none !important}
 .page.show{display:block !important;background:var(--bg);min-height:100vh}
 
-/* TOPBAR */
 .topbar{position:sticky;top:0;z-index:50;
   background:rgba(10,12,16,.96);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--brd);
@@ -33,11 +31,9 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   border-radius:20px;padding:3px 10px;font-size:10px;
   color:var(--bl-l);font-weight:600;font-family:'DM Mono',monospace}
 .tb-title{font-size:14px;font-weight:700;flex:1}
-.tb-vend{font-size:11px;color:var(--bl-l);font-weight:600;
-  font-family:'DM Mono',monospace}
+.tb-vend{font-size:11px;color:var(--bl-l);font-weight:600;font-family:'DM Mono',monospace}
 .tb-date{font-size:10px;color:var(--tx3);font-family:'DM Mono',monospace}
 
-/* LOGIN */
 #pg-login.show{display:flex !important;flex-direction:column;}
 #pg-login{display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:32px 20px;background:var(--bg)}
@@ -48,8 +44,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   border:1.5px solid var(--bl);margin-bottom:12px;font-size:26px}
 .login-t{font-size:22px;font-weight:700}
 .login-s{font-size:11px;color:var(--tx3);margin-top:4px;font-family:'DM Mono',monospace}
-.login-form{background:var(--bg2);border:1px solid var(--brd);
-  border-radius:16px;padding:22px}
+.login-form{background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:22px}
 .lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;
   letter-spacing:.06em;margin-bottom:5px;font-family:'DM Mono',monospace}
 .inp{width:100%;background:var(--bg3);border:1.5px solid var(--brd2);
@@ -68,7 +63,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   border-radius:8px;padding:8px 12px;margin-bottom:12px;text-align:center}
 .login-hint{text-align:center;margin-top:14px;font-size:11px;color:var(--tx3)}
 
-/* DASHBOARD */
 #pg-dash{padding:14px 14px 80px}
 .dash-head{background:var(--bg2);border:1px solid var(--brd);
   border-radius:14px;padding:14px;margin-bottom:12px}
@@ -78,8 +72,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   border:1px solid var(--brd2);color:var(--tx2);background:var(--bg3)}
 .pill-bl{background:var(--bl-d);border-color:var(--bl);color:var(--bl-l)}
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.kpi-card{background:var(--bg2);border:1px solid var(--brd);
-  border-radius:12px;padding:12px}
+.kpi-card{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:12px}
 .kpi-lbl{font-size:9px;color:var(--tx3);text-transform:uppercase;
   letter-spacing:.06em;margin-bottom:4px}
 .kpi-val{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
@@ -95,7 +88,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 .cob-pct{font-size:10px;font-weight:700;font-family:'DM Mono',monospace;
   min-width:60px;text-align:right}
 
-/* BUSQUEDA */
 #pg-busq{padding:14px 14px 80px}
 .back-btn{background:none;border:1px solid var(--brd2);border-radius:8px;
   padding:6px 12px;color:var(--tx2);font-size:12px;
@@ -117,7 +109,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 .cmed{background:var(--am-d);color:var(--am-l)}
 .cbad{background:var(--rd-d);color:var(--rd-l)}
 
-/* FICHA */
 #pg-ficha{padding:0 0 80px}
 .ficha-nav{display:flex;gap:8px;padding:10px 14px}
 .zona-alert{margin:0 14px 10px;padding:10px 14px;border-radius:10px;
@@ -132,7 +123,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 .pill-pu{background:var(--pu-d);border-color:var(--pu);color:var(--pu-l)}
 .cli-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 14px 10px}
 
-/* COLLAPSE */
 .csec{margin:0 14px 8px}
 .chdr{display:flex;align-items:center;justify-content:space-between;
   background:var(--bg2);border:1px solid var(--brd);border-radius:10px;
@@ -151,7 +141,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 .cbody.open{max-height:3000px}
 .cinner{padding:8px 10px}
 
-/* TABLA MARCAS */
 .mk-t{width:100%;border-collapse:collapse;font-size:12px}
 .mk-t thead td{font-size:9px;color:var(--tx3);text-transform:uppercase;
   letter-spacing:.05em;padding:5px 6px;border-bottom:1px solid var(--brd);
@@ -169,7 +158,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 .mk-cob-bar{height:3px;border-radius:2px;background:var(--bg4);margin-top:2px;overflow:hidden}
 .mk-cob-fill{height:100%;border-radius:2px}
 
-/* PEDIDO */
 .ped-card{background:var(--bg2);border:1px solid var(--brd);
   border-radius:10px;margin-bottom:6px;padding:10px 12px;
   display:flex;align-items:center;gap:10px}
@@ -179,7 +167,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 .ped-n{font-size:15px;font-weight:700;font-family:'DM Mono',monospace;display:block}
 .ped-s{font-size:9px;color:var(--tx3);display:block}
 
-/* TABLA PROVEEDORES */
 .prov-t{width:100%;border-collapse:collapse}
 .prov-t thead td{font-size:9px;color:var(--tx3);text-transform:uppercase;
   letter-spacing:.05em;padding:5px 6px;border-bottom:1px solid var(--brd);
@@ -202,7 +189,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 </head>
 <body>
 
-<!-- TOPBAR (oculto en login) -->
 <div class="topbar" id="topbar" style="display:none">
   <div class="logo-pill">611 PEP</div>
   <div class="tb-title">Guia de Visita</div>
@@ -212,7 +198,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   </div>
 </div>
 
-<!-- PG1: LOGIN -->
+<!-- LOGIN -->
 <div class="page show" id="pg-login">
   <div class="login-box">
     <div class="login-logo">
@@ -236,7 +222,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   </div>
 </div>
 
-<!-- PG2: DASHBOARD -->
+<!-- DASHBOARD -->
 <div class="page" id="pg-dash">
   <div class="dash-head">
     <div class="dash-nom" id="dash-nom"></div>
@@ -247,23 +233,22 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
     <div class="sec-lbl">Cobertura mes actual vs objetivo</div>
     <div id="dash-cob"></div>
   </div>
-  <div style="margin:14px 0 8px;font-size:12px;font-weight:700;color:var(--tx2)">
-    Mis clientes
-  </div>
-  <input type="search" id="dash-buscar" placeholder="Buscar por nombre o código..."
+  <div style="margin:14px 0 8px;font-size:12px;font-weight:700;color:var(--tx2)">Mis clientes</div>
+  <input type="search" id="dash-buscar" placeholder="Buscar por nombre o codigo..."
     oninput="buscarEnDash(this.value)"
     style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:10px;
-      border:1px solid var(--brd2);background:var(--bg2);color:var(--tx1);
+      border:1px solid var(--brd2);background:var(--bg2);color:var(--tx);
       font-size:14px;margin-bottom:10px;outline:none">
   <div id="dash-buscar-res" style="display:none;margin-bottom:10px"></div>
-  <div style="font-size:11px;font-weight:700;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Por día de visita</div>
+  <div style="font-size:11px;font-weight:700;color:var(--tx3);margin-bottom:6px;
+    text-transform:uppercase;letter-spacing:.05em">Por dia de visita</div>
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="dias-btns"></div>
   <div id="clientes-dia-list" style="margin-bottom:14px"></div>
   <button class="btn-pri" onclick="irBusq()">Buscar cliente</button>
   <button class="btn-sec" onclick="doLogout()">Cerrar sesion</button>
 </div>
 
-<!-- PG3: BUSQUEDA -->
+<!-- BUSQUEDA -->
 <div class="page" id="pg-busq">
   <button class="back-btn" onclick="irDash()">&#8592; Inicio</button>
   <div style="font-size:11px;color:var(--tx2);margin-bottom:8px" id="busq-lbl"></div>
@@ -275,10 +260,10 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
   </div>
 </div>
 
-<!-- PG4: FICHA -->
+<!-- FICHA -->
 <div class="page" id="pg-ficha">
   <div class="ficha-nav">
-    <button class="back-btn" onclick="irBusq()">&#8592; Busqueda</button>
+    <button class="back-btn" onclick="irAtras()">&#8592; Atras</button>
     <button class="back-btn" onclick="irDash()" style="margin-left:auto">Inicio</button>
   </div>
   <div id="ficha-zona"></div>
@@ -323,7 +308,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
 </div>
 
 <script>
-//  DATOS Y CONSTANTES 
+// ── CONSTANTES ──────────────────────────────────────────────
 var MARCAS=['Lays','Doritos','Cheetos','3D','Pep','Pehuamar','Twistos','Tostitos','Quaker'];
 var MK_COL={Lays:'#f5e642',Doritos:'#f5a623',Cheetos:'#f57d23','3D':'#a57af5',
   Pep:'#4f8ef5',Pehuamar:'#2dd98a',Twistos:'#f54f7d',Tostitos:'#f5c842',Quaker:'#c07af5'};
@@ -332,6 +317,8 @@ var MK_OBJ={Lays:94.9,Doritos:98.0,Cheetos:83.9,'3D':85.7,
 var PROV_COL=['#4d8ef0','#f0a500','#2ecc8a','#a07cf0','#f04d4d','#f57d23',
   '#4dcef0','#c07af5','#f5c842','#888780','#f54f7d','#2dd98a','#ffd080','#a0c0ff'];
 var DIAS=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var DIAS_ORD=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var DIA_LABELS={Lunes:'Lun',Martes:'Mar',Miercoles:'Mie',Jueves:'Jue',Viernes:'Vie',Sabado:'Sab'};
 var MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 var VNOM={31:'VILLALBA MAX.',32:'OLIVARES EDGAR',33:'ORDOEZ ISMAEL',34:'BALDO JULIAN',
   35:'BAZAN LUCIANO',36:'NEIRA NAHUEL',37:'SCORRANI IGN.',38:'MARTINEZ MAU.',
@@ -344,15 +331,17 @@ var VVALIDOS=[31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,
   51,52,53,54,55,56,57,58,59];
 var MCOL={300:'#4d8ef0',400:'#2ecc8a',500:'#f0a500',600:'#a07cf0'};
 
+// ── ESTADO GLOBAL ────────────────────────────────────────────
 var VENDEDOR=null;
+var DIA_ACTIVO=null;
+var DESDE_BUSQ=false;  // para saber a dónde volver desde ficha
 var HOY=new Date();
 var HOY_DIA=DIAS[HOY.getDay()];
 
-// Fecha topbar
 document.getElementById('tb-date').textContent=
   HOY_DIA+' '+HOY.getDate()+'/'+MESES[HOY.getMonth()];
 
-//  NAVEGACION 
+// ── NAVEGACION ───────────────────────────────────────────────
 function mostrar(id){
   ['pg-login','pg-dash','pg-busq','pg-ficha'].forEach(function(p){
     document.getElementById(p).className='page';
@@ -360,11 +349,22 @@ function mostrar(id){
   document.getElementById(id).className='page show';
   document.body.scrollTop=0;
   document.documentElement.scrollTop=0;
-  var tb=document.getElementById('topbar');
-  tb.style.display=id==='pg-login'?'none':'flex';
+  document.getElementById('topbar').style.display=id==='pg-login'?'none':'flex';
+}
+function irDash(){mostrar('pg-dash');}
+function irBusq(){
+  DESDE_BUSQ=false;
+  document.getElementById('busq-lbl').textContent=VNOM[VENDEDOR]||'';
+  mostrar('pg-busq');
+  setTimeout(function(){document.getElementById('srch-inp').focus();},100);
+}
+function irAtras(){
+  // Desde ficha: volver a búsqueda si vino de ahí, sino al dash
+  if(DESDE_BUSQ) mostrar('pg-busq');
+  else mostrar('pg-dash');
 }
 
-//  LOGIN 
+// ── LOGIN ─────────────────────────────────────────────────────
 function doLogin(){
   var v=parseInt(document.getElementById('inp-vend').value||'0');
   var p=document.getElementById('inp-pass').value.trim();
@@ -385,15 +385,15 @@ function doLogout(){
   mostrar('pg-login');
 }
 
-//  DASHBOARD 
+// ── DASHBOARD ─────────────────────────────────────────────────
 function renderDash(){
   var v=VENDEDOR;
   var s=(typeof VEND_STATS!=='undefined'&&VEND_STATS[String(v)])||null;
   var mesa=0;
   if(typeof GUIA_DATA!=='undefined'){
-    for(var c in GUIA_DATA){if(GUIA_DATA[c].v===v){mesa=GUIA_DATA[c].m;break;}}
+    var cids=Object.keys(GUIA_DATA);
+    for(var i=0;i<cids.length;i++){if(GUIA_DATA[cids[i]].v===v){mesa=GUIA_DATA[cids[i]].m;break;}}
   }
-  var mc=MCOL[mesa]||'#888';
   document.getElementById('dash-nom').textContent=VNOM[v]||'V'+v;
   document.getElementById('dash-pills').innerHTML=
     '<span class="pill pill-bl">Mesa '+mesa+'</span>'+
@@ -429,297 +429,32 @@ function renderDash(){
   }
   document.getElementById('dash-cob').innerHTML=cobHtml;
 }
-function irBusq(){
-  document.getElementById('busq-lbl').textContent=VNOM[VENDEDOR]||'';
-  mostrar('pg-busq');
-  setTimeout(function(){document.getElementById('srch-inp').focus();},100);
-}
-function irDash(){mostrar('pg-dash');}
 
-//  BUSQUEDA 
-var ST=null;
-function buscar(q){clearTimeout(ST);ST=setTimeout(function(){_buscar(q.trim());},200);}
-function _buscar(q){
-  var el=document.getElementById('srch-res');
-  if(!q||q.length<2){el.innerHTML='<div class="empty">Ingresa el codigo o nombre</div>';return;}
-  if(typeof GUIA_DATA==='undefined'){el.innerHTML='<div class="empty">Sin datos</div>';return;}
-  var ql=q.toLowerCase(),esN=/^\d+$/.test(q),res=[];
-  for(var cid in GUIA_DATA){
-    var d=GUIA_DATA[cid];
-    if(d.v!==VENDEDOR) continue;
-    if(esN){if(cid.startsWith(q))res.push([cid,d]);}
-    else{if(d.n.toLowerCase().includes(ql)||d.l.toLowerCase().includes(ql))res.push([cid,d]);}
-    if(res.length>=20)break;
-  }
-  if(!res.length){el.innerHTML='<div class="empty">Sin resultados para "'+q+'"</div>';return;}
-  el.innerHTML=res.map(function(r){
-    var cid=r[0],d=r[1];
-    var nok=d.u.filter(function(x){return x>=3;}).length;
-    var cls=nok>=7?'cok':nok>=5?'cmed':'cbad';
-    return '<div class="ri" onclick="verFicha(\''+cid+'\')">'+
-      '<div class="ri-cod mono">#'+cid+'</div>'+
-      '<div style="flex:1"><div class="ri-nom">'+d.n+'</div>'+
-      '<div class="ri-loc">'+d.l+'</div></div>'+
-      '<span class="ri-cob '+cls+'">'+nok+'/9</span></div>';
-  }).join('');
-}
-
-//  FICHA 
-function verFicha(cid){
-  var d=GUIA_DATA[cid];if(!d)return;
-  var dias=d.ds||[],dnom=dias.map(function(x){return x[0];});
-  var esHoy=dnom.indexOf(HOY_DIA)>=0;
-  var zonaEl=document.getElementById('ficha-zona');
-  if(!dnom.length){
-    zonaEl.innerHTML='<div class="zona-alert za-warn">! Sin dia de visita asignado</div>';
-  } else if(!esHoy){
-    zonaEl.innerHTML='<div class="zona-alert za-warn">! FUERA DE ZONA - Hoy es '+HOY_DIA+'. Dia: '+dnom.join(' / ')+'</div>';
-  } else {
-    zonaEl.innerHTML='<div class="zona-alert za-ok">OK En zona - Dia de visita asignado</div>';
-  }
-  var vNom=VNOM[d.v]||'V'+d.v;
-  document.getElementById('ficha-head').innerHTML=
-    '<div class="cli-nom">'+d.n+'</div>'+
-    '<div class="cli-dir">'+(d.d||'')+(d.l?' - '+d.l:'')+'</div>'+
-    '<div class="cli-pills">'+
-    '<span class="pill pill-bl">#'+cid+'</span>'+
-    '<span class="pill">'+vNom+'</span>'+
-    (dnom.length?'<span class="pill pill-pu">'+dnom.join(' / ')+'</span>':'')+
-    '</div>';
-  var abrUds=(typeof ABR_DATA!=='undefined'&&ABR_DATA[cid])||null;
-  var nOk=0;
-  for(var i=0;i<9;i++){var ref=abrUds?Math.round(abrUds[i]):Math.round(d.u[i]);if(ref>=3)nOk++;}
-  var cPct=Math.round(nOk/9*100);
-  var cCol=cPct>=78?'var(--gr-l)':cPct>=56?'var(--am-l)':'var(--rd-l)';
-  document.getElementById('ficha-kpis').innerHTML=
-    '<div class="kpi-card"><div class="kpi-lbl">Cobertura</div>'+
-    '<div class="kpi-val" style="color:'+cCol+'">'+nOk+'/9</div>'+
-    '<div class="kpi-sub">'+cPct+'% marcas</div></div>'+
-    '<div class="kpi-card"><div class="kpi-lbl">Importe mes ant.</div>'+
-    '<div class="kpi-val" style="font-size:16px">'+fmtM(d.i)+'</div>'+
-    '<div class="kpi-sub">PepsiCo</div></div>';
-  // Tabla marcas
-  var mkH='<table class="mk-t"><thead><tr>'+
-    '<td>Marca</td><td>Mes act.</td><td>Sug.</td><td>Mes ant.</td>'+
-    '</tr></thead><tbody>';
-  var falt=[];
-  for(var mi=0;mi<MARCAS.length;mi++){
-    var mk=MARCAS[mi];
-    var uAnt=Math.round(d.u[mi]);
-    var uAct=abrUds?Math.round(abrUds[mi]):0;
-    var uRef=abrUds!==null?uAct:uAnt;
-    var ok=uRef>=3,cerca=!ok&&uRef>0;
-    var sug=ok?0:Math.max(0,3-uRef);
-    var col=MK_COL[mk]||'var(--tx)';
-    var dCol=ok?'var(--gr)':cerca?'var(--am)':'var(--rd)';
-    var aCol=ok?'var(--gr-l)':cerca?'var(--am-l)':'var(--rd-l)';
-    var fw=ok?100:(uRef>0?Math.min(Math.round(uRef/3*100),99):0);
-    mkH+='<tr class="'+(ok?'ok':'falta')+'">'+
-      '<td><div class="mk-dot-row">'+
-        '<div class="mk-dot" style="background:'+dCol+'"></div>'+
-        '<div><div style="font-size:12px;font-weight:700;color:'+col+'">'+mk+'</div>'+
-        (MK_OBJ[mk]?'<div class="mk-cob-bar"><div class="mk-cob-fill" style="width:'+fw+'%;background:'+dCol+'"></div></div>':'')+'</div>'+
-      '</div></td>'+
-      '<td style="color:'+aCol+'">'+(abrUds!==null?(uAct>0?uAct+'u':'-'):'?')+'</td>'+
-      '<td style="color:'+(sug>0?'var(--am-l)':'var(--tx3)')+'">'+(sug>0?'+'+sug:'--')+'</td>'+
-      '<td style="color:var(--bl-l)">'+(uAnt>0?uAnt+'u':'-')+'</td>'+
-    '</tr>';
-    if(!ok)falt.push({mk:mk,col:col,sug:sug,uAct:uAct,uAnt:uAnt});
-  }
-  mkH+='</tbody></table>';
-  document.getElementById('ficha-marcas').innerHTML=mkH;
-  var bdgP=document.getElementById('bdg-pep');
-  if(bdgP){bdgP.textContent=(9-falt.length)+'/9 OK';bdgP.style.background=falt.length===0?'var(--gr-d)':falt.length<=3?'var(--am-d)':'var(--rd-d)';bdgP.style.color=falt.length===0?'var(--gr-l)':falt.length<=3?'var(--am-l)':'var(--rd-l)';}
-  // Pedido
-  var wp=document.getElementById('wrap-pedido');
-  var bdgPed=document.getElementById('bdg-ped');
-  if(bdgPed)bdgPed.textContent=falt.length+' marcas';
-  if(falt.length){
-    if(wp)wp.style.display='block';
-    document.getElementById('ficha-pedido').innerHTML=falt.map(function(f){
-      return '<div class="ped-card">'+
-        '<div class="ped-mk" style="color:'+f.col+'">'+f.mk+'</div>'+
-        '<div class="ped-vals">'+
-          '<div class="ped-d"><span class="ped-n" style="color:var(--am-l)">+'+f.sug+'</span><span class="ped-s">min.</span></div>'+
-          '<div class="ped-d"><span class="ped-n" style="color:var(--bl-l)">'+(f.uAct>0?f.uAct+'u':'-')+'</span><span class="ped-s">mes act.</span></div>'+
-          '<div class="ped-d"><span class="ped-n" style="color:var(--tx2)">'+(f.uAnt>0?f.uAnt+'u':'-')+'</span><span class="ped-s">mes ant.</span></div>'+
-        '</div></div>';
-    }).join('');
-  } else {
-    if(wp)wp.style.display='none';
-  }
-  // Proveedores tabla
-  var pDet=(typeof OTROS_PROV_DET!=='undefined'&&OTROS_PROV_DET[cid])||{};
-  var todosP=typeof TODOS_PROV_ACTIVOS!=='undefined'?TODOS_PROV_ACTIVOS:Object.keys(pDet);
-  var nAct=0;
-  var pH='<table class="prov-t"><thead><tr>'+
-    '<td>Proveedor</td><td>Estado</td><td>Mar.</td><td>Act.</td><td>Ofr.</td>'+
-    '</tr></thead><tbody>';
-  todosP.forEach(function(prov,idx){
-    var vals=pDet[prov]||[0,0,0,0];
-    var mU=vals[0]||0,mI=vals[1]||0,aU=vals[2]||0,aI=vals[3]||0;
-    var est,bCls;
-    if(aI>0){est='Activo';bCls='bact';nAct++;}
-    else if(mI>0){est='Inactivo';bCls='bina';}
-    else{est='Nunca';bCls='bnun';}
-    var col=PROV_COL[idx%PROV_COL.length];
-    var ofr=(mI>0&&aI===0)?(mU>0?'+'+mU:'si'):(aI>0?'OK':'-');
-    var oCol=(mI>0&&aI===0)?'var(--am-l)':(aI>0?'var(--gr-l)':'var(--tx3)');
-    pH+='<tr>'+
-      '<td style="font-weight:600;color:'+col+'">'+prov+'</td>'+
-      '<td><span class="prov-bdg '+bCls+'">'+est+'</span></td>'+
-      '<td style="color:var(--bl-l)">'+(mU>0?mU+'u':'-')+'</td>'+
-      '<td style="color:'+(aU>0?'var(--gr-l)':'var(--tx3)')+'">'+(aU>0?aU+'u':'-')+'</td>'+
-      '<td style="color:'+oCol+'">'+ofr+'</td>'+
-    '</tr>';
-  });
-  pH+='</tbody></table>';
-  document.getElementById('ficha-provs').innerHTML=pH;
-  var bdgPr=document.getElementById('bdg-prov');
-  if(bdgPr){bdgPr.textContent=nAct+' activos';bdgPr.style.background=nAct>0?'var(--gr-d)':'var(--bg3)';bdgPr.style.color=nAct>0?'var(--gr-l)':'var(--tx3)';}
-  mostrar('pg-ficha');
-}
-
-//  COLLAPSE 
-function toggle(id,hdr){
-  var b=document.getElementById(id);
-  var a=hdr.querySelector('.carr');
-  var o=b.classList.contains('open');
-  if(o){b.classList.remove('open');hdr.classList.remove('open');if(a)a.classList.remove('open');}
-  else{b.classList.add('open');hdr.classList.add('open');if(a)a.classList.add('open');}
-}
-
-//  UTILS 
-function fmtN(v){return Math.round(v||0).toLocaleString('es-AR');}
-function fmtM(v){
-  if(!v)return '$0';
-  if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B';
-  if(v>=1e6)return '$'+(v/1e6).toFixed(1)+'M';
-  if(v>=1e3)return '$'+(v/1e3).toFixed(0)+'k';
-  return '$'+v;
-}
-
-// ── FILTRO POR DÍA DE VISITA ─────────────────────────────
-var DIA_ACTIVO = null;
-var DIAS_ORD = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
-var DIA_LABELS = {Lunes:'Lun',Martes:'Mar',Miercoles:'Mie',Jueves:'Jue',Viernes:'Vie',Sabado:'Sab'};
-
-function initDias(vendCod) {
-  var diasVend = {};
-  Object.entries(GUIA_DATA).forEach(function(e){
-    var d=e[1]; if(d.v!==vendCod) return;
-    (d.ds||[]).forEach(function(ds){
-      var nom=Array.isArray(ds)?ds[0]:String(ds);
-      diasVend[nom]=(diasVend[nom]||0)+1;
-    });
-  });
-  var hoy=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][new Date().getDay()];
-  var btns=document.getElementById('dias-btns');
-  if(!btns) return;
-  btns.innerHTML='';
-  DIAS_ORD.forEach(function(dia){
-    if(!diasVend[dia]) return;
-    var btn=document.createElement('button');
-    btn.textContent=(DIA_LABELS[dia]||dia)+' ('+diasVend[dia]+')';
-    btn.style.cssText='padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--brd2);background:'+(dia===hoy?'var(--bl-d)':'var(--bg3)')+';color:'+(dia===hoy?'var(--bl-l)':'var(--tx2)');
-    btn.onclick=(function(d){return function(){filtrarDia(d,vendCod);};})(dia);
-    btns.appendChild(btn);
-  });
-  if(diasVend[hoy]) filtrarDia(hoy,vendCod);
-  else if(DIAS_ORD.filter(function(d){return diasVend[d];}).length) {
-    filtrarDia(DIAS_ORD.filter(function(d){return diasVend[d];})[0], vendCod);
-  }
-}
-
-function filtrarDia(dia, vendCod) {
-  DIA_ACTIVO = dia;
-  var btns = document.getElementById('dias-btns');
-  if(btns) Array.from(btns.children).forEach(function(b){
-    var lbl = DIA_LABELS[dia]||dia;
-    var on = b.textContent.startsWith(lbl);
-    b.style.background = on?'var(--bl-d)':'var(--bg3)';
-    b.style.color = on?'var(--bl-l)':'var(--tx2)';
-    b.style.borderColor = on?'var(--bl)':'var(--brd2)';
-  });
-  var inp = document.getElementById('dash-buscar');
-  if(inp) inp.value = '';
-  var resEl = document.getElementById('dash-buscar-res');
-  if(resEl) resEl.style.display='none';
-  var diasEl = document.getElementById('clientes-dia-list');
-  if(diasEl) diasEl.style.display='block';
-
-  var lista = [];
-  Object.entries(GUIA_DATA).forEach(function(e){
-    var cid=e[0], d=e[1];
-    if(d.v!==vendCod) return;
-    var ok=(d.ds||[]).some(function(ds){return (Array.isArray(ds)?ds[0]:String(ds))===dia;});
-    if(ok) lista.push({cid:cid, nom:d.n, dir:d.d||''});
-  });
-  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
-
-  if(!diasEl) return;
-  diasEl.innerHTML = lista.length
-    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' clientes</div>'+
-      lista.map(function(c){
-        return '<div onclick="verFicha("+c.cid+")" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
-          '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
-          '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+(c.dir?' · '+c.dir:'')+'</div></div>'+
-          '<div style="color:var(--tx3);font-size:18px">&#8250;</div></div>';
-      }).join('')
-    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin clientes para '+dia+'</div>';
-}
-
-function buscarEnDash(q) {
-  var resEl = document.getElementById('dash-buscar-res');
-  var diasEl = document.getElementById('clientes-dia-list');
-  var diasBtns = document.getElementById('dias-btns');
-  if(!q || q.length < 2) {
-    if(resEl) resEl.style.display='none';
-    if(diasEl) diasEl.style.display='block';
-    if(diasBtns) diasBtns.style.display='flex';
-    return;
-  }
-  if(diasEl) diasEl.style.display='none';
-  if(diasBtns) diasBtns.style.display='none';
-  if(resEl) resEl.style.display='block';
-  var ql = q.toLowerCase();
-  var lista = [];
-  Object.entries(GUIA_DATA).forEach(function(e){
-    var cid=e[0], d=e[1];
-    if(d.v!==VENDEDOR) return;
-    if(cid.includes(ql)||d.n.toLowerCase().includes(ql)||(d.d||'').toLowerCase().includes(ql))
-      lista.push({cid:cid, nom:d.n, dir:d.d||''});
-  });
-  lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
-  if(resEl) resEl.innerHTML = lista.length
-    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' resultados</div>'+
-      lista.map(function(c){
-        return '<div onclick="verFicha("+c.cid+")" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
-          '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
-          '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+(c.dir?' · '+c.dir:'')+'</div></div>'+
-          '<div style="color:var(--tx3);font-size:18px">&#8250;</div></div>';
-      }).join('')
-    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin resultados para "'+q+'"</div>';
-}
-
-var DIA_ACTIVO=null;
-var DIAS_ORD=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
-var DIA_LABELS={Lunes:'Lun',Martes:'Mar',Miercoles:'Mie',Jueves:'Jue',Viernes:'Vie',Sabado:'Sab'};
-
+// ── HELPER: card de cliente ───────────────────────────────────
 function mkCardCliente(c){
-  return '<div onclick="verFicha('+JSON.stringify(c.cid)+')" style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">'+
+  // c.cid es string — usamos JSON.stringify para que las comillas sean correctas siempre
+  return '<div onclick="verFicha('+JSON.stringify(String(c.cid))+')" '+
+    'style="background:var(--bg2);border:1px solid var(--brd);border-radius:10px;'+
+    'padding:10px 12px;margin-bottom:6px;cursor:pointer;display:flex;'+
+    'justify-content:space-between;align-items:center">'+
     '<div><div style="font-size:13px;font-weight:600">'+c.nom+'</div>'+
     '<div style="font-size:11px;color:var(--tx3)">#'+c.cid+(c.dir?' &middot; '+c.dir:'')+'</div></div>'+
     '<div style="color:var(--tx3);font-size:18px">&#8250;</div></div>';
 }
 
+// ── DIAS DE VISITA ────────────────────────────────────────────
 function initDias(vendCod){
   var diasVend={};
-  Object.entries(GUIA_DATA).forEach(function(e){
-    var d=e[1]; if(d.v!==vendCod) return;
-    (d.ds||[]).forEach(function(ds){var n=Array.isArray(ds)?ds[0]:String(ds); diasVend[n]=(diasVend[n]||0)+1;});
-  });
-  var hoy=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][new Date().getDay()];
+  var cids=Object.keys(GUIA_DATA);
+  for(var i=0;i<cids.length;i++){
+    var d=GUIA_DATA[cids[i]];
+    if(d.v!==vendCod) continue;
+    var ds=d.ds||[];
+    for(var j=0;j<ds.length;j++){
+      var nom=Array.isArray(ds[j])?ds[j][0]:String(ds[j]);
+      diasVend[nom]=(diasVend[nom]||0)+1;
+    }
+  }
   var btns=document.getElementById('dias-btns');
   if(!btns) return;
   btns.innerHTML='';
@@ -727,40 +462,54 @@ function initDias(vendCod){
     if(!diasVend[dia]) return;
     var btn=document.createElement('button');
     btn.textContent=(DIA_LABELS[dia]||dia)+' ('+diasVend[dia]+')';
-    btn.style.cssText='padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--brd2);background:'+(dia===hoy?'var(--bl-d)':'var(--bg3)')+';color:'+(dia===hoy?'var(--bl-l)':'var(--tx2)');
+    btn.style.cssText='padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;'+
+      'cursor:pointer;border:1px solid var(--brd2);background:'+(dia===HOY_DIA?'var(--bl-d)':'var(--bg3)')+
+      ';color:'+(dia===HOY_DIA?'var(--bl-l)':'var(--tx2)');
     btn.onclick=(function(d){return function(){filtrarDia(d,vendCod);};})(dia);
     btns.appendChild(btn);
   });
   var disponibles=DIAS_ORD.filter(function(d){return diasVend[d];});
-  if(diasVend[hoy]) filtrarDia(hoy,vendCod);
+  if(diasVend[HOY_DIA]) filtrarDia(HOY_DIA,vendCod);
   else if(disponibles.length) filtrarDia(disponibles[0],vendCod);
 }
 
 function filtrarDia(dia,vendCod){
   DIA_ACTIVO=dia;
   var btns=document.getElementById('dias-btns');
-  if(btns) Array.from(btns.children).forEach(function(b){
-    var on=b.textContent.startsWith(DIA_LABELS[dia]||dia);
-    b.style.background=on?'var(--bl-d)':'var(--bg3)';
-    b.style.color=on?'var(--bl-l)':'var(--tx2)';
-    b.style.borderColor=on?'var(--bl)':'var(--brd2)';
-  });
+  if(btns){
+    Array.from(btns.children).forEach(function(b){
+      var on=b.textContent.startsWith(DIA_LABELS[dia]||dia);
+      b.style.background=on?'var(--bl-d)':'var(--bg3)';
+      b.style.color=on?'var(--bl-l)':'var(--tx2)';
+      b.style.borderColor=on?'var(--bl)':'var(--brd2)';
+    });
+  }
   var inp=document.getElementById('dash-buscar');
   if(inp) inp.value='';
   var resEl=document.getElementById('dash-buscar-res');
   if(resEl) resEl.style.display='none';
   var diasEl=document.getElementById('clientes-dia-list');
   if(diasEl) diasEl.style.display='block';
+
   var lista=[];
-  Object.entries(GUIA_DATA).forEach(function(e){
-    var cid=e[0],d=e[1]; if(d.v!==vendCod) return;
-    if((d.ds||[]).some(function(ds){return (Array.isArray(ds)?ds[0]:String(ds))===dia;}))
-      lista.push({cid:cid,nom:d.n,dir:d.d||''});
-  });
+  var cids=Object.keys(GUIA_DATA);
+  for(var i=0;i<cids.length;i++){
+    var cid=cids[i], d=GUIA_DATA[cid];
+    if(d.v!==vendCod) continue;
+    var ds=d.ds||[];
+    var ok=false;
+    for(var j=0;j<ds.length;j++){
+      if((Array.isArray(ds[j])?ds[j][0]:String(ds[j]))===dia){ok=true;break;}
+    }
+    if(ok) lista.push({cid:cid, nom:d.n, dir:d.d||''});
+  }
   lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
+
   if(!diasEl) return;
   diasEl.innerHTML=lista.length
-    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' clientes &middot; '+dia+'</div>'+lista.map(mkCardCliente).join('')
+    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+
+        lista.length+' clientes &middot; '+dia+'</div>'+
+        lista.map(mkCardCliente).join('')
     : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin clientes para '+dia+'</div>';
 }
 
@@ -779,15 +528,212 @@ function buscarEnDash(q){
   if(resEl) resEl.style.display='block';
   var ql=q.toLowerCase();
   var lista=[];
-  Object.entries(GUIA_DATA).forEach(function(e){
-    var cid=e[0],d=e[1]; if(d.v!==VENDEDOR) return;
+  var cids=Object.keys(GUIA_DATA);
+  for(var i=0;i<cids.length;i++){
+    var cid=cids[i], d=GUIA_DATA[cid];
+    if(d.v!==VENDEDOR) continue;
     if(cid.includes(ql)||d.n.toLowerCase().includes(ql)||(d.d||'').toLowerCase().includes(ql))
-      lista.push({cid:cid,nom:d.n,dir:d.d||''});
-  });
+      lista.push({cid:cid, nom:d.n, dir:d.d||''});
+  }
   lista.sort(function(a,b){return a.nom.localeCompare(b.nom);});
-  if(resEl) resEl.innerHTML=lista.length
-    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' resultados</div>'+lista.map(mkCardCliente).join('')
-    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin resultados</div>';
+  resEl.innerHTML=lista.length
+    ? '<div style="font-size:11px;color:var(--tx3);margin-bottom:6px">'+lista.length+' resultados</div>'+
+        lista.map(mkCardCliente).join('')
+    : '<div style="color:var(--tx3);font-size:12px;padding:8px">Sin resultados para "'+q+'"</div>';
+}
+
+// ── BUSQUEDA (pagina busq) ────────────────────────────────────
+var ST=null;
+function buscar(q){clearTimeout(ST);ST=setTimeout(function(){_buscar(q.trim());},200);}
+function _buscar(q){
+  var el=document.getElementById('srch-res');
+  if(!q||q.length<2){el.innerHTML='<div class="empty">Ingresa el codigo o nombre</div>';return;}
+  if(typeof GUIA_DATA==='undefined'){el.innerHTML='<div class="empty">Sin datos</div>';return;}
+  var ql=q.toLowerCase(), esN=/^\d+$/.test(q), res=[];
+  var cids=Object.keys(GUIA_DATA);
+  for(var i=0;i<cids.length;i++){
+    var cid=cids[i], d=GUIA_DATA[cid];
+    if(d.v!==VENDEDOR) continue;
+    if(esN){if(cid.startsWith(q))res.push({cid:cid,nom:d.n,dir:d.d||''});}
+    else{if(d.n.toLowerCase().includes(ql)||d.l.toLowerCase().includes(ql))res.push({cid:cid,nom:d.n,dir:d.d||''});}
+    if(res.length>=20) break;
+  }
+  if(!res.length){el.innerHTML='<div class="empty">Sin resultados para "'+q+'"</div>';return;}
+  el.innerHTML=res.map(function(r){
+    var cid=r.cid, d=GUIA_DATA[cid];
+    var nok=d.u.filter(function(x){return x>=3;}).length;
+    var cls=nok>=7?'cok':nok>=5?'cmed':'cbad';
+    return '<div class="ri" onclick="verFichaDesde(\'busq\',\''+cid+'\')">'+
+      '<div class="ri-cod mono">#'+cid+'</div>'+
+      '<div style="flex:1"><div class="ri-nom">'+d.n+'</div>'+
+      '<div class="ri-loc">'+d.l+'</div></div>'+
+      '<span class="ri-cob '+cls+'">'+nok+'/9</span></div>';
+  }).join('');
+}
+
+// ── FICHA ─────────────────────────────────────────────────────
+function verFichaDesde(origen, cid){
+  DESDE_BUSQ = (origen==='busq');
+  verFicha(cid);
+}
+
+function verFicha(cid){
+  cid=String(cid);
+  var d=GUIA_DATA[cid];
+  if(!d){
+    alert('Cliente '+cid+' no encontrado en GUIA_DATA');
+    return;
+  }
+  var dias=d.ds||[];
+  // Solo considerar días del vendedor logueado (filtrar por v===VENDEDOR)
+  var dnom=dias
+    .filter(function(ds){return !Array.isArray(ds)||ds[1]===VENDEDOR||ds.length<2;})
+    .map(function(ds){return Array.isArray(ds)?ds[0]:String(ds);});
+  // Si no filtró ninguno, mostrar todos
+  if(!dnom.length) dnom=dias.map(function(ds){return Array.isArray(ds)?ds[0]:String(ds);});
+
+  var esHoy=dnom.indexOf(HOY_DIA)>=0;
+  var zonaEl=document.getElementById('ficha-zona');
+  if(!dnom.length){
+    zonaEl.innerHTML='<div class="zona-alert za-warn">! Sin dia de visita asignado</div>';
+  } else if(!esHoy){
+    zonaEl.innerHTML='<div class="zona-alert za-warn">! FUERA DE ZONA - Hoy es '+HOY_DIA+'. Dia: '+dnom.join(' / ')+'</div>';
+  } else {
+    zonaEl.innerHTML='<div class="zona-alert za-ok">&#10003; En zona - Dia de visita: '+dnom.join(' / ')+'</div>';
+  }
+
+  var vNom=VNOM[d.v]||'V'+d.v;
+  document.getElementById('ficha-head').innerHTML=
+    '<div class="cli-nom">'+d.n+'</div>'+
+    '<div class="cli-dir">'+(d.d||'')+(d.l?' - '+d.l:'')+'</div>'+
+    '<div class="cli-pills">'+
+      '<span class="pill pill-bl">#'+cid+'</span>'+
+      '<span class="pill">'+vNom+'</span>'+
+      (dnom.length?'<span class="pill pill-pu">'+dnom.join(' / ')+'</span>':'')+
+    '</div>';
+
+  var abrUds=(typeof ABR_DATA!=='undefined'&&ABR_DATA[cid])||null;
+  var nOk=0;
+  for(var i=0;i<9;i++){var ref=abrUds?Math.round(abrUds[i]):Math.round(d.u[i]);if(ref>=3)nOk++;}
+  var cPct=Math.round(nOk/9*100);
+  var cCol=cPct>=78?'var(--gr-l)':cPct>=56?'var(--am-l)':'var(--rd-l)';
+  document.getElementById('ficha-kpis').innerHTML=
+    '<div class="kpi-card"><div class="kpi-lbl">Cobertura</div>'+
+    '<div class="kpi-val" style="color:'+cCol+'">'+nOk+'/9</div>'+
+    '<div class="kpi-sub">'+cPct+'% marcas</div></div>'+
+    '<div class="kpi-card"><div class="kpi-lbl">Importe mes ant.</div>'+
+    '<div class="kpi-val" style="font-size:16px">'+fmtM(d.i)+'</div>'+
+    '<div class="kpi-sub">PepsiCo</div></div>';
+
+  // Tabla marcas
+  var mkH='<table class="mk-t"><thead><tr>'+
+    '<td>Marca</td><td>Mes act.</td><td>Sug.</td><td>Mes ant.</td>'+
+    '</tr></thead><tbody>';
+  var falt=[];
+  for(var mi=0;mi<MARCAS.length;mi++){
+    var mk=MARCAS[mi];
+    var uAnt=Math.round(d.u[mi]);
+    var uAct=abrUds?Math.round(abrUds[mi]):0;
+    var uRef=abrUds!==null?uAct:uAnt;
+    var ok=uRef>=3, cerca=!ok&&uRef>0;
+    var sug=ok?0:Math.max(0,3-uRef);
+    var col=MK_COL[mk]||'var(--tx)';
+    var dCol=ok?'var(--gr)':cerca?'var(--am)':'var(--rd)';
+    var aCol=ok?'var(--gr-l)':cerca?'var(--am-l)':'var(--rd-l)';
+    var fw=ok?100:(uRef>0?Math.min(Math.round(uRef/3*100),99):0);
+    mkH+='<tr class="'+(ok?'ok':'falta')+'">'+
+      '<td><div class="mk-dot-row">'+
+        '<div class="mk-dot" style="background:'+dCol+'"></div>'+
+        '<div><div style="font-size:12px;font-weight:700;color:'+col+'">'+mk+'</div>'+
+        (MK_OBJ[mk]?'<div class="mk-cob-bar"><div class="mk-cob-fill" style="width:'+fw+'%;background:'+dCol+'"></div></div>':'')+'</div>'+
+      '</div></td>'+
+      '<td style="color:'+aCol+'">'+(abrUds!==null?(uAct>0?uAct+'u':'-'):'?')+'</td>'+
+      '<td style="color:'+(sug>0?'var(--am-l)':'var(--tx3)')+'">'+(sug>0?'+'+sug:'--')+'</td>'+
+      '<td style="color:var(--bl-l)">'+(uAnt>0?uAnt+'u':'-')+'</td>'+
+    '</tr>';
+    if(!ok) falt.push({mk:mk,col:col,sug:sug,uAct:uAct,uAnt:uAnt});
+  }
+  mkH+='</tbody></table>';
+  document.getElementById('ficha-marcas').innerHTML=mkH;
+  var bdgP=document.getElementById('bdg-pep');
+  if(bdgP){
+    bdgP.textContent=(9-falt.length)+'/9 OK';
+    bdgP.style.background=falt.length===0?'var(--gr-d)':falt.length<=3?'var(--am-d)':'var(--rd-d)';
+    bdgP.style.color=falt.length===0?'var(--gr-l)':falt.length<=3?'var(--am-l)':'var(--rd-l)';
+  }
+
+  // Pedido sugerido
+  var wp=document.getElementById('wrap-pedido');
+  var bdgPed=document.getElementById('bdg-ped');
+  if(bdgPed) bdgPed.textContent=falt.length+' marcas';
+  if(falt.length){
+    if(wp) wp.style.display='block';
+    document.getElementById('ficha-pedido').innerHTML=falt.map(function(f){
+      return '<div class="ped-card">'+
+        '<div class="ped-mk" style="color:'+f.col+'">'+f.mk+'</div>'+
+        '<div class="ped-vals">'+
+          '<div class="ped-d"><span class="ped-n" style="color:var(--am-l)">+'+f.sug+'</span><span class="ped-s">min.</span></div>'+
+          '<div class="ped-d"><span class="ped-n" style="color:var(--bl-l)">'+(f.uAct>0?f.uAct+'u':'-')+'</span><span class="ped-s">mes act.</span></div>'+
+          '<div class="ped-d"><span class="ped-n" style="color:var(--tx2)">'+(f.uAnt>0?f.uAnt+'u':'-')+'</span><span class="ped-s">mes ant.</span></div>'+
+        '</div></div>';
+    }).join('');
+  } else {
+    if(wp) wp.style.display='none';
+  }
+
+  // Otros proveedores
+  var pDet=(typeof OTROS_PROV_DET!=='undefined'&&OTROS_PROV_DET[cid])||{};
+  var todosP=typeof TODOS_PROV_ACTIVOS!=='undefined'?TODOS_PROV_ACTIVOS:Object.keys(pDet);
+  var nAct=0;
+  var pH='<table class="prov-t"><thead><tr>'+
+    '<td>Proveedor</td><td>Estado</td><td>Mar.</td><td>Act.</td><td>Ofr.</td>'+
+    '</tr></thead><tbody>';
+  todosP.forEach(function(prov,idx){
+    var vals=pDet[prov]||[0,0,0,0];
+    var mU=vals[0]||0, mI=vals[1]||0, aU=vals[2]||0, aI=vals[3]||0;
+    var est,bCls;
+    if(aI>0){est='Activo';bCls='bact';nAct++;}
+    else if(mI>0){est='Inactivo';bCls='bina';}
+    else{est='Nunca';bCls='bnun';}
+    var col=PROV_COL[idx%PROV_COL.length];
+    var ofr=(mI>0&&aI===0)?(mU>0?'+'+mU:'si'):(aI>0?'OK':'-');
+    var oCol=(mI>0&&aI===0)?'var(--am-l)':(aI>0?'var(--gr-l)':'var(--tx3)');
+    pH+='<tr>'+
+      '<td style="font-weight:600;color:'+col+'">'+prov+'</td>'+
+      '<td><span class="prov-bdg '+bCls+'">'+est+'</span></td>'+
+      '<td style="color:var(--bl-l)">'+(mU>0?mU+'u':'-')+'</td>'+
+      '<td style="color:'+(aU>0?'var(--gr-l)':'var(--tx3)')+'">'+(aU>0?aU+'u':'-')+'</td>'+
+      '<td style="color:'+oCol+'">'+ofr+'</td>'+
+    '</tr>';
+  });
+  pH+='</tbody></table>';
+  document.getElementById('ficha-provs').innerHTML=pH;
+  var bdgPr=document.getElementById('bdg-prov');
+  if(bdgPr){
+    bdgPr.textContent=nAct+' activos';
+    bdgPr.style.background=nAct>0?'var(--gr-d)':'var(--bg3)';
+    bdgPr.style.color=nAct>0?'var(--gr-l)':'var(--tx3)';
+  }
+  mostrar('pg-ficha');
+}
+
+// ── COLLAPSE ──────────────────────────────────────────────────
+function toggle(id,hdr){
+  var b=document.getElementById(id);
+  var a=hdr.querySelector('.carr');
+  var o=b.classList.contains('open');
+  if(o){b.classList.remove('open');hdr.classList.remove('open');if(a)a.classList.remove('open');}
+  else{b.classList.add('open');hdr.classList.add('open');if(a)a.classList.add('open');}
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function fmtN(v){return Math.round(v||0).toLocaleString('es-AR');}
+function fmtM(v){
+  if(!v)return '$0';
+  if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B';
+  if(v>=1e6)return '$'+(v/1e6).toFixed(1)+'M';
+  if(v>=1e3)return '$'+(v/1e3).toFixed(0)+'k';
+  return '$'+v;
 }
 </script>
 
@@ -802,9 +748,6 @@ function buscarEnDash(q){
 </script>
 <script>
 // __OTROS_PROV__
-</script>
-<script>
-const VEND_RESUMEN={"31":{"nom":"VILLALBA MAX.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":274,"a_ccc":107,"a_pcc":39.1,"a_imp":14768273,"a_kr":405,"a_ot":2421,"a_apr":16.7,"a_pp":20.1,"m_ccc":223,"m_pcc":81.4,"m_imp":88777327,"m_kr":2445,"m_ot":2421,"m_apr":101.0},"32":{"nom":"OLIVARES EDGAR","mesa":400,"sup":"CLAUDIO ALVARADO","cart":286,"a_ccc":65,"a_pcc":22.7,"a_imp":7845825,"a_kr":250,"a_ot":1547,"a_apr":16.2,"a_pp":19.4,"m_ccc":218,"m_pcc":76.2,"m_imp":50007578,"m_kr":1426,"m_ot":1547,"m_apr":92.2},"33":{"nom":"ORDO\u00d1EZ ISMAEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":247,"a_ccc":70,"a_pcc":28.3,"a_imp":10854279,"a_kr":364,"a_ot":1787,"a_apr":20.4,"a_pp":24.4,"m_ccc":168,"m_pcc":68.0,"m_imp":74877786,"m_kr":1783,"m_ot":1787,"m_apr":99.8},"34":{"nom":"BALDO JULIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":263,"a_ccc":61,"a_pcc":23.2,"a_imp":4956235,"a_kr":132,"a_ot":1628,"a_apr":8.1,"a_pp":9.7,"m_ccc":192,"m_pcc":73.0,"m_imp":49863989,"m_kr":1402,"m_ot":1628,"m_apr":86.1},"35":{"nom":"BAZAN LUCIANO","mesa":400,"sup":"CLAUDIO ALVARADO","cart":275,"a_ccc":91,"a_pcc":33.1,"a_imp":9929741,"a_kr":310,"a_ot":1548,"a_apr":20.0,"a_pp":24.0,"m_ccc":235,"m_pcc":85.5,"m_imp":54674851,"m_kr":1660,"m_ot":1548,"m_apr":107.2},"36":{"nom":"NEIRA NAHUEL","mesa":400,"sup":"CLAUDIO ALVARADO","cart":254,"a_ccc":82,"a_pcc":32.3,"a_imp":8908806,"a_kr":259,"a_ot":2739,"a_apr":9.5,"a_pp":11.3,"m_ccc":196,"m_pcc":77.2,"m_imp":61433839,"m_kr":2129,"m_ot":2739,"m_apr":77.7},"37":{"nom":"SCORRANI IGN.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":272,"a_ccc":82,"a_pcc":30.1,"a_imp":9466999,"a_kr":305,"a_ot":1628,"a_apr":18.7,"a_pp":22.5,"m_ccc":194,"m_pcc":71.3,"m_imp":50063985,"m_kr":1546,"m_ot":1628,"m_apr":95.0},"38":{"nom":"MARTINEZ MAU.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":304,"a_ccc":109,"a_pcc":35.9,"a_imp":9975612,"a_kr":292,"a_ot":2461,"a_apr":11.9,"a_pp":14.2,"m_ccc":219,"m_pcc":72.0,"m_imp":58292329,"m_kr":1926,"m_ot":2461,"m_apr":78.3},"39":{"nom":"MERLO SEBASTIAN","mesa":400,"sup":"CLAUDIO ALVARADO","cart":299,"a_ccc":94,"a_pcc":31.4,"a_imp":8007588,"a_kr":269,"a_ot":2243,"a_apr":12.0,"a_pp":14.4,"m_ccc":229,"m_pcc":76.6,"m_imp":57954152,"m_kr":1939,"m_ot":2243,"m_apr":86.4},"41":{"nom":"CISTERNA DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":305,"a_ccc":68,"a_pcc":22.3,"a_imp":5001349,"a_kr":145,"a_ot":1166,"a_apr":12.4,"a_pp":14.9,"m_ccc":209,"m_pcc":68.5,"m_imp":35127177,"m_kr":1015,"m_ot":1166,"m_apr":87.0},"42":{"nom":"RESTIVO VALERIA","mesa":500,"sup":"MARIANO TRIULCI","cart":282,"a_ccc":73,"a_pcc":25.9,"a_imp":6649488,"a_kr":188,"a_ot":1375,"a_apr":13.7,"a_pp":16.4,"m_ccc":180,"m_pcc":63.8,"m_imp":44958496,"m_kr":1423,"m_ot":1375,"m_apr":103.5},"43":{"nom":"RUEDA CUJAR","mesa":500,"sup":"MARIANO TRIULCI","cart":280,"a_ccc":73,"a_pcc":26.1,"a_imp":5954060,"a_kr":159,"a_ot":1328,"a_apr":12.0,"a_pp":14.4,"m_ccc":228,"m_pcc":81.4,"m_imp":37964662,"m_kr":1119,"m_ot":1328,"m_apr":84.3},"44":{"nom":"BERNAHOLA AGU.","mesa":500,"sup":"MARIANO TRIULCI","cart":315,"a_ccc":71,"a_pcc":22.5,"a_imp":6402422,"a_kr":209,"a_ot":1222,"a_apr":17.1,"a_pp":20.5,"m_ccc":172,"m_pcc":54.6,"m_imp":39147641,"m_kr":1191,"m_ot":1222,"m_apr":97.5},"45":{"nom":"ROMERO DIANA","mesa":300,"sup":"NATALIA PEREZ","cart":337,"a_ccc":76,"a_pcc":22.6,"a_imp":7394685,"a_kr":206,"a_ot":1153,"a_apr":17.9,"a_pp":21.4,"m_ccc":209,"m_pcc":62.0,"m_imp":43957151,"m_kr":1321,"m_ot":1153,"m_apr":114.6},"46":{"nom":"OCHOA ROXANA","mesa":500,"sup":"MARIANO TRIULCI","cart":256,"a_ccc":77,"a_pcc":30.1,"a_imp":5691485,"a_kr":163,"a_ot":1200,"a_apr":13.6,"a_pp":16.3,"m_ccc":186,"m_pcc":72.7,"m_imp":40247032,"m_kr":1243,"m_ot":1200,"m_apr":103.6},"47":{"nom":"CACERES YANINA","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":61,"a_pcc":20.5,"a_imp":4882574,"a_kr":145,"a_ot":1199,"a_apr":12.1,"a_pp":14.5,"m_ccc":190,"m_pcc":64.0,"m_imp":36458445,"m_kr":1039,"m_ot":1199,"m_apr":86.7},"48":{"nom":"SALDE MARCELA","mesa":500,"sup":"MARIANO TRIULCI","cart":313,"a_ccc":80,"a_pcc":25.6,"a_imp":6452350,"a_kr":175,"a_ot":2632,"a_apr":6.6,"a_pp":8.0,"m_ccc":184,"m_pcc":58.8,"m_imp":79430337,"m_kr":2503,"m_ot":2632,"m_apr":95.1},"49":{"nom":"MOREIRA TOBIAS","mesa":300,"sup":"NATALIA PEREZ","cart":317,"a_ccc":57,"a_pcc":18.0,"a_imp":4486694,"a_kr":129,"a_ot":1166,"a_apr":11.1,"a_pp":13.3,"m_ccc":186,"m_pcc":58.7,"m_imp":31526583,"m_kr":914,"m_ot":1166,"m_apr":78.4},"51":{"nom":"GONZALEZ CAND.","mesa":400,"sup":"CLAUDIO ALVARADO","cart":245,"a_ccc":109,"a_pcc":44.5,"a_imp":11693917,"a_kr":277,"a_ot":1846,"a_apr":15.0,"a_pp":18.0,"m_ccc":189,"m_pcc":77.1,"m_imp":58822255,"m_kr":1541,"m_ot":1846,"m_apr":83.5},"52":{"nom":"MARTINEZ DIEGO","mesa":300,"sup":"NATALIA PEREZ","cart":332,"a_ccc":82,"a_pcc":24.7,"a_imp":7372625,"a_kr":202,"a_ot":1438,"a_apr":14.0,"a_pp":16.9,"m_ccc":235,"m_pcc":70.8,"m_imp":44973200,"m_kr":1331,"m_ot":1438,"m_apr":92.6},"53":{"nom":"CARRIZO EZE.","mesa":300,"sup":"NATALIA PEREZ","cart":303,"a_ccc":84,"a_pcc":27.7,"a_imp":6887270,"a_kr":170,"a_ot":1451,"a_apr":11.7,"a_pp":14.1,"m_ccc":225,"m_pcc":74.3,"m_imp":42747885,"m_kr":1143,"m_ot":1451,"m_apr":78.8},"54":{"nom":"MORENO JOHAN","mesa":500,"sup":"MARIANO TRIULCI","cart":360,"a_ccc":70,"a_pcc":19.4,"a_imp":5379696,"a_kr":162,"a_ot":1351,"a_apr":12.0,"a_pp":14.4,"m_ccc":213,"m_pcc":59.2,"m_imp":40725802,"m_kr":1249,"m_ot":1351,"m_apr":92.5},"55":{"nom":"PULIDO EFRAIM","mesa":300,"sup":"NATALIA PEREZ","cart":315,"a_ccc":70,"a_pcc":22.2,"a_imp":6652244,"a_kr":202,"a_ot":1177,"a_apr":17.2,"a_pp":20.6,"m_ccc":175,"m_pcc":55.6,"m_imp":41730782,"m_kr":1293,"m_ot":1177,"m_apr":109.9},"56":{"nom":"RIVARA LORENZO","mesa":300,"sup":"NATALIA PEREZ","cart":292,"a_ccc":51,"a_pcc":17.5,"a_imp":4896551,"a_kr":154,"a_ot":2096,"a_apr":7.3,"a_pp":8.8,"m_ccc":192,"m_pcc":65.8,"m_imp":51734056,"m_kr":1772,"m_ot":2096,"m_apr":84.5},"57":{"nom":"DIAZ OMAR","mesa":300,"sup":"NATALIA PEREZ","cart":274,"a_ccc":68,"a_pcc":24.8,"a_imp":6204887,"a_kr":177,"a_ot":1153,"a_apr":15.4,"a_pp":18.4,"m_ccc":197,"m_pcc":71.9,"m_imp":36446145,"m_kr":1052,"m_ot":1153,"m_apr":91.2},"58":{"nom":"GONZALEZ MARC.","mesa":500,"sup":"MARIANO TRIULCI","cart":297,"a_ccc":76,"a_pcc":25.6,"a_imp":8588524,"a_kr":258,"a_ot":1446,"a_apr":17.8,"a_pp":21.4,"m_ccc":216,"m_pcc":72.7,"m_imp":50471152,"m_kr":1467,"m_ot":1446,"m_apr":101.5},"59":{"nom":"AVENDA\u00d1O SERGIO","mesa":300,"sup":"NATALIA PEREZ","cart":298,"a_ccc":48,"a_pcc":16.1,"a_imp":5960907,"a_kr":178,"a_ot":1600,"a_apr":11.1,"a_pp":13.4,"m_ccc":176,"m_pcc":59.1,"m_imp":36662513,"m_kr":1178,"m_ot":1600,"m_apr":73.6},"61":{"nom":"PACHECO RODRIGO","mesa":600,"sup":"NATALIA PEREZ","cart":558,"a_ccc":86,"a_pcc":15.4,"a_imp":6502017,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":252,"m_pcc":45.2,"m_imp":44237676,"m_kr":1,"m_ot":0,"m_apr":null},"62":{"nom":"PAEZ SEBASTIAN","mesa":600,"sup":"NATALIA PEREZ","cart":525,"a_ccc":26,"a_pcc":5.0,"a_imp":1433027,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":190,"m_pcc":36.2,"m_imp":23370801,"m_kr":0,"m_ot":0,"m_apr":null},"63":{"nom":"MIRANDA MARIANA","mesa":600,"sup":"NATALIA PEREZ","cart":527,"a_ccc":89,"a_pcc":16.9,"a_imp":8097355,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":241,"m_pcc":45.7,"m_imp":38010349,"m_kr":0,"m_ot":0,"m_apr":null},"64":{"nom":"GONZALEZ FRANCO","mesa":600,"sup":"NATALIA PEREZ","cart":370,"a_ccc":77,"a_pcc":20.8,"a_imp":15361904,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":182,"m_pcc":49.2,"m_imp":62716339,"m_kr":0,"m_ot":0,"m_apr":null},"65":{"nom":"SANCHEZ JULIAN","mesa":600,"sup":"NATALIA PEREZ","cart":593,"a_ccc":79,"a_pcc":13.3,"a_imp":15357055,"a_kr":0,"a_ot":0,"a_apr":null,"a_pp":null,"m_ccc":278,"m_pcc":46.9,"m_imp":70286390,"m_kr":3,"m_ot":0,"m_apr":null}};
 </script>
 </body>
 </html>
